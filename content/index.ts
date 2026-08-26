@@ -1,13 +1,27 @@
 import { ContentSchema, isPlaceholder } from "./schema";
 import type { Content } from "./schema";
+import { MIN_WORDS, countWords } from "./thresholds";
 import { business } from "./business";
 import { doctors } from "./doctors";
 import { pricing } from "./pricing";
+import { aboutPage } from "./pages";
 import { cities, quartiers } from "./geo";
 import { specialties } from "./specialties";
 import { situations } from "./situations";
+import { citySpecialties, situationCities } from "./combinations";
 
-const raw: Content = { business, doctors, pricing, cities, quartiers, specialties, situations };
+const raw: Content = {
+  business,
+  doctors,
+  pricing,
+  aboutPage,
+  cities,
+  quartiers,
+  specialties,
+  situations,
+  citySpecialties,
+  situationCities,
+};
 
 /** Recursively collects every unfilled TODO placeholder, with a JSON-path-like location. */
 function collectPlaceholders(value: unknown, path: string, out: string[]): void {
@@ -24,6 +38,47 @@ function collectPlaceholders(value: unknown, path: string, out: string[]): void 
       collectPlaceholders(val, path ? `${path}.${key}` : key, out);
     }
   }
+}
+
+/**
+ * Checks each templated page's unique-content word count against
+ * content/thresholds.ts. Skipped per-field while that field still has an
+ * unfilled placeholder (already reported by the placeholder scan above), so
+ * the two checks don't double-report the same unwritten page — this check is
+ * what starts firing once Phase 5 replaces placeholders with real, but
+ * possibly too-thin, prose.
+ */
+function checkThresholds(c: Content): string[] {
+  const errors: string[] = [];
+
+  function check(label: string, fields: string[], min: number) {
+    if (fields.some(isPlaceholder)) return;
+    const words = countWords(fields.join(" "));
+    if (words < min) {
+      errors.push(`${label}: only ${words} unique word(s), needs at least ${min}`);
+    }
+  }
+
+  for (const city of c.cities) {
+    check(`cities.${city.slug}`, [city.intro, city.body], MIN_WORDS.cityHub);
+  }
+  for (const q of c.quartiers) {
+    check(`quartiers.${q.slug}`, [q.intro, ...q.landmarks, ...q.nearestHospitals, q.accessNotes], MIN_WORDS.quartier);
+  }
+  for (const s of c.specialties) {
+    check(`specialties.${s.slug}`, [s.intro, s.body], MIN_WORDS.specialtyHub);
+  }
+  for (const s of c.situations) {
+    check(`situations.${s.slug}`, [s.intro, s.body], MIN_WORDS.situation);
+  }
+  for (const cs of c.citySpecialties) {
+    check(`citySpecialties.${cs.citySlug}.${cs.specialtySlug}`, [cs.intro, cs.body], MIN_WORDS.citySpecialty);
+  }
+  for (const sc of c.situationCities) {
+    check(`situationCities.${sc.situationSlug}.${sc.citySlug}`, [sc.intro, sc.body], MIN_WORDS.situationCity);
+  }
+
+  return errors;
 }
 
 export interface ContentValidationResult {
@@ -44,6 +99,8 @@ export function validateContent(): ContentValidationResult {
   const placeholders: string[] = [];
   collectPlaceholders(raw, "", placeholders);
   errors.push(...placeholders.map((p) => `unfilled placeholder at ${p}`));
+
+  errors.push(...checkThresholds(raw));
 
   return { ok: errors.length === 0, errors };
 }
@@ -67,4 +124,4 @@ export function assertContentValid(): Content {
   return raw;
 }
 
-export { business, doctors, pricing, cities, quartiers, specialties, situations };
+export { business, doctors, pricing, aboutPage, cities, quartiers, specialties, situations };

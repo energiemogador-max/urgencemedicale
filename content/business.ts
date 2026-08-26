@@ -17,6 +17,10 @@ export const business: Business = {
     postalCode: todo("postal code"),
     region: todo("region"),
   },
+  geo: {
+    lat: todo("business latitude, e.g. 33.589886"),
+    lng: todo("business longitude, e.g. -7.603869"),
+  },
   defaultResponseTimeMinutes: todo("site-wide default response-time commitment, in minutes"),
   hoursOpen: "24/7",
 };

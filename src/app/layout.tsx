@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { content } from "@/lib/content";
+import { inter, sourceSerif } from "./fonts";
+import { StickyCallBar } from "@/components/StickyCallBar";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,8 +17,11 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="fr">
-      <body>{children}</body>
+    <html lang="fr" className={`${inter.variable} ${sourceSerif.variable}`}>
+      <body>
+        <StickyCallBar phoneDisplay={content.business.phoneDisplay} phoneHref={content.business.phoneHref} />
+        {children}
+      </body>
     </html>
   );
 }

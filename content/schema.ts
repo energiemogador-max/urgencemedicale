@@ -34,6 +34,14 @@ function filledNumericString(label: string) {
   );
 }
 
+/** A string that must resolve to a plain (possibly negative, decimal) geographic coordinate. */
+function filledCoordinateString(label: string) {
+  return filledText(label).refine(
+    (v) => /^-?\d{1,3}(\.\d{1,8})?$/.test(v),
+    `${label}: must be a plain decimal coordinate (e.g. "33.58"), got a non-numeric value`
+  );
+}
+
 // ---------------------------------------------------------------------------
 // Reference data — these slugs come directly from the approved URL taxonomy
 // (Phase 2), not invented content, so they're safe to hard-code as enums.
@@ -110,6 +118,10 @@ export const CitySchema = z.object({
   lat: z.number().min(-90).max(90),
   lng: z.number().min(-180).max(180),
   hasQuartierPages: z.boolean(),
+  /** Answer-shaped 2-3 sentence opening for the city hub page (the AEO layer). */
+  intro: filledText("city intro — 2-3 sentence answer-shaped opening"),
+  /** City-level unique content (distinct from any quartier's content). */
+  body: filledText("city unique body content"),
 });
 export type City = z.infer<typeof CitySchema>;
 
@@ -117,6 +129,8 @@ export const QuartierSchema = z.object({
   slug: filledText("quartier slug"),
   name: filledText("quartier name"),
   citySlug: CitySlugEnum,
+  /** Answer-shaped 2-3 sentence opening for the quartier page (the AEO layer). */
+  intro: filledText("quartier intro — 2-3 sentence answer-shaped opening"),
   /** Business input: this city/quartier's committed response time, in minutes. */
   responseTimeMinutes: filledNumericString("quartier response time (minutes)"),
   /** Local-knowledge content, authored/verified in Phase 5 — never invented. */
@@ -130,6 +144,10 @@ export const SpecialtySchema = z.object({
   slug: SpecialtySlugEnum,
   name: filledText("specialty name"),
   shortDescription: filledText("specialty short description"),
+  /** Answer-shaped 2-3 sentence opening for the specialty hub page. */
+  intro: filledText("specialty intro — 2-3 sentence answer-shaped opening"),
+  /** Specialty hub unique body content (national scope, links out to the city spokes). */
+  body: filledText("specialty unique body content"),
 });
 export type Specialty = z.infer<typeof SpecialtySchema>;
 
@@ -138,8 +156,29 @@ export const SituationSchema = z.object({
   title: filledText("situation title"),
   shortDescription: filledText("situation short description"),
   geoMultiplied: z.boolean(),
+  /** Answer-shaped 2-3 sentence opening for the situation page — the cornerstone AEO content. */
+  intro: filledText("situation intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("situation unique body content"),
 });
 export type Situation = z.infer<typeof SituationSchema>;
+
+/** City x specialty spoke page (top 6 cities only — Phase 2 rule). */
+export const CitySpecialtySchema = z.object({
+  citySlug: CitySlugEnum,
+  specialtySlug: SpecialtySlugEnum,
+  intro: filledText("city x specialty intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("city x specialty unique body content"),
+});
+export type CitySpecialty = z.infer<typeof CitySpecialtySchema>;
+
+/** Situation x city spoke page (3 highest-intent situations only — Phase 2 rule). */
+export const SituationCitySchema = z.object({
+  situationSlug: SituationSlugEnum,
+  citySlug: CitySlugEnum,
+  intro: filledText("situation x city intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("situation x city unique body content"),
+});
+export type SituationCity = z.infer<typeof SituationCitySchema>;
 
 export const DoctorSchema = z.object({
   slug: filledText("doctor slug"),
@@ -176,19 +215,34 @@ export const BusinessSchema = z.object({
     postalCode: filledText("postal code"),
     region: filledText("region"),
   }),
+  /** Precise business location — required for LocalBusiness geo (Phase 4), distinct from the approximate public city-center coordinates on City. */
+  geo: z.object({
+    lat: filledCoordinateString("business latitude"),
+    lng: filledCoordinateString("business longitude"),
+  }),
   /** Business input: the site-wide default response-time commitment, in minutes. */
   defaultResponseTimeMinutes: filledNumericString("default response time (minutes)"),
   hoursOpen: z.literal("24/7"),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 
+/** Narrative copy for /a-propos — company story, never invented. */
+export const AboutPageSchema = z.object({
+  intro: filledText("about page intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("about page body — company story, mission, service commitment"),
+});
+export type AboutPage = z.infer<typeof AboutPageSchema>;
+
 export const ContentSchema = z.object({
   business: BusinessSchema,
   doctors: z.array(DoctorSchema).min(1, "at least one named doctor is required (full-operation model)"),
   pricing: PricingSchema,
+  aboutPage: AboutPageSchema,
   cities: z.array(CitySchema).min(1),
   quartiers: z.array(QuartierSchema),
   specialties: z.array(SpecialtySchema).min(1),
   situations: z.array(SituationSchema).min(1),
+  citySpecialties: z.array(CitySpecialtySchema),
+  situationCities: z.array(SituationCitySchema),
 });
 export type Content = z.infer<typeof ContentSchema>;
