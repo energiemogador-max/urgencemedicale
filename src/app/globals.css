@@ -16,6 +16,11 @@
   --color-primary-dark: #0a3b24;
   --color-call: #c81e2c;
   --color-call-dark: #a11722;
+  /* WhatsApp's own brand green — kept distinct from --color-primary so the
+     button is instantly recognizable as WhatsApp, the same way --color-call
+     is reserved so the call button stays unambiguous. */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-dark: #1da851;
   --color-border: #ddd6cc;
   --color-focus: #1d6fb8;
 

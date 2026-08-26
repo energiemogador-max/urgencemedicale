@@ -209,6 +209,8 @@ export const BusinessSchema = z.object({
   legalName: filledText("business legal name"),
   phoneDisplay: filledText("phone number (display format, e.g. 05 22 00 00 00)"),
   phoneHref: filledText("phone number (tel: href format, e.g. +212522000000)"),
+  /** Separate from phoneHref — the operator may route WhatsApp to a different line than the call number. */
+  whatsappNumber: filledText("WhatsApp number (e.g. +212600000000) — can be the same as phoneHref or a different line"),
   address: z.object({
     street: filledText("street address"),
     city: filledText("city"),

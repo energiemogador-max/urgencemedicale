@@ -19,7 +19,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr" className={`${inter.variable} ${sourceSerif.variable}`}>
       <body>
-        <StickyCallBar phoneDisplay={content.business.phoneDisplay} phoneHref={content.business.phoneHref} />
+        <StickyCallBar
+          phoneDisplay={content.business.phoneDisplay}
+          phoneHref={content.business.phoneHref}
+          whatsappNumber={content.business.whatsappNumber}
+        />
         {children}
       </body>
     </html>

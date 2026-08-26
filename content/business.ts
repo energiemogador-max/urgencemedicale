@@ -11,6 +11,7 @@ export const business: Business = {
   legalName: todo("registered legal/commercial name of the operator"),
   phoneDisplay: todo("phone number, display format, e.g. 05 22 00 00 00"),
   phoneHref: todo("phone number, tel: href format, e.g. +212522000000"),
+  whatsappNumber: todo("WhatsApp number, e.g. +212600000000 (can be the same as phoneHref or a different line)"),
   address: {
     street: todo("street address"),
     city: todo("city"),
