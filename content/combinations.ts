@@ -9,6 +9,8 @@ import type { CitySpecialty, SituationCity } from "./schema";
 import { cities } from "./geo";
 import { specialties } from "./specialties";
 import { situations } from "./situations";
+import { CITY_SPECIALTY_DRAFTS } from "./drafts/city-specialties";
+import { SITUATION_CITY_DRAFTS } from "./drafts/situation-cities";
 
 function cityName(slug: string): string {
   return cities.find((c) => c.slug === slug)?.name ?? slug;
@@ -27,16 +29,17 @@ function situationTitle(slug: string): string {
  * duplicate/thin content across 30 pages.
  */
 export const citySpecialties: CitySpecialty[] = SPECIALTY_ELIGIBLE_CITY_SLUGS.flatMap((citySlug) =>
-  SPECIALTY_SLUGS.map(
-    (specialtySlug): CitySpecialty => ({
+  SPECIALTY_SLUGS.map((specialtySlug): CitySpecialty => {
+    const draft = CITY_SPECIALTY_DRAFTS[`${citySlug}:${specialtySlug}`];
+    return {
       citySlug,
       specialtySlug,
-      intro: todo(
-        `${specialtyName(specialtySlug)} à domicile ${cityName(citySlug)} intro — 2-3 sentence answer-shaped opening`
-      ),
-      body: todo(`${specialtyName(specialtySlug)} à domicile ${cityName(citySlug)} unique body content`),
-    })
-  )
+      intro:
+        draft?.intro ??
+        todo(`${specialtyName(specialtySlug)} à domicile ${cityName(citySlug)} intro — 2-3 sentence answer-shaped opening`),
+      body: draft?.body ?? todo(`${specialtyName(specialtySlug)} à domicile ${cityName(citySlug)} unique body content`),
+    };
+  })
 );
 
 /**
@@ -44,12 +47,14 @@ export const citySpecialties: CitySpecialty[] = SPECIALTY_ELIGIBLE_CITY_SLUGS.fl
  * Same non-mail-merge requirement as above.
  */
 export const situationCities: SituationCity[] = GEO_MULTIPLIED_SITUATION_SLUGS.flatMap((situationSlug) =>
-  CITY_SLUGS.map(
-    (citySlug): SituationCity => ({
+  CITY_SLUGS.map((citySlug): SituationCity => {
+    const draft = SITUATION_CITY_DRAFTS[`${situationSlug}:${citySlug}`];
+    return {
       situationSlug,
       citySlug,
-      intro: todo(`${situationTitle(situationSlug)} ${cityName(citySlug)} intro — 2-3 sentence answer-shaped opening`),
-      body: todo(`${situationTitle(situationSlug)} ${cityName(citySlug)} unique body content`),
-    })
-  )
+      intro:
+        draft?.intro ?? todo(`${situationTitle(situationSlug)} ${cityName(citySlug)} intro — 2-3 sentence answer-shaped opening`),
+      body: draft?.body ?? todo(`${situationTitle(situationSlug)} ${cityName(citySlug)} unique body content`),
+    };
+  })
 );
