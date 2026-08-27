@@ -24,7 +24,9 @@ const sharp = require('sharp');
 
 | File | Used by |
 | --- | --- |
-| `logo.png` | Brand lockup — hero, header, footer (`public/images/logo-{420,840}.webp`) |
+| `logo.png` | Full brand lockup, mark + wordmark, transparent. Hero (`public/images/logo-{420,840}.webp`) |
+| `mark.png` | Just the mark, cropped out of `logo.png` and trimmed. Header (`public/images/mark-{96,192,288}.webp`) |
+| `mark-opaque-unused.png` | The mark as separately supplied — **no alpha channel, solid black background**, so it cannot sit on a light header. Superseded by `mark.png` above, which was extracted from the transparent lockup instead. Kept only for reference. |
 | `doctor.png` | Homepage hero photo (`public/images/doctor-{640,1000}.webp`). **Stock image**, confirmed by the operator — keep it away from the named-doctor credentials, and do not caption it as a specific person. |
 | `ambulance.png` | Liveried vehicle (`public/images/ambulance-{800,1200,1600}.webp`) |
 | `hero-reference.png` | The operator's hero mockup. Design reference only — never served. |

@@ -34,7 +34,7 @@ export default function HomePage() {
           srcSet: "/images/logo-420.webp 420w, /images/logo-840.webp 840w",
           width: 420,
           height: 161,
-          alt: business.legalName,
+          alt: `${business.legalName} — logo`,
         }}
         title="L'urgence médicale"
         titleAccent="à domicile,"

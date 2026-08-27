@@ -27,6 +27,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           phoneDisplay={business.phoneDisplay}
           phoneHref={business.phoneHref}
           whatsappNumber={business.whatsappNumber}
+          cities={cities}
+          specialties={specialties}
+          situations={situations}
         />
         <div className="flex-1">{children}</div>
         <SiteFooter
