@@ -31,5 +31,6 @@ export default async function Page({ params }: { params: Params }) {
   const city = getCityBySlug(citySlug);
   const quartier = city && getQuartierBySlug(city.slug, quartierSlug);
   if (!city || !quartier) notFound();
-  return <QuartierPage city={city} quartier={quartier} />;
+  const siblings = getQuartiersForCity(city.slug).filter((q) => q.slug !== quartier.slug);
+  return <QuartierPage city={city} quartier={quartier} siblings={siblings} />;
 }

@@ -1,33 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Color tokens ------------------------------------------------------
-   * Deep pharmacy-green as the structural/trust color (the green cross is
-   * the universal "medical help here" cue in Morocco/France) — deliberately
-   * not the generic SaaS blue every competitor's Elementor template uses.
-   * Red is reserved EXCLUSIVELY for the call CTA so it stays unambiguous —
-   * it never appears anywhere else on the site.
+  /* ---- Color -------------------------------------------------------------
+   * Deep pharmacy-green as the structural/trust color — the green cross is
+   * the universal "medical help here" cue in Morocco and France, and it is
+   * deliberately not the generic SaaS blue every competitor's Elementor
+   * template uses. Red is reserved EXCLUSIVELY for the call CTA so that one
+   * action stays unambiguous; it appears nowhere else on the site.
    */
-  --color-bg: #faf8f5;
+  --color-bg: #f7f4ee;
   --color-surface: #ffffff;
-  --color-ink: #14201c;
-  --color-ink-muted: #45534c;
-  --color-primary: #0f5132;
-  --color-primary-dark: #0a3b24;
+  --color-surface-2: #efeae1;
+  --color-ink: #101a16;
+  --color-ink-muted: #47554d;
+
+  --color-primary: #0c4a2c;
+  --color-primary-dark: #07331e;
+  --color-primary-tint: #dfeee5;
+  /* Lifted green used only on the dark hero panel, where the deep primary
+     would disappear against its own background. */
+  --color-primary-bright: #4ec08a;
+
   --color-call: #c81e2c;
   --color-call-dark: #a11722;
-  /* WhatsApp's own brand green — kept distinct from --color-primary so the
-     button is instantly recognizable as WhatsApp, the same way --color-call
-     is reserved so the call button stays unambiguous. */
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
-  --color-border: #ddd6cc;
+
+  --color-border: #ddd5c8;
   --color-focus: #1d6fb8;
 
-  /* ---- Type scale ----------------------------------------------------------
-   * 18px base (vs. the usual 16px) and no weight below 500 anywhere on the
-   * site — legible at arm's length by a stressed 60-year-old is the actual
-   * design brief, not a phone-screen density optimization.
+  /* ---- Type ---------------------------------------------------------------
+   * 18px base (not 16) and no weight below 500 anywhere: legibility at arm's
+   * length for a stressed reader is the brief, not screen density.
    */
   --font-size-xs: 0.875rem;
   --font-size-sm: 1rem;
@@ -35,8 +39,8 @@
   --font-size-lg: 1.375rem;
   --font-size-xl: 1.75rem;
   --font-size-2xl: 2.25rem;
-  --font-size-3xl: 3rem;
-  --font-size-4xl: 3.75rem;
+  --font-size-3xl: 2.75rem;
+  --font-size-4xl: 3.5rem;
 
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   --font-family-serif: var(--font-serif), ui-serif, Georgia, serif;
@@ -56,21 +60,94 @@ body {
   color: var(--color-ink);
   font-family: var(--font-family-sans);
   font-size: var(--font-size-base);
-  font-weight: 500; /* floor — nothing on this site renders lighter than medium */
-  line-height: 1.5;
+  font-weight: 500; /* floor — nothing renders lighter than medium */
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--font-family-serif);
+  text-wrap: balance;
+  letter-spacing: -0.015em;
 }
 
 a {
   color: var(--color-primary);
+  text-underline-offset: 0.18em;
 }
 
 :focus-visible {
   outline: 3px solid var(--color-focus);
   outline-offset: 2px;
+}
+
+/* ---- The cross motif -------------------------------------------------------
+ * The pharmacy cross is this subject's own symbol, so it carries the site's
+ * texture instead of a generic gradient. Used at very low contrast as a
+ * background weave on dark panels, and as the list marker in place of bullets.
+ */
+.cross-weave {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M28 12h8v16h16v8H36v16h-8V36H12v-8h16z' fill='%23ffffff' fill-opacity='0.045'/%3E%3C/svg%3E");
+  background-size: 64px 64px;
+}
+
+.cross-marker {
+  position: relative;
+  padding-left: 1.6rem;
+}
+.cross-marker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 0.7rem;
+  height: 0.7rem;
+  background-color: currentColor;
+  opacity: 0.85;
+  /* A plus/cross drawn with clip-path — no image request. */
+  clip-path: polygon(
+    40% 0%, 60% 0%, 60% 40%, 100% 40%, 100% 60%, 60% 60%,
+    60% 100%, 40% 100%, 40% 60%, 0% 60%, 0% 40%, 40% 40%
+  );
+}
+
+/* ---- Prose -----------------------------------------------------------------
+ * Body copy arrives from the content layer as plain text with blank lines
+ * between paragraphs; <Prose> splits it into real <p>. This sets the measure
+ * and rhythm.
+ */
+.prose-body > p {
+  max-width: 68ch;
+  margin-bottom: 1.15rem;
+}
+.prose-body > p:last-child {
+  margin-bottom: 0;
+}
+
+/* ---- Motion ----------------------------------------------------------------
+ * One restrained entrance on the hero only. An emergency service should feel
+ * immediate, so nothing else on the page animates, and everything is static
+ * for readers who ask for reduced motion.
+ */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
 }

@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { content } from "@/lib/content";
-import { inter, sourceSerif } from "./fonts";
+import { archivo, fraunces } from "./fonts";
 import { StickyCallBar } from "@/components/StickyCallBar";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,15 +18,26 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const { business, cities, specialties, situations } = content;
+
   return (
-    <html lang="fr" className={`${inter.variable} ${sourceSerif.variable}`}>
-      <body>
+    <html lang="fr" className={`${archivo.variable} ${fraunces.variable}`}>
+      <body className="flex min-h-full flex-col">
         <StickyCallBar
-          phoneDisplay={content.business.phoneDisplay}
-          phoneHref={content.business.phoneHref}
-          whatsappNumber={content.business.whatsappNumber}
+          phoneDisplay={business.phoneDisplay}
+          phoneHref={business.phoneHref}
+          whatsappNumber={business.whatsappNumber}
         />
-        {children}
+        <SiteHeader legalName={business.legalName} />
+        <div className="flex-1">{children}</div>
+        <SiteFooter
+          legalName={business.legalName}
+          address={business.address}
+          phoneDisplay={business.phoneDisplay}
+          cities={cities}
+          specialties={specialties}
+          situations={situations}
+        />
       </body>
     </html>
   );

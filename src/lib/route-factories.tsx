@@ -12,6 +12,7 @@ import {
   getCitiesForSituation,
   getCitiesForSpecialty,
   getCitySpecialty,
+  getQuartiersForCity,
   getSituationBySlug,
   getSituationCity,
   getSpecialtyBySlug,
@@ -48,7 +49,8 @@ export function SpecialtyHubRoute({ specialtySlug }: { specialtySlug: SpecialtyS
   const cities = getCitiesForSpecialty(specialtySlug)
     .map((cs) => getCityBySlug(cs.citySlug))
     .filter((c): c is NonNullable<typeof c> => Boolean(c));
-  return <SpecialtyHubPage specialty={specialty} cities={cities} />;
+  const otherSpecialties = content.specialties.filter((s) => s.slug !== specialtySlug);
+  return <SpecialtyHubPage specialty={specialty} cities={cities} otherSpecialties={otherSpecialties} />;
 }
 
 // ---- specialty x city spoke (/{specialty}-a-domicile/[city]) --------------
@@ -74,7 +76,15 @@ export function CitySpecialtyRoute({ specialtySlug, citySlug }: { specialtySlug:
   const city = getCityBySlug(citySlug);
   const cs = specialty && city ? getCitySpecialty(city.slug, specialty.slug) : undefined;
   if (!specialty || !city || !cs) notFound();
-  return <CitySpecialtyPage specialty={specialty} city={city} citySpecialty={cs} />;
+  return (
+    <CitySpecialtyPage
+      specialty={specialty}
+      city={city}
+      citySpecialty={cs}
+      quartiers={getQuartiersForCity(city.slug)}
+      otherSpecialties={content.specialties.filter((s) => s.slug !== specialtySlug)}
+    />
+  );
 }
 
 // ---- situation standalone (/{situation}) -----------------------------------
@@ -97,7 +107,8 @@ export function SituationRoute({ situationSlug }: { situationSlug: SituationSlug
         .map((sc) => getCityBySlug(sc.citySlug))
         .filter((c): c is NonNullable<typeof c> => Boolean(c))
     : [];
-  return <SituationPage situation={situation} cities={cities} />;
+  const otherSituations = content.situations.filter((s) => s.slug !== situationSlug);
+  return <SituationPage situation={situation} cities={cities} otherSituations={otherSituations} />;
 }
 
 // ---- situation x city spoke (/{situation}/[city], geo-multiplied only) ----
@@ -123,5 +134,13 @@ export function SituationCityRoute({ situationSlug, citySlug }: { situationSlug:
   const city = getCityBySlug(citySlug);
   const sc = situation && city ? getSituationCity(situation.slug, city.slug) : undefined;
   if (!situation || !city || !sc) notFound();
-  return <SituationCityPage situation={situation} city={city} situationCity={sc} />;
+  return (
+    <SituationCityPage
+      situation={situation}
+      city={city}
+      situationCity={sc}
+      quartiers={getQuartiersForCity(city.slug)}
+      otherSituations={content.situations.filter((s) => s.slug !== situationSlug)}
+    />
+  );
 }

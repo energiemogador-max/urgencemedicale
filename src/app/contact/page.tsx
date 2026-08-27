@@ -3,6 +3,10 @@ import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { TrustBlock } from "@/components/TrustBlock";
 import { JsonLd } from "@/components/JsonLd";
+import { CallButton } from "@/components/CallButton";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { Breadcrumbs, FactPill, Lead, Section } from "@/components/ui";
+import { toWhatsAppHref } from "@/lib/phone";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
 
 export function generateMetadata(): Metadata {
@@ -14,25 +18,47 @@ export function generateMetadata(): Metadata {
 }
 
 export default function Page() {
-  const { address } = content.business;
+  const { business } = content;
+  const { address } = business;
+
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
+    <main className="mx-auto max-w-5xl px-4 py-10">
       <JsonLd
         data={buildBreadcrumbList([
           { name: "Accueil", path: paths.home() },
           { name: "Contact", path: paths.contact() },
         ])}
       />
-      <h1 className="text-3xl font-bold text-ink">Contact</h1>
+      <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: "Contact" }]} />
+      <h1 className="mt-2 text-3xl font-bold text-ink">Contact</h1>
+      <Lead>
+        Le téléphone est le moyen le plus rapide de faire venir un médecin. Le délai et le tarif vous sont annoncés
+        pendant l&apos;appel.
+      </Lead>
       <TrustBlock {...getTrustBlockProps()} />
-      <address className="mt-8 not-italic">
-        {content.business.legalName}
-        <br />
-        {address.street}
-        <br />
-        {address.postalCode} {address.city}, {address.region}
-      </address>
-      <p className="mt-4">Disponible {content.business.hoursOpen}.</p>
+
+      <div className="mt-8 grid gap-3 sm:grid-cols-2">
+        <CallButton phoneDisplay={business.phoneDisplay} phoneHref={business.phoneHref} />
+        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} />
+      </div>
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+        <FactPill label="Disponibilité" value={business.hoursOpen} />
+        <FactPill label="Intervention" value={`${business.defaultResponseTimeMinutes} minutes`} />
+      </div>
+
+      <Section title="Adresse">
+        <address className="rounded-lg border border-border bg-surface p-5 not-italic">
+          <span className="block font-bold text-ink">{business.legalName}</span>
+          <span className="mt-1 block text-ink-muted">
+            {address.street}
+            <br />
+            {address.postalCode} {address.city}
+            <br />
+            {address.region}
+          </span>
+        </address>
+      </Section>
     </main>
   );
 }
