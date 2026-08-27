@@ -29,6 +29,14 @@ export default function HomePage() {
         badge={`Disponible ${business.hoursOpen}`}
         title="Un médecin chez vous, jour et nuit."
         lead={`Le médecin se déplace à votre domicile et vous appelle avant d'arriver. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite — jamais après.`}
+        image={{
+          src: "/images/ambulance-1200.webp",
+          srcSet:
+            "/images/ambulance-800.webp 800w, /images/ambulance-1200.webp 1200w, /images/ambulance-1600.webp 1586w",
+          width: 1200,
+          height: 751,
+          alt: `Véhicule d'intervention ${business.legalName}, équipé pour le transport médicalisé`,
+        }}
       />
       <TrustBlock {...getTrustBlockProps()} />
 
