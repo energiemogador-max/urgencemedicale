@@ -3,16 +3,22 @@
   "name": "urgencemedicale",
   "compatibility_date": "2026-08-26",
 
-  // Static-assets-only Worker: no "main" entry point, so Wrangler uploads the
-  // contents of ./out (produced by `next build` with output: "export") and
-  // serves them directly from Cloudflare's edge.
+  // The site is a static export; `worker/index.js` only exists to answer
+  // /api/track (Phase 7 conversion tracking) and forwards everything else to
+  // the assets binding untouched. See that file for why a Worker is needed at
+  // all — the conversion is a phone tap, which cookie-less analytics cannot
+  // observe.
   //
   // The presence of this file is also what stops `wrangler deploy` from
   // running its Next.js auto-config, which previously installed the OpenNext
   // adapter and then failed looking for .next/standalone SSR artifacts that a
   // static export never produces.
+  "main": "worker/index.js",
+
   "assets": {
     "directory": "./out",
+    // Exposes env.ASSETS so the Worker can serve the exported files.
+    "binding": "ASSETS",
     // Serve out/404.html for unmatched paths (Next's exported 404 page).
     "not_found_handling": "404-page"
   },

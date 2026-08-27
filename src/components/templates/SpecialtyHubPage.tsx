@@ -60,6 +60,9 @@ export function SpecialtyHubPage({
                   {d.name}
                 </Link>
                 <p className="mt-1.5 text-sm text-ink-muted">{d.bio}</p>
+                <p className="mt-1.5 text-sm text-ink-muted">
+                  <span className="font-semibold text-ink">Langues :</span> {d.languages.join(", ")}
+                </p>
               </li>
             ))}
           </ul>

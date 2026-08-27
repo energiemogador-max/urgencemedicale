@@ -49,6 +49,9 @@ export default function Page() {
                 )}
               </div>
               <p className="mt-3 max-w-[68ch] text-ink-muted">{d.bio}</p>
+              <p className="mt-2 text-sm text-ink-muted">
+                <span className="font-semibold text-ink">Langues :</span> {d.languages.join(", ")}
+              </p>
             </li>
           ))}
         </ul>

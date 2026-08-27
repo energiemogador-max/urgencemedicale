@@ -65,8 +65,8 @@ const QUARTIER_NAMES: { slug: string; name: string }[] = [
 ];
 
 /**
- * PREVIEW STATE (2026-08-27): responseTimeMinutes uses the operator's
- * citywide figure (3 min) for every quartier — real per-neighborhood numbers
+ * responseTimeMinutes uses the operator's citywide range (10 à 15 min) for
+ * every quartier — real per-neighborhood numbers
  * may differ once dispatch is live. nearestHospitals is NOT invented: a
  * visible "[À CONFIRMER]" marker stands in for each of the 19 quartiers
  * until real, verified facility names are supplied.
@@ -78,7 +78,7 @@ export const quartiers: Quartier[] = QUARTIER_NAMES.map(({ slug, name }) => {
     name,
     citySlug: "casablanca",
     intro: draft?.intro ?? todo(`${name} intro — 2-3 sentence answer-shaped opening for "médecin à domicile ${name}"`),
-    responseTimeMinutes: "3",
+    responseTimeMinutes: "10 à 15",
     landmarks: draft?.landmarks ?? [todo(`${name} landmarks/streets a local would recognise`)],
     nearestHospitals: ["[À CONFIRMER]"],
     accessNotes: draft?.accessNotes ?? todo(`${name} access specifics (traffic, gated residences, street layout)`),

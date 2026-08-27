@@ -48,6 +48,23 @@ function filledNumericString(label: string) {
   );
 }
 
+/**
+ * A response time, which may be a single figure ("15") or an honest range
+ * ("10 à 15"). It is interpolated into sentences as "Intervention en {v} min",
+ * so both read correctly.
+ *
+ * A range is allowed deliberately. The site previously published a flat
+ * 3-minute promise on every page — faster than any competitor in the market
+ * claims, and a delay nobody can hold across Casablanca traffic. An unmet
+ * promise on an emergency service costs more trust than a slower honest one.
+ */
+function filledResponseTime(label: string) {
+  return filledText(label).refine(
+    (v) => /^\d+( (à|-) ?\d+)?$/.test(v.trim()),
+    `${label}: must be a number ("15") or a range ("10 à 15")`
+  );
+}
+
 /** A string that must resolve to a plain (possibly negative, decimal) geographic coordinate. */
 function filledCoordinateString(label: string) {
   return filledText(label).refine(
@@ -147,7 +164,7 @@ export const QuartierSchema = z.object({
   /** Answer-shaped 2-3 sentence opening for the quartier page (the AEO layer). */
   intro: filledText("quartier intro — 2-3 sentence answer-shaped opening"),
   /** Business input: this city/quartier's committed response time, in minutes. */
-  responseTimeMinutes: filledNumericString("quartier response time (minutes)"),
+  responseTimeMinutes: filledResponseTime("quartier response time (minutes)"),
   /** Local-knowledge content, authored/verified in Phase 5 — never invented. */
   landmarks: z.array(filledText("landmark")).min(1, "at least one landmark is required"),
   nearestHospitals: z.array(filledText("nearest hospital")).min(1, "at least one nearest hospital is required"),
@@ -251,6 +268,17 @@ export const DoctorSchema = z.object({
   /** Ordre National des Médecins registration number — business input, never invented. */
   ordreNumber: filledText("Ordre National des Médecins number"),
   specialtySlug: SpecialtySlugEnum,
+  /**
+   * Languages the doctor consults in. This matters more here than almost
+   * anywhere: a home visit is a conversation, often with an anxious patient
+   * or an elderly relative, and whether the doctor can take that conversation
+   * in Arabic decides how well it goes. Not one competitor site publishes
+   * this — most do not name a doctor at all.
+   *
+   * Emitted as `knowsLanguage` on the Physician node, so it is machine
+   * readable as well as visible.
+   */
+  languages: z.array(filledText("language spoken")).min(1, "at least one language is required"),
   bio: filledText("doctor bio"),
   photo: z.string().optional(),
 });
@@ -288,7 +316,7 @@ export const BusinessSchema = z.object({
     lng: filledCoordinateString("business longitude"),
   }),
   /** Business input: the site-wide default response-time commitment, in minutes. */
-  defaultResponseTimeMinutes: filledNumericString("default response time (minutes)"),
+  defaultResponseTimeMinutes: filledResponseTime("default response time (minutes)"),
   hoursOpen: z.literal("24/7"),
 });
 export type Business = z.infer<typeof BusinessSchema>;

@@ -40,8 +40,10 @@
 # so a Phase 7 booking form doesn't fail silently. If that form posts to a
 # third party, its origin must be added here.
 #
-# Revisit if analytics are added in Phase 7 — a GA4 tag needs its domain in
-# script-src and connect-src.
+# Phase 7 analytics are Cloudflare Web Analytics, allow-listed above:
+# static.cloudflareinsights.com (the beacon script) and cloudflareinsights.com
+# (where it reports). Cookie-less, so no consent banner. The tap tracking
+# beacon posts to /api/track on this origin and needs no extra permission.
 # ---------------------------------------------------------------------------
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
@@ -49,7 +51,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 
 # ---------------------------------------------------------------------------
 # The OG image is a metadata route emitting a real PNG at an extensionless

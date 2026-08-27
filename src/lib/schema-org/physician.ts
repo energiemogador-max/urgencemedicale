@@ -5,6 +5,16 @@ import { SITE_URL } from "@/lib/site";
 import { SPECIALTY_TO_SCHEMA_ORG } from "./specialty-map";
 import { BUSINESS_ID } from "./business";
 
+/** Display name -> BCP-47, for the languages this practice actually lists. */
+const LANGUAGE_CODES: Record<string, string> = {
+  Arabe: "ar",
+  Français: "fr",
+  Anglais: "en",
+  Darija: "ary",
+  Espagnol: "es",
+  Amazigh: "zgh",
+};
+
 export function physicianId(doctor: Doctor): string {
   return `${SITE_URL}/nos-medecins#${doctor.slug}`;
 }
@@ -18,6 +28,13 @@ export function buildPhysician(doctor: Doctor): WithContext<PhysicianLeaf> {
     name: doctor.name,
     description: doctor.bio,
     medicalSpecialty: SPECIALTY_TO_SCHEMA_ORG[doctor.specialtySlug],
+    // BCP-47 alongside the display name so the value is unambiguous to a
+    // consumer that does not read French.
+    knowsLanguage: doctor.languages.map((name) => ({
+      "@type": "Language" as const,
+      name,
+      ...(LANGUAGE_CODES[name] ? { alternateName: LANGUAGE_CODES[name] } : {}),
+    })),
     // A Physician node is valid without `identifier`. Emitting the literal
     // "[À CONFIRMER]" marker would publish a structured, machine-readable
     // claim about a real licensed person that is simply false — far worse

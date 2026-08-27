@@ -5,6 +5,7 @@ import { content } from "@/lib/content";
 import { archivo } from "./fonts";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { CF_BEACON_TOKEN, TAP_TRACKING_SCRIPT, hasWebAnalytics } from "@/lib/analytics";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -62,6 +63,24 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           situations={situations}
           services={services}
         />
+
+        {/*
+          Phase 7 — conversion tracking. See src/lib/analytics.ts.
+
+          The tap tracker is inline and runs immediately rather than waiting
+          for hydration: a visitor who lands and taps the number straight away
+          is the most valuable one on the site, and deferring would miss
+          exactly them. It is plain DOM, no React, no bundle dependency.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: TAP_TRACKING_SCRIPT }} />
+
+        {hasWebAnalytics() && (
+          <script
+            defer
+            src="https://static.cloudflareinsights.com/beacon.min.js"
+            data-cf-beacon={JSON.stringify({ token: CF_BEACON_TOKEN })}
+          />
+        )}
       </body>
     </html>
   );
