@@ -27,6 +27,27 @@ import type { Service } from "./schema";
  */
 export const services: Service[] = [
   {
+    slug: "ambulance",
+    name: "Ambulance et transport médicalisé",
+    shortDescription: "Transport d'un patient par la route, vers ou depuis un établissement de santé.",
+    geoMultiplied: false,
+    intro:
+      "Une ambulance permet de transporter par la route une personne dont l'état ne permet pas de prendre un véhicule ordinaire — vers un hôpital ou une clinique, entre deux établissements, ou pour le retour au domicile. La demande se fait par téléphone.",
+    body: `On cherche une ambulance dans deux situations très différentes, et il vaut mieux les distinguer tout de suite.
+
+La première est l'urgence vitale : quelqu'un ne respire plus normalement, a perdu connaissance, saigne abondamment, ou vient d'avoir un accident. Dans ce cas, ce ne sont pas ces pages qu'il faut lire : il faut contacter immédiatement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation nécessaires. Aucun transport programmé ne remplace cela, et perdre cinq minutes à chercher un numéro privé est exactement ce qu'il ne faut pas faire.
+
+La seconde est le transport d'un patient dont l'état est connu et stable, mais qui ne peut pas se déplacer normalement : une personne âgée qui doit se rendre à un examen, un patient qui rentre chez lui après une hospitalisation, un transfert d'une clinique vers une autre pour un plateau technique dont elle ne dispose pas. C'est ce que couvre ce service. Le trajet se fait par la route, à l'intérieur du territoire marocain.
+
+Au moment de l'appel, on vous demande l'adresse ou l'établissement de départ, la destination exacte, l'état général de la personne, si elle peut marcher ou tenir assise, et les conditions d'accès aux deux extrémités. Ce dernier point compte plus qu'on ne le croit : un étage sans ascenseur, un escalier étroit, une rue où un véhicule ne peut pas s'arrêter changent complètement l'organisation du transport, et il vaut mieux le savoir avant de partir.
+
+Préparez les documents avant l'arrivée du véhicule : le courrier ou la convocation qui motive le déplacement, les comptes-rendus et examens déjà faits, la liste des traitements en cours, et la pièce d'identité du patient. L'établissement d'accueil les demandera, et leur absence coûte souvent plus de temps que le trajet lui-même. Quand il s'agit d'un transfert entre deux structures, assurez-vous aussi que celle qui reçoit a confirmé qu'elle peut prendre le patient.
+
+Un proche peut en général accompagner la personne transportée. C'est souvent souhaitable, en particulier pour quelqu'un d'âgé, désorienté ou anxieux à l'idée du déplacement — signalez-le en réservant plutôt qu'au moment du départ, pour que la place soit prévue.
+
+Pour un transport programmé — un examen à heure fixe, une sortie d'hospitalisation annoncée — réservez à l'avance : cela permet de caler le départ sur l'heure de rendez-vous et sur la circulation, qui reste un facteur réel à Casablanca comme sur les axes entre les grandes villes. Un transport non programmé reste possible, et le délai vous est annoncé au téléphone selon l'heure et la destination. Le tarif dépend de la distance et des conditions du transport ; il vous est communiqué avant le départ.`,
+  },
+  {
     slug: "soins-infirmiers-a-domicile",
     name: "Soins infirmiers à domicile",
     shortDescription: "Injections, pansements, perfusions et suivi infirmier réalisés chez vous.",

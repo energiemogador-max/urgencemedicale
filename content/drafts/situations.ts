@@ -12,6 +12,21 @@ import type { Situation } from "../schema";
  * temperature number or a red-flag symptom list.
  */
 export const SITUATION_DRAFTS: Partial<Record<Situation["slug"], Pick<Situation, "intro" | "body">>> = {
+  "medecin-de-garde": {
+    intro:
+      "Un médecin de garde est un docteur joignable en dehors des heures de cabinet — la nuit, le week-end, les jours fériés. Ici, il ne s'agit pas d'aller le consulter quelque part : il se déplace à votre domicile, 24h/24 et 7j/7.",
+    body: `Chercher un médecin de garde, c'est presque toujours chercher quelqu'un maintenant. Les cabinets sont fermés, la pharmacie de garde est loin, et le problème ne peut pas attendre le lendemain matin sans que la nuit devienne très longue. La question posée est simple : qui peut voir cette personne, et dans combien de temps.
+
+La réponse habituelle au Maroc est d'aller aux urgences d'un hôpital ou d'une clinique. C'est le bon réflexe quand la situation est grave, et il ne faut pas hésiter dans ce cas. Mais pour un grand nombre de motifs — une fièvre qui monte, une douleur qui empêche de dormir, un malaise chez une personne âgée, un enfant qui vomit — cela signifie habiller un malade, le faire descendre, traverser la ville et attendre. La visite d'un docteur à domicile évite ce déplacement, et l'examen se fait au calme, chez vous.
+
+Le médecin de garde qui se déplace fait le même travail qu'en cabinet : il interroge, il examine, et il décide. Selon ce qu'il constate, cela peut être un traitement remis sur place, une ordonnance, un certificat, ou l'orientation vers un service hospitalier lorsque l'état de la personne le justifie. C'est lui qui tranche, sur place, avec la personne devant lui — c'est précisément ce qu'un conseil au téléphone ne peut pas remplacer.
+
+En pratique, vous appelez et vous décrivez la situation : qui est malade, depuis quand, ce que vous observez. On vous indique le délai estimé et le tarif applicable avant que vous ne confirmiez, de sorte que rien ne se découvre au moment de payer. Le tarif de garde — nuit et jours fériés — est publié sur le site au même titre que celui de la journée, ce qui est rare dans ce secteur et volontaire ici.
+
+Donnez au téléphone l'adresse complète, l'étage, le code de la porte s'il y en a un et un numéro joignable. Cela paraît accessoire, mais c'est ce qui fait la différence entre un médecin qui arrive et un médecin qui cherche l'immeuble à deux heures du matin. Si un proche peut descendre ouvrir ou guider, dites-le également.
+
+Un point important : ce service ne remplace pas les secours d'urgence. Douleur violente dans la poitrine, difficulté à respirer, perte de connaissance, saignement important, suite d'un accident — dans ces cas, contactez immédiatement les services d'urgence plutôt que d'attendre une visite. Une garde à domicile est faite pour ce qui ne peut pas attendre demain, pas pour ce qui ne peut pas attendre dix minutes.`,
+  },
   "fievre-enfant-nuit": {
     intro:
       "Une fièvre qui grimpe chez un enfant en pleine nuit inquiète n'importe quel parent, surtout loin des horaires d'un cabinet. Un médecin généraliste ou pédiatre peut se déplacer à votre domicile pour l'examiner sur place, cette nuit même, sans attendre le lendemain.",

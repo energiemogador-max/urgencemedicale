@@ -91,6 +91,11 @@ const SERVICE_SPECIFIC_FAQ: Record<ServiceSlug, FaqEntry> = {
     answer:
       "Oui. Les soins infirmiers sont réalisés sur prescription médicale : l'ordonnance définit les actes à effectuer et leur fréquence. Si vous n'en avez pas, une consultation à domicile permet d'abord au médecin d'établir le traitement.",
   },
+  ambulance: {
+    question: "Faut-il appeler une ambulance privée ou les secours ?",
+    answer:
+      "S'il y a un doute sur la gravité — respiration difficile, perte de connaissance, douleur violente dans la poitrine, saignement important, accident — contactez immédiatement les services d'urgence : ils disposent des moyens de réanimation et de la priorité de circulation. Un transport privé s'adresse aux patients dont l'état est connu et stable et qui doivent être déplacés vers un examen, entre deux établissements, ou pour rentrer chez eux.",
+  },
   "oxygenotherapie-a-domicile": {
     question: "Faut-il fournir le matériel soi-même ?",
     answer:

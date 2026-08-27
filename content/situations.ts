@@ -4,6 +4,13 @@ import { SITUATION_DRAFTS } from "./drafts/situations";
 
 const SITUATION_META: { slug: Situation["slug"]; title: string; shortDescription: string; geoMultiplied: boolean }[] = [
   {
+    slug: "medecin-de-garde",
+    title: "Médecin de garde à domicile",
+    shortDescription:
+      "Un docteur de garde qui se déplace chez vous la nuit, le week-end et les jours fériés.",
+    geoMultiplied: true,
+  },
+  {
     slug: "fievre-enfant-nuit",
     title: "Fièvre chez l'enfant la nuit",
     shortDescription: "Faire venir un médecin à domicile pour examiner un enfant fiévreux, la nuit.",

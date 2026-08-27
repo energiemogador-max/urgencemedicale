@@ -89,6 +89,7 @@ export type SpecialtySlug = (typeof SPECIALTY_SLUGS)[number];
 export const SpecialtySlugEnum = z.enum(SPECIALTY_SLUGS);
 
 export const SITUATION_SLUGS = [
+  "medecin-de-garde",
   "fievre-enfant-nuit",
   "certificat-medical",
   "contre-visite-medicale",
@@ -101,6 +102,7 @@ export const SituationSlugEnum = z.enum(SITUATION_SLUGS);
 
 /** The 3 highest-intent situations, per Phase 2, also get geography variants. */
 export const GEO_MULTIPLIED_SITUATION_SLUGS: SituationSlug[] = [
+  "medecin-de-garde",
   "fievre-enfant-nuit",
   "prise-de-sang-domicile",
   "ecg-domicile",
@@ -180,6 +182,7 @@ export type Situation = z.infer<typeof SituationSchema>;
  * competing with their own hub.
  */
 export const SERVICE_SLUGS = [
+  "ambulance",
   "soins-infirmiers-a-domicile",
   "oxygenotherapie-a-domicile",
   "hospitalisation-a-domicile",
