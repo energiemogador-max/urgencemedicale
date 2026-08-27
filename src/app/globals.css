@@ -8,11 +8,15 @@
    * competitor's Elementor template uses. Red is reserved EXCLUSIVELY for the
    * call CTA so that one action stays unambiguous; it appears nowhere else.
    */
-  --color-bg: #f7f4ee;
+  /* Ground is a cool clinical off-white with a green undertone, not the warm
+     cream that pairs with a serif display in the most common AI-design
+     cluster. It also reads closer to a clinic than to a magazine, which is
+     the right association for a medical service. */
+  --color-bg: #e9efec;
   --color-surface: #ffffff;
-  --color-surface-2: #efeae1;
-  --color-ink: #101a16;
-  --color-ink-muted: #47554d;
+  --color-surface-2: #dde7e2;
+  --color-ink: #0d1a15;
+  --color-ink-muted: #46564f;
 
   --color-primary: #0c4a2c;
   --color-primary-dark: #07331e;

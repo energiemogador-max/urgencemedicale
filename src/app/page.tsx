@@ -6,7 +6,6 @@ import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Hero } from "@/components/Hero";
-import { CallButton } from "@/components/CallButton";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
 import { CardLink, FactPill, LinkGrid, Section } from "@/components/ui";
@@ -31,6 +30,9 @@ export default function HomePage() {
       <Hero
         badge={`Disponible ${business.hoursOpen}`}
         title="Un médecin chez vous, jour et nuit."
+        phoneDisplay={business.phoneDisplay}
+        phoneHref={business.phoneHref}
+        callLabel="Appelez maintenant"
         lead={`Le médecin se déplace à votre domicile et vous appelle avant d'arriver. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite — jamais après.`}
         image={{
           src: "/images/ambulance-1200.webp",
@@ -41,14 +43,7 @@ export default function HomePage() {
           alt: `Véhicule d'intervention ${business.legalName}, équipé pour le transport médicalisé`,
         }}
       >
-        <div className="flex flex-wrap gap-3">
-          <CallButton
-            phoneDisplay={business.phoneDisplay}
-            phoneHref={business.phoneHref}
-            className="shadow-lg"
-          />
-          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} />
-        </div>
+        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} className="w-full sm:w-auto" />
       </Hero>
       <TrustBlock {...getTrustBlockProps()} />
 
