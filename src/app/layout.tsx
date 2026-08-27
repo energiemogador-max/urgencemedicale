@@ -3,7 +3,6 @@ import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { content } from "@/lib/content";
 import { archivo, fraunces } from "./fonts";
-import { StickyCallBar } from "@/components/StickyCallBar";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
@@ -23,17 +22,18 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="fr" className={`${archivo.variable} ${fraunces.variable}`}>
       <body className="flex min-h-full flex-col">
-        <StickyCallBar
+        <SiteHeader
+          legalName={business.legalName}
           phoneDisplay={business.phoneDisplay}
           phoneHref={business.phoneHref}
           whatsappNumber={business.whatsappNumber}
         />
-        <SiteHeader legalName={business.legalName} />
         <div className="flex-1">{children}</div>
         <SiteFooter
           legalName={business.legalName}
           address={business.address}
           phoneDisplay={business.phoneDisplay}
+          hoursOpen={business.hoursOpen}
           cities={cities}
           specialties={specialties}
           situations={situations}

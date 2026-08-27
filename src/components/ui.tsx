@@ -2,26 +2,43 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { CrescentMark } from "@/components/CrescentMark";
 
-/** Page section with a serif heading and consistent vertical rhythm. */
+/**
+ * Page section with a serif heading and consistent vertical rhythm.
+ *
+ * `tone="panel"` puts the section on a tinted, inset surface. Long pages here
+ * stack many sections, and an unbroken run of white-cards-on-cream reads as
+ * one undifferentiated list — alternating the ground gives the page a
+ * rhythm to scan by without introducing another accent colour.
+ */
 export function Section({
   title,
   children,
   lead,
+  tone = "plain",
 }: {
   title: string;
   lead?: string;
+  tone?: "plain" | "panel";
   children: ReactNode;
 }) {
-  return (
-    <section className="mt-14">
+  const heading = (
+    <>
       <h2 className="flex items-center gap-2.5 text-xl font-bold text-ink">
         <CrescentMark className="h-4 w-4 shrink-0 text-primary" />
         {title}
       </h2>
       {lead && <p className="mt-1.5 max-w-[68ch] text-ink-muted">{lead}</p>}
       <div className="mt-5">{children}</div>
-    </section>
+    </>
   );
+
+  if (tone === "panel") {
+    return (
+      <section className="mt-14 rounded-2xl border border-border bg-surface-2 px-5 py-8 sm:px-8">{heading}</section>
+    );
+  }
+
+  return <section className="mt-14">{heading}</section>;
 }
 
 /**

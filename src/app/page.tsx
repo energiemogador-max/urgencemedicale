@@ -6,6 +6,9 @@ import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Hero } from "@/components/Hero";
+import { CallButton } from "@/components/CallButton";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CardLink, FactPill, LinkGrid, Section } from "@/components/ui";
 import { paths } from "@/lib/urls";
 import { homeFaqs } from "@/lib/faqs";
@@ -37,7 +40,16 @@ export default function HomePage() {
           height: 751,
           alt: `Véhicule d'intervention ${business.legalName}, équipé pour le transport médicalisé`,
         }}
-      />
+      >
+        <div className="flex flex-wrap gap-3">
+          <CallButton
+            phoneDisplay={business.phoneDisplay}
+            phoneHref={business.phoneHref}
+            className="shadow-lg"
+          />
+          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} />
+        </div>
+      </Hero>
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -50,6 +62,7 @@ export default function HomePage() {
       <Section
         title="Comment ça se passe"
         lead="Trois étapes, sans salle d'attente et sans mauvaise surprise sur le tarif."
+        tone="panel"
       >
         <ol className="grid gap-4 sm:grid-cols-3">
           {[
@@ -106,7 +119,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section title="Tarifs" lead="Publiés à l'avance, contrairement à l'usage du secteur.">
+      <Section title="Tarifs" lead="Publiés à l'avance, contrairement à l'usage du secteur." tone="panel">
         <div className="overflow-x-auto rounded-lg border border-border bg-surface">
           <table className="w-full border-collapse text-left">
             <thead className="border-b border-border">
