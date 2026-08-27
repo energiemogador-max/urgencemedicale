@@ -42,6 +42,8 @@ export function SiteHeader({
     "absolute left-0 top-full z-50 mt-1 min-w-[15rem] rounded-xl border border-border bg-surface p-2 shadow-xl";
   const itemClass = "block rounded-md px-3 py-1.5 text-sm text-ink no-underline hover:bg-primary-tint";
   const linkClass = "whitespace-nowrap rounded-md px-2.5 py-1.5 font-semibold text-primary no-underline hover:bg-primary-tint";
+  const mobileItemClass = "block rounded-md px-3 py-2.5 font-semibold text-primary no-underline hover:bg-primary-tint";
+  const mobileSubItemClass = "block rounded-md px-3 py-2 text-sm text-ink no-underline hover:bg-primary-tint";
 
   const chevron = (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 shrink-0">
@@ -70,7 +72,7 @@ export function SiteHeader({
               srcSet="/images/mark-96.webp 96w, /images/mark-192.webp 192w"
               sizes="44px"
               width={96}
-              height={85}
+              height={103}
               alt=""
               fetchPriority="high"
               decoding="sync"
@@ -106,16 +108,79 @@ export function SiteHeader({
         </div>
       </div>
 
+      {/*
+        Two navigations, one source of links.
+        - Mobile (< md): a single "Menu" disclosure. Eight top-level items
+          wrapping across three lines was unreadable on a phone.
+        - Desktop (>= md): the horizontal bar with dropdown panels.
+
+        Both are <details>, so navigation works with JavaScript disabled —
+        this is a static export and an emergency service, so the menu must
+        never depend on a bundle loading. Nested <details> in the mobile
+        panel keeps the initial list short instead of dumping 33 links.
+
+        Neither container may scroll horizontally: an `overflow-x: auto` box
+        whose `overflow-y` is `visible` computes overflow-y to `auto` too,
+        which silently clipped every dropdown to the height of the nav strip.
+      */}
       <nav aria-label="Navigation principale" className="border-b border-border bg-surface">
-        {/*
-          This container must NOT scroll horizontally. The dropdown panels
-          below are absolutely positioned children of it, and per CSS spec an
-          `overflow-x: auto` box whose `overflow-y` is `visible` computes
-          overflow-y to `auto` as well — which clipped every menu to the
-          height of the nav strip on mobile. Wrapping to a second line costs
-          a few pixels and keeps the menus openable.
-        */}
-        <div className="mx-auto max-w-5xl px-3">
+        {/* ---- mobile ---- */}
+        <details className="group/menu md:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-2.5 font-bold text-primary marker:content-none">
+            <span className="flex items-center gap-2">
+              <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+              </svg>
+              Menu
+            </span>
+            <span className="transition-transform group-open/menu:rotate-180">{chevron}</span>
+          </summary>
+
+          <div className="border-t border-border px-2 pb-3 pt-2">
+            <Link href={paths.home()} prefetch={false} className={mobileItemClass}>
+              Accueil
+            </Link>
+
+            {[
+              {
+                label: "Spécialités",
+                links: specialties.map((x) => ({ href: paths.specialtyHub(x.slug), label: `${x.name} à domicile` })),
+              },
+              { label: "Services", links: services.map((x) => ({ href: paths.service(x.slug), label: x.name })) },
+              { label: "Situations", links: situations.map((x) => ({ href: paths.situation(x.slug), label: x.title })) },
+              { label: "Villes", links: cities.map((x) => ({ href: paths.cityHub(x.slug), label: x.name })) },
+            ].map((group) => (
+              <details key={group.label} name="mobilenav" className="group/sub">
+                <summary
+                  className={`${mobileItemClass} flex cursor-pointer list-none items-center justify-between marker:content-none`}
+                >
+                  {group.label}
+                  <span className="transition-transform group-open/sub:rotate-180">{chevron}</span>
+                </summary>
+                <div className="mb-1 ml-3 grid gap-0.5 border-l border-border pl-3">
+                  {group.links.map((l) => (
+                    <Link key={l.href} href={l.href} prefetch={false} className={mobileSubItemClass}>
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            ))}
+
+            <Link href={paths.tarifs()} prefetch={false} className={mobileItemClass}>
+              Tarifs
+            </Link>
+            <Link href={paths.nosMedecins()} prefetch={false} className={mobileItemClass}>
+              Nos médecins
+            </Link>
+            <Link href={paths.contact()} prefetch={false} className={mobileItemClass}>
+              Contact
+            </Link>
+          </div>
+        </details>
+
+        {/* ---- desktop ---- */}
+        <div className="mx-auto hidden max-w-5xl px-3 md:block">
           <ul className="flex flex-wrap items-center gap-x-0.5 gap-y-1 py-1.5 text-sm">
             <li>
               <Link href={paths.home()} prefetch={false} className={linkClass}>
@@ -130,9 +195,9 @@ export function SiteHeader({
                   <span className="transition-transform group-open:rotate-180">{chevron}</span>
                 </summary>
                 <div className={panelClass}>
-                  {specialties.map((s) => (
-                    <Link key={s.slug} href={paths.specialtyHub(s.slug)} prefetch={false} className={itemClass}>
-                      {s.name} à domicile
+                  {specialties.map((x) => (
+                    <Link key={x.slug} href={paths.specialtyHub(x.slug)} prefetch={false} className={itemClass}>
+                      {x.name} à domicile
                     </Link>
                   ))}
                 </div>
@@ -146,9 +211,9 @@ export function SiteHeader({
                   <span className="transition-transform group-open:rotate-180">{chevron}</span>
                 </summary>
                 <div className={`${panelClass} grid grid-cols-2 gap-x-2`}>
-                  {cities.map((c) => (
-                    <Link key={c.slug} href={paths.cityHub(c.slug)} prefetch={false} className={itemClass}>
-                      {c.name}
+                  {cities.map((x) => (
+                    <Link key={x.slug} href={paths.cityHub(x.slug)} prefetch={false} className={itemClass}>
+                      {x.name}
                     </Link>
                   ))}
                 </div>
@@ -162,9 +227,9 @@ export function SiteHeader({
                   <span className="transition-transform group-open:rotate-180">{chevron}</span>
                 </summary>
                 <div className={panelClass}>
-                  {situations.map((s) => (
-                    <Link key={s.slug} href={paths.situation(s.slug)} prefetch={false} className={itemClass}>
-                      {s.title}
+                  {situations.map((x) => (
+                    <Link key={x.slug} href={paths.situation(x.slug)} prefetch={false} className={itemClass}>
+                      {x.title}
                     </Link>
                   ))}
                 </div>
@@ -178,9 +243,9 @@ export function SiteHeader({
                   <span className="transition-transform group-open:rotate-180">{chevron}</span>
                 </summary>
                 <div className={panelClass}>
-                  {services.map((s) => (
-                    <Link key={s.slug} href={paths.service(s.slug)} prefetch={false} className={itemClass}>
-                      {s.name}
+                  {services.map((x) => (
+                    <Link key={x.slug} href={paths.service(x.slug)} prefetch={false} className={itemClass}>
+                      {x.name}
                     </Link>
                   ))}
                 </div>

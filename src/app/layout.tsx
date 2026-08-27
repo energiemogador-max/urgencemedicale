@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { content } from "@/lib/content";
@@ -14,6 +14,22 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_NAME}`,
   },
   description: "Médecin à domicile au Maroc, 24h/24 et 7j/7.",
+};
+
+/**
+ * Declares the page as light-only at the document level.
+ *
+ * The CSS already sets `color-scheme: light` on :root, but that only applies
+ * once the stylesheet has loaded and parsed. Chrome on Android decides
+ * whether to apply its "Auto Dark Theme" — which algorithmically inverts
+ * pages that do not declare a scheme — earlier than that, and the result is
+ * text and background inverted inconsistently, i.e. copy that appears to
+ * share its background colour. This meta tag is read before CSS and opts out
+ * properly. The site has no dark palette, so `light` is the honest value.
+ */
+export const viewport: Viewport = {
+  colorScheme: "light",
+  themeColor: "#002454",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
