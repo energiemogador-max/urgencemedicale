@@ -107,8 +107,16 @@ export function SiteHeader({
       </div>
 
       <nav aria-label="Navigation principale" className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-5xl overflow-x-auto px-3">
-          <ul className="flex w-max items-center gap-0.5 py-1 text-sm">
+        {/*
+          This container must NOT scroll horizontally. The dropdown panels
+          below are absolutely positioned children of it, and per CSS spec an
+          `overflow-x: auto` box whose `overflow-y` is `visible` computes
+          overflow-y to `auto` as well — which clipped every menu to the
+          height of the nav strip on mobile. Wrapping to a second line costs
+          a few pixels and keeps the menus openable.
+        */}
+        <div className="mx-auto max-w-5xl px-3">
+          <ul className="flex flex-wrap items-center gap-x-0.5 gap-y-1 py-1.5 text-sm">
             <li>
               <Link href={paths.home()} prefetch={false} className={linkClass}>
                 Accueil

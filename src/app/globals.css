@@ -42,17 +42,43 @@
   --color-focus: #1d6fb8;
 
   /* ---- Type ---------------------------------------------------------------
-   * 18px base (not 16) and no weight below 500 anywhere: legibility at arm's
-   * length for a stressed reader is the brief, not screen density.
+   * The namespace here is `--text-*`, which is what Tailwind v4's `text-sm`,
+   * `text-3xl` … utilities actually read. An earlier revision defined this
+   * scale as `--font-size-*`, which Tailwind ignores entirely — so for the
+   * whole build so far the site silently rendered at Tailwind's stock sizes
+   * (text-xs 12px, text-sm 14px, text-3xl 30px) while this block looked
+   * authoritative. Only `--font-size-base` had any effect, because the `body`
+   * rule below references it directly in plain CSS rather than via a utility.
+   *
+   * Small sizes are raised to the brief's legibility floor: nothing renders
+   * below 14px, because 12px captions on a phone held at arm's length by
+   * someone worried about a sick child is the wrong trade.
+   *
+   * Headings are fluid so a long French title — "Soins infirmiers à domicile
+   * à Marrakech" — sets at a sane size on a 375px screen and still has
+   * presence on a desktop, without needing responsive classes on all 135
+   * template pages. The `--text-*--line-height` companions are Tailwind's
+   * paired convention; headings get tighter leading as they grow.
    */
-  --font-size-xs: 0.875rem;
-  --font-size-sm: 1rem;
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.4;
+  --text-sm: 1rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.125rem;
+  --text-base--line-height: 1.55;
+  --text-lg: clamp(1.2rem, 1.1rem + 0.5vw, 1.375rem);
+  --text-lg--line-height: 1.4;
+  --text-xl: clamp(1.35rem, 1.2rem + 0.75vw, 1.625rem);
+  --text-xl--line-height: 1.3;
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);
+  --text-2xl--line-height: 1.2;
+  --text-3xl: clamp(1.75rem, 1.4rem + 1.75vw, 2.25rem);
+  --text-3xl--line-height: 1.15;
+  --text-4xl: clamp(2rem, 1.6rem + 2.5vw, 2.75rem);
+  --text-4xl--line-height: 1.08;
+
+  /* Consumed by the `body` rule directly, not by a utility. */
   --font-size-base: 1.125rem;
-  --font-size-lg: 1.375rem;
-  --font-size-xl: 1.75rem;
-  --font-size-2xl: 2.25rem;
-  --font-size-3xl: 2.75rem;
-  --font-size-4xl: 3.5rem;
 
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   /* Display is the same family at heavy weight, matching the logo lettering. */

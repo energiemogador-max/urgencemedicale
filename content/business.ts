@@ -1,13 +1,16 @@
 import type { Business } from "./schema";
 
 /**
- * Site-wide business facts. PREVIEW STATE (2026-08-27): real values from the
- * operator for legalName/phone/address/response-time/city/region.
- * postalCode and geo coordinates are NOT confirmed — geo is a best-effort
- * neighborhood estimate for Hay Essalam, Casablanca (needs verification
- * against a real map before launch, since a wrong pin actively misleads a
- * home-visit dispatch). postalCode uses a visible "[À CONFIRMER]" marker
- * instead of a real value.
+ * Site-wide business facts. All operator-supplied except one:
+ *
+ * `geo.lat/lng` is still a best-effort estimate for the Hay Essalam
+ * neighbourhood, never checked against a map. It feeds the GeoCoordinates
+ * node in the site-wide MedicalBusiness JSON-LD, so a wrong pin actively
+ * misdirects a home-visit service. Replace it with the real coordinates.
+ *
+ * `defaultResponseTimeMinutes` is operator-supplied at 3 minutes and is
+ * published on every page. Competitors in this market advertise 10–20. It
+ * was flagged as an unusually aggressive promise and still stands unchanged.
  */
 export const business: Business = {
   legalName: "Urgence Médicale Casablanca",
@@ -18,7 +21,7 @@ export const business: Business = {
   address: {
     street: "Hay Essalam, GH 2, Imm 4",
     city: "Casablanca",
-    postalCode: "[À CONFIRMER]",
+    postalCode: "20260",
     region: "Casablanca-Settat",
   },
   // Approximate — Hay Essalam neighborhood, eastern Casablanca. Not verified

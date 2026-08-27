@@ -118,7 +118,7 @@ export function Hero({
           <div className="mt-8 flex flex-wrap items-center gap-4">
             <a
               href={`tel:${phoneHref}`}
-              className="flex items-center gap-3 rounded-2xl bg-primary px-5 py-3 no-underline shadow-lg transition-transform hover:-translate-y-0.5"
+              className="flex min-w-0 items-center gap-3 rounded-2xl bg-primary px-4 py-3 no-underline shadow-lg transition-transform hover:-translate-y-0.5 sm:px-5"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5 text-call">
@@ -155,7 +155,7 @@ export function Hero({
 
         {/* ---- Right: photo masked into the brand's curve ---- */}
         {image && (
-          <div className="relative min-h-[280px] lg:min-h-[520px]">
+          <div className="relative min-h-[220px] sm:min-h-[300px] lg:min-h-[520px]">
             <div className="absolute inset-0 overflow-hidden lg:[clip-path:ellipse(115%_130%_at_78%_50%)]">
               <div className="absolute inset-0 bg-gradient-to-b from-primary-tint to-surface-2" />
               {/* eslint-disable-next-line @next/next/no-img-element */}
