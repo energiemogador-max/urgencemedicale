@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
+export const dynamic = "force-static";
+
 /**
  * Phase 1 stub: only the homepage. Phase 2 replaces this with a sitemap
  * generated from the full content graph (cities, quartiers, specialties,
