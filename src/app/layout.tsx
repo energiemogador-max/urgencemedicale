@@ -29,7 +29,7 @@ export const metadata: Metadata = {
  * properly. The site has no dark palette, so `light` is the honest value.
  */
 export const viewport: Viewport = {
-  colorScheme: "light",
+  colorScheme: "only light",
   themeColor: "#002454",
 };
 

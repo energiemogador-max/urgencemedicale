@@ -88,7 +88,7 @@ export function Hero({
           <h1 className="mt-7 text-[clamp(1.9rem,5.2vw,3.1rem)] font-black uppercase leading-[1.02] tracking-tight text-primary">
             {title}
             <br />
-            <span className="text-call">{titleAccent}</span> {titleTail}
+            <span className="text-call-ink">{titleAccent}</span> {titleTail}
           </h1>
 
           <p className="mt-4 max-w-[46ch] text-ink-muted">{lead}</p>
@@ -106,7 +106,7 @@ export function Hero({
                   <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-primary">
                     {f.title}
                   </span>
-                  <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-call">
+                  <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-call-ink">
                     {f.emphasis}
                   </span>
                   <span className="mt-0.5 block text-xs text-ink-muted">{f.detail}</span>

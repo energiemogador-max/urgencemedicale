@@ -80,7 +80,7 @@ export function SiteHeader({
             />
             <span className="hidden leading-none sm:block">
               <span className="block text-base font-black uppercase tracking-tight text-primary">Urgence Médicale</span>
-              <span className="mt-0.5 block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-call">
+              <span className="mt-0.5 block text-[0.7rem] font-bold uppercase tracking-[0.18em] text-call-ink">
                 À domicile
               </span>
             </span>

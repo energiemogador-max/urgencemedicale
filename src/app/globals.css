@@ -35,6 +35,14 @@
 
   --color-call: #e20102;
   --color-call-dark: #a10000;
+  /* Red TEXT on the light grounds. The brand red is a fill colour: at
+   * #e20102 it measures 4.43:1 on the page ground and 4.02:1 on the panels,
+   * so any red text below 24px failed WCAG AA — the hero's proof pills and
+   * the header's "À domicile" line both did. This darker red clears AA on
+   * white, ground and panel (6.91 / 6.19 / 5.61) and still reads as the same
+   * brand colour. `--color-call` stays as-is for backgrounds and icons,
+   * where white-on-red is 4.95:1 and passes. */
+  --color-call-ink: #b80000;
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
 
@@ -86,7 +94,50 @@
 }
 
 :root {
-  color-scheme: light;
+  /* `only light` is a stronger signal than `light`: it tells the browser not
+   * to apply its own colour transformations at all. Plain `light` is advisory
+   * and Chrome's Auto Dark Theme has been observed overriding it. */
+  color-scheme: only light;
+}
+
+/*
+ * Chrome on Android applies "Auto Dark Theme" to any page that does NOT ship
+ * a dark theme of its own, and its algorithm lightens dark backgrounds while
+ * leaving already-light text light. On this site that hit exactly two blocks —
+ * the navy service strip on the homepage and the navy footer — turning white
+ * text on navy into white text on pale grey. Invisible, and only on mobile.
+ *
+ * Declaring a dark block is what makes Chrome stand down: the page now claims
+ * its own dark handling, so nothing is auto-transformed. The values below
+ * deliberately re-assert the light palette rather than inventing a dark one —
+ * this design is a single committed light identity (navy/red on a pale
+ * ground), and a half-considered dark variant would be worse than none.
+ * If a real dark theme is ever designed, it replaces this block.
+ */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #eef3f7;
+    --color-surface: #ffffff;
+    --color-surface-2: #dfe9f0;
+    --color-ink: #0b1c33;
+    --color-ink-muted: #47586e;
+    --color-primary: #002454;
+    --color-primary-dark: #00142e;
+    --color-primary-tint: #dce6f2;
+    --color-primary-bright: #7fb0e8;
+    --color-on-primary: #ffffff;
+    --color-on-primary-muted: #a9bdd4;
+    --color-on-primary-faint: #8ba1bd;
+    --color-call: #e20102;
+    --color-call-dark: #a10000;
+    --color-call-ink: #b80000;
+    --color-border: #c9d9e6;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+  }
 }
 
 /* `html` keeps a real height so body's `min-h-full` has a percentage to
