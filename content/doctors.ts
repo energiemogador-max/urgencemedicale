@@ -1,18 +1,20 @@
-import { todo } from "./schema";
 import type { Doctor } from "./schema";
 
 /**
- * Named, credentialed doctors (required for the full-operation model's
- * /nos-medecins, trust blocks, and Physician structured data). Name and Ordre
- * National des Médecins number are hard placeholders — never invented.
- * Add one entry per doctor; each field must be filled before the build passes.
+ * Named, credentialed doctors. PREVIEW STATE (2026-08-27): name is
+ * operator-supplied ("Docteur Seriani"). ordreNumber is NOT invented — it's a
+ * visible "[À CONFIRMER]" marker, since a fabricated Ordre National des
+ * Médecins number is a licensed-professional credential claim, not a
+ * cosmetic placeholder. Bio is kept to only what's actually known (name,
+ * that they see patients at home in Casablanca) — no invented years of
+ * experience, languages, or education.
  */
 export const doctors: Doctor[] = [
   {
-    slug: todo("doctor slug, e.g. dr-amina-bennani"),
-    name: todo("doctor full name"),
-    ordreNumber: todo("Ordre National des Médecins registration number"),
+    slug: "dr-seriani",
+    name: "Docteur Seriani",
+    ordreNumber: "[À CONFIRMER]",
     specialtySlug: "generaliste",
-    bio: todo("doctor bio — credentials, experience, languages"),
+    bio: "Le Docteur Seriani intervient à domicile à Casablanca.",
   },
 ];

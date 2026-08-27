@@ -1,27 +1,34 @@
-import { todo } from "./schema";
 import type { Business } from "./schema";
 
 /**
- * Site-wide business facts. Every field here is a hard placeholder — legal
- * name, phone, address and response-time commitment must come from the
- * operator and are never invented. Fill each `todo(...)` with the real value;
- * `npm run validate:content` (wired into `prebuild`) fails until you do.
+ * Site-wide business facts. PREVIEW STATE (2026-08-27): real values from the
+ * operator for legalName/phone/address/response-time/city/region.
+ * postalCode and geo coordinates are NOT confirmed — geo is a best-effort
+ * neighborhood estimate for Hay Essalam, Casablanca (needs verification
+ * against a real map before launch, since a wrong pin actively misleads a
+ * home-visit dispatch). postalCode uses a visible "[À CONFIRMER]" marker
+ * instead of a real value.
  */
 export const business: Business = {
-  legalName: todo("registered legal/commercial name of the operator"),
-  phoneDisplay: todo("phone number, display format, e.g. 05 22 00 00 00"),
-  phoneHref: todo("phone number, tel: href format, e.g. +212522000000"),
-  whatsappNumber: todo("WhatsApp number, e.g. +212600000000 (can be the same as phoneHref or a different line)"),
+  legalName: "Urgence Médicale Casablanca",
+  phoneDisplay: "06 01 99 12 96",
+  phoneHref: "+212601991296",
+  // Not separately provided — defaulting to the same number as the call line.
+  whatsappNumber: "+212601991296",
   address: {
-    street: todo("street address"),
-    city: todo("city"),
-    postalCode: todo("postal code"),
-    region: todo("region"),
+    street: "Hay Essalam, GH 2, Imm 4",
+    city: "Casablanca",
+    postalCode: "[À CONFIRMER]",
+    region: "Casablanca-Settat",
   },
+  // Approximate — Hay Essalam neighborhood, eastern Casablanca. Not verified
+  // against a real map; confirm before this goes live anywhere real.
   geo: {
-    lat: todo("business latitude, e.g. 33.589886"),
-    lng: todo("business longitude, e.g. -7.603869"),
+    lat: "33.596",
+    lng: "-7.546",
   },
-  defaultResponseTimeMinutes: todo("site-wide default response-time commitment, in minutes"),
+  // Operator-supplied: 3 minutes citywide. Flagged to the operator as an
+  // unusually aggressive claim worth double-checking before launch.
+  defaultResponseTimeMinutes: "3",
   hoursOpen: "24/7",
 };
