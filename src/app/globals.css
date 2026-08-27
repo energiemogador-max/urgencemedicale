@@ -63,8 +63,17 @@
   color-scheme: light;
 }
 
-html,
-body {
+/* `html` keeps a real height so body's `min-h-full` has a percentage to
+ * resolve against. `body` must NOT get `height: 100%`: it is a flex column
+ * (see layout.tsx), and a fixed-height flex container puts shrink pressure on
+ * its items. Items normally resist that because `min-height: auto` floors
+ * them at their content size — but per the flexbox spec that automatic
+ * minimum applies ONLY to items whose `overflow` is `visible`. The moment any
+ * item gets `overflow: hidden` its minimum becomes 0, and it collapses to
+ * nothing. That is exactly how the footer vanished when it gained
+ * `overflow-hidden`. Letting body size to its content removes the pressure at
+ * the source. */
+html {
   height: 100%;
 }
 

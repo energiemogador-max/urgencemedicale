@@ -24,6 +24,14 @@ import { paths } from "@/lib/urls";
  *    the solid `--color-on-primary*` tokens, which cannot fail that way and
  *    are pinned at 15.2:1 / 7.9:1 / 5.8:1 against the navy ground.
  *
+ * `shrink-0` is load-bearing, not decoration. As a flex item of the body
+ * column, this footer's `overflow-hidden` sets its automatic minimum height
+ * to 0 (the flexbox `min-height: auto` floor applies only to items with
+ * `overflow: visible`). Without `shrink-0` — or without body sizing to its
+ * content, which globals.css now also fixes — the footer collapses to zero
+ * height and disappears entirely. Both guards stay: either alone is enough,
+ * and the failure they prevent is silent.
+ *
  * It also carries the site's internal-link graph (Phase 8) — every city,
  * specialty, situation and service page is reachable from any page, which is
  * what lets the deeper spoke pages accumulate links.
@@ -55,7 +63,7 @@ export function SiteFooter({
   const headingClass = "text-sm font-bold uppercase tracking-[0.1em] text-primary-bright";
 
   return (
-    <footer className="relative mt-20 overflow-hidden bg-primary text-on-primary">
+    <footer className="relative mt-20 shrink-0 overflow-hidden bg-primary text-on-primary">
       {/* Brand red hairline — the one place the accent appears down here. */}
       <div aria-hidden="true" className="h-1 w-full bg-call" />
 
