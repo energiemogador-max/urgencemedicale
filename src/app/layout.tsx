@@ -10,10 +10,11 @@ import "./globals.css";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Médecin à domicile au Maroc`,
+    default: `${SITE_NAME} — Médecin à domicile à Casablanca et Rabat`,
     template: `%s | ${SITE_NAME}`,
   },
-  description: "Médecin à domicile au Maroc, 24h/24 et 7j/7.",
+  description:
+    "Médecin à domicile à Casablanca, Mohammedia, Bouskoura, Dar Bouazza et Rabat, 24h/24 et 7j/7.",
 };
 
 /**

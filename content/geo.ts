@@ -12,21 +12,20 @@ import { QUARTIER_DRAFTS } from "./drafts/quartiers";
 const CITY_NAMES: { slug: City["slug"]; name: string; region: string; lat: number; lng: number; hasQuartierPages: boolean }[] = [
   { slug: "casablanca", name: "Casablanca", region: "Casablanca-Settat", lat: 33.5731, lng: -7.5898, hasQuartierPages: true },
   { slug: "rabat", name: "Rabat", region: "Rabat-Salé-Kénitra", lat: 34.0209, lng: -6.8416, hasQuartierPages: false },
-  { slug: "marrakech", name: "Marrakech", region: "Marrakech-Safi", lat: 31.6295, lng: -7.9811, hasQuartierPages: false },
-  { slug: "tanger", name: "Tanger", region: "Tanger-Tétouan-Al Hoceïma", lat: 35.7595, lng: -5.834, hasQuartierPages: false },
-  { slug: "agadir", name: "Agadir", region: "Souss-Massa", lat: 30.4278, lng: -9.5981, hasQuartierPages: false },
-  { slug: "fes", name: "Fès", region: "Fès-Meknès", lat: 34.0331, lng: -5.0003, hasQuartierPages: false },
-  { slug: "sale", name: "Salé", region: "Rabat-Salé-Kénitra", lat: 34.0531, lng: -6.7985, hasQuartierPages: false },
-  { slug: "temara", name: "Témara", region: "Rabat-Salé-Kénitra", lat: 33.9287, lng: -6.9061, hasQuartierPages: false },
   { slug: "mohammedia", name: "Mohammedia", region: "Casablanca-Settat", lat: 33.6863, lng: -7.383, hasQuartierPages: false },
-  { slug: "kenitra", name: "Kénitra", region: "Rabat-Salé-Kénitra", lat: 34.261, lng: -6.5802, hasQuartierPages: false },
-  { slug: "tetouan", name: "Tétouan", region: "Tanger-Tétouan-Al Hoceïma", lat: 35.5785, lng: -5.3684, hasQuartierPages: false },
-  { slug: "oujda", name: "Oujda", region: "Oriental", lat: 34.6805, lng: -1.9086, hasQuartierPages: false },
-  { slug: "meknes", name: "Meknès", region: "Fès-Meknès", lat: 33.8935, lng: -5.5473, hasQuartierPages: false },
-  { slug: "el-jadida", name: "El Jadida", region: "Casablanca-Settat", lat: 33.2316, lng: -8.5007, hasQuartierPages: false },
   { slug: "bouskoura", name: "Bouskoura", region: "Casablanca-Settat", lat: 33.4425, lng: -7.6564, hasQuartierPages: false },
   { slug: "dar-bouazza", name: "Dar Bouazza", region: "Casablanca-Settat", lat: 33.5333, lng: -7.7833, hasQuartierPages: false },
 ];
+/**
+ * Cities no longer served (operator, 2026-08-27): Marrakech, Tanger, Agadir,
+ * Fès, Salé, Témara, Kénitra, Tétouan, Oujda, Meknès, El Jadida.
+ *
+ * Their written page content is still in content/drafts/ — nothing was
+ * deleted. Restoring one means adding its slug back to CITY_SLUGS in
+ * schema.ts and its row to CITY_NAMES above; the drafts are picked up
+ * automatically and the build gates report anything still missing.
+ */
+
 
 export const cities: City[] = CITY_NAMES.map((c) => {
   const draft = CITY_DRAFTS[c.slug];

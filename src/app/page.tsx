@@ -17,12 +17,21 @@ import { pageMetadata } from "@/lib/seo";
 import { SITE_DOMAIN } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
-  return pageMetadata({ title: "Médecin à domicile au Maroc, 24h/24 et 7j/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
+  return pageMetadata({ title: "Médecin à domicile à Casablanca et Rabat, 24h/24 et 7j/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
 }
 
 export default function HomePage() {
   const { business, specialties, situations, services, cities, pricing } = content;
   const casablancaQuartiers = getQuartiersForCity("casablanca");
+
+  /**
+   * Coverage text is derived from the served-city list, never hardcoded. The
+   * hero card read "Partout au Maroc" while the site listed 16 cities, and
+   * would have gone on saying it after the area was cut to 5 — the kind of
+   * claim that quietly becomes false when data changes underneath it.
+   */
+  const coverageTitle = `${cities.length} villes couvertes`;
+  const coverageNote = cities.map((c) => c.name).join(", ");
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
@@ -51,8 +60,8 @@ export default function HomePage() {
           { title: "Soins", emphasis: "À domicile", detail: "Confort & sécurité", icon: "home" },
           { title: "Service", emphasis: "Fiable", detail: "Tarif annoncé d'avance", icon: "shield" },
         ]}
-        coverageTitle="Partout au Maroc"
-        coverageNote="Nous sommes là pour vous."
+        coverageTitle={coverageTitle}
+        coverageNote={coverageNote}
         image={{
           src: "/images/doctor-640.webp",
           srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
