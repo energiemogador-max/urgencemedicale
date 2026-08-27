@@ -35,6 +35,8 @@ Rabat est bâtie à l'embouchure du fleuve Bouregreg, qui la sépare de Salé, s
 
 La circulation à Rabat reste, dans l'ensemble, plus fluide qu'à Casablanca, même si certains axes autour du centre-ville et des ministères peuvent ralentir en journée. Les quartiers résidentiels excentrés, souvent pavillonnaires, sont en général d'accès plus simple qu'un immeuble dense du centre, ce qui facilite l'arrivée du médecin en soirée ou la nuit.
 
+Rabat compte plusieurs quartiers bien identifiés, comme l'Agdal, Hassan, Yacoub El Mansour ou Souissi, chacun avec son propre profil résidentiel : immeubles d'habitation dans certains secteurs, villas et résidences plus spacieuses dans d'autres. Le service s'adresse à toute personne installée dans l'un de ces quartiers ou dans les zones plus périphériques de l'agglomération, qu'il s'agisse d'un résident de longue date, d'un fonctionnaire récemment muté dans la capitale, ou d'un membre de la communauté diplomatique nombreuse à Rabat.
+
 Le médecin qui se déplace jusqu'à vous à Rabat est, dans tous les cas, inscrit à l'Ordre National des Médecins. Il confirme l'adresse par téléphone avant de partir, et communique le tarif de la visite dès cet appel — vous savez donc à quoi vous attendre avant même qu'il ne se mette en route.`,
   },
 
@@ -46,6 +48,8 @@ Le médecin qui se déplace jusqu'à vous à Rabat est, dans tous les cas, inscr
 La médina de Marrakech, avec ses ruelles étroites, largement piétonnes et souvent impraticables en voiture, représente une contrainte d'accès réelle qu'il ne sert à rien de minimiser. Pour une adresse à l'intérieur des remparts, le médecin peut avoir besoin de se garer à distance et de terminer le trajet à pied ; il est donc utile de préciser un repère proche de votre porte — une place, un riad connu, une entrée particulière — lors de l'appel.
 
 En dehors de la médina, les quartiers plus récents de Marrakech se prêtent à un accès en voiture plus direct, avec des rues plus larges et une circulation qui reste, en dehors des grands axes touristiques et des périodes de forte affluence, raisonnable. Le médecin adapte son estimation de délai selon que votre adresse se trouve dans l'enceinte historique ou en dehors.
+
+Marrakech attire aussi une importante communauté de résidents étrangers, propriétaires de riads en médina ou de villas dans les quartiers périphériques, qui font régulièrement appel à des services médicaux en dehors des horaires classiques de cabinet. Ce profil de patientèle s'ajoute aux familles marocaines installées de longue date dans la ville, qu'elles résident en centre-ville ou dans des quartiers plus récents comme Targa ou Massira.
 
 Que votre adresse se trouve en médina ou en ville nouvelle, le médecin qui intervient à Marrakech reste inscrit à l'Ordre National des Médecins. Le tarif de la visite est communiqué au moment de l'appel, avant que vous ne confirmiez le rendez-vous, et il vous recontacte avant d'arriver pour préciser l'accès.`,
   },
@@ -59,6 +63,8 @@ La ville est construite sur un relief vallonné, avec des rues en pente autour d
 
 Comme dans toute ville portuaire en forte croissance, certains axes de Tanger peuvent être chargés aux heures de pointe, en particulier autour du centre-ville et des voies reliant les nouveaux quartiers aux grands boulevards. Le médecin en tient compte pour ajuster le délai annoncé lors de l'appel, et privilégie souvent un trajet différent la nuit, quand la circulation se libère.
 
+La croissance économique de Tanger, portée par l'industrie automobile et le secteur logistique installés autour du port, a attiré ces dernières années de nombreux salariés et leurs familles, souvent nouvellement installés en ville et sans médecin traitant encore identifié. Pour ces foyers comme pour les résidents de longue date, le service couvre l'ensemble des quartiers de la ville, du centre historique aux zones résidentielles les plus récentes.
+
 Dans tous les quartiers de Tanger, le médecin qui se déplace est inscrit à l'Ordre National des Médecins. Il vous appelle avant d'arriver pour confirmer l'adresse, et annonce le tarif de la visite dès cet échange, avant que vous ne confirmiez quoi que ce soit.`,
   },
 
@@ -70,6 +76,8 @@ Dans tous les quartiers de Tanger, le médecin qui se déplace est inscrit à l'
 Cette configuration facilite en général l'accès en voiture jusqu'au pied des immeubles, y compris dans les quartiers construits plus récemment. L'économie de la ville reste très marquée par le tourisme balnéaire, avec une forte concentration de résidences et d'hôtels le long de la corniche, et des quartiers résidentiels qui s'étendent vers l'intérieur des terres.
 
 La circulation à Agadir reste, la plupart du temps, plus fluide que dans les grandes métropoles du pays, même si les abords du front de mer et des zones touristiques peuvent se charger en haute saison ou lors d'événements ponctuels. Le médecin ajuste son délai d'arrivée en fonction de la période et du quartier concerné.
+
+Agadir accueille aussi une population importante de retraités, marocains et étrangers, installés à l'année ou une partie de l'année dans la région, notamment autour de quartiers comme Founty ou la Vallée des Oiseaux. Pour ces résidents comme pour les visiteurs de passage, le service permet d'obtenir une consultation sans devoir localiser soi-même un cabinet dans une ville qu'ils ne connaissent pas toujours bien, ou sans pouvoir facilement s'y déplacer. Beaucoup de ces résidents étrangers passent l'hiver au Maroc et n'ont pas de médecin traitant sur place, ce qui rend un service disponible à toute heure d'autant plus utile pour eux.
 
 Que vous habitiez un quartier résidentiel ou une zone plus touristique d'Agadir, le médecin qui se déplace est inscrit à l'Ordre National des Médecins. Le tarif est communiqué dès l'appel, avant toute confirmation, et il vous recontacte juste avant d'arriver pour confirmer l'adresse.`,
   },
@@ -83,6 +91,8 @@ Pour une adresse à l'intérieur de la médina, le médecin ne peut généraleme
 
 En dehors de la médina, Fès dispose d'une ville nouvelle et de quartiers plus récents où l'accès en voiture est direct, comme dans la plupart des villes marocaines. Le médecin adapte donc son estimation de délai selon que votre adresse se trouve dans l'enceinte historique ou dans un quartier plus moderne de la ville.
 
+Fès est aussi une ville universitaire et un centre religieux et artisanal important, avec une population étudiante nombreuse installée notamment autour de la ville nouvelle. Les familles de la médina, souvent implantées depuis plusieurs générations, côtoient des habitants plus récemment installés dans des quartiers périphériques comme Zouagha ou Ain Kadous. Le service couvre l'ensemble de ces profils, qu'il s'agisse d'une famille de la médina, d'un étudiant logé en ville nouvelle ou d'un résident d'un quartier plus excentré.
+
 Que votre adresse soit en médina ou en ville nouvelle, le médecin qui intervient à Fès est inscrit à l'Ordre National des Médecins. Il précise l'accès avec vous au téléphone avant de partir, et le tarif de la visite est annoncé dès cet appel.`,
   },
 
@@ -94,6 +104,8 @@ Que votre adresse soit en médina ou en ville nouvelle, le médecin qui intervie
 La ville s'est beaucoup développée ces dernières décennies, avec de nouveaux quartiers résidentiels qui s'étendent loin de la médina et du centre historique. Le médecin adapte son trajet selon que votre adresse se trouve dans le tissu ancien, aux rues plus étroites, ou dans un quartier récent aux voies plus larges et plus directes.
 
 Les liaisons entre Salé et Rabat, notamment les ponts sur le Bouregreg et la ligne de tramway reliant les deux villes, peuvent connaître des ralentissements aux heures de pointe. Le médecin en tient compte lorsqu'il estime le délai d'arrivée pour une adresse à Salé, en particulier en fin de journée.
+
+Salé a connu une croissance démographique importante ces dernières décennies, portée notamment par de nouveaux quartiers comme Salé Al Jadida, qui accueillent une population nombreuse de familles à la recherche de logements plus accessibles qu'à Rabat. Cette croissance rapide s'accompagne d'une diversité de profils de logement, entre médina ancienne, quartiers d'habitat plus anciens et résidences récentes, chacun avec ses propres contraintes d'accès pour un médecin en visite. Beaucoup de familles installées dans ces nouveaux quartiers travaillent à Rabat et rentrent tard le soir, ce qui rend une consultation en soirée ou de nuit particulièrement utile pour elles.
 
 Le médecin qui vient chez vous à Salé est, comme partout ailleurs, inscrit à l'Ordre National des Médecins. Un appel avant son arrivée permet de confirmer l'adresse, et le tarif de la visite est communiqué dès cet échange, avant que le rendez-vous ne soit confirmé.`,
   },
@@ -107,6 +119,8 @@ La ville dispose aussi d'une façade littorale, avec des quartiers proches de la
 
 Le trafic entre Témara et Rabat peut se charger aux heures où les habitants font la navette vers la capitale, notamment le matin et en fin de journée. Le médecin ajuste son estimation de délai en fonction de ces pics de circulation et du quartier concerné, en privilégiant si besoin un autre itinéraire.
 
+La population de Témara est en grande partie composée de jeunes familles et de fonctionnaires qui ont choisi la ville pour des logements plus accessibles qu'à Rabat, tout en restant à proximité de la capitale. Cette population, souvent installée assez récemment, n'a pas toujours de médecin traitant déjà identifié sur place, ce qui rend un service de visite à domicile particulièrement utile en dehors des horaires classiques de cabinet. La ville continue de s'étendre vers le sud, avec de nouveaux quartiers résidentiels qui s'ajoutent régulièrement à ceux déjà établis le long de la route côtière et vers l'intérieur des terres.
+
 Où que vous soyez à Témara, le médecin qui se déplace jusqu'à vous est inscrit à l'Ordre National des Médecins. Il confirme l'adresse par téléphone avant d'arriver, et le tarif de la visite est annoncé dès l'appel, avant toute confirmation de rendez-vous.`,
   },
 
@@ -118,6 +132,8 @@ Où que vous soyez à Témara, le médecin qui se déplace jusqu'à vous est ins
 La taille de Mohammedia reste modeste comparée à Casablanca, ce qui se traduit par une circulation généralement plus fluide, y compris aux heures où les grands axes casablancais sont chargés. Les quartiers résidentiels sont pour la plupart d'accès direct en voiture, ce qui facilite les trajets du médecin à toute heure du jour ou de la nuit.
 
 Mohammedia attire une population plus nombreuse le week-end et en été, du fait de sa plage et de sa marina, ce qui peut ponctuellement densifier la circulation près du front de mer. Le médecin en tient compte pour ajuster son délai d'arrivée selon la période et le quartier de destination.
+
+Beaucoup d'habitants de Mohammedia travaillent dans l'industrie locale, notamment autour de la raffinerie et du port, ou font la navette vers Casablanca pour leur emploi, ce qui donne à la ville un profil résidentiel stable, avec des familles souvent installées depuis plusieurs années. Le service s'adresse aussi bien à ces résidents de longue date qu'aux nouveaux arrivants attirés par le cadre de vie plus calme de la ville, à quelques minutes seulement de Casablanca et de son agitation.
 
 Le médecin qui se déplace à Mohammedia est, dans tous les cas, inscrit à l'Ordre National des Médecins. Il vous appelle avant d'arriver pour confirmer l'adresse, et communique le tarif de la visite dès cet appel, avant que vous ne confirmiez le rendez-vous.`,
   },
@@ -131,6 +147,8 @@ Cette croissance rapide se traduit par un tissu urbain en évolution constante, 
 
 La région de Kénitra inclut aussi la zone de la plage de Mehdia, à l'embouchure du Sebou, qui attire une population plus importante en période estivale. Le médecin en tient compte pour ajuster son délai d'arrivée selon la période de l'année et le secteur concerné.
 
+Kénitra abrite également une importante base militaire et une zone industrielle en expansion, qui ont attiré ces dernières années de nombreuses familles venues d'autres régions du pays pour y travailler. Ces nouveaux arrivants, comme les habitants installés de longue date dans les quartiers plus anciens de la ville, peuvent faire appel au service sans distinction, à toute heure du jour ou de la nuit. La ville continue de croître rapidement, avec de nouveaux lotissements qui apparaissent chaque année en périphérie, parfois desservis par des routes encore en construction, ce dont le médecin tient compte pour organiser son trajet et estimer un délai réaliste. Que vous soyez installé de longue date ou récemment arrivé à Kénitra pour le travail, le service reste accessible de la même manière, à toute heure du jour ou de la nuit.
+
 Le médecin qui intervient à Kénitra est inscrit à l'Ordre National des Médecins, quel que soit votre quartier. Un appel avant son arrivée permet de confirmer l'adresse, et le tarif de la visite est communiqué dès cet échange, avant toute confirmation.`,
   },
 
@@ -142,6 +160,8 @@ Le médecin qui intervient à Kénitra est inscrit à l'Ordre National des Méde
 Comme dans les autres médinas historiques du Maroc, les ruelles du centre ancien de Tétouan sont étroites et largement inaccessibles en voiture. Pour une adresse située dans ce périmètre, le médecin peut avoir besoin de se garer à proximité et de terminer le trajet à pied, ce qui rend utile un repère précis donné au téléphone au moment de l'appel.
 
 En dehors de la médina, Tétouan dispose de quartiers plus récents à l'urbanisme plus classique, avec un accès direct en voiture, ainsi que d'une proximité avec des plages comme celle de Martil qui attirent du monde en été. Le médecin adapte son délai selon le secteur concerné et la période de l'année.
+
+Tétouan entretient des liens historiques et familiaux étroits avec l'Espagne toute proche, et une partie de sa population partage son temps entre les deux rives du détroit ou reçoit régulièrement des proches venus d'Europe. Cette proximité avec Tanger et la côte méditerranéenne donne à la ville un profil résidentiel varié, entre familles installées de longue date et habitants plus récemment arrivés dans les quartiers en expansion. Le service reste disponible pour tous ces profils, à toute heure, y compris pour les visiteurs de passage qui ne connaissent pas encore la ville.
 
 Que votre adresse soit en médina ou dans un quartier plus récent, le médecin qui intervient à Tétouan reste inscrit à l'Ordre National des Médecins. Il précise l'accès avec vous par téléphone avant de partir, et le tarif est annoncé dès cet appel.`,
   },
@@ -155,6 +175,8 @@ Le climat continental de la région, plus sec et plus contrasté que sur le litt
 
 La ville reste néanmoins étendue, et les distances entre certains quartiers périphériques et le centre peuvent représenter un trajet non négligeable. Le médecin en tient compte dans son estimation de délai selon le secteur de la ville où vous résidez, et privilégie les itinéraires les plus directs.
 
+Oujda est, plus que les autres villes couvertes par ce service, relativement isolée des autres grands centres urbains du pays, ce qui en fait un pôle médical et administratif de référence pour toute la région de l'Oriental. Une partie de sa population vit dans des quartiers résidentiels construits ces dernières décennies, tandis que le centre ancien conserve un tissu urbain plus dense, hérité de son passé de ville-étape. Cette position de pôle régional signifie aussi que des habitants de villes plus petites de l'Oriental se tournent parfois vers Oujda pour un avis médical, y compris en dehors des horaires de cabinet.
+
 Le médecin qui se déplace à Oujda est inscrit à l'Ordre National des Médecins, dans tous les quartiers de la ville. Il vous appelle avant d'arriver pour confirmer l'adresse, et le tarif de la visite est communiqué dès cet appel, avant toute confirmation de rendez-vous.`,
   },
 
@@ -166,6 +188,8 @@ Le médecin qui se déplace à Oujda est inscrit à l'Ordre National des Médeci
 La médina de Meknès, comme les autres médinas historiques du pays, comporte des ruelles étroites peu ou pas accessibles en voiture, en particulier autour de ses monuments et de ses places anciennes. Pour une adresse dans ce périmètre, le médecin peut devoir se garer à proximité et terminer le trajet à pied, comme c'est le cas dans la plupart des centres historiques marocains.
 
 En dehors de la médina, Meknès dispose d'une ville nouvelle et de quartiers résidentiels plus récents où la circulation reste, dans l'ensemble, plus fluide que dans une grande métropole comme Casablanca ou même Fès. Le médecin adapte son estimation de délai selon le secteur concerné et le moment de la journée.
+
+La région autour de Meknès est l'une des plus importantes zones viticoles et oléicoles du Maroc, ce qui donne à la ville et ses environs un caractère plus rural que ses voisines Fès ou Casablanca. Une partie de la population de Meknès reste liée à cette activité agricole, tandis que la ville elle-même conserve un rythme urbain calme, propice à des délais d'intervention réguliers d'un quartier à l'autre. Les familles des environs agricoles de Meknès, parfois éloignées d'un cabinet, peuvent aussi faire appel à ce service lorsqu'un déplacement en ville n'est pas envisageable.
 
 Le médecin qui intervient à Meknès, en médina comme en ville nouvelle, est inscrit à l'Ordre National des Médecins. Il confirme l'accès avec vous par téléphone avant de partir, et le tarif est annoncé dès cet échange, avant que vous ne confirmiez le rendez-vous.`,
   },
@@ -179,6 +203,8 @@ Les ruelles à l'intérieur des remparts de la Cité Portugaise sont étroites, 
 
 El Jadida attire une population plus nombreuse en été, du fait de ses plages appréciées des visiteurs de la région de Casablanca, ce qui peut ponctuellement densifier la circulation près du front de mer et du centre-ville. Le médecin ajuste son délai d'arrivée selon la période et le quartier concerné.
 
+De nombreux habitants de Casablanca possèdent une résidence secondaire à El Jadida ou y passent régulièrement leurs week-ends, ce qui donne à la ville une population qui varie fortement selon la saison. Le service reste disponible toute l'année pour les résidents permanents comme pour les visiteurs temporaires, quel que soit le quartier de la ville où ils se trouvent, y compris ceux qui ne connaissent pas encore bien la ville et ses différents secteurs résidentiels. Le médecin s'oriente lui-même une fois l'adresse confirmée par téléphone, sans que vous ayez à décrire un itinéraire compliqué.
+
 Le médecin qui se déplace à El Jadida est inscrit à l'Ordre National des Médecins. Un appel avant son arrivée permet de confirmer l'adresse, et le tarif de la visite est communiqué dès cet appel, avant toute confirmation de rendez-vous.`,
   },
 
@@ -191,6 +217,8 @@ La proximité de Bouskoura avec l'aéroport international Mohammed V en fait une
 
 L'habitat à Bouskoura est majoritairement récent, avec des résidences sécurisées à digicode ou à gardiennage, ce qui veut dire que le médecin doit souvent obtenir un code d'accès ou prévenir un gardien avant d'arriver. Préciser ces informations dès l'appel permet de gagner du temps une fois sur place.
 
+La population de Bouskoura est en grande partie composée de jeunes familles ayant fait le choix d'un cadre de vie plus vert et plus spacieux qu'en centre-ville de Casablanca, tout en restant à proximité immédiate de l'agglomération. Beaucoup de ces foyers n'ont pas encore de médecin traitant installé dans la commune elle-même, ce qui rend un service de visite à domicile particulièrement pertinent, notamment le soir et le week-end quand les cabinets du secteur sont fermés ou déjà complets. La proximité de l'aéroport et des zones d'activité voisines fait aussi de Bouskoura un lieu de passage pour des professionnels en déplacement, qui peuvent également faire appel à ce service.
+
 Le médecin qui se déplace à Bouskoura est inscrit à l'Ordre National des Médecins. Il vous appelle avant d'arriver pour confirmer l'adresse et les modalités d'accès à votre résidence, et le tarif est annoncé dès cet appel, avant toute confirmation.`,
   },
 
@@ -202,6 +230,8 @@ Le médecin qui se déplace à Bouskoura est inscrit à l'Ordre National des Mé
 Cette configuration allongée veut dire que deux adresses à Dar Bouazza peuvent être séparées par une distance importante, même si elles portent le même nom de secteur. Il est donc utile de préciser des repères clairs — un lotissement, une résidence, un axe proche — pour que le médecin identifie rapidement le bon emplacement le long de la côte.
 
 De nombreuses résidences à Dar Bouazza sont sécurisées, avec gardiennage ou digicode, comme c'est souvent le cas dans les développements résidentiels récents en périphérie de Casablanca. Le médecin demande généralement ces informations d'accès par téléphone avant de se déplacer, pour ne pas perdre de temps une fois sur place.
+
+Beaucoup de foyers installés à Dar Bouazza y résident depuis peu, attirés par le cadre de vie balnéaire et le calme relatif de la zone comparé au centre de Casablanca. Cette population récemment installée n'a pas toujours encore de médecin traitant sur place, ce qui rend le service particulièrement utile en dehors des horaires d'ouverture des cabinets classiques, notamment pour les familles avec de jeunes enfants ou les personnes âgées. La zone continue de s'étendre le long de la côte, avec de nouveaux programmes immobiliers qui s'ajoutent chaque année à ceux déjà construits.
 
 Le médecin qui se déplace à Dar Bouazza est inscrit à l'Ordre National des Médecins. Il confirme l'adresse et les modalités d'accès avec vous par téléphone avant d'arriver, et le tarif de la visite est communiqué dès cet appel, avant toute confirmation.`,
   },

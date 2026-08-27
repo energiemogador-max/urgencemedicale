@@ -29,7 +29,7 @@ export function CityHubPage({ city, quartiers }: { city: City; quartiers: Quarti
           <ul className="mt-2 grid grid-cols-2 gap-1 sm:grid-cols-3">
             {quartiers.map((q) => (
               <li key={q.slug}>
-                <Link href={paths.quartier(city.slug, q.slug)} className="underline">
+                <Link href={paths.quartier(city.slug, q.slug)} prefetch={false} className="underline">
                   {q.name}
                 </Link>
               </li>

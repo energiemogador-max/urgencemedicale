@@ -27,6 +27,8 @@ Le tracé n'est pas interprété sur place : c'est un médecin qui l'analyse ens
 
 Dans les ruelles étroites de la médina, où une voiture ne peut pas toujours s'approcher du domicile, un déplacement jusqu'à une clinique peut vite devenir compliqué pour une personne âgée ou en fauteuil. C'est aussi une solution pratique pour un suivi cardiaque déjà engagé avec un cardiologue, ou pour éviter un trajet en pleine chaleur à un patient fragile après une hospitalisation.
 
+L'appareil utilisé est portable et fonctionne sur batterie, sans qu'aucune installation particulière ne soit nécessaire chez vous : pas de prise électrique spécifique, pas de matériel encombrant. Le rendez-vous se fixe au moment de l'appel, et le médecin arrive avec tout le nécessaire pour réaliser l'examen dans votre salon ou votre chambre, dans les mêmes conditions de confort qu'à Guéliz ou dans un riad de la médina.
+
 Comme pour tout ECG, le tracé n'est pas expliqué dans le détail au moment de l'enregistrement : son interprétation revient à un médecin, jamais à la personne qui pose les électrodes, et certainement pas à cette page.`,
   },
   "ecg-domicile:tanger": {
@@ -35,6 +37,8 @@ Comme pour tout ECG, le tracé n'est pas expliqué dans le détail au moment de 
     body: `L'examen consiste à poser des électrodes sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui capte l'activité électrique du cœur pendant quelques minutes ; il ne demande ni jeûne ni préparation particulière, et ne provoque aucune gêne.
 
 À Tanger, la demande concerne souvent des personnes âgées installées dans les quartiers en hauteur comme Marshan ou Iberia, pour qui descendre jusqu'à une clinique du centre-ville représente un effort important, ou des patients déjà suivis pour le cœur qui ont besoin d'un contrôle régulier sans multiplier les déplacements.
+
+L'appareil portable utilisé pour l'examen fonctionne sur batterie et ne demande aucune installation particulière : le médecin s'installe directement dans votre salon ou votre chambre, avec tout le matériel nécessaire. Le rendez-vous se fixe dès l'appel initial, et l'ensemble du geste prend rarement plus de quelques minutes une fois le médecin arrivé sur place.
 
 Le tracé enregistré est ensuite transmis à un médecin pour interprétation : ni la personne qui pose les électrodes, ni cette page, ne se prononcent sur ce qu'il montre.`,
   },
@@ -45,6 +49,8 @@ Le tracé enregistré est ensuite transmis à un médecin pour interprétation :
 
 Agadir compte une population importante de retraités, marocains comme étrangers, installés notamment autour de la Vallée des Oiseaux ou de Founty, souvent suivis pour une pathologie cardiaque et amenés à faire réaliser un contrôle régulier. Pour eux, comme pour toute personne dont la mobilité est réduite, l'ECG à domicile évite un trajet et une attente en clinique.
 
+L'appareil utilisé fonctionne sur batterie et ne nécessite aucune installation particulière chez vous ; le médecin apporte tout le matériel nécessaire et réalise l'examen directement dans votre salon ou votre chambre. Le rendez-vous se programme dès l'appel, ce qui évite toute attente une fois le médecin arrivé sur place.
+
 Le tracé, une fois enregistré, est interprété par un médecin à partir d'une lecture complète, jamais commenté sur le moment ni détaillé sur cette page.`,
   },
   "ecg-domicile:fes": {
@@ -53,6 +59,8 @@ Le tracé, une fois enregistré, est interprété par un médecin à partir d'un
     body: `L'examen se déroule toujours de la même manière : des électrodes sont placées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui enregistre l'activité électrique du cœur pendant un court instant, sans douleur ni préparation particulière.
 
 Dans la médina de Fès el-Bali comme dans les quartiers plus récents de la ville nouvelle, la demande vient souvent de personnes âgées peu mobiles ou de patients suivis pour le cœur à qui un cardiologue a demandé un contrôle régulier. Faire venir le médecin évite le trajet, parfois à pied sur plusieurs centaines de mètres avant même d'atteindre une voiture.
+
+L'appareil portable fonctionne sur batterie et ne demande aucune installation chez vous : le médecin s'installe directement dans votre salon ou votre chambre, quel que soit le type de logement, maison traditionnelle en médina ou appartement de la ville nouvelle. Le rendez-vous se fixe dès l'appel, et l'examen lui-même ne prend que quelques minutes une fois le médecin sur place.
 
 Le tracé obtenu est ensuite interprété par un médecin, jamais expliqué en détail sur place au moment du geste, ni sur cette page.`,
   },
@@ -63,6 +71,8 @@ Le tracé obtenu est ensuite interprété par un médecin, jamais expliqué en d
 
 Que ce soit dans la médina de Salé, à Bettana ou dans les quartiers plus récents de Salé Al Jadida, la demande vient souvent de personnes âgées ou de patients en convalescence pour qui un déplacement jusqu'à une clinique de Rabat ou du centre de Salé est difficile, ainsi que de personnes déjà suivies pour une pathologie cardiaque.
 
+L'appareil utilisé pour l'enregistrement est portable et fonctionne sur batterie, sans installation particulière : le médecin s'installe directement chez vous, dans votre salon ou votre chambre. Le rendez-vous se fixe dès l'appel, ce qui évite tout déplacement inutile, y compris de l'autre côté du fleuve vers un cabinet de Rabat.
+
 Le tracé enregistré à domicile suit ensuite le même circuit qu'en cabinet : son interprétation revient à un médecin, pas à la personne qui réalise l'examen, et pas à cette page.`,
   },
   "ecg-domicile:temara": {
@@ -71,6 +81,8 @@ Le tracé enregistré à domicile suit ensuite le même circuit qu'en cabinet : 
     body: `Le déroulement reste identique à un ECG de cabinet : des électrodes sont placées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui capte l'activité électrique du cœur pendant quelques minutes, sans douleur ni préparation.
 
 À Témara, la demande concerne souvent des personnes âgées installées dans des quartiers résidentiels calmes, pour qui un trajet jusqu'à une clinique de Rabat ou du centre-ville de Témara est peu pratique, ou des patients suivis pour le cœur qui ont besoin d'un contrôle périodique sans avoir à s'organiser à chaque fois.
+
+L'appareil utilisé fonctionne sur batterie et ne nécessite aucun aménagement particulier de votre logement : le médecin réalise l'examen directement dans votre salon ou votre chambre, avec tout le matériel nécessaire apporté sur place. Le rendez-vous se programme dès l'appel, pour un examen qui ne dure que quelques minutes.
 
 Comme pour tout ECG, le tracé n'est pas interprété sur place : cette tâche revient à un médecin, à partir d'une analyse complète, jamais à une lecture rapide au moment de l'examen ni sur cette page.`,
   },
@@ -81,6 +93,8 @@ Comme pour tout ECG, le tracé n'est pas interprété sur place : cette tâche r
 
 La demande vient souvent de personnes âgées installées près de la Corniche ou dans les quartiers résidentiels du centre, ainsi que de patients déjà suivis pour une pathologie cardiaque et à qui un contrôle régulier a été prescrit. L'ECG à domicile leur évite un trajet vers une clinique, à Mohammedia ou dans une ville voisine.
 
+L'appareil portable fonctionne sur batterie et ne demande aucune installation chez vous : le médecin s'installe directement dans votre salon ou votre chambre, avec tout le matériel nécessaire. Le rendez-vous se fixe dès l'appel, pour un examen qui prend rarement plus de quelques minutes une fois le médecin arrivé.
+
 Le tracé, une fois enregistré, est ensuite interprété par un médecin : ni la personne qui pose les électrodes, ni cette page, ne se prononcent sur ce qu'il montre.`,
   },
   "ecg-domicile:kenitra": {
@@ -89,6 +103,8 @@ Le tracé, une fois enregistré, est ensuite interprété par un médecin : ni l
     body: `Le déroulement est toujours le même : des électrodes sont posées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui enregistre l'activité électrique du cœur pendant quelques minutes, sans douleur ni préparation particulière.
 
 À Kénitra, la demande vient souvent de personnes âgées vivant dans des quartiers périphériques mal desservis, ou de patients suivis pour une pathologie cardiaque qui doivent réaliser un contrôle régulier sans multiplier les trajets. Faire venir le médecin à domicile évite l'attente en clinique en plus du déplacement lui-même.
+
+L'appareil utilisé pour l'examen est portable et fonctionne sur batterie, sans qu'aucune installation particulière ne soit nécessaire dans votre logement. Le rendez-vous se fixe dès l'appel initial, et le médecin apporte tout le matériel requis pour réaliser l'enregistrement directement dans votre salon ou votre chambre, y compris dans les quartiers les plus récents et les plus éloignés du centre-ville de Kénitra.
 
 Le tracé obtenu est ensuite interprété par un médecin à partir d'une lecture complète, jamais expliqué en détail au moment de l'enregistrement ni sur cette page.`,
   },
@@ -99,6 +115,8 @@ Le tracé obtenu est ensuite interprété par un médecin à partir d'une lectur
 
 Que vous habitiez dans la médina ou dans les quartiers plus récents de la ville, la demande vient souvent de personnes âgées peu mobiles ou de patients déjà suivis pour une pathologie cardiaque, pour qui un contrôle régulier est prescrit par un cardiologue.
 
+L'appareil portable fonctionne sur batterie, sans installation particulière requise chez vous : le médecin s'installe directement dans votre salon ou votre chambre, avec tout le matériel nécessaire. Le rendez-vous se programme dès l'appel, et l'examen lui-même ne prend que quelques minutes une fois le médecin sur place, que vous résidiez en médina ou dans un quartier plus récent.
+
 Le tracé enregistré à domicile n'est pas commenté sur place : son interprétation revient à un médecin, à partir d'une analyse complète, jamais à une explication improvisée au moment du geste ni à cette page.`,
   },
   "ecg-domicile:oujda": {
@@ -107,6 +125,8 @@ Le tracé enregistré à domicile n'est pas commenté sur place : son interprét
     body: `Le principe reste identique partout : des électrodes sont placées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui enregistre l'activité électrique du cœur pendant quelques minutes, sans douleur ni préparation particulière.
 
 À Oujda, la demande vient souvent de personnes âgées ou de patients en convalescence pour qui un trajet jusqu'à une clinique du centre-ville est difficile, ainsi que de personnes suivies pour une pathologie cardiaque et amenées à faire réaliser un contrôle périodique. L'ECG à domicile leur évite ce déplacement.
+
+L'appareil utilisé fonctionne sur batterie et ne demande aucune installation particulière : le médecin apporte tout le matériel nécessaire et réalise l'examen directement dans votre salon ou votre chambre. Le rendez-vous se fixe dès l'appel, ce qui est particulièrement utile dans une ville où l'offre de soins spécialisés reste plus limitée qu'à Casablanca ou Rabat, et où chaque déplacement compte davantage.
 
 Le tracé, une fois obtenu, est interprété par un médecin à partir d'une lecture complète, jamais expliqué sur le moment ni détaillé sur cette page.`,
   },
@@ -117,6 +137,8 @@ Le tracé, une fois obtenu, est interprété par un médecin à partir d'une lec
 
 La demande vient souvent de personnes âgées installées dans les quartiers résidentiels de Meknès, ou de patients suivis pour une pathologie cardiaque à qui un contrôle régulier a été prescrit. Pour eux, se rendre en clinique représente parfois un effort disproportionné par rapport à un examen aussi bref.
 
+L'appareil portable fonctionne sur batterie, sans aucune installation particulière requise dans votre logement : le médecin réalise l'examen directement dans votre salon ou votre chambre, avec tout le matériel nécessaire apporté sur place. Le rendez-vous se programme dès l'appel initial, pour un examen qui prend rarement plus de quelques minutes une fois le médecin arrivé à votre domicile, que vous résidiez près du centre historique ou dans un quartier plus récent de Meknès.
+
 Le tracé enregistré à domicile est ensuite interprété par un médecin, jamais commenté en détail sur place au moment du geste, ni sur cette page.`,
   },
   "ecg-domicile:el-jadida": {
@@ -125,6 +147,8 @@ Le tracé enregistré à domicile est ensuite interprété par un médecin, jama
     body: `Le déroulement de l'examen est toujours le même : des électrodes sont posées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui enregistre l'activité électrique du cœur pendant un court instant, sans douleur ni préparation particulière.
 
 À El Jadida, la demande vient souvent de personnes âgées ou de patients en convalescence, ainsi que de personnes déjà suivies pour le cœur et à qui un cardiologue a demandé un contrôle régulier. L'ECG à domicile leur évite le trajet et l'attente en clinique.
+
+L'appareil utilisé pour l'enregistrement fonctionne sur batterie et ne nécessite aucune installation particulière : le médecin s'installe directement chez vous, dans votre salon ou votre chambre, avec tout le matériel requis. Le rendez-vous se fixe dès l'appel, pour un examen bref, aussi bien pour un résident permanent de la ville que pour quelqu'un simplement de passage l'été, près de la cité portugaise ou plus loin.
 
 Le tracé obtenu est ensuite interprété par un médecin, à partir d'une lecture complète, jamais expliqué sur le moment ni sur cette page.`,
   },
@@ -135,6 +159,8 @@ Le tracé obtenu est ensuite interprété par un médecin, à partir d'une lectu
 
 Dans un secteur aussi étalé, où les habitations sont parfois loin des grands axes, la demande vient souvent de personnes âgées ou de patients suivis pour une pathologie cardiaque, pour qui un déplacement jusqu'à une clinique représente un vrai détour. Faire venir le médecin à domicile évite ce trajet.
 
+L'appareil portable fonctionne sur batterie, sans installation particulière requise : le médecin s'installe directement dans votre salon ou votre chambre, avec tout le matériel nécessaire. Le rendez-vous se fixe dès l'appel, ce qui est particulièrement pratique dans un secteur aussi étendu où les résidences sont parfois difficiles à localiser du premier coup, loin des grands axes de Casablanca.
+
 Le tracé enregistré est ensuite interprété par un médecin, jamais commenté en détail au moment du geste ni sur cette page.`,
   },
   "ecg-domicile:dar-bouazza": {
@@ -143,6 +169,8 @@ Le tracé enregistré est ensuite interprété par un médecin, jamais commenté
     body: `Le principe est simple : des électrodes sont placées sur la poitrine, les poignets et les chevilles, reliées à un boîtier qui enregistre l'activité électrique du cœur pendant quelques minutes, sans douleur ni préparation particulière.
 
 À Dar Bouazza, la demande vient souvent de résidents installés loin des grands axes, de personnes âgées peu mobiles ou de patients suivis pour une pathologie cardiaque et à qui un contrôle régulier a été prescrit. L'ECG à domicile leur évite un trajet vers Casablanca ou vers une clinique plus éloignée.
+
+L'appareil utilisé pour l'examen fonctionne sur batterie et ne demande aucune installation particulière dans votre logement : le médecin apporte tout le matériel nécessaire et réalise l'enregistrement directement dans votre salon ou votre chambre. Le rendez-vous se programme dès l'appel, ce qui évite tout trajet, y compris pour les résidences les plus récentes et les plus étendues de la zone, loin du centre de Casablanca.
 
 Le tracé obtenu est ensuite interprété par un médecin à partir d'une analyse complète, jamais expliqué sur le moment ni détaillé sur cette page.`,
   },

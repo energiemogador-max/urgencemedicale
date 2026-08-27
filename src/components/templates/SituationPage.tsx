@@ -26,7 +26,7 @@ export function SituationPage({ situation, cities }: { situation: Situation; cit
           <ul className="mt-2 grid grid-cols-2 gap-1 sm:grid-cols-3">
             {cities.map((c) => (
               <li key={c.slug}>
-                <Link href={paths.situationCity(situation.slug, c.slug)} className="underline">
+                <Link href={paths.situationCity(situation.slug, c.slug)} prefetch={false} className="underline">
                   {c.name}
                 </Link>
               </li>
