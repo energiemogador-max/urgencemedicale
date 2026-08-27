@@ -183,20 +183,20 @@ export default function HomePage() {
 
       <Section title="Tarifs" lead="Publiés à l'avance, contrairement à l'usage du secteur." tone="panel">
         <div className="overflow-x-auto rounded-lg border border-border bg-surface">
-          <table className="w-full border-collapse text-left">
+          <table className="w-full table-fixed border-collapse text-left">
             <thead className="border-b border-border">
               <tr>
-                <th className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Consultation</th>
-                <th className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Horaire</th>
-                <th className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-ink-muted">Prix</th>
+                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Consultation</th>
+                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Horaire</th>
+                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Prix</th>
               </tr>
             </thead>
             <tbody>
               {pricing.tiers.map((t) => (
                 <tr key={t.slug} className="border-b border-border last:border-0">
                   <td className="px-4 py-3">{t.label}</td>
-                  <td className="px-4 py-3 text-ink-muted">{t.window}</td>
-                  <td className="px-4 py-3 font-bold tabular-nums text-primary">
+                  <td className="px-2 py-2.5 text-[0.85rem] text-ink-muted sm:px-4 sm:py-3 sm:text-base">{t.window}</td>
+                  <td className="px-2 py-2.5 text-[0.95rem] font-bold whitespace-nowrap tabular-nums text-primary sm:px-4 sm:py-3 sm:text-base">
                     {t.amountMad} {pricing.currency}
                   </td>
                 </tr>
