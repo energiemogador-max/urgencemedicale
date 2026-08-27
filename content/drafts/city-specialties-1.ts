@@ -1,7 +1,7 @@
 import type { CitySlug, SpecialtySlug } from "../schema";
 
 /** Shard 1 of city x specialty drafts — casablanca, rabat, marrakech (all 5 specialties each). Key as `${citySlug}:${specialtySlug}`. */
-export const CITY_SPECIALTY_DRAFTS_1: Partial<Record<`${CitySlug}:${SpecialtySlug}`, { intro: string; body: string }>> = {
+export const CITY_SPECIALTY_DRAFTS_1: Partial<Record<string, { intro: string; body: string }>> = {
   "casablanca:generaliste": {
     intro:
       "Un médecin généraliste se déplace chez vous à Casablanca, dans n'importe quel quartier de la ville, de jour comme de nuit. C'est une alternative directe au trajet en cabinet quand les embouteillages ou l'état du patient rendent le déplacement compliqué.",

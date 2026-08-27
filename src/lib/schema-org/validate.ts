@@ -58,9 +58,17 @@ export function validatePhysician(node: object): string[] {
   if (!isNonEmptyString(n.name)) errors.push("Physician: missing required `name`");
   if (!isNonEmptyString(n.medicalSpecialty as string)) errors.push("Physician: missing `medicalSpecialty`");
 
+  // `identifier` is optional: a Physician without a registration number is
+  // valid, and omitting it is the correct behaviour while the operator has
+  // not supplied one. What is NOT acceptable is shipping a placeholder as if
+  // it were a real credential, so that is what this checks for.
   const identifier = n.identifier as Record<string, unknown> | undefined;
-  if (!identifier || !isNonEmptyString(identifier.value)) {
-    errors.push("Physician: missing `identifier.value` (Ordre National des Médecins number)");
+  if (identifier) {
+    if (!isNonEmptyString(identifier.value)) {
+      errors.push("Physician: `identifier` present but `identifier.value` is empty");
+    } else if (/\[.*\]/.test(identifier.value)) {
+      errors.push(`Physician: \`identifier.value\` is an unfilled marker (${identifier.value}) — omit the property instead`);
+    }
   }
   return errors;
 }

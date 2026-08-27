@@ -1,7 +1,7 @@
 import type { CitySlug, SituationSlug } from "../schema";
 
 /** Shard: fièvre-enfant-nuit x all 16 cities. Key as `${situationSlug}:${citySlug}`. */
-export const SITUATION_CITY_DRAFTS_FIEVRE: Partial<Record<`${SituationSlug}:${CitySlug}`, { intro: string; body: string }>> = {
+export const SITUATION_CITY_DRAFTS_FIEVRE: Partial<Record<string, { intro: string; body: string }>> = {
   "fievre-enfant-nuit:casablanca": {
     intro:
       "Casablanca est la plus grande ville du Maroc, et ses quartiers résidentiels s'étendent sur une surface considérable — rejoindre un service d'urgence en pleine nuit avec un enfant fiévreux peut représenter un vrai trajet, selon l'endroit où vous habitez. Un médecin généraliste ou pédiatre peut au contraire venir l'examiner directement chez vous, cette nuit même, dans n'importe quel quartier de l'agglomération.",

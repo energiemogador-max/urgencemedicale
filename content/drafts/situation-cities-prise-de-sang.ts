@@ -1,7 +1,7 @@
 import type { CitySlug, SituationSlug } from "../schema";
 
 /** Shard: prise-de-sang-domicile x all 16 cities. Key as `${situationSlug}:${citySlug}`. */
-export const SITUATION_CITY_DRAFTS_PRISE_DE_SANG: Partial<Record<`${SituationSlug}:${CitySlug}`, { intro: string; body: string }>> = {
+export const SITUATION_CITY_DRAFTS_PRISE_DE_SANG: Partial<Record<string, { intro: string; body: string }>> = {
   "prise-de-sang-domicile:casablanca": {
     intro:
       "Casablanca s'étend sur des dizaines de kilomètres, et un simple trajet jusqu'à un laboratoire peut vite se transformer en une heure perdue dans les embouteillages de l'avenue des FAR ou du boulevard Zerktouni. Pour une prise de sang, un infirmier ou un technicien de laboratoire peut se déplacer directement chez vous, où que vous soyez dans la ville.",

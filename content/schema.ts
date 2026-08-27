@@ -14,6 +14,20 @@ export function todo(hint: string): string {
   return `${TODO_PREFIX} ${hint}`;
 }
 
+/**
+ * A value the operator has not supplied yet, written as a visible
+ * "[À CONFIRMER]" marker rather than invented. Unlike `todo()` these do NOT
+ * fail the build — they are facts the site can honestly ship without (an
+ * Ordre number, a nearby hospital name), where inventing one would be a false
+ * credential claim and printing the marker would be worse than saying
+ * nothing. Templates use this to OMIT the field instead of rendering it.
+ */
+export const UNCONFIRMED = "[À CONFIRMER]";
+
+export function isUnconfirmed(value: string | undefined): boolean {
+  return value === undefined || value.trim() === UNCONFIRMED;
+}
+
 export function isPlaceholder(value: string): boolean {
   return value.startsWith(TODO_PREFIX);
 }
@@ -47,21 +61,22 @@ function filledCoordinateString(label: string) {
 // (Phase 2), not invented content, so they're safe to hard-code as enums.
 // ---------------------------------------------------------------------------
 
+/**
+ * The cities actually served, per the operator (2026-08-27). This list is
+ * deliberately short: Grand Casablanca plus Rabat. It previously carried 16
+ * cities including Oujda and Tanger, which advertised a home-visit service
+ * several hundred kilometres from where any doctor is based — a coverage
+ * claim the business could not honour.
+ *
+ * Everything geographic derives from this: city hubs, the situation and
+ * service spokes, `areaServed` in the JSON-LD, the footer link graph, and
+ * the sitemap. Adding a city here requires real written content for its
+ * pages or the build fails, which is the intended cost.
+ */
 export const CITY_SLUGS = [
   "casablanca",
   "rabat",
-  "marrakech",
-  "tanger",
-  "agadir",
-  "fes",
-  "sale",
-  "temara",
   "mohammedia",
-  "kenitra",
-  "tetouan",
-  "oujda",
-  "meknes",
-  "el-jadida",
   "bouskoura",
   "dar-bouazza",
 ] as const;
@@ -69,14 +84,12 @@ export type CitySlug = (typeof CITY_SLUGS)[number];
 export const CitySlugEnum = z.enum(CITY_SLUGS);
 
 /** Top 6 cities eligible for city x specialty pages (Phase 2 rule). */
-export const SPECIALTY_ELIGIBLE_CITY_SLUGS: CitySlug[] = [
-  "casablanca",
-  "rabat",
-  "marrakech",
-  "tanger",
-  "agadir",
-  "fes",
-];
+/**
+ * Cities that also get per-specialty spoke pages. Only where genuinely
+ * distinct content exists — a specialty x city page with nothing specific to
+ * say is thin content, which is fatal in YMYL.
+ */
+export const SPECIALTY_ELIGIBLE_CITY_SLUGS: CitySlug[] = ["casablanca", "rabat"];
 
 export const SPECIALTY_SLUGS = [
   "generaliste",

@@ -1,7 +1,7 @@
 import type { CitySlug, SpecialtySlug } from "../schema";
 
 /** Shard 2 of city x specialty drafts — tanger, agadir, fes (all 5 specialties each). Key as `${citySlug}:${specialtySlug}`. */
-export const CITY_SPECIALTY_DRAFTS_2: Partial<Record<`${CitySlug}:${SpecialtySlug}`, { intro: string; body: string }>> = {
+export const CITY_SPECIALTY_DRAFTS_2: Partial<Record<string, { intro: string; body: string }>> = {
   "tanger:generaliste": {
     intro:
       "À Tanger, un médecin généraliste peut se déplacer chez vous pour l'essentiel des consultations courantes — fièvre, douleur, certificat médical, renouvellement d'ordonnance — quel que soit le quartier où vous habitez. C'est une réponse pratique dans une ville qui s'étend vite, où un nouveau quartier peut se trouver loin de tout cabinet installé.",

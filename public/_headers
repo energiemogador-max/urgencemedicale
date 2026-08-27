@@ -52,19 +52,6 @@
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 
 # ---------------------------------------------------------------------------
-# PRE-LAUNCH ONLY — REMOVE BEFORE GOING LIVE ON THE REAL DOMAIN.
-#
-# The site is currently served from a public *.workers.dev preview URL while
-# urgencemedicale.ma is not yet registered. robots.txt says Allow: / and every
-# canonical points at the unregistered domain, so without this Google could
-# index the preview host and split signals against the real site later.
-#
-# Deleting this block is item 1 on PRE-LAUNCH-CHECKLIST.md.
-# ---------------------------------------------------------------------------
-/*
-  X-Robots-Tag: noindex, nofollow
-
-# ---------------------------------------------------------------------------
 # Next's metadata routes emit real PNGs at extensionless paths (/icon,
 # /opengraph-image). Without an extension the asset server falls back to
 # application/octet-stream, and WhatsApp/Facebook then refuse to render the

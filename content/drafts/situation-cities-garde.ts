@@ -11,7 +11,7 @@ import type { CitySlug } from "../schema";
  * page routes judgment to the doctor, and severe signs to the emergency
  * services.
  */
-export const SITUATION_CITY_DRAFTS_GARDE: Partial<Record<`medecin-de-garde:${CitySlug}`, { intro: string; body: string }>> = {
+export const SITUATION_CITY_DRAFTS_GARDE: Partial<Record<string, { intro: string; body: string }>> = {
   "medecin-de-garde:casablanca": {
     intro:
       "À Casablanca, trouver un médecin de garde la nuit veut souvent dire traverser une ville immense pour atteindre des urgences saturées. Un docteur qui se déplace chez vous supprime ce trajet.",

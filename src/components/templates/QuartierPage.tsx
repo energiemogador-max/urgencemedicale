@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, Lead, LinkGrid, Section } from "@/components/ui";
 import { getTrustBlockProps } from "@/lib/content";
+import { isUnconfirmed } from "@content/schema";
 import { paths } from "@/lib/urls";
 import { quartierFaqs } from "@/lib/faqs";
 import { buildAreaServedFragment } from "@/lib/schema-org/business";
@@ -59,16 +60,23 @@ export function QuartierPage({
           </ul>
         </section>
 
-        <section className="rounded-lg border border-border bg-surface p-4">
-          <h2 className="text-lg font-bold text-ink">Hôpitaux et cliniques les plus proches</h2>
-          <ul className="mt-3 space-y-2">
-            {quartier.nearestHospitals.map((h) => (
-              <li key={h} className="crescent-marker text-ink-muted">
-                <span>{h}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+        {/* Omitted entirely until real, verified facility names exist —
+            naming the wrong hospital near a home-visit service is worse than
+            not naming one, and printing "[À CONFIRMER]" is worse than both. */}
+        {quartier.nearestHospitals.some((h) => !isUnconfirmed(h)) && (
+          <section className="rounded-lg border border-border bg-surface p-4">
+            <h2 className="text-lg font-bold text-ink">Hôpitaux et cliniques les plus proches</h2>
+            <ul className="mt-3 space-y-2">
+              {quartier.nearestHospitals
+                .filter((h) => !isUnconfirmed(h))
+                .map((h) => (
+                  <li key={h} className="crescent-marker text-ink-muted">
+                    <span>{h}</span>
+                  </li>
+                ))}
+            </ul>
+          </section>
+        )}
       </div>
 
       <Section title={`Accès et circulation à ${quartier.name}`}>

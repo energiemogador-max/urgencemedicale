@@ -1,4 +1,5 @@
 import type { PhysicianLeaf, WithContext } from "schema-dts";
+import { isUnconfirmed } from "@content/schema";
 import type { Doctor } from "@content/schema";
 import { SITE_URL } from "@/lib/site";
 import { SPECIALTY_TO_SCHEMA_ORG } from "./specialty-map";
@@ -17,11 +18,20 @@ export function buildPhysician(doctor: Doctor): WithContext<PhysicianLeaf> {
     name: doctor.name,
     description: doctor.bio,
     medicalSpecialty: SPECIALTY_TO_SCHEMA_ORG[doctor.specialtySlug],
-    identifier: {
-      "@type": "PropertyValue",
-      propertyID: "Ordre National des Médecins",
-      value: doctor.ordreNumber,
-    },
+    // A Physician node is valid without `identifier`. Emitting the literal
+    // "[À CONFIRMER]" marker would publish a structured, machine-readable
+    // claim about a real licensed person that is simply false — far worse
+    // than the property being absent. It reappears on its own once the real
+    // registration number is filled in.
+    ...(isUnconfirmed(doctor.ordreNumber)
+      ? {}
+      : {
+          identifier: {
+            "@type": "PropertyValue" as const,
+            propertyID: "Ordre National des Médecins",
+            value: doctor.ordreNumber,
+          },
+        }),
     parentOrganization: { "@id": BUSINESS_ID },
   };
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isUnconfirmed } from "@content/schema";
 import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { TrustBlock } from "@/components/TrustBlock";
@@ -43,7 +44,9 @@ export default function Page() {
                 <span className="rounded-full bg-primary-tint px-2.5 py-0.5 font-semibold text-primary">
                   {specialties.find((s) => s.slug === d.specialtySlug)?.name}
                 </span>
-                <span className="text-ink-muted">Ordre National des Médecins n° {d.ordreNumber}</span>
+                {!isUnconfirmed(d.ordreNumber) && (
+                  <span className="text-ink-muted">Ordre National des Médecins n° {d.ordreNumber}</span>
+                )}
               </div>
               <p className="mt-3 max-w-[68ch] text-ink-muted">{d.bio}</p>
             </li>

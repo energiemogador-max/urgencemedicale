@@ -1,7 +1,7 @@
 import type { CitySlug, SituationSlug } from "../schema";
 
 /** Shard: ecg-domicile x all 16 cities. Key as `${situationSlug}:${citySlug}`. */
-export const SITUATION_CITY_DRAFTS_ECG: Partial<Record<`${SituationSlug}:${CitySlug}`, { intro: string; body: string }>> = {
+export const SITUATION_CITY_DRAFTS_ECG: Partial<Record<string, { intro: string; body: string }>> = {
   "ecg-domicile:casablanca": {
     intro:
       "Casablanca est la capitale économique du royaume, une ville tentaculaire où relier un quartier résidentiel à une clinique du centre peut prendre une heure aux heures de pointe. Pour un examen aussi ponctuel qu'un électrocardiogramme, un médecin équipé d'un appareil portable peut se déplacer directement chez vous, du Maarif à Sidi Moumen, sans que vous ayez à affronter la circulation. L'enregistrement se fait en quelques minutes, à votre domicile.",

@@ -6,7 +6,7 @@ import type { CitySlug, ServiceSlug } from "../schema";
  * facts, no nursing or medical instruction, no prices.
  * Key as `${serviceSlug}:${citySlug}`.
  */
-export const SERVICE_CITY_DRAFTS: Partial<Record<`${ServiceSlug}:${CitySlug}`, { intro: string; body: string }>> = {
+export const SERVICE_CITY_DRAFTS: Partial<Record<string, { intro: string; body: string }>> = {
   "soins-infirmiers-a-domicile:casablanca": {
     intro:
       "Un infirmier se déplace à votre domicile à Casablanca pour réaliser les soins prescrits par votre médecin. Dans une ville où traverser l'agglomération pour un pansement quotidien coûte plus de temps que le soin lui-même, c'est souvent la solution la plus simple.",
