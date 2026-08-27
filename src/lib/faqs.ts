@@ -91,6 +91,21 @@ const SERVICE_SPECIFIC_FAQ: Record<ServiceSlug, FaqEntry> = {
     answer:
       "Oui. Les soins infirmiers sont réalisés sur prescription médicale : l'ordonnance définit les actes à effectuer et leur fréquence. Si vous n'en avez pas, une consultation à domicile permet d'abord au médecin d'établir le traitement.",
   },
+  "oxygenotherapie-a-domicile": {
+    question: "Faut-il fournir le matériel soi-même ?",
+    answer:
+      "Non. Le matériel nécessaire au traitement est fourni et installé à votre domicile. Une ordonnance est requise : c'est elle qui détermine ce qui est mis en place et à quel réglage. Le réglage lui-même relève du médecin prescripteur et n'est jamais modifié sans son avis.",
+  },
+  "hospitalisation-a-domicile": {
+    question: "Comment savoir si une hospitalisation à domicile est possible ?",
+    answer:
+      "C'est une évaluation médicale qui le détermine. Un médecin examine la nature des soins nécessaires, leur fréquence, l'état de la personne et les conditions du domicile, puis indique si la situation s'y prête. Toutes les situations ne relèvent pas de ce mode de prise en charge, et cette évaluation précède toujours la mise en place.",
+  },
+  "evacuation-sanitaire": {
+    question: "Quels trajets sont assurés ?",
+    answer:
+      "Les transferts sont assurés par la route, entre villes et entre établissements de santé au Maroc. Indiquez au téléphone le point de départ, la destination exacte et l'état de la personne : ces éléments déterminent la façon dont le transfert est organisé, ainsi que le tarif, qui vous est annoncé avant le départ.",
+  },
   "transport-medicalise": {
     question: "Faut-il réserver à l'avance ?",
     answer:

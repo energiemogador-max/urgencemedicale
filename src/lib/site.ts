@@ -1,4 +1,15 @@
-export const SITE_URL = "https://www.urgencemedicale.ma";
+/**
+ * The canonical host. Apex, no `www` — this must match the Custom domain
+ * attached to the Worker in Cloudflare, which is `urgencemedicale.ma`. Every
+ * canonical tag, all 139 sitemap URLs, the robots.txt Sitemap line and every
+ * JSON-LD @id derive from this constant, so a mismatch here means Google
+ * crawls one host and is told the content lives on another.
+ *
+ * If this ever moves to `www`, the www hostname needs its own Custom domain
+ * entry on the Worker and the apex needs a redirect to it — changing this
+ * string alone is not enough.
+ */
+export const SITE_URL = "https://urgencemedicale.ma";
 
 /**
  * The bare domain, for display in the UI (hero, footer). Derived from

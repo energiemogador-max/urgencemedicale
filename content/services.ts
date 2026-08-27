@@ -1,7 +1,11 @@
 import type { Service } from "./schema";
 
 /**
- * The three non-consultation services the operator confirmed they offer.
+ * The non-consultation services the operator confirmed they offer.
+ *
+ * Injection, pansement and perfusion are NOT separate entries: the operator
+ * confirmed they are acts performed within `soins-infirmiers-a-domicile`, so
+ * that page names them rather than three thin pages competing with it.
  *
  * Written with the same discipline as the situation pages: describe what the
  * service IS and how the visit works, never give medical or nursing
@@ -9,6 +13,14 @@ import type { Service } from "./schema";
  * here claims specific vehicle equipment, staffing levels, licences or
  * response capabilities — those are facts only the operator can supply, and
  * asserting them on a regulated service would be inventing credentials.
+ *
+ * Scope confirmed by the operator (2026-08-27), and deliberately not exceeded:
+ * evacuation sanitaire is inter-city ROAD transfer within Morocco only — no
+ * air evacuation and no international repatriation is claimed anywhere;
+ * oxygenotherapie includes supplying the equipment, but no concentrator
+ * model, cylinder size or flow rate is named; hospitalisation a domicile is
+ * continuous care over days or weeks, described without asserting a nursing
+ * rota, hospital agreements or a device inventory.
  *
  * No prices: the published tiers are consultation rates. Quoting them here
  * would misprice a different service.
@@ -34,6 +46,64 @@ Lorsque plusieurs passages sont prévus, l'horaire est convenu dès le premier a
 Les soins à domicile ne remplacent pas la consultation médicale qui les a prescrits, ni le suivi par le médecin traitant. Si l'état de la personne évolue pendant la période de soins, c'est au médecin d'être sollicité pour réévaluer la situation — l'infirmier peut le signaler, mais la décision médicale lui revient.
 
 Le tarif dépend des actes prescrits et du nombre de passages ; il vous est communiqué au téléphone avant toute intervention, comme pour les consultations à domicile. En cas d'urgence vitale, ce service n'est pas la bonne réponse : il faut contacter directement les secours.`,
+  },
+  {
+    slug: "oxygenotherapie-a-domicile",
+    name: "Oxygénothérapie à domicile",
+    shortDescription: "Mise en place et suivi d'un traitement par oxygène au domicile du patient, matériel fourni.",
+    geoMultiplied: false,
+    intro:
+      "L'oxygénothérapie à domicile permet à un patient de suivre chez lui un traitement par oxygène prescrit par son médecin, sans rester hospitalisé pour cette seule raison. Nous fournissons le matériel, assurons son installation et le suivi.",
+    body: `L'oxygénothérapie est prescrite lorsqu'un patient a besoin d'un apport en oxygène que l'air ambiant ne suffit pas à couvrir. C'est le médecin qui pose l'indication, fixe le débit et la durée quotidienne, et décide de la poursuite ou de l'arrêt du traitement. Le rôle du service à domicile est de rendre cette prescription applicable chez le patient : apporter le matériel, l'installer, expliquer son usage, et revenir aussi souvent que le suivi l'exige.
+
+Le déroulement commence par l'ordonnance. Elle est indispensable, car c'est elle qui détermine ce qui est installé et à quel réglage. À la première visite, le matériel est mis en place à l'endroit du logement qui convient le mieux : en général près de l'endroit où la personne passe le plus de temps, avec une prise électrique accessible et un dégagement suffisant autour de l'appareil. Le fonctionnement est expliqué au patient et, quand il y en a un, à l'aidant qui vit avec lui : mise en marche, arrêt, ce qu'il faut surveiller, et qui appeler en cas de doute.
+
+Le suivi compte autant que l'installation. Un traitement par oxygène s'inscrit dans la durée, et l'état de la personne peut évoluer dans un sens comme dans l'autre. Les passages permettent de vérifier que le matériel fonctionne comme prévu, que le traitement est suivi tel qu'il a été prescrit, et de signaler au médecin ce qui mérite une réévaluation. Toute modification du débit ou du rythme relève du médecin prescripteur, jamais du service qui installe.
+
+Quelques points pratiques évitent des difficultés. L'oxygène impose des précautions strictes autour du feu : ni flamme, ni cigarette, ni source de chaleur à proximité de l'appareil ou du patient pendant l'administration. Ces consignes sont détaillées lors de l'installation, et il vaut mieux qu'elles soient connues de tout le foyer, pas seulement du patient. L'accès au logement compte également : indiquez l'étage, la présence ou non d'un ascenseur et la largeur des accès au moment de l'appel, puisque du matériel doit être acheminé jusqu'à l'intérieur.
+
+Une coupure de courant mérite d'être anticipée quand le traitement dépend d'un appareil électrique. Le point est à évoquer dès l'installation plutôt qu'au moment où le problème se pose : la conduite à tenir dépend de la prescription et de l'état du patient, et c'est au médecin de l'indiquer. Il en va de même avant un déplacement ou un séjour hors du domicile, qui se prépare à l'avance et non la veille du départ.
+
+Ce service ne remplace pas une prise en charge d'urgence. Si la respiration de la personne se dégrade nettement, si elle devient confuse ou si son état vous inquiète, contactez les secours sans attendre la prochaine visite prévue. Le tarif dépend du matériel installé et de la durée du traitement ; il vous est communiqué avant toute mise en place, comme pour les consultations.`,
+  },
+  {
+    slug: "hospitalisation-a-domicile",
+    name: "Hospitalisation à domicile",
+    shortDescription:
+      "Prise en charge continue à domicile sur plusieurs jours ou semaines, coordonnée entre médecin et infirmiers.",
+    geoMultiplied: false,
+    intro:
+      "L'hospitalisation à domicile organise chez le patient une prise en charge continue sur plusieurs jours ou plusieurs semaines : visites médicales, soins infirmiers et surveillance coordonnés dans le temps, plutôt qu'un séjour en établissement.",
+    body: `L'hospitalisation à domicile ne se confond ni avec une visite ponctuelle, ni avec un simple suivi. C'est une prise en charge organisée dans la durée, où le passage du médecin, celui de l'infirmier et la surveillance de l'état du patient sont planifiés ensemble et ajustés au fil des jours. Le patient reste chez lui, dans son cadre de vie, entouré des siens, pendant que les soins qui justifieraient autrement un séjour hospitalier lui sont apportés à domicile.
+
+La mise en place part toujours d'une décision médicale. Un médecin évalue si la situation s'y prête : la nature des soins nécessaires, leur fréquence, la stabilité de l'état de la personne, et les conditions du domicile. Toutes les situations ne relèvent pas de ce mode de prise en charge, et c'est précisément le rôle de cette évaluation initiale de le déterminer. Elle définit ensuite le contenu du programme, quels soins et à quelle fréquence, avec quelle surveillance ; ce programme est réévalué régulièrement plutôt que fixé une fois pour toutes.
+
+Concrètement, une prise en charge de ce type combine des passages infirmiers pour les soins prescrits, des visites médicales pour l'examen clinique et l'adaptation du traitement, et une transmission écrite entre les intervenants pour que chacun sache ce qui a été fait depuis le passage précédent. Cette continuité est ce qui distingue l'hospitalisation à domicile d'une succession d'interventions isolées : c'est un même dossier suivi dans le temps, pas une série d'appels sans lien entre eux.
+
+Le domicile lui-même entre dans l'équation. Un lieu où la personne peut être installée confortablement, un accès praticable pour des passages répétés, et de préférence la présence d'un proche, sont des éléments qui pèsent sur la faisabilité. L'entourage familial n'est pas un soignant et ne se substitue pas aux professionnels, mais sa présence change ce qui est réalisable, et le médecin en tient compte au moment de l'évaluation.
+
+La famille reste informée tout au long de la prise en charge. Les visites sont l'occasion d'expliquer où en est le patient, ce qui est attendu jusqu'au passage suivant, et ce qui doit conduire à appeler sans attendre. Ce point est important : entre deux passages, si l'état de la personne se dégrade, il ne faut pas patienter jusqu'à l'horaire prévu.
+
+Ce mode de prise en charge ne remplace pas les services d'urgence, et il ne convient pas à toutes les situations. Si un transfert vers un établissement devient nécessaire, le médecin l'organise plutôt que de poursuivre à domicile. Les modalités, la durée envisagée et le tarif applicable sont établis avec vous avant le début de la prise en charge, de sorte que rien ne soit découvert en cours de route.`,
+  },
+  {
+    slug: "evacuation-sanitaire",
+    name: "Évacuation sanitaire",
+    shortDescription: "Transfert d'un patient par la route entre villes ou entre établissements de santé au Maroc.",
+    geoMultiplied: false,
+    intro:
+      "L'évacuation sanitaire consiste à transférer un patient par la route, d'une ville à une autre ou d'un établissement de santé à un autre, dans des conditions adaptées à son état. Le transfert se réserve par téléphone.",
+    body: `Une évacuation sanitaire répond à un besoin précis : un patient doit être déplacé sur une distance que son état ne lui permet pas de parcourir dans un véhicule ordinaire. Les motifs les plus courants sont le transfert vers un établissement disposant d'un plateau technique ou d'une spécialité absente sur place, le rapprochement d'un patient de sa famille dans une autre ville, et le retour au domicile après une prise en charge loin de chez soi.
+
+Ces transferts se font par la route, à l'intérieur du territoire marocain. C'est une précision utile, car les distances entre les grandes villes marocaines sont réelles : un trajet entre Casablanca et Marrakech, Fès ou Tanger représente plusieurs heures de route, et cette durée fait partie des éléments à prendre en compte pour un patient fragile. Elle influe sur l'heure de départ retenue, sur l'organisation des pauses, et sur ce qu'il faut prévoir pour le confort de la personne pendant le trajet.
+
+Au moment de l'appel, plusieurs informations sont demandées : l'adresse ou l'établissement de départ, la destination exacte, l'état général de la personne à transférer, sa capacité à se déplacer seule ou non, et les contraintes d'accès aux deux extrémités du trajet. Un étage sans ascenseur, un couloir étroit ou un portail à faire ouvrir changent l'organisation, et il vaut mieux le savoir avant le départ que le découvrir sur place.
+
+Les documents comptent autant que la logistique. Rassemblez avant le départ le courrier du médecin qui motive le transfert, les comptes-rendus et les examens déjà réalisés, la liste des traitements en cours et la pièce d'identité du patient. L'établissement d'accueil les réclamera à l'arrivée, et leur absence fait perdre un temps qui dépasse souvent celui du trajet lui-même. Lorsque le transfert se fait entre deux structures, il est également préférable que la structure d'accueil ait confirmé qu'elle peut recevoir le patient avant que le départ ne soit organisé.
+
+Un proche peut en général accompagner la personne transférée, ce qui est souvent souhaitable sur un long trajet, en particulier pour une personne âgée ou désorientée. Signalez-le au moment de la réservation plutôt qu'au moment du départ, afin que la place soit prévue.
+
+Pour un transfert programmé, réservez à l'avance : cela laisse le temps d'organiser le trajet en fonction de l'heure d'arrivée souhaitée. Ce service ne se substitue pas aux secours d'urgence : si la situation met en jeu le pronostic vital, contactez directement les services d'urgence, qui disposent des moyens adaptés à une intervention immédiate. Le tarif dépend de la distance et des conditions du transfert, et il est annoncé avant le départ.`,
   },
   {
     slug: "transport-medicalise",

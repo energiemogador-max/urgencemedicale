@@ -172,8 +172,18 @@ export type Situation = z.infer<typeof SituationSchema>;
  * No prices here: the published tiers are consultation rates, and quoting
  * them against nursing or transport would be inventing a price.
  */
+/**
+ * Injection, pansement and perfusion are deliberately NOT slugs here. They
+ * are acts performed within `soins-infirmiers-a-domicile`, and the operator
+ * confirmed they belong on that page rather than as pages of their own — so
+ * that page carries them as named sections instead of three thinner pages
+ * competing with their own hub.
+ */
 export const SERVICE_SLUGS = [
   "soins-infirmiers-a-domicile",
+  "oxygenotherapie-a-domicile",
+  "hospitalisation-a-domicile",
+  "evacuation-sanitaire",
   "transport-medicalise",
   "suivi-medical-personnalise",
 ] as const;
