@@ -2,35 +2,33 @@
 
 @theme {
   /* ---- Color -------------------------------------------------------------
-   * Deep pharmacy-green as the structural/trust color: in Morocco the
-   * pharmacy sign is a green crescent, so green reads as "medical help here"
-   * locally — and it is deliberately not the generic SaaS blue every
-   * competitor's Elementor template uses. Red is reserved EXCLUSIVELY for the
-   * call CTA so that one action stays unambiguous; it appears nowhere else.
+   * The operator's own brand: navy + red, taken from their logo and vehicle
+   * livery rather than invented here. Values sampled directly from the logo
+   * artwork and the hero mockup, so the site, the van and the logo agree.
+   *
+   * Navy carries structure (headings, panels, chrome). Red is the urgency
+   * accent and stays reserved for the call action and the single word it
+   * emphasises in the headline — it is never decoration.
    */
-  /* Ground is a cool clinical off-white with a green undertone, not the warm
-     cream that pairs with a serif display in the most common AI-design
-     cluster. It also reads closer to a clinic than to a magazine, which is
-     the right association for a medical service. */
-  --color-bg: #e9efec;
+  --color-bg: #eef3f7;
   --color-surface: #ffffff;
-  --color-surface-2: #dde7e2;
-  --color-ink: #0d1a15;
-  --color-ink-muted: #46564f;
+  --color-surface-2: #dfe9f0;
+  --color-ink: #0b1c33;
+  --color-ink-muted: #47586e;
 
-  --color-primary: #0c4a2c;
-  --color-primary-dark: #07331e;
-  --color-primary-tint: #dfeee5;
-  /* Lifted green used only on the dark hero panel, where the deep primary
-     would disappear against its own background. */
-  --color-primary-bright: #4ec08a;
+  --color-primary: #002454;
+  --color-primary-dark: #00142e;
+  --color-primary-tint: #dce6f2;
+  /* Lifted blue for text sitting on the deep navy panels, where the primary
+     would disappear against its own ground. */
+  --color-primary-bright: #7fb0e8;
 
-  --color-call: #c81e2c;
-  --color-call-dark: #a11722;
+  --color-call: #e20102;
+  --color-call-dark: #a10000;
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
 
-  --color-border: #ddd5c8;
+  --color-border: #c9d9e6;
   --color-focus: #1d6fb8;
 
   /* ---- Type ---------------------------------------------------------------
@@ -47,7 +45,8 @@
   --font-size-4xl: 3.5rem;
 
   --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
-  --font-family-serif: var(--font-serif), ui-serif, Georgia, serif;
+  /* Display is the same family at heavy weight, matching the logo lettering. */
+  --font-family-serif: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -72,9 +71,10 @@ body {
 h1,
 h2,
 h3 {
-  font-family: var(--font-family-serif);
+  font-family: var(--font-family-sans);
+  font-weight: 800;
   text-wrap: balance;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
 }
 
 a {

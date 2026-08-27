@@ -14,6 +14,7 @@ import { homeFaqs } from "@/lib/faqs";
 import { buildMedicalBusiness } from "@/lib/schema-org/business";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
 import { pageMetadata } from "@/lib/seo";
+import { SITE_DOMAIN } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
   return pageMetadata({ title: "Médecin à domicile au Maroc, 24h/24 et 7j/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
@@ -28,23 +29,54 @@ export default function HomePage() {
       <JsonLd data={[buildMedicalBusiness(), buildBreadcrumbList([{ name: "Accueil", path: paths.home() }])]} />
 
       <Hero
-        badge={`Disponible ${business.hoursOpen}`}
-        title="Un médecin chez vous, jour et nuit."
+        logo={{
+          src: "/images/logo-420.webp",
+          srcSet: "/images/logo-420.webp 420w, /images/logo-840.webp 840w",
+          width: 420,
+          height: 161,
+          alt: business.legalName,
+        }}
+        title="L'urgence médicale"
+        titleAccent="à domicile,"
+        titleTail={business.hoursOpen}
+        lead="Des médecins qualifiés, chez vous, en un temps record. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite."
         phoneDisplay={business.phoneDisplay}
         phoneHref={business.phoneHref}
-        callLabel="Appelez maintenant"
-        lead={`Le médecin se déplace à votre domicile et vous appelle avant d'arriver. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite — jamais après.`}
+        callLabel="Appelez-nous"
+        siteLabel={SITE_DOMAIN}
+        siteTagline="Votre santé, notre priorité"
+        features={[
+          { title: "Intervention", emphasis: "Rapide", detail: `${business.hoursOpen}`, icon: "clock" },
+          { title: "Médecins", emphasis: "Qualifiés", detail: "Inscrits à l'Ordre", icon: "doctor" },
+          { title: "Soins", emphasis: "À domicile", detail: "Confort & sécurité", icon: "home" },
+          { title: "Service", emphasis: "Fiable", detail: "Tarif annoncé d'avance", icon: "shield" },
+        ]}
+        coverageTitle="Partout au Maroc"
+        coverageNote="Nous sommes là pour vous."
         image={{
-          src: "/images/ambulance-1200.webp",
-          srcSet:
-            "/images/ambulance-800.webp 800w, /images/ambulance-1200.webp 1200w, /images/ambulance-1600.webp 1586w",
-          width: 1200,
-          height: 751,
-          alt: `Véhicule d'intervention ${business.legalName}, équipé pour le transport médicalisé`,
+          src: "/images/doctor-640.webp",
+          srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
+          width: 640,
+          height: 960,
+          alt: "Médecin en blouse blanche avec un stéthoscope",
         }}
       >
         <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} className="w-full sm:w-auto" />
       </Hero>
+
+      {/* Service strip, matching the brand artwork. */}
+      <ul className="mt-4 grid gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-4">
+        {[
+          "Urgences médicales",
+          "Consultations à domicile",
+          "Soins infirmiers",
+          "Suivi personnalisé",
+        ].map((s) => (
+          <li key={s} className="bg-primary px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white">
+            {s}
+          </li>
+        ))}
+      </ul>
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

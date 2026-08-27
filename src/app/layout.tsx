@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { content } from "@/lib/content";
-import { archivo, fraunces } from "./fonts";
+import { archivo } from "./fonts";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import "./globals.css";
@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { business, cities, specialties, situations } = content;
 
   return (
-    <html lang="fr" className={`${archivo.variable} ${fraunces.variable}`}>
+    <html lang="fr" className={archivo.variable}>
       <body className="flex min-h-full flex-col">
         <SiteHeader
           legalName={business.legalName}
