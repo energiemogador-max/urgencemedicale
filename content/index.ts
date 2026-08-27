@@ -8,6 +8,8 @@ import { aboutPage } from "./pages";
 import { cities, quartiers } from "./geo";
 import { specialties } from "./specialties";
 import { situations } from "./situations";
+import { services } from "./services";
+import { serviceCities } from "./service-cities";
 import { citySpecialties, situationCities } from "./combinations";
 
 const raw: Content = {
@@ -19,6 +21,8 @@ const raw: Content = {
   quartiers,
   specialties,
   situations,
+  services,
+  serviceCities,
   citySpecialties,
   situationCities,
 };
@@ -70,6 +74,12 @@ function checkThresholds(c: Content): string[] {
   }
   for (const s of c.situations) {
     check(`situations.${s.slug}`, [s.intro, s.body], MIN_WORDS.situation);
+  }
+  for (const s of c.services) {
+    check(`services.${s.slug}`, [s.intro, s.body], MIN_WORDS.service);
+  }
+  for (const sc of c.serviceCities) {
+    check(`serviceCities.${sc.serviceSlug}.${sc.citySlug}`, [sc.intro, sc.body], MIN_WORDS.serviceCity);
   }
   for (const cs of c.citySpecialties) {
     check(`citySpecialties.${cs.citySlug}.${cs.specialtySlug}`, [cs.intro, cs.body], MIN_WORDS.citySpecialty);
@@ -124,4 +134,4 @@ export function assertContentValid(): Content {
   return raw;
 }
 
-export { business, doctors, pricing, aboutPage, cities, quartiers, specialties, situations };
+export { business, doctors, pricing, aboutPage, cities, quartiers, specialties, situations, services, serviceCities };

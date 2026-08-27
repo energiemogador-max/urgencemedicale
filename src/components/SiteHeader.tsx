@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { City, Specialty, Situation } from "@content/schema";
+import type { City, Service, Specialty, Situation } from "@content/schema";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
 import { paths } from "@/lib/urls";
@@ -25,6 +25,7 @@ export function SiteHeader({
   cities,
   specialties,
   situations,
+  services,
 }: {
   legalName: string;
   phoneDisplay: string;
@@ -33,6 +34,7 @@ export function SiteHeader({
   cities: City[];
   specialties: Specialty[];
   situations: Situation[];
+  services: Service[];
 }) {
   const summaryClass =
     "flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1.5 font-semibold text-primary marker:content-none hover:bg-primary-tint";
@@ -155,6 +157,22 @@ export function SiteHeader({
                   {situations.map((s) => (
                     <Link key={s.slug} href={paths.situation(s.slug)} prefetch={false} className={itemClass}>
                       {s.title}
+                    </Link>
+                  ))}
+                </div>
+              </details>
+            </li>
+
+            <li className="relative">
+              <details name="mainnav" className="group">
+                <summary className={summaryClass}>
+                  Services
+                  <span className="transition-transform group-open:rotate-180">{chevron}</span>
+                </summary>
+                <div className={panelClass}>
+                  {services.map((s) => (
+                    <Link key={s.slug} href={paths.service(s.slug)} prefetch={false} className={itemClass}>
+                      {s.name}
                     </Link>
                   ))}
                 </div>

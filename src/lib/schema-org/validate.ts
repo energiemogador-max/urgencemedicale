@@ -82,6 +82,22 @@ export function validateOffer(node: object): string[] {
   return errors;
 }
 
+export function validateService(node: object): string[] {
+  const n = node as Record<string, unknown>;
+  const errors: string[] = [];
+  if (!isNonEmptyString(n.name)) errors.push("Service: missing required `name`");
+  if (!isNonEmptyString(n.description)) errors.push("Service: missing `description`");
+  if (!isNonEmptyString(n.url as string) || !/^https?:\/\//.test(n.url as string)) {
+    errors.push("Service: `url` must be an absolute URL");
+  }
+
+  const provider = n.provider as Record<string, unknown> | undefined;
+  if (!provider || !isNonEmptyString(provider["@id"] as string)) {
+    errors.push("Service: missing `provider` @id reference to the business node");
+  }
+  return errors;
+}
+
 export function validateBreadcrumbList(node: object): string[] {
   const n = node as Record<string, unknown>;
   const errors: string[] = [];

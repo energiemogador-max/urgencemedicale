@@ -1,4 +1,5 @@
 import type { FaqEntry } from "@/lib/schema-org/faq";
+import type { Service, ServiceSlug } from "@content/schema";
 import { content } from "@/lib/content";
 
 /**
@@ -73,6 +74,42 @@ export function specialtyFaqs(specialtyName: string): FaqEntry[] {
       answer:
         "Le médecin vous appelle avant d'arriver pour confirmer l'adresse et l'accès. Sur place, il procède à un examen complet, puis détermine lui-même la conduite à tenir : traitement, ordonnance, ou orientation vers un examen complémentaire ou un service hospitalier.",
     },
+    ...commonFaqs(),
+  ];
+}
+
+/**
+ * The second question differs per service because the honest answer does:
+ * nursing care runs on a prescription, transport is booked around a
+ * destination and a time, and a follow-up is agreed as a schedule. A single
+ * shared question would have to be vague enough to be useless — or, worse,
+ * state the nursing answer on the transport page.
+ */
+const SERVICE_SPECIFIC_FAQ: Record<ServiceSlug, FaqEntry> = {
+  "soins-infirmiers-a-domicile": {
+    question: "Faut-il une ordonnance ?",
+    answer:
+      "Oui. Les soins infirmiers sont réalisés sur prescription médicale : l'ordonnance définit les actes à effectuer et leur fréquence. Si vous n'en avez pas, une consultation à domicile permet d'abord au médecin d'établir le traitement.",
+  },
+  "transport-medicalise": {
+    question: "Faut-il réserver à l'avance ?",
+    answer:
+      "Pour un trajet programmé — un examen à heure fixe, une sortie d'hospitalisation prévue — mieux vaut réserver la veille ou plus tôt, afin que le trajet soit organisé en fonction de l'heure de rendez-vous. Un transport non programmé reste possible : le délai vous est annoncé au téléphone en fonction de l'heure et de la destination.",
+  },
+  "suivi-medical-personnalise": {
+    question: "À quelle fréquence le médecin passe-t-il ?",
+    answer:
+      "La fréquence n'est pas fixée d'avance : elle est convenue avec le médecin en fonction de l'état de la personne, et réévaluée au fil des visites. Elle vous est confirmée, avec le tarif applicable, avant la mise en place du suivi.",
+  },
+};
+
+export function serviceFaqs(service: Service): FaqEntry[] {
+  return [
+    {
+      question: `${service.name} : comment faire la demande ?`,
+      answer: `Vous appelez le ${content.business.phoneDisplay}. Nous vérifions avec vous ce qui est nécessaire, l'adresse et le moment souhaité, puis nous vous confirmons le tarif avant toute intervention.`,
+    },
+    SERVICE_SPECIFIC_FAQ[service.slug],
     ...commonFaqs(),
   ];
 }

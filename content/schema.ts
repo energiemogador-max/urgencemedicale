@@ -162,6 +162,45 @@ export const SituationSchema = z.object({
 });
 export type Situation = z.infer<typeof SituationSchema>;
 
+/**
+ * Non-consultation services the operator confirmed they provide: nursing
+ * care, medical transport, and ongoing follow-up. These are distinct from
+ * Specialty (which is a kind of doctor) — they were advertised in the
+ * homepage strip with nowhere to click through to, and they open keyword
+ * territory the doctor-visit taxonomy does not reach at all.
+ *
+ * No prices here: the published tiers are consultation rates, and quoting
+ * them against nursing or transport would be inventing a price.
+ */
+export const SERVICE_SLUGS = [
+  "soins-infirmiers-a-domicile",
+  "transport-medicalise",
+  "suivi-medical-personnalise",
+] as const;
+export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
+export const ServiceSlugEnum = z.enum(SERVICE_SLUGS);
+
+/** Services that also get per-city spoke pages (top 6 cities). */
+export const GEO_MULTIPLIED_SERVICE_SLUGS: ServiceSlug[] = ["soins-infirmiers-a-domicile"];
+
+export const ServiceSchema = z.object({
+  slug: ServiceSlugEnum,
+  name: filledText("service name"),
+  shortDescription: filledText("service short description"),
+  intro: filledText("service intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("service body content"),
+  geoMultiplied: z.boolean(),
+});
+export type Service = z.infer<typeof ServiceSchema>;
+
+export const ServiceCitySchema = z.object({
+  serviceSlug: ServiceSlugEnum,
+  citySlug: CitySlugEnum,
+  intro: filledText("service x city intro — 2-3 sentence answer-shaped opening"),
+  body: filledText("service x city unique body content"),
+});
+export type ServiceCity = z.infer<typeof ServiceCitySchema>;
+
 /** City x specialty spoke page (top 6 cities only — Phase 2 rule). */
 export const CitySpecialtySchema = z.object({
   citySlug: CitySlugEnum,
@@ -244,6 +283,8 @@ export const ContentSchema = z.object({
   quartiers: z.array(QuartierSchema),
   specialties: z.array(SpecialtySchema).min(1),
   situations: z.array(SituationSchema).min(1),
+  services: z.array(ServiceSchema).min(1),
+  serviceCities: z.array(ServiceCitySchema),
   citySpecialties: z.array(CitySpecialtySchema),
   situationCities: z.array(SituationCitySchema),
 });

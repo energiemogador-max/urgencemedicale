@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const { business, cities, specialties, situations } = content;
+  const { business, cities, specialties, situations, services } = content;
 
   return (
     <html lang="fr" className={archivo.variable}>
@@ -30,6 +30,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           cities={cities}
           specialties={specialties}
           situations={situations}
+          services={services}
         />
         <div className="flex-1">{children}</div>
         <SiteFooter
@@ -40,6 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           cities={cities}
           specialties={specialties}
           situations={situations}
+          services={services}
         />
       </body>
     </html>

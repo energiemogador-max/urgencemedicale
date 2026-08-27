@@ -38,7 +38,7 @@ These render publicly right now, and one of them is a medical credential.
 
 | Field | Where it shows | File |
 |---|---|---|
-| Ordre National des Médecins number | Trust block on **all 130 pages**, plus `Physician` JSON-LD | `content/doctors.ts` |
+| Ordre National des Médecins numbers (**7 doctors**) | `/nos-medecins` and the `Physician` JSON-LD on that page and on each specialty hub | `content/doctors.ts` |
 | Postal code | `/contact`, plus `PostalAddress` JSON-LD site-wide | `content/business.ts` |
 | Nearest hospital/clinic | All **19** quartier pages | `content/geo.ts` |
 
@@ -54,20 +54,33 @@ home-visit service actively misleads.
 
 ---
 
-## 5. Publish a real named doctor — the single highest-value action
+## 5. Finish the doctor profiles — the single highest-value action
 
 The competitor audit found that **not one of the seven competitor sites names
 a single doctor.** They all use aggregates: "+340 médecins mobilisés",
 "350+ médecins à disposition", "Plus 50 médecins à votre écoute". No names, no
 Ordre numbers, no individual credentials anywhere in this market.
 
-In a YMYL medical vertical that is the largest available differentiator, and
-it is currently unexploited because the field is a placeholder. One real
-doctor, named, with a verifiable Ordre number and a photograph, puts the site
-somewhere no competitor stands.
+**Done (2026-08-27):** seven named doctors are published — one generalist,
+four emergency physicians, one cardiologist, one geriatrician — listed on
+`/nos-medecins` and on each matching specialty hub, each with a `Physician`
+JSON-LD node.
 
-Needs: full name, Ordre National des Médecins registration number, specialty,
-short bio, and their consent to be listed.
+**Still needed, per doctor:**
+
+| Field | Status |
+|---|---|
+| Full name | Supplied. Confirm the reading of **Docteur Naoufal Naim** — supplied as "naim naoufal", and both elements work as either given name or surname. |
+| Ordre National des Médecins number | **Placeholder.** Blocks launch. |
+| Bio | **Stub.** Currently states only the specialty and that they do home visits — nothing was supplied to write from. |
+| Photograph | Missing. The `Doctor` schema already has an optional `photo` field. |
+| Consent to be listed | Must be obtained before launch. |
+
+The bios are the cheap win here. Years in practice, languages spoken
+(Arabic/Darija/French/English matters a lot in this market), hospital or
+clinic affiliation, and where they trained are exactly the E-E-A-T signals
+Google weighs in YMYL — and no competitor publishes any of them. Right now
+seven real doctors are carrying one generic sentence each.
 
 ---
 

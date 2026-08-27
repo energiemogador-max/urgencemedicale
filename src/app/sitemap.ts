@@ -82,6 +82,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
   }
 
+  for (const service of content.services) {
+    entries.push({
+      url: url(paths.service(service.slug)),
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+
+    if (service.geoMultiplied) {
+      for (const sc of content.serviceCities.filter((s) => s.serviceSlug === service.slug)) {
+        entries.push({
+          url: url(paths.serviceCity(service.slug, sc.citySlug)),
+          lastModified,
+          changeFrequency: "monthly",
+          priority: 0.6,
+        });
+      }
+    }
+  }
+
   for (const path of [paths.tarifs(), paths.nosMedecins(), paths.aPropos(), paths.reserver(), paths.contact()]) {
     entries.push({ url: url(path), lastModified, changeFrequency: "yearly", priority: 0.5 });
   }

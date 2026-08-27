@@ -16,6 +16,8 @@ export const MIN_WORDS = {
   citySpecialty: 250,
   situation: 450,
   situationCity: 220,
+  service: 450,
+  serviceCity: 250,
 } as const;
 
 export type ContentTemplate = keyof typeof MIN_WORDS;

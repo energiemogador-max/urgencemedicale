@@ -21,7 +21,7 @@ export function generateMetadata(): Metadata {
 }
 
 export default function HomePage() {
-  const { business, specialties, situations, cities, pricing } = content;
+  const { business, specialties, situations, services, cities, pricing } = content;
   const casablancaQuartiers = getQuartiersForCity("casablanca");
 
   return (
@@ -64,16 +64,26 @@ export default function HomePage() {
         <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} className="w-full sm:w-auto" />
       </Hero>
 
-      {/* Service strip, matching the brand artwork. */}
+      {/*
+        Service strip, matching the brand artwork. Every label links: the strip
+        is the first thing under the hero, so leaving it inert wasted four
+        prominent internal links from the site's strongest page.
+      */}
       <ul className="mt-4 grid gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-4">
         {[
-          "Urgences médicales",
-          "Consultations à domicile",
-          "Soins infirmiers",
-          "Suivi personnalisé",
+          { label: "Urgences médicales", href: paths.specialtyHub("urgentiste") },
+          { label: "Consultations à domicile", href: paths.specialtyHub("generaliste") },
+          { label: "Soins infirmiers", href: paths.service("soins-infirmiers-a-domicile") },
+          { label: "Suivi personnalisé", href: paths.service("suivi-medical-personnalise") },
         ].map((s) => (
-          <li key={s} className="bg-primary px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white">
-            {s}
+          <li key={s.label} className="bg-primary">
+            <Link
+              href={s.href}
+              prefetch={false}
+              className="block px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white no-underline hover:bg-primary-dark"
+            >
+              {s.label}
+            </Link>
           </li>
         ))}
       </ul>
@@ -140,6 +150,22 @@ export default function HomePage() {
               key={s.slug}
               href={paths.situation(s.slug)}
               title={s.title}
+              description={s.shortDescription}
+            />
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        title="Services à domicile"
+        lead="Au-delà de la consultation : ce que nous assurons aussi chez vous."
+      >
+        <div className="grid gap-3 sm:grid-cols-2">
+          {services.map((s) => (
+            <CardLink
+              key={s.slug}
+              href={paths.service(s.slug)}
+              title={s.name}
               description={s.shortDescription}
             />
           ))}

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { City, Specialty, Situation } from "@content/schema";
+import type { City, Service, Specialty, Situation } from "@content/schema";
 import { CrescentMark } from "@/components/CrescentMark";
 import { paths } from "@/lib/urls";
 
@@ -9,8 +9,8 @@ import { paths } from "@/lib/urls";
  * started on.
  *
  * It also carries the site's internal-link graph (Phase 8) — every city,
- * specialty and situation page is reachable from any page, which is what
- * lets the deeper spoke pages accumulate links.
+ * specialty, situation and service page is reachable from any page, which is
+ * what lets the deeper spoke pages accumulate links.
  */
 export function SiteFooter({
   legalName,
@@ -20,6 +20,7 @@ export function SiteFooter({
   cities,
   specialties,
   situations,
+  services,
 }: {
   legalName: string;
   address: { street: string; city: string; postalCode: string; region: string };
@@ -28,6 +29,7 @@ export function SiteFooter({
   cities: City[];
   specialties: Specialty[];
   situations: Situation[];
+  services: Service[];
 }) {
   const linkClass = "text-white/70 no-underline hover:text-white hover:underline";
   const headingClass = "text-sm font-bold uppercase tracking-[0.08em] text-primary-bright";
@@ -45,18 +47,39 @@ export function SiteFooter({
         </p>
 
         <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          <section>
-            <h2 className={headingClass}>Spécialités</h2>
-            <ul className="mt-3 space-y-1.5 text-sm">
-              {specialties.map((s) => (
-                <li key={s.slug}>
-                  <Link href={paths.specialtyHub(s.slug)} prefetch={false} className={linkClass}>
-                    {s.name} à domicile
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {/*
+            Spécialités and Services share a column rather than the footer
+            going to five: five columns at max-w-5xl leaves each one too
+            narrow for names like "Soins infirmiers à domicile", and the two
+            lists answer the same question — what the service actually does.
+          */}
+          <div className="space-y-8">
+            <section>
+              <h2 className={headingClass}>Spécialités</h2>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                {specialties.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={paths.specialtyHub(s.slug)} prefetch={false} className={linkClass}>
+                      {s.name} à domicile
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+            <section>
+              <h2 className={headingClass}>Services</h2>
+              <ul className="mt-3 space-y-1.5 text-sm">
+                {services.map((s) => (
+                  <li key={s.slug}>
+                    <Link href={paths.service(s.slug)} prefetch={false} className={linkClass}>
+                      {s.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </div>
 
           <section>
             <h2 className={headingClass}>Villes</h2>

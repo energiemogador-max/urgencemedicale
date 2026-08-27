@@ -1,5 +1,5 @@
 import { assertContentValid } from "@content/index";
-import type { CitySlug, SituationSlug, SpecialtySlug } from "@content/schema";
+import type { CitySlug, ServiceSlug, SituationSlug, SpecialtySlug } from "@content/schema";
 
 /**
  * The single content entry point for app code. Asserting validity at module
@@ -49,12 +49,33 @@ export function getCitiesForSituation(situationSlug: SituationSlug) {
   return content.situationCities.filter((sc) => sc.situationSlug === situationSlug);
 }
 
-/** Props for <TrustBlock>, defaulting to the site-wide response time unless a page has its own (e.g. a quartier). */
+export function getServiceBySlug(slug: string) {
+  return content.services.find((s) => s.slug === slug);
+}
+
+export function getServiceCity(serviceSlug: string, citySlug: string) {
+  return content.serviceCities.find((sc) => sc.serviceSlug === serviceSlug && sc.citySlug === citySlug);
+}
+
+export function getCitiesForService(serviceSlug: ServiceSlug) {
+  return content.serviceCities.filter((sc) => sc.serviceSlug === serviceSlug);
+}
+
+/**
+ * Props for <TrustBlock>, defaulting to the site-wide response time unless a
+ * page has its own (e.g. a quartier).
+ *
+ * A single doctor is named outright — that's the strongest E-E-A-T signal and
+ * no competitor publishes it. With a team, the badge switches to the headcount
+ * instead, because naming one of seven on every page attaches the wrong
+ * doctor to most of them.
+ */
 export function getTrustBlockProps(responseTimeMinutesOverride?: string) {
-  const leadDoctor = content.doctors[0];
+  const soleDoctor = content.doctors.length === 1 ? content.doctors[0] : undefined;
   return {
-    doctorName: leadDoctor?.name,
-    ordreNumber: leadDoctor?.ordreNumber,
+    doctorName: soleDoctor?.name,
+    ordreNumber: soleDoctor?.ordreNumber,
+    doctorCount: content.doctors.length,
     city: content.business.address.city,
     responseTimeMinutes: responseTimeMinutesOverride ?? content.business.defaultResponseTimeMinutes,
   };

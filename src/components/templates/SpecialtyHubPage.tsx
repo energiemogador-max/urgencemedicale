@@ -1,4 +1,5 @@
-import type { City, Specialty } from "@content/schema";
+import Link from "next/link";
+import type { City, Doctor, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
@@ -8,22 +9,26 @@ import { getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { specialtyFaqs } from "@/lib/faqs";
 import { buildSpecialtyFragment } from "@/lib/schema-org/business";
+import { buildPhysician } from "@/lib/schema-org/physician";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
 
 export function SpecialtyHubPage({
   specialty,
   cities,
   otherSpecialties,
+  doctors,
 }: {
   specialty: Specialty;
   cities: City[];
   otherSpecialties: Specialty[];
+  doctors: Doctor[];
 }) {
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <JsonLd
         data={[
           buildSpecialtyFragment(specialty.slug),
+          ...doctors.map(buildPhysician),
           buildBreadcrumbList([
             { name: "Accueil", path: paths.home() },
             { name: `${specialty.name} à domicile`, path: paths.specialtyHub(specialty.slug) },
@@ -38,6 +43,28 @@ export function SpecialtyHubPage({
       <div className="mt-8">
         <Prose text={specialty.body} />
       </div>
+
+      {/*
+        Naming the physicians who actually cover this specialty is the one
+        E-E-A-T signal no competitor in this market publishes — not one of the
+        nine audited names a single doctor anywhere on their site. The
+        Physician nodes reuse their /nos-medecins @id, so this is the same
+        entity surfaced in a second place, not a duplicate.
+      */}
+      {doctors.length > 0 && (
+        <Section title={doctors.length > 1 ? `Nos ${specialty.name.toLowerCase()}s` : `Votre ${specialty.name.toLowerCase()}`}>
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {doctors.map((d) => (
+              <li key={d.slug} className="rounded-lg border border-border bg-surface p-4">
+                <Link href={paths.nosMedecins()} className="font-bold text-ink no-underline hover:underline">
+                  {d.name}
+                </Link>
+                <p className="mt-1.5 text-sm text-ink-muted">{d.bio}</p>
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )}
 
       {cities.length > 0 && (
         <Section title={`${specialty.name} à domicile par ville`}>

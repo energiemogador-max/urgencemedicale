@@ -3,6 +3,7 @@ import { buildAreaServedFragment, buildMedicalBusiness, buildSpecialtyFragment }
 import { buildBreadcrumbList } from "../src/lib/schema-org/breadcrumbs";
 import { buildOffers } from "../src/lib/schema-org/offers";
 import { buildPhysician } from "../src/lib/schema-org/physician";
+import { buildService } from "../src/lib/schema-org/service";
 import { paths } from "../src/lib/urls";
 import {
   validateBreadcrumbList,
@@ -10,6 +11,7 @@ import {
   validateLocalBusiness,
   validateOffer,
   validatePhysician,
+  validateService,
 } from "../src/lib/schema-org/validate";
 
 // Content must be real and complete before its derived JSON-LD means anything.
@@ -86,6 +88,26 @@ for (const situation of content.situations) {
   );
 }
 
+for (const service of content.services) {
+  check(`service / ${service.slug}`, validateService(buildService(service)));
+  check(
+    `service / ${service.slug} / breadcrumbs`,
+    validateBreadcrumbList(
+      buildBreadcrumbList([
+        { name: "Accueil", path: paths.home() },
+        { name: service.name, path: paths.service(service.slug) },
+      ])
+    )
+  );
+}
+
+for (const sc of content.serviceCities) {
+  const service = content.services.find((s) => s.slug === sc.serviceSlug);
+  const city = content.cities.find((c) => c.slug === sc.citySlug);
+  if (!service || !city) continue;
+  check(`service-city / ${sc.serviceSlug}-${sc.citySlug}`, validateService(buildService(service, city)));
+}
+
 for (const sc of content.situationCities) {
   const city = content.cities.find((c) => c.slug === sc.citySlug);
   if (!city) continue;
@@ -93,7 +115,7 @@ for (const sc of content.situationCities) {
 }
 
 if (errors.length === 0) {
-  console.log(`jsonld: OK — validated MedicalBusiness, ${content.doctors.length} Physician(s), ${content.pricing.tiers.length} Offer(s), and breadcrumbs/fragments across all ${content.cities.length + content.quartiers.length + content.specialties.length + content.citySpecialties.length + content.situations.length + content.situationCities.length} generated pages.`);
+  console.log(`jsonld: OK — validated MedicalBusiness, ${content.doctors.length} Physician(s), ${content.pricing.tiers.length} Offer(s), ${content.services.length + content.serviceCities.length} Service(s), and breadcrumbs/fragments across all ${content.cities.length + content.quartiers.length + content.specialties.length + content.citySpecialties.length + content.situations.length + content.situationCities.length + content.services.length + content.serviceCities.length} generated pages.`);
   process.exit(0);
 }
 

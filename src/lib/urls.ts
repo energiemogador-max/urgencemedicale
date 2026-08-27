@@ -1,4 +1,4 @@
-import type { CitySlug, SituationSlug, SpecialtySlug } from "@content/schema";
+import type { CitySlug, ServiceSlug, SituationSlug, SpecialtySlug } from "@content/schema";
 
 /** Central URL builders — every internal link in the app should go through these, never a hand-typed string. */
 export const paths = {
@@ -8,6 +8,8 @@ export const paths = {
   specialtyHub: (specialty: SpecialtySlug) => `/${specialty}-a-domicile`,
   citySpecialty: (specialty: SpecialtySlug, city: CitySlug) => `/${specialty}-a-domicile/${city}`,
   situation: (situation: SituationSlug) => `/${situation}`,
+  service: (service: ServiceSlug) => `/${service}`,
+  serviceCity: (service: ServiceSlug, city: CitySlug) => `/${service}/${city}`,
   situationCity: (situation: SituationSlug, city: CitySlug) => `/${situation}/${city}`,
   nosMedecins: () => "/nos-medecins",
   tarifs: () => "/tarifs",
