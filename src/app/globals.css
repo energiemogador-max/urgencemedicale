@@ -150,37 +150,54 @@
  * nothing. That is exactly how the footer vanished when it gained
  * `overflow-hidden`. Letting body size to its content removes the pressure at
  * the source. */
-html {
-  height: 100%;
-}
+/*
+ * These MUST stay inside `@layer base`.
+ *
+ * Cascade layers do not care about specificity: an unlayered rule beats every
+ * layered rule, full stop. Tailwind puts its utilities in `@layer utilities`,
+ * so while this block sat unlayered, the bare `a { color: … }` below silently
+ * overrode `text-white`, `text-on-primary-muted` and every other text-colour
+ * utility — on every anchor on the site.
+ *
+ * That was not a subtle contrast bug. `--color-primary` is the same navy the
+ * footer and the homepage service strip use as their BACKGROUND, so those
+ * links rendered navy-on-navy: text and background mathematically identical,
+ * completely invisible, and only on the dark blocks. Moving one brace fixes
+ * every one of them.
+ */
+@layer base {
+  html {
+    height: 100%;
+  }
 
-body {
-  background-color: var(--color-bg);
-  color: var(--color-ink);
-  font-family: var(--font-family-sans);
-  font-size: var(--font-size-base);
-  font-weight: 500; /* floor — nothing renders lighter than medium */
-  line-height: 1.55;
-  -webkit-font-smoothing: antialiased;
-}
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-family-sans);
+    font-size: var(--font-size-base);
+    font-weight: 500; /* floor — nothing renders lighter than medium */
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
 
-h1,
-h2,
-h3 {
-  font-family: var(--font-family-sans);
-  font-weight: 800;
-  text-wrap: balance;
-  letter-spacing: -0.02em;
-}
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-family-sans);
+    font-weight: 800;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
 
-a {
-  color: var(--color-primary);
-  text-underline-offset: 0.18em;
-}
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 0.18em;
+  }
 
-:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 2px;
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
 }
 
 /* ---- The crescent motif ----------------------------------------------------
