@@ -29,12 +29,29 @@ export default function OpengraphImage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-          <div style={{ display: "flex", position: "relative", width: 56, height: 56 }}>
+          {/* Crescent carved by overlapping discs — satori has no SVG paths. */}
+          <div style={{ display: "flex", position: "relative", width: 60, height: 60 }}>
             <div
-              style={{ position: "absolute", left: 19, top: 0, width: 18, height: 56, background: "#4ec08a" }}
+              style={{
+                position: "absolute",
+                left: 0,
+                top: 0,
+                width: 60,
+                height: 60,
+                borderRadius: 30,
+                background: "#4ec08a",
+              }}
             />
             <div
-              style={{ position: "absolute", left: 0, top: 19, width: 56, height: 18, background: "#4ec08a" }}
+              style={{
+                position: "absolute",
+                left: 20,
+                top: -6,
+                width: 57,
+                height: 57,
+                borderRadius: 29,
+                background: "#0c4a2c",
+              }}
             />
           </div>
           <div style={{ display: "flex", color: "#4ec08a", fontSize: 30, fontWeight: 700 }}>

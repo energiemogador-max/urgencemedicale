@@ -4,8 +4,15 @@ export const dynamic = "force-static";
 export const size = { width: 64, height: 64 };
 export const contentType = "image/png";
 
-/** Favicon: the pharmacy cross on the site's deep green. Generated at build time. */
+/**
+ * Favicon: the green crescent — Morocco's pharmacy/health symbol, not the
+ * European cross. Satori (which renders this) has no SVG path support, so
+ * the crescent is carved by laying a background-coloured disc over a white
+ * one rather than drawn as a path.
+ */
 export default function Icon() {
+  const green = "#0c4a2c";
+
   return new ImageResponse(
     (
       <div
@@ -15,31 +22,31 @@ export default function Icon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#0c4a2c",
+          background: green,
           borderRadius: 12,
         }}
       >
-        <div style={{ display: "flex", position: "relative", width: 38, height: 38 }}>
+        <div style={{ display: "flex", position: "relative", width: 40, height: 40 }}>
           <div
             style={{
               position: "absolute",
-              left: 13,
+              left: 0,
               top: 0,
-              width: 12,
-              height: 38,
+              width: 40,
+              height: 40,
+              borderRadius: 20,
               background: "#ffffff",
-              borderRadius: 2,
             }}
           />
           <div
             style={{
               position: "absolute",
-              left: 0,
-              top: 13,
+              left: 13,
+              top: -4,
               width: 38,
-              height: 12,
-              background: "#ffffff",
-              borderRadius: 2,
+              height: 38,
+              borderRadius: 19,
+              background: green,
             }}
           />
         </div>

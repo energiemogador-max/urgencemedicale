@@ -2,11 +2,11 @@
 
 @theme {
   /* ---- Color -------------------------------------------------------------
-   * Deep pharmacy-green as the structural/trust color — the green cross is
-   * the universal "medical help here" cue in Morocco and France, and it is
-   * deliberately not the generic SaaS blue every competitor's Elementor
-   * template uses. Red is reserved EXCLUSIVELY for the call CTA so that one
-   * action stays unambiguous; it appears nowhere else on the site.
+   * Deep pharmacy-green as the structural/trust color: in Morocco the
+   * pharmacy sign is a green crescent, so green reads as "medical help here"
+   * locally — and it is deliberately not the generic SaaS blue every
+   * competitor's Elementor template uses. Red is reserved EXCLUSIVELY for the
+   * call CTA so that one action stays unambiguous; it appears nowhere else.
    */
   --color-bg: #f7f4ee;
   --color-surface: #ffffff;
@@ -83,34 +83,43 @@ a {
   outline-offset: 2px;
 }
 
-/* ---- The cross motif -------------------------------------------------------
- * The pharmacy cross is this subject's own symbol, so it carries the site's
- * texture instead of a generic gradient. Used at very low contrast as a
- * background weave on dark panels, and as the list marker in place of bullets.
+/* ---- The crescent motif ----------------------------------------------------
+ * Morocco's health symbol is the crescent, not the cross: pharmacies sign
+ * with a green crescent, and the relief society is the Croissant-Rouge. It
+ * carries the site's texture instead of a generic gradient — a low-contrast
+ * weave on dark panels, and the list marker in place of dot bullets.
+ *
+ * The marker uses mask-image rather than a background image so the shape
+ * inherits `currentColor` and recolors with the surrounding text.
  */
-.cross-weave {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Cpath d='M28 12h8v16h16v8H36v16h-8V36H12v-8h16z' fill='%23ffffff' fill-opacity='0.045'/%3E%3C/svg%3E");
-  background-size: 64px 64px;
+.crescent-weave {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
+  background-size: 72px 72px;
 }
 
-.cross-marker {
+.crescent-marker {
   position: relative;
   padding-left: 1.6rem;
 }
-.cross-marker::before {
+.crescent-marker::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.55em;
-  width: 0.7rem;
-  height: 0.7rem;
+  top: 0.5em;
+  width: 0.8rem;
+  height: 0.8rem;
   background-color: currentColor;
-  opacity: 0.85;
-  /* A plus/cross drawn with clip-path — no image request. */
-  clip-path: polygon(
-    40% 0%, 60% 0%, 60% 40%, 100% 40%, 100% 60%, 60% 60%,
-    60% 100%, 40% 100%, 40% 60%, 0% 60%, 0% 40%, 40% 40%
-  );
+  opacity: 0.9;
+  -webkit-mask-image: var(--crescent-mask);
+  mask-image: var(--crescent-mask);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+:root {
+  --crescent-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z' fill='%23000'/%3E%3C/svg%3E");
 }
 
 /* ---- Prose -----------------------------------------------------------------

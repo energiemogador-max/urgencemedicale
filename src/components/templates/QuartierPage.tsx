@@ -52,7 +52,7 @@ export function QuartierPage({
           <h2 className="text-lg font-bold text-ink">Repères à {quartier.name}</h2>
           <ul className="mt-3 space-y-2">
             {quartier.landmarks.map((l) => (
-              <li key={l} className="cross-marker text-ink-muted">
+              <li key={l} className="crescent-marker text-ink-muted">
                 <span>{l}</span>
               </li>
             ))}
@@ -63,7 +63,7 @@ export function QuartierPage({
           <h2 className="text-lg font-bold text-ink">Hôpitaux et cliniques les plus proches</h2>
           <ul className="mt-3 space-y-2">
             {quartier.nearestHospitals.map((h) => (
-              <li key={h} className="cross-marker text-ink-muted">
+              <li key={h} className="crescent-marker text-ink-muted">
                 <span>{h}</span>
               </li>
             ))}

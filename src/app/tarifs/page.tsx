@@ -67,7 +67,7 @@ export default function Page() {
             "L'ordonnance si le médecin la juge nécessaire",
             "Le compte-rendu de la consultation",
           ].map((item) => (
-            <li key={item} className="cross-marker rounded-lg border border-border bg-surface px-4 py-3 text-ink-muted">
+            <li key={item} className="crescent-marker rounded-lg border border-border bg-surface px-4 py-3 text-ink-muted">
               <span>{item}</span>
             </li>
           ))}

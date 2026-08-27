@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { CrescentMark } from "@/components/CrescentMark";
 
 /** Page section with a serif heading and consistent vertical rhythm. */
 export function Section({
@@ -13,8 +14,8 @@ export function Section({
 }) {
   return (
     <section className="mt-14">
-      <h2 className="text-xl font-bold text-ink">
-        <span aria-hidden="true" className="mr-2.5 inline-block h-3 w-3 align-middle text-primary [clip-path:polygon(40%_0%,60%_0%,60%_40%,100%_40%,100%_60%,60%_60%,60%_100%,40%_100%,40%_60%,0%_60%,0%_40%,40%_40%)] [background-color:currentColor]" />
+      <h2 className="flex items-center gap-2.5 text-xl font-bold text-ink">
+        <CrescentMark className="h-4 w-4 shrink-0 text-primary" />
         {title}
       </h2>
       {lead && <p className="mt-1.5 max-w-[68ch] text-ink-muted">{lead}</p>}
@@ -25,7 +26,7 @@ export function Section({
 
 /**
  * Card link with a green rule down its left edge that thickens on hover —
- * echoes the cross motif's stroke without adding another shape to the page.
+ * keeps the accent present without repeating the crescent on every card.
  */
 export function CardLink({
   href,
