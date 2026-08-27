@@ -6,13 +6,10 @@ import { JsonLd } from "@/components/JsonLd";
 import { Breadcrumbs, Lead, Section } from "@/components/ui";
 import { buildPhysician } from "@/lib/schema-org/physician";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "Nos médecins",
-    description: "Les médecins qui interviennent à domicile, avec leur numéro d'inscription à l'Ordre National des Médecins.",
-    alternates: { canonical: paths.nosMedecins() },
-  };
+  return pageMetadata({ title: "Nos médecins", description: "Les médecins qui interviennent à domicile, avec leur numéro d'inscription à l'Ordre National des Médecins.", path: paths.nosMedecins() });
 }
 
 export default function Page() {

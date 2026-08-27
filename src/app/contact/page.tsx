@@ -8,13 +8,10 @@ import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { Breadcrumbs, FactPill, Lead, Section } from "@/components/ui";
 import { toWhatsAppHref } from "@/lib/phone";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "Contact",
-    description: `Contactez ${content.business.legalName} — ${content.business.phoneDisplay}.`,
-    alternates: { canonical: paths.contact() },
-  };
+  return pageMetadata({ title: "Contact", description: `Contactez ${content.business.legalName} — ${content.business.phoneDisplay}.`, path: paths.contact() });
 }
 
 export default function Page() {

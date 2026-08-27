@@ -1,0 +1,19 @@
+# Cloudflare static-assets headers.
+#
+# Next's metadata routes emit real PNGs at extensionless paths (/icon,
+# /opengraph-image). Without an extension the asset server falls back to
+# application/octet-stream, and WhatsApp/Facebook then refuse to render the
+# share preview — which matters here because WhatsApp is a primary channel
+# for this market. These rules pin the correct type.
+
+/icon
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+/opengraph-image
+  Content-Type: image/png
+  Cache-Control: public, max-age=86400
+
+# Content-hashed build output is immutable by construction.
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

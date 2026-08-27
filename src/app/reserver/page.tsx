@@ -10,13 +10,10 @@ import { Breadcrumbs, Lead, Section } from "@/components/ui";
 import { toWhatsAppHref } from "@/lib/phone";
 import { homeFaqs } from "@/lib/faqs";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "Réserver un médecin à domicile",
-    description: "Réservez la visite d'un médecin à domicile.",
-    alternates: { canonical: paths.reserver() },
-  };
+  return pageMetadata({ title: "Réserver un médecin à domicile", description: "Réservez la visite d'un médecin à domicile.", path: paths.reserver() });
 }
 
 /**

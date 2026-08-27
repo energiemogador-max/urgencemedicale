@@ -8,13 +8,10 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, FactPill, Lead } from "@/components/ui";
 import { homeFaqs } from "@/lib/faqs";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "À propos",
-    description: content.aboutPage.intro,
-    alternates: { canonical: paths.aPropos() },
-  };
+  return pageMetadata({ title: "À propos", description: content.aboutPage.intro, path: paths.aPropos() });
 }
 
 export default function Page() {

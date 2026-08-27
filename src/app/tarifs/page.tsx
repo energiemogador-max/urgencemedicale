@@ -8,13 +8,10 @@ import { Breadcrumbs, Lead, Section } from "@/components/ui";
 import { homeFaqs } from "@/lib/faqs";
 import { buildOffers } from "@/lib/schema-org/offers";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "Tarifs",
-    description: "Nos tarifs de consultation à domicile, en toute transparence — jour, nuit et weekend.",
-    alternates: { canonical: paths.tarifs() },
-  };
+  return pageMetadata({ title: "Tarifs", description: "Nos tarifs de consultation à domicile, en toute transparence — jour, nuit et weekend.", path: paths.tarifs() });
 }
 
 export default function Page() {

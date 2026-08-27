@@ -12,7 +12,9 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
-    ignores: [".next/**", "node_modules/**", "next-env.d.ts"],
+    // `out/` is the static-export build output — generated, minified, and not
+    // ours to lint (it otherwise floods the report with thousands of warnings).
+    ignores: [".next/**", "out/**", "node_modules/**", "next-env.d.ts"],
   },
 ];
 

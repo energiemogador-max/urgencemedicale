@@ -22,6 +22,7 @@ import { SpecialtyHubPage } from "@/components/templates/SpecialtyHubPage";
 import { CitySpecialtyPage } from "@/components/templates/CitySpecialtyPage";
 import { SituationPage } from "@/components/templates/SituationPage";
 import { SituationCityPage } from "@/components/templates/SituationCityPage";
+import { pageMetadata } from "@/lib/seo";
 
 /**
  * Shared logic behind the 5 `{specialty}-a-domicile/` routes and the 6
@@ -36,11 +37,7 @@ import { SituationCityPage } from "@/components/templates/SituationCityPage";
 export function specialtyHubMetadata(specialtySlug: SpecialtySlug): Metadata {
   const specialty = getSpecialtyBySlug(specialtySlug);
   if (!specialty) return {};
-  return {
-    title: `${specialty.name} à domicile`,
-    description: specialty.intro,
-    alternates: { canonical: paths.specialtyHub(specialty.slug) },
-  };
+  return pageMetadata({ title: `${specialty.name} à domicile`, description: specialty.intro, path: paths.specialtyHub(specialty.slug) });
 }
 
 export function SpecialtyHubRoute({ specialtySlug }: { specialtySlug: SpecialtySlug }) {
@@ -64,11 +61,7 @@ export function citySpecialtyMetadata(specialtySlug: SpecialtySlug, citySlug: st
   const city = getCityBySlug(citySlug);
   const cs = specialty && city ? getCitySpecialty(city.slug, specialty.slug) : undefined;
   if (!specialty || !city || !cs) return {};
-  return {
-    title: `${specialty.name} à domicile à ${city.name}`,
-    description: cs.intro,
-    alternates: { canonical: paths.citySpecialty(specialty.slug, city.slug) },
-  };
+  return pageMetadata({ title: `${specialty.name} à domicile à ${city.name}`, description: cs.intro, path: paths.citySpecialty(specialty.slug, city.slug) });
 }
 
 export function CitySpecialtyRoute({ specialtySlug, citySlug }: { specialtySlug: SpecialtySlug; citySlug: string }) {
@@ -92,11 +85,7 @@ export function CitySpecialtyRoute({ specialtySlug, citySlug }: { specialtySlug:
 export function situationMetadata(situationSlug: SituationSlug): Metadata {
   const situation = getSituationBySlug(situationSlug);
   if (!situation) return {};
-  return {
-    title: situation.title,
-    description: situation.intro,
-    alternates: { canonical: paths.situation(situation.slug) },
-  };
+  return pageMetadata({ title: situation.title, description: situation.intro, path: paths.situation(situation.slug) });
 }
 
 export function SituationRoute({ situationSlug }: { situationSlug: SituationSlug }) {
@@ -122,11 +111,7 @@ export function situationCityMetadata(situationSlug: SituationSlug, citySlug: st
   const city = getCityBySlug(citySlug);
   const sc = situation && city ? getSituationCity(situation.slug, city.slug) : undefined;
   if (!situation || !city || !sc) return {};
-  return {
-    title: `${situation.title} à ${city.name}`,
-    description: sc.intro,
-    alternates: { canonical: paths.situationCity(situation.slug, city.slug) },
-  };
+  return pageMetadata({ title: `${situation.title} à ${city.name}`, description: sc.intro, path: paths.situationCity(situation.slug, city.slug) });
 }
 
 export function SituationCityRoute({ situationSlug, citySlug }: { situationSlug: SituationSlug; citySlug: string }) {

@@ -11,13 +11,10 @@ import { paths } from "@/lib/urls";
 import { homeFaqs } from "@/lib/faqs";
 import { buildMedicalBusiness } from "@/lib/schema-org/business";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
+import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
-  return {
-    title: "Médecin à domicile au Maroc, 24h/24 et 7j/7",
-    description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`,
-    alternates: { canonical: "/" },
-  };
+  return pageMetadata({ title: "Médecin à domicile au Maroc, 24h/24 et 7j/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
 }
 
 export default function HomePage() {
