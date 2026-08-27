@@ -23,6 +23,16 @@
      would disappear against its own ground. */
   --color-primary-bright: #7fb0e8;
 
+  /* Solid ink colours FOR use on the navy panels (footer, hero plate).
+   * Deliberately opaque rather than white-at-N%: alpha text on a dark ground
+   * depends on the compositing landing correctly, and if the declaration ever
+   * fails to apply, type falls back to `--color-ink` or the base link navy —
+   * both invisible here. Solid values cannot fail that way. Contrast on
+   * #002454: 15.2:1, 7.9:1, 5.8:1. */
+  --color-on-primary: #ffffff;
+  --color-on-primary-muted: #a9bdd4;
+  --color-on-primary-faint: #8ba1bd;
+
   --color-call: #e20102;
   --color-call-dark: #a10000;
   --color-whatsapp: #25d366;
@@ -89,16 +99,29 @@ a {
 
 /* ---- The crescent motif ----------------------------------------------------
  * Morocco's health symbol is the crescent, not the cross: pharmacies sign
- * with a green crescent, and the relief society is the Croissant-Rouge. It
- * carries the site's texture instead of a generic gradient — a low-contrast
- * weave on dark panels, and the list marker in place of dot bullets.
+ * with a green crescent, and the relief society is the Croissant-Rouge.
+ *
+ * GEOMETRY: the earlier path was `M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z`, which
+ * is malformed. Its first arc asks for radius 6 across a chord of 12.73 — and
+ * SVG (spec F.6.6) silently scales radii up until they fit rather than
+ * failing, so that arc degenerated into a plain semicircle. The result was a
+ * lopsided blob with a round bite taken out of it, not a crescent, and it was
+ * tiled across the whole footer.
+ *
+ * The path below is constructed rather than guessed: outer circle r=10 at
+ * (12,12) minus inner circle r=8.2 at (15.2,12). They intersect at
+ * (18.72, 4.59) and (18.72, 19.41) — the two tips. The outline is the major
+ * arc of the outer circle (large-arc, counterclockwise) followed by the arc
+ * of the inner circle that falls inside it. Both chords (14.82) sit inside
+ * their diameters, so no rescaling happens. It opens to the right, the
+ * Croissant-Rouge orientation.
  *
  * The marker uses mask-image rather than a background image so the shape
  * inherits `currentColor` and recolors with the surrounding text.
  */
-.crescent-weave {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E");
-  background-size: 72px 72px;
+:root {
+  --crescent-path: "M18.72 4.59A10 10 0 1 0 18.72 19.41A8.2 8.2 0 1 1 18.72 4.59Z";
+  --crescent-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M18.72 4.59A10 10 0 1 0 18.72 19.41A8.2 8.2 0 1 1 18.72 4.59Z' fill='%23000'/%3E%3C/svg%3E");
 }
 
 .crescent-marker {
@@ -120,10 +143,6 @@ a {
   mask-size: contain;
   -webkit-mask-repeat: no-repeat;
   mask-repeat: no-repeat;
-}
-
-:root {
-  --crescent-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z' fill='%23000'/%3E%3C/svg%3E");
 }
 
 /* ---- Prose -----------------------------------------------------------------

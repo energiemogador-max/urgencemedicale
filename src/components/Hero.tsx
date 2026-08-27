@@ -126,7 +126,7 @@ export function Hero({
                 </svg>
               </span>
               <span>
-                <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white/70">{callLabel}</span>
+                <span className="block text-xs font-bold uppercase tracking-[0.12em] text-on-primary-muted">{callLabel}</span>
                 <span className="block text-2xl font-black tracking-tight tabular-nums text-white">{phoneDisplay}</span>
               </span>
             </a>

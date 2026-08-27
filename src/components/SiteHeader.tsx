@@ -95,7 +95,7 @@ export function SiteHeader({
                 </svg>
               </span>
               <span className="leading-tight">
-                <span className="hidden text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/70 sm:block">
+                <span className="hidden text-[0.65rem] font-bold uppercase tracking-[0.12em] text-on-primary-muted sm:block">
                   Appelez-nous
                 </span>
                 <span className="block text-base font-black tabular-nums text-white sm:text-lg">{phoneDisplay}</span>

@@ -37,6 +37,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           legalName={business.legalName}
           address={business.address}
           phoneDisplay={business.phoneDisplay}
+          phoneHref={business.phoneHref}
+          whatsappNumber={business.whatsappNumber}
           hoursOpen={business.hoursOpen}
           cities={cities}
           specialties={specialties}
