@@ -56,6 +56,12 @@ export function SiteHeader({
             className="flex shrink-0 items-center gap-2.5 no-underline"
             aria-label={`${legalName} — accueil`}
           >
+            {/*
+              Lighthouse identifies this 44px mark as the actual LCP element on
+              the homepage — not the hero imagery — because it is the first
+              painted image in the sticky bar. It therefore carries the high
+              fetch priority, and the hero images do not.
+            */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/mark-96.webp"
@@ -64,6 +70,8 @@ export function SiteHeader({
               width={96}
               height={85}
               alt=""
+              fetchPriority="high"
+              decoding="sync"
               className="h-11 w-auto"
             />
             <span className="hidden leading-none sm:block">

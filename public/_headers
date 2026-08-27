@@ -1,11 +1,46 @@
 # Cloudflare static-assets headers.
+
+# ---------------------------------------------------------------------------
+# Security headers, site-wide.
 #
+# The audit found none were being sent. This is a static site with no cookies,
+# no login and no user input, so the exposure is limited — but these are free
+# and Google treats HTTPS/security hygiene as a quality signal.
+#
+# CSP is deliberately strict because the site genuinely needs nothing exotic:
+# no third-party scripts, no inline event handlers, no external stylesheets.
+# 'unsafe-inline' is required for style-src only because Next injects inline
+# styles; script-src stays clean. Revisit if analytics are added in Phase 7 —
+# a GA4 tag will need its domain allow-listed here.
+# ---------------------------------------------------------------------------
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+  Content-Security-Policy: default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+
+# ---------------------------------------------------------------------------
+# PRE-LAUNCH ONLY — REMOVE BEFORE GOING LIVE ON THE REAL DOMAIN.
+#
+# The site is currently served from a public *.workers.dev preview URL while
+# urgencemedicale.ma is not yet registered. robots.txt says Allow: / and every
+# canonical points at the unregistered domain, so without this Google could
+# index the preview host and split signals against the real site later.
+#
+# Deleting this block is item 1 on PRE-LAUNCH-CHECKLIST.md.
+# ---------------------------------------------------------------------------
+/*
+  X-Robots-Tag: noindex, nofollow
+
+# ---------------------------------------------------------------------------
 # Next's metadata routes emit real PNGs at extensionless paths (/icon,
 # /opengraph-image). Without an extension the asset server falls back to
 # application/octet-stream, and WhatsApp/Facebook then refuse to render the
 # share preview — which matters here because WhatsApp is a primary channel
 # for this market. These rules pin the correct type.
-
+# ---------------------------------------------------------------------------
 /icon
   Content-Type: image/png
   Cache-Control: public, max-age=86400

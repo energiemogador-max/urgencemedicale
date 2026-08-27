@@ -1,0 +1,66 @@
+{
+  "url": "https://urgencemedicale.lhakem3chine.workers.dev/",
+  "status_code": 200,
+  "content": "<!DOCTYPE html><!--YkcbuJrV6ixC8i8NsnFvs--><html lang=\"fr\" class=\"__variable_485b41\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preload\" href=\"/_next/static/media/1a4aa50920b5315c-s.p.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" href=\"/_next/static/media/23d669af23d19c95-s.p.woff2\" as=\"font\" crossorigin=\"\" type=\"font/woff2\"/><link rel=\"preload\" as=\"image\" imageSrcSet=\"/images/mark-96.webp 96w, /images/mar...",
+  "raw_content": "<!DOCTYPE html><!--YkcbuJrV6ixC8i8NsnFvs--><html lang=\"fr\" class=\"__variable_485b41\"><head><meta charSet=\"utf-8\"/><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"/><link rel=\"preloa...",
+  "is_spa": false,
+  "extracted_text": "L'urgence m\u00c3\u00a9dicale\n\u00c3\u00a0 domicile, 24/7\nDes m\u00c3\u00a9decins qualifi\u00c3\u00a9s, chez vous, en un temps record. Le tarif vous est annonc\u00c3\u00a9 au t\u00c3\u00a9l\u00c3\u00a9phone avant que vous ne confirmiez la visite.\n- InterventionRapide24/7\n- M\u00c3\u00a9decinsQualifi\u00c3\u00a9sInscrits \u00c3 l'Ordre\n- Soins\u00c3 domicileConfort & s\u00c3\u00a9curit\u00c3\u00a9\n- ServiceFiableTarif annonc\u00c3\u00a9 d'avance\nAppelez-nous06 01 99 12 96\nurgencemedicale.maVotre sant\u00c3\u00a9, notre priorit\u00c3\u00a9\nPartout au MarocNous sommes l\u00c3\u00a0 pour vous.\n- Urgences m\u00c3\u00a9dicales\n- Consultations \u00c3 domicile\n- Soins infirm...",
+  "publication_date": null,
+  "accessibility_tree": null,
+  "headers": {
+    "Date": "Thu, 27 Aug 2026 13:56:16 GMT",
+    "Content-Type": "text/html",
+    "Transfer-Encoding": "chunked",
+    "Connection": "keep-alive",
+    "CF-Cache-Status": "HIT",
+    "Cache-Control": "public, max-age=0, must-revalidate",
+    "Nel": "{\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}",
+    "Report-To": "{\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=WKKLtwEAR1NnkOyCZzdoq9EpUOFhbCUb22%2FStQDgtI5jMvj9%2BtVC0sTON7JmoVk%2BSBXxAfezP%2FFuOguDdi4J2OfU1Lt9HrqBr8RVpzDQ0E6FAOH6S2Qt2gXz4pEFhPB%2FtQCawY6AqfrcjBa8LBLQXOn6TaX3rrLkAa7l\"}]}",
+    "Content-Encoding": "zstd",
+    "Server": "cloudflare",
+    "CF-RAY": "a31b94258ee5ab0d-LIS",
+    "alt-svc": "h3=\":443\"; ma=86400"
+  },
+  "redirect_chain": [],
+  "console_errors": [],
+  "render_diagnostics": [],
+  "render_engine": null,
+  "render_ms": null,
+  "mode_used": "raw",
+  "error": null,
+  "structured_data": {
+    "block_count": 2,
+    "processed_count": 2,
+    "total_bytes": 4286,
+    "truncated": false,
+    "blocks": [
+      {
+        "index": 1,
+        "size_bytes": 2470,
+        "valid": true,
+        "types": [
+          "BreadcrumbList",
+          "City",
+          "GeoCoordinates",
+          "ListItem",
+          "MedicalBusiness",
+          "MedicalTherapy",
+          "OpeningHoursSpecification",
+          "PostalAddress"
+        ],
+        "types_truncated": false
+      },
+      {
+        "index": 2,
+        "size_bytes": 1816,
+        "valid": true,
+        "types": [
+          "Answer",
+          "FAQPage",
+          "Question"
+        ],
+        "types_truncated": false
+      }
+    ]
+  }
+}

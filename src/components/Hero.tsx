@@ -81,7 +81,7 @@ export function Hero({
             width={logo.width}
             height={logo.height}
             alt={logo.alt}
-            fetchPriority="high"
+            decoding="async"
             className="h-auto w-[220px] sm:w-[300px]"
           />
 
@@ -166,7 +166,6 @@ export function Hero({
                 width={image.width}
                 height={image.height}
                 alt={image.alt}
-                fetchPriority="high"
                 decoding="async"
                 className="absolute bottom-0 left-1/2 h-full w-auto max-w-none -translate-x-1/2 object-contain object-bottom"
               />
