@@ -21,6 +21,43 @@ type MedicalBusinessNode = MedicalBusinessLeaf & {
   isAcceptingNewPatients?: boolean;
 };
 
+/** All seven days — this service is 24/7, so both hours nodes use the full week. */
+const ALL_DAYS = [
+  "https://schema.org/Monday",
+  "https://schema.org/Tuesday",
+  "https://schema.org/Wednesday",
+  "https://schema.org/Thursday",
+  "https://schema.org/Friday",
+  "https://schema.org/Saturday",
+  "https://schema.org/Sunday",
+] as const;
+
+/**
+ * A 24/7 emergency contact point, in the languages the doctors actually
+ * consult in.
+ *
+ * Added after a live competitor sweep (2026-08-28): omnidoc.ma and
+ * sosmedecinmaroc.com both publish ContactPoint and we did not. It is the
+ * node that tells Google this is a number to call rather than a string of
+ * digits on a page, and `availableLanguage` is a claim none of them make.
+ */
+function buildContactPoint(languages: string[]) {
+  const { business } = content;
+  return {
+    "@type": "ContactPoint" as const,
+    contactType: "emergency",
+    telephone: business.phoneHref,
+    availableLanguage: languages,
+    areaServed: content.cities.map((c) => c.name),
+    hoursAvailable: {
+      "@type": "OpeningHoursSpecification" as const,
+      dayOfWeek: ALL_DAYS,
+      opens: "00:00",
+      closes: "23:59",
+    },
+  };
+}
+
 /**
  * The single site-wide MedicalBusiness/LocalBusiness node — full address,
  * geo, 24/7 opening hours, every specialty and city served. Emitted once on
@@ -51,19 +88,14 @@ export function buildMedicalBusiness(): WithContext<MedicalBusinessNode> {
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "https://schema.org/Monday",
-        "https://schema.org/Tuesday",
-        "https://schema.org/Wednesday",
-        "https://schema.org/Thursday",
-        "https://schema.org/Friday",
-        "https://schema.org/Saturday",
-        "https://schema.org/Sunday",
-      ],
+      dayOfWeek: ALL_DAYS,
       opens: "00:00",
       closes: "23:59",
     },
     isAcceptingNewPatients: true,
+    contactPoint: buildContactPoint(
+      Array.from(new Set(content.doctors.flatMap((d) => d.languages)))
+    ),
     medicalSpecialty: content.specialties.map((s) => SPECIALTY_TO_SCHEMA_ORG[s.slug]),
     areaServed: content.cities.map((c) => ({ "@type": "City", name: c.name })),
     availableService: content.specialties.map((s) => ({

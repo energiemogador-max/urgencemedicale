@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -41,6 +42,8 @@ export default function Page() {
       </div>
 
       <FaqBlock entries={homeFaqs()} />
+      <CallBanner />
+
     </main>
   );
 }

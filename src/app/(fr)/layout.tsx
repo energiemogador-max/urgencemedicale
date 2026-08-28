@@ -2,17 +2,20 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { content } from "@/lib/content";
-import { archivo } from "./fonts";
+import { business } from "@content/business";
+import { archivo } from "@/app/fonts";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { CF_BEACON_TOKEN, TAP_TRACKING_SCRIPT, hasWebAnalytics } from "@/lib/analytics";
-import "./globals.css";
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE_NAME} — Médecin à domicile à Casablanca et Rabat`,
-    template: `%s | ${SITE_NAME}`,
+    default: `Médecin à domicile Casablanca et Rabat | ${business.phoneDisplay}`,
+    // Pages build their own title via pageMetadata(), which appends the
+    // phone number when it fits. No template here, or it would double up.
+    template: "%s",
   },
   description:
     "Médecin à domicile à Casablanca, Mohammedia, Bouskoura, Dar Bouazza et Rabat, 24h/24 et 7j/7.",
@@ -38,7 +41,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const { business, cities, specialties, situations, services } = content;
 
   return (
-    <html lang="fr" className={archivo.variable}>
+    <html lang="fr" dir="ltr" className={archivo.variable}>
       <body className="flex min-h-full flex-col">
         <SiteHeader
           legalName={business.legalName}

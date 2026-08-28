@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, Lead, Section } from "@/components/ui";
@@ -78,6 +79,8 @@ export default function Page() {
       </Section>
 
       <FaqBlock entries={homeFaqs()} />
+      <CallBanner label={"Ce tarif vous convient ?"} />
+
     </main>
   );
 }

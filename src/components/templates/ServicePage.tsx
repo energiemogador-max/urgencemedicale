@@ -1,5 +1,6 @@
 import type { City, Service } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -38,6 +39,8 @@ export function ServicePage({
       <div className="mt-8">
         <Prose text={service.body} />
       </div>
+
+      <CallBanner />
 
       {cities.length > 0 && (
         <Section title={`${service.name} par ville`}>

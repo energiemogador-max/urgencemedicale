@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   const city = getCityBySlug(citySlug);
   const quartier = city && getQuartierBySlug(city.slug, quartierSlug);
   if (!city || !quartier) return {};
-  return pageMetadata({ title: `Médecin à domicile à ${quartier.name}, ${city.name}`, description: quartier.intro, path: paths.quartier(city.slug, quartier.slug) });
+  return pageMetadata({ title: `Médecin à domicile ${quartier.name}, ${city.name}`, description: quartier.intro, path: paths.quartier(city.slug, quartier.slug) });
 }
 
 export default async function Page({ params }: { params: Params }) {

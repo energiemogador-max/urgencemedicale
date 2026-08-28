@@ -29,7 +29,7 @@ export const services: Service[] = [
   {
     slug: "ambulance",
     name: "Ambulance et transport médicalisé",
-    shortDescription: "Transport d'un patient par la route, vers ou depuis un établissement de santé.",
+    shortDescription: "Ambulance et transport sanitaire d'un patient par la route, vers ou depuis un établissement de santé.",
     geoMultiplied: false,
     intro:
       "Une ambulance permet de transporter par la route une personne dont l'état ne permet pas de prendre un véhicule ordinaire — vers un hôpital ou une clinique, entre deux établissements, ou pour le retour au domicile. La demande se fait par téléphone.",
@@ -50,7 +50,7 @@ Pour un transport programmé — un examen à heure fixe, une sortie d'hospitali
   {
     slug: "soins-infirmiers-a-domicile",
     name: "Soins infirmiers à domicile",
-    shortDescription: "Injections, pansements, perfusions et suivi infirmier réalisés chez vous.",
+    shortDescription: "Infirmier à domicile : injections, pansements, perfusions et suivi infirmier réalisés chez vous.",
     geoMultiplied: true,
     intro:
       "Un infirmier peut se déplacer à votre domicile pour réaliser les soins prescrits par votre médecin, sans que vous ayez à vous rendre en cabinet ou en clinique. C'est particulièrement utile pour des soins répétés sur plusieurs jours, ou pour une personne dont les déplacements sont difficiles.",

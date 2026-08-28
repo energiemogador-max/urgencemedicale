@@ -13,8 +13,10 @@ import type { Doctor } from "./schema";
  *    home visits, phrased from the already-vetted wording in
  *    content/specialties.ts. No years of practice, languages, diplomas,
  *    hospital affiliations, or subspecialties — none of that was supplied.
- * 2. Languages are operator-supplied (2026-08-28): Arabic, French and
- *    English for the whole team.
+ * 2. Languages are operator-supplied (2026-08-28): Arabic, French and English
+ *    for the whole team, plus Amazigh for Docteur Naoufal Naim. Amazigh is an
+ *    official language of Morocco and a real differentiator for a home-visit
+ *    service — it is worth surfacing, not flattening into a team-wide list.
  * 3. No pronouns, and no gendered honorific beyond the standard "Docteur"
  *    used for all physicians in Moroccan and French practice. Nothing here
  *    infers a doctor's gender from their name.
@@ -55,7 +57,7 @@ export const doctors: Doctor[] = [
     slug: "dr-naoufal-naim",
     name: "Docteur Naoufal Naim",
     ordreNumber: "24656978",
-    languages: ["Arabe", "Français", "Anglais"],
+    languages: ["Arabe", "Français", "Anglais", "Amazigh"],
     specialtySlug: "urgentiste",
     bio: "Médecin urgentiste. Se déplace à domicile pour les demandes qui relèvent d'une prise en charge sans délai.",
   },

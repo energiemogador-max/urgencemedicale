@@ -3,6 +3,7 @@ import { isUnconfirmed } from "@content/schema";
 import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Breadcrumbs, Lead, Section } from "@/components/ui";
 import { buildPhysician } from "@/lib/schema-org/physician";
@@ -56,6 +57,8 @@ export default function Page() {
           ))}
         </ul>
       </Section>
+      <CallBanner label={"Un de nos médecins peut venir chez vous"} />
+
     </main>
   );
 }

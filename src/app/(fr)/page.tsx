@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { content, getTrustBlockProps, getQuartiersForCity } from "@/lib/content";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -17,7 +18,7 @@ import { pageMetadata } from "@/lib/seo";
 import { SITE_DOMAIN } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
-  return pageMetadata({ title: "Médecin à domicile à Casablanca et Rabat, 24h/24 et 7j/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
+  return pageMetadata({ title: "Médecin à domicile Casablanca et Rabat 24/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
 }
 
 export default function HomePage() {
@@ -48,7 +49,7 @@ export default function HomePage() {
         title="L'urgence médicale"
         titleAccent="à domicile,"
         titleTail={business.hoursOpen}
-        lead="Des médecins qualifiés, chez vous, en un temps record. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite."
+        lead="Assistance médicale à domicile : des médecins qualifiés chez vous, en un temps record. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite."
         phoneDisplay={business.phoneDisplay}
         phoneHref={business.phoneHref}
         callLabel="Appelez-nous"
@@ -115,7 +116,7 @@ export default function HomePage() {
             {
               n: "1",
               t: "Vous appelez",
-              d: "Vous indiquez l'adresse, l'étage et le motif. Le délai et le tarif vous sont annoncés immédiatement.",
+              d: "Régulation médicale au téléphone : vous indiquez l'adresse, l'étage et le motif. Le délai et le tarif vous sont annoncés immédiatement.",
             },
             {
               n: "2",
@@ -234,6 +235,8 @@ export default function HomePage() {
       </Section>
 
       <FaqBlock entries={homeFaqs()} />
+      <CallBanner />
+
     </main>
   );
 }

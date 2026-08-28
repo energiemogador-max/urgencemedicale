@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { City, Doctor, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -43,6 +44,8 @@ export function SpecialtyHubPage({
       <div className="mt-8">
         <Prose text={specialty.body} />
       </div>
+
+      <CallBanner />
 
       {/*
         Naming the physicians who actually cover this specialty is the one

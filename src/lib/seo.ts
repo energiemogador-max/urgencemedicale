@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
+import { business } from "@content/business";
+import { DEFAULT_LOCALE, HREFLANG, LOCALES, isTranslated, localizedPath, type Locale } from "@/lib/i18n";
+
+const PHONE_DISPLAY = business.phoneDisplay;
 
 /**
  * One place that builds page metadata, so every indexable page gets the same
@@ -46,16 +50,70 @@ function clampDescription(text: string): string {
 }
 
 /**
- * The layout's title template appends " | Urgence Médicale" (20 chars). On a
- * long page title — "Fièvre chez l'enfant la nuit à Casablanca" — that pushed
- * 27 pages past the point where Google truncates, and the brand is the least
- * useful part to keep: it is already in the URL and the site name in the
- * SERP. When the combined title would overflow, this returns an absolute
- * title so the keyword-bearing half survives intact.
+ * Titles end with the phone number, not the brand.
+ *
+ * A live sweep of the six reachable competitors (2026-08-28) found three of
+ * them doing this — "Médecin à Domicile Maroc 24h/24 et 7j/7 | 07 08 21 53 88",
+ * "Soins à Domicile au Maroc | 0650956222 | Urgence 24/7". It is the right
+ * call for this market: someone searching at 2am wants to dial, and a number
+ * in the result is a tap without a page load.
+ *
+ * It also costs nothing. The brand suffix occupied the same budget while
+ * adding no information — "Urgence Médicale" is already the SERP site name
+ * and sits in the domain. Swapping one for the other is free.
+ *
+ * When even the shortened form would overflow the ~60 chars Google renders,
+ * the page title alone wins: the keywords matter more than the number.
  */
 function clampTitle(title: string): Metadata["title"] {
-  const suffix = ` | ${SITE_NAME}`;
-  return title.length + suffix.length > TITLE_MAX ? { absolute: title } : title;
+  const suffix = ` | ${PHONE_DISPLAY}`;
+  return title.length + suffix.length > TITLE_MAX
+    ? { absolute: title }
+    : { absolute: `${title}${suffix}` };
+}
+
+/**
+ * hreflang alternates.
+ *
+ * Emitted ONLY for paths that genuinely exist in the other locales. Declaring
+ * an alternate that 404s, or that points at an untranslated duplicate, makes
+ * Google treat the whole cluster as broken and can cause it to ignore every
+ * annotation on the site — worse than having none. `x-default` points at the
+ * French version, which is the primary market.
+ */
+function buildAlternates(path: string): Record<string, string> {
+  const out: Record<string, string> = {
+    [HREFLANG[DEFAULT_LOCALE]]: `${SITE_URL}${path === "/" ? "" : path}`,
+    "x-default": `${SITE_URL}${path === "/" ? "" : path}`,
+  };
+  if (isTranslated(path)) {
+    for (const locale of LOCALES) {
+      if (locale === DEFAULT_LOCALE) continue;
+      out[HREFLANG[locale]] = `${SITE_URL}${localizedPath(path, locale)}`;
+    }
+  }
+  return out;
+}
+
+/** Metadata for a non-French page. `frenchPath` is its French equivalent. */
+export function localeMetadata({
+  locale,
+  frenchPath,
+  title,
+  description,
+}: {
+  locale: Locale;
+  frenchPath: string;
+  title: string;
+  description: string;
+}): Metadata {
+  const self = `${SITE_URL}${localizedPath(frenchPath, locale)}`;
+  return {
+    title: { absolute: title },
+    description: clampDescription(description),
+    alternates: { canonical: localizedPath(frenchPath, locale), languages: buildAlternates(frenchPath) },
+    openGraph: { type: "website", siteName: SITE_NAME, locale, title, description, url: self },
+  };
 }
 
 export function pageMetadata({
@@ -76,12 +134,7 @@ export function pageMetadata({
     description: desc,
     alternates: {
       canonical,
-      languages: {
-        // fr-MA now; the ar-MA entry is added here when the Arabic version
-        // exists. x-default points at the French site until then.
-        "fr-MA": absolute,
-        "x-default": absolute,
-      },
+      languages: buildAlternates(path),
     },
     openGraph: {
       type: "website",

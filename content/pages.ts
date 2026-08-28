@@ -8,5 +8,5 @@ import type { AboutPage } from "./schema";
  */
 export const aboutPage: AboutPage = {
   intro: "Urgence Médicale Casablanca envoie un médecin à votre domicile à Casablanca, 24h/24 et 7j/7.",
-  body: "Le service est assuré par une équipe de médecins nommément identifiés — généraliste, urgentistes, gériatre et cardiologue — qui se déplacent chez vous. Leurs noms et leurs spécialités figurent sur la page Nos médecins. Le tarif est communiqué avant votre confirmation, et le médecin vous appelle avant d'arriver.",
+  body: "Urgence Médicale Casablanca est un service d'assistance médicale à domicile — ce qu'on appelle couramment un SOS médecin. Le service est assuré par une équipe de médecins nommément identifiés — généraliste, urgentistes, gériatre et cardiologue — qui se déplacent chez vous. Leurs noms et leurs spécialités figurent sur la page Nos médecins. Le tarif est communiqué avant votre confirmation, et le médecin vous appelle avant d'arriver.",
 };

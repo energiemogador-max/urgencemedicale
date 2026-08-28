@@ -3,6 +3,7 @@ import { SPECIALTY_ELIGIBLE_CITY_SLUGS } from "@content/schema";
 import { SITE_URL } from "@/lib/site";
 import { content, getQuartiersForCity } from "@/lib/content";
 import { paths } from "@/lib/urls";
+import { DEFAULT_LOCALE, LOCALES, TRANSLATED_PATHS, localizedPath } from "@/lib/i18n";
 
 export const dynamic = "force-static";
 
@@ -99,6 +100,23 @@ export default function sitemap(): MetadataRoute.Sitemap {
           priority: 0.6,
         });
       }
+    }
+  }
+
+  /*
+   * Translated pages. Only paths listed in TRANSLATED_PATHS have a locale
+   * version, so this can never emit a URL that does not exist — the same
+   * registry drives the hreflang cluster and the language switcher.
+   */
+  for (const frenchPath of TRANSLATED_PATHS) {
+    for (const locale of LOCALES) {
+      if (locale === DEFAULT_LOCALE) continue;
+      entries.push({
+        url: url(localizedPath(frenchPath, locale)),
+        lastModified,
+        changeFrequency: "weekly",
+        priority: 0.9,
+      });
     }
   }
 

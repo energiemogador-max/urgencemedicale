@@ -3,6 +3,7 @@ import type { City, Service, Specialty, Situation } from "@content/schema";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
 import { paths } from "@/lib/urls";
+import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 
 /**
  * Header carrying the brand mark, the call action, and the navigation.
@@ -266,6 +267,13 @@ export function SiteHeader({
               <Link href={paths.contact()} prefetch={false} className={linkClass}>
                 Contact
               </Link>
+            </li>
+
+            {/* Renders only on pages that genuinely have translations — the
+                registry in lib/i18n.ts is the single source of truth, shared
+                with hreflang and the sitemap. */}
+            <li className="ms-auto">
+              <LocaleSwitcher current="fr" frenchPath="/" />
             </li>
           </ul>
         </div>

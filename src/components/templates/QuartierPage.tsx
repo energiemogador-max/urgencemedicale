@@ -1,5 +1,6 @@
 import type { City, Quartier } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, Lead, LinkGrid, Section } from "@/components/ui";
@@ -90,6 +91,8 @@ export function QuartierPage({
           />
         </Section>
       )}
+
+      <CallBanner />
 
       <FaqBlock entries={quartierFaqs(quartier.name, quartier.responseTimeMinutes)} />
     </main>
