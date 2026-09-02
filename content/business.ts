@@ -29,4 +29,7 @@ export const business: Business = {
   },
   defaultResponseTimeMinutes: "10 à 15",
   hoursOpen: "24/7",
+  // Google Business Profile (Knowledge Graph id /g/11zfhwtr46), supplied by
+  // the operator 2026-09-02. Add Facebook/Instagram here as they are created.
+  profiles: ["https://share.google/2mBNIVD81eAsxysgi"],
 };

@@ -93,6 +93,9 @@ export function buildMedicalBusiness(): WithContext<MedicalBusinessNode> {
       closes: "23:59",
     },
     isAcceptingNewPatients: true,
+    // Ties this site's business entity to its Google Business Profile, so the
+    // two are understood as one business rather than two similar ones.
+    ...(business.profiles.length ? { sameAs: business.profiles } : {}),
     contactPoint: buildContactPoint(
       Array.from(new Set(content.doctors.flatMap((d) => d.languages)))
     ),

@@ -29,11 +29,11 @@ export const services: Service[] = [
   {
     slug: "ambulance",
     name: "Ambulance et transport médicalisé",
-    shortDescription: "Ambulance et transport sanitaire d'un patient par la route, vers ou depuis un établissement de santé.",
+    shortDescription: "Service ambulancier et transport sanitaire par la route, vers ou depuis un établissement de santé.",
     geoMultiplied: false,
     intro:
       "Une ambulance permet de transporter par la route une personne dont l'état ne permet pas de prendre un véhicule ordinaire — vers un hôpital ou une clinique, entre deux établissements, ou pour le retour au domicile. La demande se fait par téléphone.",
-    body: `On cherche une ambulance dans deux situations très différentes, et il vaut mieux les distinguer tout de suite.
+    body: `On cherche un service ambulancier dans deux situations très différentes, et il vaut mieux les distinguer tout de suite.
 
 La première est l'urgence vitale : quelqu'un ne respire plus normalement, a perdu connaissance, saigne abondamment, ou vient d'avoir un accident. Dans ce cas, ce ne sont pas ces pages qu'il faut lire : il faut contacter immédiatement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation nécessaires. Aucun transport programmé ne remplace cela, et perdre cinq minutes à chercher un numéro privé est exactement ce qu'il ne faut pas faire.
 

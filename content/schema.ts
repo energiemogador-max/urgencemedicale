@@ -327,6 +327,16 @@ export const BusinessSchema = z.object({
   /** Business input: the site-wide default response-time commitment, in minutes. */
   defaultResponseTimeMinutes: filledResponseTime("default response time (minutes)"),
   hoursOpen: z.literal("24/7"),
+  /**
+   * Authoritative profiles for this same business elsewhere, emitted as
+   * `sameAs` on the MedicalBusiness node.
+   *
+   * This is how a search engine is told "the entity on this site and the
+   * entity in that listing are one and the same" rather than two businesses
+   * with a similar name. Add the Facebook and Instagram pages here when they
+   * exist; each one strengthens the same link.
+   */
+  profiles: z.array(z.string().url("profile must be a full URL")),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 
