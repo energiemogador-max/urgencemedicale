@@ -216,8 +216,17 @@ const ADMIN_CSP = [
     "https://identitytoolkit.googleapis.com https://securetoken.googleapis.com " +
     "https://cloudflareinsights.com https://www.gstatic.com",
 
+  // Realtime Database opens a hidden iframe to a regional shard host
+  // (s-gke-euw1-*.firebasedatabase.app) during its connection handshake, and
+  // Auth uses one on the authDomain for some flows. Without frame-src these
+  // fall back to default-src 'self' and are blocked, which shows up as
+  // reconnect churn even when the socket itself is fine.
+  "frame-src 'self' https://*.firebasedatabase.app https://*.firebaseio.com " +
+    "https://urgencemedicale-8b903.firebaseapp.com",
+
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
+  // frame-ancestors stays 'none': nothing may embed the dashboard itself.
   "frame-ancestors 'none'",
   "base-uri 'self'",
   "object-src 'none'",
