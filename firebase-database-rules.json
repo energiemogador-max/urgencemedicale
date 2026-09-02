@@ -10,6 +10,11 @@
       "$id": { ".write": "auth != null" }
     },
 
+    "staff_members": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+    },
+
     "doctors": {
       ".read": "auth != null",
       ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"

@@ -256,6 +256,20 @@
     <div class="wrap"><table>
       <thead><tr><th>Nom</th><th>E-mail</th><th>Rôle</th><th>Médecin</th><th>UID</th></tr></thead>
       <tbody id="usr-rows"></tbody></table></div>
+
+    <div class="card" style="max-width:460px">
+      <h3>Équipe au standard (codes)</h3>
+      <div id="stmsg" class="msg okmsg" hidden></div>
+      <p class="muted" style="margin-top:0">Ces codes identifient qui prend l'appel. Ce n'est pas une
+        sécurité — la connexion Firebase l'est — et le code est lisible par toute l'équipe connectée.
+        Il sépare les collègues, il ne protège pas contre eux.</p>
+      <label for="st-nom">Nom</label><input id="st-nom" placeholder="Prénom Nom">
+      <label for="st-pin">Code</label><input id="st-pin" inputmode="numeric" placeholder="4 chiffres">
+      <button id="st-save" class="primary">Ajouter au standard</button>
+    </div>
+    <div class="wrap"><table>
+      <thead><tr><th>Nom</th><th>Identifiant</th><th>Action</th></tr></thead>
+      <tbody id="staff-rows"></tbody></table></div>
   </section>
 </main>
 
@@ -274,13 +288,21 @@ const mad = (n) => (Number(n) || 0).toLocaleString("fr-FR") + " MAD";
 const fmt = (t) => { try { return new Date(t).toLocaleString("fr-FR"); } catch (e) { return String(t); } };
 const DAY = 86400000;
 
-/* Staff, with a light PIN. Not security — the Firebase login is that — but
-   attribution: every intervention and every payment carries a name, which is
-   the entire point of the ledger. Edit this list to add or remove people. */
-const STAFF = [
-  { id: "s_1", name: "Standard 1", pin: "1011" },
-  { id: "s_2", name: "Standard 2", pin: "2022" },
-];
+/* Staff, with a light PIN, managed from the Utilisateurs tab and stored in
+   Firebase at staff_members/ — the same shape as the Nova Style admin.
+   Hardcoding them meant nobody could change a name or a code without a
+   redeploy, which is not how a rota works.
+
+   NOT security: the Firebase login is. This is attribution, so every
+   intervention and every payment carries the name of whoever took it. The PIN
+   is readable by any signed-in staff member, which is the accepted trade in
+   the Nova Style admin too — it separates colleagues, it does not defend
+   against them.
+
+   SEED_STAFF only applies while staff_members/ is empty, so a fresh install
+   is usable before anyone has been added. */
+const SEED_STAFF = [{ id: "s_1", name: "Standard 1", pin: "1011" }];
+let STAFF = SEED_STAFF;
 
 const STATUS = [
   ["recu", "Reçu", "st-recu"],
@@ -351,7 +373,14 @@ else {
   $("out").onclick = () => { sessionStorage.removeItem("um_staff"); signOut(auth); };
 
   // ── PIN ────────────────────────────────────────────────────────────────
-  $("pinsel").innerHTML = STAFF.map((s) => `<option value="${s.id}">${esc(s.name)}</option>`).join("");
+  function refreshStaffOptions() {
+    $("pinsel").innerHTML = STAFF.map((m) => `<option value="${m.id}">${esc(m.name)}</option>`).join("");
+    $("staff-rows").innerHTML = STAFF.map((m) =>
+      `<tr><td>${esc(m.name)}</td><td class="muted">${esc(m.id)}</td>` +
+      `<td>${isAdmin() ? `<button class="mini" style="background:#8a5a00" data-staff="${esc(m.id)}">Retirer</button>` : ""}</td></tr>`
+    ).join("");
+  }
+  refreshStaffOptions();
   $("pinok").onclick = () => {
     const m = STAFF.find((s) => s.id === $("pinsel").value);
     if (!m || $("pinval").value !== m.pin) {
@@ -491,6 +520,30 @@ else {
     }
   };
 
+  // ── add / remove a staff member (admin) ────────────────────────────────
+  $("st-save").onclick = async () => {
+    const name = $("st-nom").value.trim();
+    const pin = $("st-pin").value.trim();
+    if (!name || pin.length < 3) {
+      $("stmsg").className = "msg"; $("stmsg").textContent = "Nom requis et code d'au moins 3 chiffres.";
+      $("stmsg").hidden = false; return;
+    }
+    const id = "s_" + Date.now().toString(36);
+    try {
+      await update(ref(db, "staff_members/" + id), { id, name, pin, active: true, createdAt: Date.now() });
+      $("st-nom").value = ""; $("st-pin").value = "";
+      $("stmsg").className = "msg okmsg"; $("stmsg").textContent = "Membre ajouté.";
+      $("stmsg").hidden = false; setTimeout(() => { $("stmsg").hidden = true; }, 4000);
+    } catch (e) {
+      $("stmsg").className = "msg"; $("stmsg").textContent = "Refusé — réservé aux administrateurs.";
+      $("stmsg").hidden = false;
+    }
+  };
+  $("staff-rows").addEventListener("click", async (ev) => {
+    const b = ev.target.closest("button[data-staff]"); if (!b) return;
+    try { await update(ref(db, "staff_members/" + b.dataset.staff), { active: false }); } catch (e) {}
+  });
+
   // ── add / update a user role (admin) ───────────────────────────────────
   $("u-save").onclick = async () => {
     const uid = $("u-uid").value.trim();
@@ -574,6 +627,11 @@ else {
     }, () => {});
     onValue(ref(db, "users"), (s) => {
       users = Object.entries(s.val() || {}).map(([uid, v]) => ({ uid, ...v })); renderUsers();
+    }, () => {});
+    onValue(ref(db, "staff_members"), (s) => {
+      const live = Object.values(s.val() || {}).filter((m) => m && m.active !== false);
+      STAFF = live.length ? live : SEED_STAFF;
+      refreshStaffOptions();
     }, () => {});
 
     const days = [];
