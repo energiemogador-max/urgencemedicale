@@ -348,6 +348,13 @@ let users = [];
  * database rules decide. Both are needed — the UI so people are not offered
  * actions that will fail, the rules so a hidden button cannot be bypassed.
  */
+/* The tab ids, in one place. They were previously written out at each use
+   site and one copy omitted "admin", so clicking Utilisateurs hid every other
+   section and unhid nothing — a blank page. A list repeated three times is a
+   list that will disagree with itself. */
+const TABS = ["dash", "ops", "cash", "admin"];
+const showTab = (name) => TABS.forEach((t) => { $("t-" + t).hidden = t !== name; });
+
 const isAdmin = () => me?.role === "admin";
 const isDoctor = () => me?.role === "medecin";
 
@@ -396,7 +403,7 @@ else {
   $("nav").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-t]"); if (!b) return;
     [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
-    ["dash", "ops", "cash"].forEach((t) => { $("t-" + t).hidden = t !== b.dataset.t; });
+    showTab(b.dataset.t);
   });
   $("range").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-r]"); if (!b) return;
@@ -576,7 +583,7 @@ else {
   // ── auth ───────────────────────────────────────────────────────────────
   function showApp() {
     $("pin").hidden = true; $("nav").hidden = false;
-    $("t-dash").hidden = false;
+    showTab("dash");
     $("staff").textContent = staff ? "· " + staff : "";
     renderAll();
   }
@@ -587,7 +594,7 @@ else {
     $("who").textContent = user ? user.email : "";
     if (!user) {
       $("nav").hidden = true; $("pin").hidden = true;
-      ["dash","ops","cash"].forEach((t) => { $("t-" + t).hidden = true; });
+      TABS.forEach((t) => { $("t-" + t).hidden = true; });
       return;
     }
     get(ref(db, "users/" + user.uid)).then((snap) => {
