@@ -28,7 +28,16 @@
     // there. Listing /admin/* here inverts that for the dashboard alone —
     // every public page keeps the default path and pays no Worker latency,
     // which matters on a site with an LCP budget.
-    "run_worker_first": ["/admin/*"]
+    // MUST list every path the Worker owns, not just /admin. When this is an
+    // array it is the EXCLUSIVE set of paths that reach the Worker first;
+    // everything else is served by the asset server, and with
+    // not_found_handling "404-page" an unmatched path gets the 404 page
+    // without the Worker running at all.
+    //
+    // Adding only "/admin/*" here silently broke /api/track: the tracking
+    // beacon started returning 404 and every tap, view and heartbeat was
+    // dropped. The dashboard was correct and simply had nothing to show.
+    "run_worker_first": ["/admin/*", "/api/*"]
   },
 
   "observability": {
