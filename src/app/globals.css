@@ -47,6 +47,11 @@
   --color-whatsapp-dark: #1da851;
 
   --color-border: #c9d9e6;
+  /* Review stars. Kept in the Google gold family on purpose — these reviews
+     are quoted from Google, and a navy or red star would read as a rating we
+     invented rather than a reproduction of theirs. Darker than Google's own
+     #fbbc04, which does not hold 3:1 against a white card. */
+  --color-star: #c8860d;
   --color-focus: #1d6fb8;
 
   /* ---- Type ---------------------------------------------------------------
@@ -132,6 +137,7 @@
     --color-call-dark: #a10000;
     --color-call-ink: #b80000;
     --color-border: #c9d9e6;
+    --color-star: #c8860d;
   }
 
   body {

@@ -348,6 +348,7 @@ export default {
 
     if (url.pathname !== TRACK_PATH) return env.ASSETS.fetch(request);
 
+    let sink = "none";
     try {
       const event = url.searchParams.get("e") ?? "";
       if (CONVERSIONS.has(event) || PRESENCE.has(event)) {
@@ -371,10 +372,12 @@ export default {
 
         if (PRESENCE.has(event)) {
           const ok = await recordPresence(env, event, row);
+          sink = ok ? "firebase" : env.FIREBASE_DB_URL ? "firebase-failed" : "log-only";
           // Pings are frequent; only log arrivals, or the log is unreadable.
           if (event === "view") console.log(`VIEW ${ok ? "stored" : "log-only"} ${JSON.stringify(row)}`);
         } else {
           const mode = await recordTap(env, row);
+          sink = mode;
           // Stable prefix so this is one filter term in Workers Logs.
           console.log(`TAP ${mode} ${JSON.stringify(row)}`);
         }
@@ -383,6 +386,20 @@ export default {
       console.error("track failed", error instanceof Error ? error.message : String(error));
     }
 
-    return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
+    /*
+     * `x-track-sink` reports where the beacon actually went: "firebase" when
+     * the row was written, "log-only" when FIREBASE_DB_URL is not set on the
+     * Worker, "firebase-failed" when it is set but the write was rejected.
+     *
+     * Without this the whole pipeline is opaque from outside — the endpoint
+     * returns 204 whether it stored anything or silently dropped it, which is
+     * exactly how an unset variable went unnoticed while the dashboard sat
+     * empty. One header turns "why is there no data" into a single curl.
+     * It exposes no secret: the URL itself is public by design.
+     */
+    return new Response(null, {
+      status: 204,
+      headers: { "cache-control": "no-store", "x-track-sink": sink },
+    });
   },
 };

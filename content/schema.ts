@@ -337,6 +337,12 @@ export const BusinessSchema = z.object({
    * exist; each one strengthens the same link.
    */
   profiles: z.array(z.string().url("profile must be a full URL")),
+  /**
+   * The Google "write a review" short link (GBP -> Demander des avis).
+   * Empty until supplied; the dashboard hides the request button rather than
+   * sending staff to a dead link.
+   */
+  reviewUrl: z.string(),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 
@@ -347,11 +353,36 @@ export const AboutPageSchema = z.object({
 });
 export type AboutPage = z.infer<typeof AboutPageSchema>;
 
+/**
+ * A patient review copied from the Google Business Profile.
+ *
+ * Deliberately NOT emitted as Review/AggregateRating JSON-LD. Google has
+ * classed reviews about a business, hosted on that business's own site, as
+ * "self-serving" since 2019: they are ineligible for review rich results on
+ * LocalBusiness and Organization, so the markup wins no stars, and marking it
+ * up anyway is the pattern that draws a structured-data manual action. The
+ * stars that appear in Search come from the Google Business Profile itself.
+ * This content exists to convince a human reader, not to fake a rich result.
+ */
+export const ReviewSchema = z.object({
+  /** First name plus initial, as shown on the site — e.g. "Fatima Z.". */
+  author: filledText("review author — first name and surname initial"),
+  rating: z.number().int().min(1).max(5),
+  /** The review's own date on Google, ISO 8601. */
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "review date must be ISO (YYYY-MM-DD)"),
+  /** Verbatim review text. Never edited, never invented. */
+  text: filledText("review text — copied verbatim from Google"),
+  /** BCP-47 tag when the review is not in French, so screen readers switch voice. */
+  lang: z.string().optional(),
+});
+export type Review = z.infer<typeof ReviewSchema>;
+
 export const ContentSchema = z.object({
   business: BusinessSchema,
   doctors: z.array(DoctorSchema).min(1, "at least one named doctor is required (full-operation model)"),
   pricing: PricingSchema,
   aboutPage: AboutPageSchema,
+  reviews: z.array(ReviewSchema),
   cities: z.array(CitySchema).min(1),
   quartiers: z.array(QuartierSchema),
   specialties: z.array(SpecialtySchema).min(1),

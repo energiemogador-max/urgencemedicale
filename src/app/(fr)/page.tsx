@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { content, getTrustBlockProps, getQuartiersForCity } from "@/lib/content";
 import { TrustBlock } from "@/components/TrustBlock";
+import { Reviews } from "@/components/Reviews";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
@@ -233,6 +234,8 @@ export default function HomePage() {
       <Section title={`À propos de ${business.legalName}`}>
         <Prose text={content.aboutPage.body} />
       </Section>
+
+      <Reviews />
 
       <FaqBlock entries={homeFaqs()} />
       <CallBanner />

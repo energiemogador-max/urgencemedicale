@@ -5,6 +5,7 @@ import { business } from "./business";
 import { doctors } from "./doctors";
 import { pricing } from "./pricing";
 import { aboutPage } from "./pages";
+import { reviews } from "./reviews";
 import { cities, quartiers } from "./geo";
 import { specialties } from "./specialties";
 import { situations } from "./situations";
@@ -17,6 +18,7 @@ const raw: Content = {
   doctors,
   pricing,
   aboutPage,
+  reviews,
   cities,
   quartiers,
   specialties,
@@ -134,4 +136,4 @@ export function assertContentValid(): Content {
   return raw;
 }
 
-export { business, doctors, pricing, aboutPage, cities, quartiers, specialties, situations, services, serviceCities };
+export { business, doctors, pricing, aboutPage, reviews, cities, quartiers, specialties, situations, services, serviceCities };

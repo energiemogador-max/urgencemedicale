@@ -32,6 +32,8 @@ const data = {
     window: t.window,
   })),
   currency: content.pricing.currency,
+  reviewUrl: content.business.reviewUrl,
+  businessName: content.business.legalName,
   situations: content.situations.map((s) => ({ slug: s.slug, title: s.title })),
 };
 

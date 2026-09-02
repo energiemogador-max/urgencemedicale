@@ -32,4 +32,8 @@ export const business: Business = {
   // Google Business Profile (Knowledge Graph id /g/11zfhwtr46), supplied by
   // the operator 2026-09-02. Add Facebook/Instagram here as they are created.
   profiles: ["https://share.google/2mBNIVD81eAsxysgi"],
+  // Paste the GBP "Demander des avis" link here (looks like
+  // https://g.page/r/XXXXXXXX/review). Until then the dashboard's review
+  // button stays hidden.
+  reviewUrl: "",
 };

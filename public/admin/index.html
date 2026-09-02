@@ -711,6 +711,19 @@ function renderOps() {
     const i = STATUS.findIndex((s) => s[0] === r.status);
     const next = (r.status === "termine" || r.status === "annule") ? null : STATUS[i+1];
     const btn = next ? `<button class="mini" data-id="${r.id}" data-next="${next[0]}">${esc(next[1])}</button>` : "";
+
+    /* Ask for the review at the only moment it works: right after the visit,
+       while the relief is fresh. The patient's number is already on the
+       record, so this is one tap in WhatsApp rather than a task nobody
+       remembers. Hidden entirely when no review link is configured — sending
+       staff to a dead link is worse than not offering the button. */
+    const review = (r.status === "termine" && DATA.reviewUrl && r.patient_phone)
+      ? ` <a class="mini" style="background:#12683a;text-decoration:none;display:inline-block" target="_blank" rel="noopener"
+           href="https://wa.me/${esc(String(r.patient_phone).replace(/[^0-9]/g, "").replace(/^0/, "212"))}?text=${
+             encodeURIComponent(
+               `Bonjour, merci de votre confiance. Si la visite du médecin vous a été utile, votre avis aiderait beaucoup d'autres familles à nous trouver : ${DATA.reviewUrl}`
+             )}">Demander un avis</a>`
+      : "";
     const cancel = (r.status === "termine" || r.status === "annule") ? "" :
       ` <button class="mini" style="background:#8a5a00" data-id="${r.id}" data-next="annule">Annuler</button>`;
     return `<tr><td><b>${esc(r.ref ?? "")}</b></td><td>${esc(fmt(r.createdAt))}</td>` +
@@ -718,7 +731,7 @@ function renderOps() {
       `<td>${esc([r.quartier, r.city].filter(Boolean).join(", "))}<br><span class="muted">${esc(r.address)}</span></td>` +
       `<td>${esc(r.doctorName)}</td><td class="num">${esc(mad(r.amount))}</td>` +
       `<td><span class="tag ${stClass(r.status)}">${esc(stLabel(r.status))}</span></td>` +
-      `<td>${esc(r.createdBy)}</td><td>${btn}${cancel}</td></tr>`;
+      `<td>${esc(r.createdBy)}</td><td>${btn}${cancel}${review}</td></tr>`;
   }).join("");
 }
 

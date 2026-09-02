@@ -267,6 +267,8 @@ export const DATA = {
     }
   ],
   "currency": "MAD",
+  "reviewUrl": "",
+  "businessName": "Urgence Médicale Casablanca",
   "situations": [
     {
       "slug": "medecin-de-garde",
