@@ -26,4 +26,27 @@
   "observability": {
     "enabled": true
   }
+
+  /*
+   * Durable record of every tap-to-call, so the operator can compare the
+   * site's calls against the phone log.
+   *
+   * COMMENTED OUT ON PURPOSE: a d1_databases entry with a placeholder
+   * database_id fails the deploy, and this Worker sits in front of a live
+   * emergency service. The Worker checks for `env.DB` and degrades to Workers
+   * Logs when it is absent, so the code is already correct without it.
+   *
+   * To switch it on:
+   *   npx wrangler login
+   *   npx wrangler d1 create urgencemedicale-taps
+   * then paste the returned database_id here, uncomment, and redeploy.
+   *
+   * "d1_databases": [
+   *   {
+   *     "binding": "DB",
+   *     "database_name": "urgencemedicale-taps",
+   *     "database_id": "<paste-it-here>"
+   *   }
+   * ]
+   */
 }

@@ -1,32 +1,187 @@
 /**
  * Worker entry point.
  *
- * This site is a static export, so 99.9% of requests are served straight from
- * the assets binding. The one exception is `/api/track`, which exists because
- * the conversion on this site is a phone tap — the visitor leaves the browser
- * and calls. No client-side analytics product sees that as anything but a
- * bounce, and Cloudflare Web Analytics (cookie-less, which is why it was
- * chosen) has no custom-event API at all.
+ * The site is a static export; everything except the two /api and /admin paths
+ * below falls straight through to the assets binding.
  *
- * So taps are recorded here instead: the page fires a beacon, this Worker
- * logs one line, and `observability.enabled` in wrangler.jsonc puts that line
- * in Workers Logs where it can be queried per page. No third party, no
- * cookies, no consent banner, no extra vendor.
+ * WHY THIS EXISTS: the conversion on this site is a phone tap. The visitor
+ * leaves the browser and dials, which every analytics product records as a
+ * bounce. Cloudflare Web Analytics is cookie-less by design and has no
+ * custom-event API at all, so taps are recorded here instead.
+ *
+ * The operator's stated need is sharper than analytics: they want to check
+ * whether calls that were placed were actually answered. That means the tap
+ * record has to be a DURABLE, TIMESTAMPED LIST they can read back and compare
+ * against the phone log — not a counter, and not a stream that ages out. So a
+ * tap writes a row to D1 when the binding exists, and always logs a line.
  *
  * SAFETY: this Worker sits in front of an emergency medical service. Every
- * path that is not exactly `/api/track` falls through to the assets binding,
- * and the tracking branch is wrapped so that a failure inside it can never
- * take the site down — a broken counter must never become a broken phone
- * number.
+ * unknown path falls through to ASSETS, and every tracking branch is wrapped
+ * so a failure inside it can never take the site down. A broken counter must
+ * never become a broken phone number.
  */
 
 const TRACK_PATH = "/api/track";
+const STATS_PATH = "/admin/stats";
 
-/** Events the page is allowed to report. Anything else is dropped. */
+/** Events the page may report. Anything else is dropped. */
 const ALLOWED_EVENTS = new Set(["call", "whatsapp"]);
 
+const SCHEMA = `CREATE TABLE IF NOT EXISTS taps (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  at TEXT NOT NULL,
+  event TEXT NOT NULL,
+  page TEXT,
+  visitor TEXT,
+  country TEXT,
+  city TEXT,
+  region TEXT,
+  timezone TEXT,
+  isp TEXT,
+  device TEXT,
+  source TEXT,
+  referer TEXT
+)`;
+
+/**
+ * Location, free, from Cloudflare's edge.
+ *
+ * `request.cf` carries city-level geo on every request at no cost and with no
+ * third-party script — this is the part Firebase or a analytics vendor would
+ * charge for and would need a client-side SDK to approximate. Deliberately NOT
+ * stored: the IP address, and the latitude/longitude (which are a city
+ * centroid anyway, so they add precision this log has no business keeping).
+ */
+function geoOf(request) {
+  const cf = request.cf ?? {};
+  return {
+    country: request.headers.get("cf-ipcountry") ?? cf.country ?? null,
+    city: cf.city ?? null,
+    region: cf.region ?? null,
+    timezone: cf.timezone ?? null,
+    isp: cf.asOrganization ?? null,
+  };
+}
+
+/** Rough device class, so "mobile at 2am" is distinguishable from a desktop browse. */
+function deviceOf(request) {
+  const ua = request.headers.get("user-agent") ?? "";
+  if (/iPhone|Android.*Mobile|Windows Phone/i.test(ua)) return "mobile";
+  if (/iPad|Android/i.test(ua)) return "tablet";
+  if (!ua) return null;
+  return "desktop";
+}
+
+/** Where the visitor came from, collapsed to something readable. */
+function sourceOf(referer) {
+  if (!referer) return "direct";
+  try {
+    const host = new URL(referer).hostname.replace(/^www\./, "");
+    if (host.endsWith("urgencemedicale.ma")) return "interne";
+    if (/google\./.test(host)) return "Google";
+    if (/bing\./.test(host)) return "Bing";
+    if (/facebook|instagram|fb\./.test(host)) return "Facebook/Instagram";
+    if (/whatsapp/.test(host)) return "WhatsApp";
+    return host;
+  } catch {
+    return "direct";
+  }
+}
+
+/**
+ * Push the tap into the Firebase Realtime Database the admin dashboard reads.
+ *
+ * Done server-side, from the Worker, on purpose: the public pages must never
+ * load the Firebase SDK. The dashboard (public/admin/) is the only place that
+ * does, and it is a separate document, so the emergency pages stay at zero
+ * bytes of it.
+ *
+ * FIREBASE_DB_URL is a Worker variable, not a secret — a Realtime Database URL
+ * is public by design. What protects the data is the database rules: reads
+ * require an authenticated staff account, writes are open so this Worker can
+ * post without carrying a credential.
+ */
+async function pushToFirebase(env, row) {
+  if (!env.FIREBASE_DB_URL) return false;
+  const res = await fetch(`${env.FIREBASE_DB_URL.replace(/\/$/, "")}/taps.json`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(row),
+  });
+  return res.ok;
+}
+
+async function recordTap(env, row) {
+  let sinks = [];
+  try {
+    if (await pushToFirebase(env, row)) sinks.push("firebase");
+  } catch (error) {
+    console.error("firebase push failed", error instanceof Error ? error.message : String(error));
+  }
+  if (!env.DB) return sinks.length ? sinks.join("+") : "log-only";
+  await env.DB.prepare(SCHEMA).run();
+  await env.DB.prepare(
+    "INSERT INTO taps (at, event, page, visitor, country, city, region, timezone, isp, device, source, referer) " +
+      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+  )
+    .bind(
+      row.at, row.event, row.page, row.visitor, row.country, row.city,
+      row.region, row.timezone, row.isp, row.device, row.source, row.referer
+    )
+    .run();
+  sinks.push("d1");
+  return sinks.join("+");
+}
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+}
+
+/**
+ * A plain HTML list of recent taps, so the operator can open one URL on a
+ * phone and read it. Gated by a shared secret held as a Worker secret, never
+ * in the repo; without ADMIN_KEY set the route does not exist at all. It sits
+ * under /admin, which robots.txt already disallows.
+ */
+async function statsPage(env, url) {
+  if (!env.ADMIN_KEY || url.searchParams.get("key") !== env.ADMIN_KEY) return null;
+  if (!env.DB) {
+    return new Response("No D1 database bound yet — taps are going to Workers Logs only.", {
+      status: 200,
+      headers: { "content-type": "text/plain; charset=utf-8" },
+    });
+  }
+  await env.DB.prepare(SCHEMA).run();
+  const { results } = await env.DB.prepare(
+    "SELECT at, event, page, visitor, city, region, country, device, source FROM taps ORDER BY id DESC LIMIT 300"
+  ).all();
+
+  const rows = (results ?? [])
+    .map(
+      (r) =>
+        `<tr><td>${esc(r.at)}</td><td>${esc(r.event)}</td><td>${esc(r.page)}</td>` +
+        `<td>${esc([r.city, r.region, r.country].filter(Boolean).join(", "))}</td>` +
+        `<td>${esc(r.device)}</td><td>${esc(r.source)}</td><td>${esc(r.visitor)}</td></tr>`
+    )
+    .join("");
+
+  return new Response(
+    `<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Appels — ${results?.length ?? 0} derniers</title>
+<style>body{font:15px system-ui;margin:0;padding:16px;background:#eef3f7;color:#0b1c33}
+h1{font-size:18px}table{border-collapse:collapse;width:100%;background:#fff;font-size:14px}
+th,td{border-bottom:1px solid #c9d9e6;padding:8px;text-align:left}th{background:#002454;color:#fff}
+td:nth-child(2){font-weight:700}</style>
+<h1>Derniers appels déclenchés depuis le site (${results?.length ?? 0})</h1>
+<p>Chaque ligne = un visiteur qui a appuyé sur le numéro. Comparez avec le journal du téléphone.</p>
+<table><tr><th>Date (UTC)</th><th>Type</th><th>Page</th><th>Localisation</th><th>Appareil</th><th>Source</th><th>Visiteur</th></tr>${rows}</table>`,
+    { headers: { "content-type": "text/html; charset=utf-8", "cache-control": "no-store" } }
+  );
+}
+
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     let url;
     try {
       url = new URL(request.url);
@@ -34,38 +189,40 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
-    if (url.pathname !== TRACK_PATH) {
-      return env.ASSETS.fetch(request);
+    if (url.pathname === STATS_PATH) {
+      try {
+        const page = await statsPage(env, url);
+        if (page) return page;
+      } catch (error) {
+        console.error("stats failed", error instanceof Error ? error.message : String(error));
+      }
+      return env.ASSETS.fetch(request); // wrong/absent key: behave as if the route does not exist
     }
+
+    if (url.pathname !== TRACK_PATH) return env.ASSETS.fetch(request);
 
     try {
       const event = url.searchParams.get("e") ?? "";
-      // `p` is the page that produced the tap. Cap the length so a crafted
-      // URL cannot write unbounded data into the logs.
-      const page = (url.searchParams.get("p") ?? "").slice(0, 200);
-
       if (ALLOWED_EVENTS.has(event)) {
-        console.log(
-          JSON.stringify({
-            type: "conversion",
-            event,
-            page,
-            country: request.headers.get("cf-ipcountry") ?? null,
-            referer: (request.headers.get("referer") ?? "").slice(0, 200) || null,
-            at: new Date().toISOString(),
-          })
-        );
+        const referer = (request.headers.get("referer") ?? "").slice(0, 200) || null;
+        const row = {
+          at: new Date().toISOString(),
+          event,
+          page: (url.searchParams.get("p") ?? "").slice(0, 200),
+          visitor: (url.searchParams.get("v") ?? "").slice(0, 40),
+          ...geoOf(request),
+          device: deviceOf(request),
+          source: sourceOf(referer),
+          referer,
+        };
+        const mode = await recordTap(env, row);
+        // Stable prefix so this is one filter term in Workers Logs.
+        console.log(`TAP ${mode} ${JSON.stringify(row)}`);
       }
     } catch (error) {
-      // Never surface a tracking failure to the visitor.
       console.error("track failed", error instanceof Error ? error.message : String(error));
     }
 
-    // 204 with no body: the beacon does not need a response, and this keeps
-    // the request cheap. `no-store` so no intermediary ever caches a hit.
-    return new Response(null, {
-      status: 204,
-      headers: { "cache-control": "no-store" },
-    });
+    return new Response(null, { status: 204, headers: { "cache-control": "no-store" } });
   },
 };

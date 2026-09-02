@@ -56,6 +56,18 @@ export const TAP_TRACKING_SCRIPT = `
 (function(){
   try {
     if (!navigator.sendBeacon) return;
+
+    /* A short per-browser id, kept in localStorage. It is NOT a tracking
+       cookie: it is random, never leaves this site, and exists so the call
+       log can tell "one person tapped three times" apart from "three people
+       called". Without it a single hesitant visitor looks like three leads,
+       which is exactly the number that would be argued about. */
+    var vid;
+    try {
+      vid = localStorage.getItem("um_v");
+      if (!vid) { vid = Math.random().toString(36).slice(2, 10); localStorage.setItem("um_v", vid); }
+    } catch (e) { vid = "nostore"; }
+
     document.addEventListener("click", function(ev){
       try {
         var a = ev.target && ev.target.closest && ev.target.closest("a[href]");
@@ -66,7 +78,9 @@ export const TAP_TRACKING_SCRIPT = `
                   : null;
         if (!event) return;
         navigator.sendBeacon(
-          "/api/track?e=" + event + "&p=" + encodeURIComponent(location.pathname)
+          "/api/track?e=" + event +
+          "&p=" + encodeURIComponent(location.pathname) +
+          "&v=" + encodeURIComponent(vid)
         );
       } catch (e) {}
     }, true);

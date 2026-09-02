@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Tableau de bord — Urgence Médicale</title>
+<!--
+  Admin dashboard, built on the same pattern as the Nova Style admin:
+  Firebase Auth (email/password, accounts created by the operator — there is
+  no public sign-up) reading from the Realtime Database.
+
+  DELIBERATELY a standalone HTML file, not a Next page. The Firebase SDK is
+  ~100KB and must never touch the public site, which has a 1.8s LCP budget for
+  someone in an emergency. Keeping the dashboard outside the Next bundle means
+  the public pages ship zero bytes of it.
+
+  Every tap-to-call on the site is written here by worker/index.js, so this
+  page answers the question it was built for: how many people pressed the
+  number, from which page, from where — to compare against the phone log.
+-->
+<style>
+  :root{--navy:#002454;--red:#e20102;--bg:#eef3f7;--line:#c9d9e6;--ink:#0b1c33;--muted:#47586e}
+  *{box-sizing:border-box}
+  body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+  header{background:var(--navy);color:#fff;padding:14px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  header h1{font-size:17px;margin:0;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+  header .sp{margin-inline-start:auto}
+  button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 14px;cursor:pointer}
+  .primary{background:var(--red);color:#fff}
+  .ghost{background:rgba(255,255,255,.15);color:#fff}
+  main{padding:16px;max-width:1100px;margin:0 auto}
+  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
+  label{display:block;font-weight:700;font-size:13px;margin-bottom:4px}
+  input{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:12px}
+  .stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
+  .stat b{display:block;font-size:28px;color:var(--navy);font-variant-numeric:tabular-nums}
+  .stat span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
+  th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:start;vertical-align:top}
+  th{background:var(--navy);color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.05em;position:sticky;top:0}
+  .tag{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800}
+  .call{background:#fde7e7;color:#a10000}.whatsapp{background:#e3f7ea;color:#12683a}
+  .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px}
+  .msg{padding:10px 12px;border-radius:10px;background:#fde7e7;color:#a10000;font-weight:600;margin-bottom:12px}
+  .muted{color:var(--muted);font-size:13px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header>
+  <h1>Urgence Médicale — Appels</h1>
+  <span class="sp"></span>
+  <span id="who" class="muted" style="color:#a9bdd4"></span>
+  <button id="out" class="ghost" hidden>Déconnexion</button>
+</header>
+
+<main>
+  <div id="setup" class="card" hidden>
+    <h2 style="margin-top:0">Configuration requise</h2>
+    <p class="muted">Renseignez <code>public/admin/firebase-config.js</code> avec la configuration de votre projet
+      Firebase, puis redéployez. Les règles de la Realtime Database doivent autoriser la lecture de
+      <code>taps</code> aux utilisateurs authentifiés uniquement.</p>
+  </div>
+
+  <div id="login" class="card" hidden style="max-width:380px">
+    <h2 style="margin-top:0;font-size:18px">Connexion</h2>
+    <div id="err" class="msg" hidden></div>
+    <label for="em">E-mail</label>
+    <input id="em" type="email" autocomplete="username">
+    <label for="pw">Mot de passe</label>
+    <input id="pw" type="password" autocomplete="current-password">
+    <button id="in" class="primary" style="width:100%">Se connecter</button>
+    <p class="muted" style="margin-bottom:0">Les comptes sont créés par l'administrateur dans Firebase. Il n'y a pas
+      d'inscription publique.</p>
+  </div>
+
+  <div id="app" hidden>
+    <div class="stats">
+      <div class="stat"><span>Aujourd'hui</span><b id="s-today">–</b></div>
+      <div class="stat"><span>7 derniers jours</span><b id="s-week">–</b></div>
+      <div class="stat"><span>Appels</span><b id="s-call">–</b></div>
+      <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b></div>
+      <div class="stat"><span>Visiteurs distincts</span><b id="s-vis">–</b></div>
+    </div>
+    <p class="muted">Chaque ligne = un visiteur qui a appuyé sur le numéro. À comparer avec le journal du téléphone :
+      l'écart entre les deux est le nombre d'appels manqués.</p>
+    <div class="wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Type</th><th>Page</th><th>Localisation</th><th>Appareil</th><th>Source</th><th>Visiteur</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<script type="module">
+import { firebaseConfig, isConfigured } from "./firebase-config.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
+  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getDatabase, ref, query, limitToLast, onValue }
+  from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+if (!isConfigured()) {
+  $("setup").hidden = false;
+} else {
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getDatabase(app);
+
+  $("in").onclick = async () => {
+    $("err").hidden = true;
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      await signInWithEmailAndPassword(auth, $("em").value.trim(), $("pw").value);
+      $("pw").value = "";
+    } catch (e) {
+      $("err").textContent = "Connexion refusée. Vérifiez l'e-mail et le mot de passe.";
+      $("err").hidden = false;
+    }
+  };
+  $("out").onclick = () => signOut(auth);
+
+  const fmt = (iso) => { try { return new Date(iso).toLocaleString("fr-FR"); } catch (e) { return iso; } };
+
+  function render(list) {
+    list.sort((a, b) => (a.at < b.at ? 1 : -1));
+    const DAY = 86400000;
+    const since = (ms) => list.filter((r) => Date.now() - new Date(r.at).getTime() < ms).length;
+    $("s-today").textContent = since(DAY);
+    $("s-week").textContent = since(7 * DAY);
+    $("s-call").textContent = list.filter((r) => r.event === "call").length;
+    $("s-wa").textContent = list.filter((r) => r.event === "whatsapp").length;
+    $("s-vis").textContent = new Set(list.map((r) => r.visitor).filter(Boolean)).size;
+
+    $("rows").innerHTML = list.map((r) => {
+      const loc = [r.city, r.region, r.country].filter(Boolean).join(", ");
+      const cls = r.event === "call" ? "call" : "whatsapp";
+      return "<tr><td>" + esc(fmt(r.at)) + "</td><td><span class=\"tag " + cls + "\">" + esc(r.event) + "</span></td>" +
+        "<td>" + esc(r.page) + "</td><td>" + esc(loc) + "</td><td>" + esc(r.device) + "</td>" +
+        "<td>" + esc(r.source) + "</td><td>" + esc(r.visitor) + "</td></tr>";
+    }).join("");
+  }
+
+  onAuthStateChanged(auth, (user) => {
+    $("login").hidden = !!user;
+    $("app").hidden = !user;
+    $("out").hidden = !user;
+    $("who").textContent = user ? user.email : "";
+    if (!user) return;
+    onValue(query(ref(db, "taps"), limitToLast(500)), (snap) => {
+      render(Object.values(snap.val() || {}));
+    }, () => {
+      $("err").textContent = "Lecture refusée — vérifiez les règles de la base.";
+      $("err").hidden = false;
+    });
+  });
+}
+</script>
+</body>
+</html>
