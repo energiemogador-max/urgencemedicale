@@ -69,18 +69,14 @@
   Cache-Control: public, max-age=31536000, immutable
 
 # ---------------------------------------------------------------------------
-# /admin — the staff dashboard. It is the ONLY place Firebase is allowed.
+# /admin — the staff dashboard.
 #
-# The site-wide policy above stays strict: the public pages load nothing from
-# a third party, which is what keeps them fast for someone in an emergency.
-# This rule relaxes script-src/connect-src for the dashboard alone, and is
-# more specific so it wins for these paths.
-#
-# noindex here as well as in the page's own meta and in robots.txt — three
-# independent signals, because an indexed staff dashboard is not recoverable
-# once it is in someone's search results.
+# NO Content-Security-Policy here on purpose. Cloudflare's _headers ADDS a
+# repeated header rather than replacing it, so a CSP here would arrive
+# alongside the site-wide one and the browser would enforce the intersection —
+# which allowed neither the Firebase SDK nor Cloudflare's own beacon. The
+# admin CSP is set in worker/index.js instead, where it is the only one.
 # ---------------------------------------------------------------------------
 /admin/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com; connect-src 'self' https://*.firebaseio.com https://*.firebasedatabase.app https://identitytoolkit.googleapis.com https://securetoken.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; frame-ancestors 'none'; base-uri 'self'; object-src 'none'

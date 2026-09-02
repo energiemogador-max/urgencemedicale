@@ -1,9 +1,11 @@
 /**
  * Firebase config for the Urgence Médicale admin dashboard.
  *
- * PLACEHOLDER — the dashboard stays disabled until these are filled in.
- * Nothing here is invented: create (or reuse) a Firebase project, then copy
- * the web-app config from Project settings → General → Your apps.
+ * Project: urgencemedicale-8b903 (operator-supplied, 2026-09-02). Complete.
+ *
+ * `measurementId` is deliberately omitted: it is for Google Analytics, which
+ * this dashboard does not load. Pulling in the Analytics SDK would add weight
+ * and a tracking surface to a page that only needs Auth and the database.
  *
  * These values are public identifiers by design — a Firebase web config is
  * meant to ship in the browser. What protects the data is the Realtime
@@ -23,11 +25,13 @@
  * means here.
  */
 export const firebaseConfig = {
-  apiKey: "",
-  authDomain: "",
-  databaseURL: "",
-  projectId: "",
-  appId: "",
+  apiKey: "AIzaSyB056BzxbBbZqI9Vn4waoJI7QQY0m_V63g",
+  authDomain: "urgencemedicale-8b903.firebaseapp.com",
+  databaseURL: "https://urgencemedicale-8b903-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "urgencemedicale-8b903",
+  storageBucket: "urgencemedicale-8b903.firebasestorage.app",
+  messagingSenderId: "931669755140",
+  appId: "1:931669755140:web:689e07ba6fc93e22683c51",
 };
 
 export function isConfigured() {

@@ -180,6 +180,45 @@ td:nth-child(2){font-weight:700}</style>
   );
 }
 
+
+/**
+ * Single Content-Security-Policy for /admin.
+ *
+ * This MUST be applied here rather than in public/_headers. Cloudflare's
+ * _headers ADDS a header when a more specific rule repeats one — it does not
+ * replace it — so a `/admin/*` CSP alongside the site-wide `/*` CSP results in
+ * two policies on the response. Browsers then enforce the INTERSECTION, and
+ * the intersection of "allow gstatic" and "allow cloudflareinsights" permits
+ * neither. Both the Firebase SDK and Cloudflare's own beacon were blocked.
+ *
+ * Serving it from the Worker means exactly one policy reaches the browser, and
+ * the strict site-wide policy is left untouched for the public pages.
+ */
+const ADMIN_CSP = [
+  "default-src 'self'",
+  // gstatic = Firebase SDK. cloudflareinsights = the beacon Cloudflare injects.
+  "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://static.cloudflareinsights.com",
+  "connect-src 'self' https://*.firebaseio.com https://*.firebasedatabase.app " +
+    "https://identitytoolkit.googleapis.com https://securetoken.googleapis.com " +
+    "https://cloudflareinsights.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data:",
+  "frame-ancestors 'none'",
+  "base-uri 'self'",
+  "object-src 'none'",
+].join("; ");
+
+/** Serves an /admin asset with exactly one CSP, replacing whatever _headers set. */
+async function serveAdmin(request, env) {
+  const upstream = await env.ASSETS.fetch(request);
+  const headers = new Headers(upstream.headers);
+  headers.delete("content-security-policy");
+  headers.set("content-security-policy", ADMIN_CSP);
+  headers.set("x-robots-tag", "noindex, nofollow");
+  headers.set("cache-control", "no-store");
+  return new Response(upstream.body, { status: upstream.status, statusText: upstream.statusText, headers });
+}
+
 export default {
   async fetch(request, env) {
     let url;
@@ -197,6 +236,10 @@ export default {
         console.error("stats failed", error instanceof Error ? error.message : String(error));
       }
       return env.ASSETS.fetch(request); // wrong/absent key: behave as if the route does not exist
+    }
+
+    if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) {
+      return serveAdmin(request, env);
     }
 
     if (url.pathname !== TRACK_PATH) return env.ASSETS.fetch(request);
