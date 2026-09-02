@@ -196,11 +196,26 @@ td:nth-child(2){font-weight:700}</style>
  */
 const ADMIN_CSP = [
   "default-src 'self'",
-  // gstatic = Firebase SDK. cloudflareinsights = the beacon Cloudflare injects.
-  "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://static.cloudflareinsights.com",
-  "connect-src 'self' https://*.firebaseio.com https://*.firebasedatabase.app " +
+
+  // script-src needs the database host as well as gstatic. Realtime Database
+  // prefers a WebSocket, but when one is unavailable it falls back to long
+  // polling, which works by INJECTING <script> tags pointing at the database
+  // domain (the /.lp? requests). Without this the dashboard silently retries
+  // forever on any network that blocks WebSockets.
+  // static.cloudflareinsights.com is the beacon Cloudflare injects itself.
+  "script-src 'self' 'unsafe-inline' https://www.gstatic.com https://static.cloudflareinsights.com " +
+    "https://*.firebasedatabase.app https://*.firebaseio.com",
+
+  // connect-src MUST list the wss: origins explicitly. CSP matches on scheme,
+  // and an https: source does NOT authorise a wss: connection — that mismatch
+  // is what blocked the socket and forced the long-polling fallback above.
+  // gstatic is here only so devtools can fetch the SDK source maps.
+  "connect-src 'self' " +
+    "wss://*.firebasedatabase.app wss://*.firebaseio.com " +
+    "https://*.firebasedatabase.app https://*.firebaseio.com " +
     "https://identitytoolkit.googleapis.com https://securetoken.googleapis.com " +
-    "https://cloudflareinsights.com",
+    "https://cloudflareinsights.com https://www.gstatic.com",
+
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data:",
   "frame-ancestors 'none'",
