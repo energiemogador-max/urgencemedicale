@@ -14,16 +14,20 @@ export function WhatsAppButton({
   href,
   showLabel = true,
   className = "",
+  tap,
 }: {
   href: string;
   showLabel?: boolean;
   className?: string;
+  /** Names this surface for the beacon — see lib/analytics.ts. */
+  tap?: string;
 }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
+      data-tap={tap}
       aria-label="Contacter sur WhatsApp"
       className={`flex items-center justify-center gap-2 rounded-md bg-whatsapp px-3.5 py-3 font-bold text-ink hover:bg-whatsapp-dark sm:px-4 ${className}`}
     >

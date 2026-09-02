@@ -133,7 +133,11 @@ export const TAP_TRACKING_SCRIPT = `
                   : href.indexOf("wa.me") > -1 ? "whatsapp"
                   : null;
         if (!event) return;
-        send(base(event));
+        /* Which call surface was tapped — header, hero, banner, footer, or the
+           fixed mobile bar. Without this every tap looks the same in the
+           dashboard, and no CTA can be shown to be earning its place. */
+        var cta = a.getAttribute("data-tap") || "autre";
+        send(base(event) + "&c=" + encodeURIComponent(cta));
       } catch (e) {}
     }, true);
   } catch (e) {}

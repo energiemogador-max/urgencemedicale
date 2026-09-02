@@ -11,14 +11,18 @@ export function CallButton({
   phoneDisplay,
   phoneHref,
   className = "",
+  tap,
 }: {
   phoneDisplay: string;
   phoneHref: string;
   className?: string;
+  /** Names this surface for the beacon — see lib/analytics.ts. */
+  tap?: string;
 }) {
   return (
     <a
       href={`tel:${phoneHref}`}
+      data-tap={tap}
       className={`flex items-center justify-center gap-2 rounded-md bg-call px-4 py-3 font-bold text-white hover:bg-call-dark sm:px-6 sm:text-lg ${className}`}
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 shrink-0 sm:h-6 sm:w-6">

@@ -82,10 +82,10 @@ export function Hero({
             height={logo.height}
             alt={logo.alt}
             decoding="async"
-            className="h-auto w-[220px] sm:w-[300px]"
+            className="h-auto w-[168px] sm:w-[300px]"
           />
 
-          <h1 className="mt-7 text-[clamp(1.9rem,5.2vw,3.1rem)] font-black uppercase leading-[1.02] tracking-tight text-primary">
+          <h1 className="mt-5 text-[clamp(1.9rem,5.2vw,3.1rem)] sm:mt-7 font-black uppercase leading-[1.02] tracking-tight text-primary">
             {title}
             <br />
             <span className="text-call-ink">{titleAccent}</span> {titleTail}
@@ -94,7 +94,7 @@ export function Hero({
           <p className="mt-4 max-w-[46ch] text-ink-muted">{lead}</p>
           <div aria-hidden="true" className="mt-4 h-1 w-16 rounded-full bg-call" />
 
-          <ul className="mt-7 grid grid-cols-2 gap-x-4 gap-y-5 sm:grid-cols-4">
+          <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-4 sm:mt-7 sm:gap-y-5 sm:grid-cols-4">
             {features.map((f) => (
               <li key={f.title} className="flex items-start gap-2.5">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-call shadow-sm ring-1 ring-border">
@@ -115,9 +115,10 @@ export function Hero({
             ))}
           </ul>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div className="mt-6 flex flex-wrap items-center gap-4 sm:mt-8">
             <a
               href={`tel:${phoneHref}`}
+              data-tap="hero"
               className="flex min-w-0 items-center gap-3 rounded-2xl bg-primary px-4 py-3 no-underline shadow-lg transition-transform hover:-translate-y-0.5 sm:px-5"
             >
               <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white">
@@ -155,7 +156,7 @@ export function Hero({
 
         {/* ---- Right: photo masked into the brand's curve ---- */}
         {image && (
-          <div className="relative min-h-[220px] sm:min-h-[300px] lg:min-h-[520px]">
+          <div className="relative min-h-[150px] sm:min-h-[300px] lg:min-h-[520px]">
             <div className="absolute inset-0 overflow-hidden lg:[clip-path:ellipse(115%_130%_at_78%_50%)]">
               <div className="absolute inset-0 bg-gradient-to-b from-primary-tint to-surface-2" />
               {/* eslint-disable-next-line @next/next/no-img-element */}

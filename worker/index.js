@@ -366,6 +366,7 @@ export default {
           device: q("d", 20) || deviceOf(request),
           browser: q("b", 20) || null,
           screenW: Number(q("w", 6)) || null,
+          cta: q("c", 24) || null,
           source: sourceOf(referer),
           referer,
         };

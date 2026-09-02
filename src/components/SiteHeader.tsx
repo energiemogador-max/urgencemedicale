@@ -44,7 +44,7 @@ export function SiteHeader({
   const itemClass = "block rounded-md px-3 py-1.5 text-sm text-ink no-underline hover:bg-primary-tint";
   const linkClass = "whitespace-nowrap rounded-md px-2.5 py-1.5 font-semibold text-primary no-underline hover:bg-primary-tint";
   const mobileItemClass = "block rounded-md px-3 py-2.5 font-semibold text-primary no-underline hover:bg-primary-tint";
-  const mobileSubItemClass = "block rounded-md px-3 py-2 text-sm text-ink no-underline hover:bg-primary-tint";
+  const mobileSubItemClass = "block rounded-md px-3 py-3 text-sm text-ink no-underline hover:bg-primary-tint";
 
   const chevron = (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 shrink-0">
@@ -90,6 +90,7 @@ export function SiteHeader({
           <div className="ml-auto flex items-stretch gap-2">
             <a
               href={`tel:${phoneHref}`}
+              data-tap="entete"
               className="flex items-center gap-2.5 rounded-xl bg-primary px-3 py-1.5 no-underline hover:bg-primary-dark sm:px-4"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white">
@@ -101,10 +102,10 @@ export function SiteHeader({
                 <span className="hidden text-[0.65rem] font-bold uppercase tracking-[0.12em] text-on-primary-muted sm:block">
                   Appelez-nous
                 </span>
-                <span className="block text-base font-black tabular-nums text-white sm:text-lg">{phoneDisplay}</span>
+                <span className="block text-lg font-black tabular-nums text-white sm:text-xl" dir="ltr">{phoneDisplay}</span>
               </span>
             </a>
-            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} showLabel={false} className="shrink-0 rounded-xl" />
+            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} showLabel={false} tap="entete" className="shrink-0 rounded-xl" />
           </div>
         </div>
       </div>

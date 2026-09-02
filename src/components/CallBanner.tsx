@@ -37,6 +37,7 @@ export function CallBanner({ label }: { label?: string }) {
         <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
           <a
             href={`tel:${business.phoneHref}`}
+            data-tap="banniere"
             className="flex items-center justify-center gap-3 rounded-xl bg-call px-5 py-3 no-underline transition-colors hover:bg-call-dark"
           >
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
@@ -49,7 +50,7 @@ export function CallBanner({ label }: { label?: string }) {
               <span className="block text-lg font-black tabular-nums text-white">{business.phoneDisplay}</span>
             </span>
           </a>
-          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} className="justify-center rounded-xl" />
+          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="banniere" className="justify-center rounded-xl" />
         </div>
       </div>
     </aside>

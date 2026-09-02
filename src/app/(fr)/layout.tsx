@@ -6,6 +6,7 @@ import { business } from "@content/business";
 import { archivo } from "@/app/fonts";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import { MobileCallBar, MobileCallBarSpacer } from "@/components/MobileCallBar";
 import { CF_BEACON_TOKEN, TAP_TRACKING_SCRIPT, hasWebAnalytics } from "@/lib/analytics";
 import "@/app/globals.css";
 
@@ -65,6 +66,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           specialties={specialties}
           situations={situations}
           services={services}
+        />
+        <MobileCallBarSpacer />
+        <MobileCallBar
+          phoneDisplay={business.phoneDisplay}
+          phoneHref={business.phoneHref}
+          whatsappNumber={business.whatsappNumber}
         />
 
         {/*

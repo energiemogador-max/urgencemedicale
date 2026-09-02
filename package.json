@@ -13,8 +13,9 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "postbuild": "npm run validate:csp",
-    "deploy": "wrangler deploy"
+    "postbuild": "npm run fix:404 && npm run validate:csp",
+    "deploy": "wrangler deploy",
+    "fix:404": "tsx scripts/fix-404.ts"
   },
   "dependencies": {
     "next": "^15.5.24",

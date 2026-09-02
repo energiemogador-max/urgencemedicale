@@ -91,6 +91,7 @@ export function SiteFooter({
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
             <a
               href={`tel:${phoneHref}`}
+              data-tap="pied"
               className="flex items-center gap-3 rounded-xl bg-call px-5 py-3 no-underline transition-colors hover:bg-call-dark"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
@@ -105,7 +106,7 @@ export function SiteFooter({
                 <span className="block text-lg font-black tabular-nums text-white">{phoneDisplay}</span>
               </span>
             </a>
-            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} className="justify-center rounded-xl" />
+            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} tap="pied" className="justify-center rounded-xl" />
           </div>
         </div>
 

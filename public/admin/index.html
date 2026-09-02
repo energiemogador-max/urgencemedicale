@@ -159,6 +159,8 @@
       <section class="card"><h3>Provenance</h3><ol id="b-src" class="bars"></ol></section>
       <section class="card"><h3>Villes</h3><ol id="b-city" class="bars"></ol></section>
       <section class="card"><h3>Appareils</h3><ol id="b-dev" class="bars"></ol></section>
+      <section class="card"><h3>D'où vient l'appui</h3><ol id="b-cta" class="bars"></ol>
+        <p class="muted" style="margin:8px 0 0">entete · hero · banniere · pied · barre-mobile</p></section>
     </div>
     <h3 style="margin:22px 0 8px">Appels déclenchés depuis le site</h3>
     <div class="wrap"><table>
@@ -693,6 +695,9 @@ function renderDash() {
 
   bars("b-pages", tally(ses,"page")); bars("b-src", tally(ses,"source"));
   bars("b-city", tally(ses,"city")); bars("b-dev", tally(ses,"device"));
+  /* Which call surface people actually use. Rows written before the
+     data-tap attributes shipped have no cta and fall into "—". */
+  bars("b-cta", tally(tp, "cta"));
 
   tp.sort((a,b) => a.at < b.at ? 1 : -1);
   $("rows").innerHTML = tp.map((r) => {

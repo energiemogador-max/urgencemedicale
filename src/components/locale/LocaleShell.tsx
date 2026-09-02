@@ -3,6 +3,7 @@ import Link from "next/link";
 import { content } from "@/lib/content";
 import { toWhatsAppHref } from "@/lib/phone";
 import { LocaleSwitcher } from "@/components/LocaleSwitcher";
+import { MobileCallBar, MobileCallBarSpacer } from "@/components/MobileCallBar";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -62,6 +63,7 @@ export function LocaleShell({
           <div className="ms-auto flex items-stretch gap-2">
             <a
               href={`tel:${business.phoneHref}`}
+              data-tap="entete"
               className="flex items-center gap-2.5 rounded-xl bg-primary px-3 py-1.5 no-underline hover:bg-primary-dark sm:px-4"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white">
@@ -101,6 +103,7 @@ export function LocaleShell({
           <div className="mt-6 flex flex-col gap-2 sm:flex-row">
             <a
               href={`tel:${business.phoneHref}`}
+              data-tap="pied"
               className="flex items-center justify-center gap-2 rounded-xl bg-call px-5 py-3 font-black text-white no-underline hover:bg-call-dark"
             >
               <span dir="ltr">{business.phoneDisplay}</span>
@@ -109,6 +112,7 @@ export function LocaleShell({
               href={toWhatsAppHref(business.whatsappNumber)}
               target="_blank"
               rel="noopener noreferrer"
+              data-tap="pied"
               className="flex items-center justify-center rounded-xl bg-whatsapp px-5 py-3 font-bold text-ink no-underline hover:bg-whatsapp-dark"
             >
               {strings.whatsapp}
@@ -123,6 +127,18 @@ export function LocaleShell({
           </p>
         </div>
       </footer>
+
+      {/* Same thumb-zone reasoning as the French pages — and these locales have
+          no navigation at all, so the bar is the only persistent action once
+          the header scrolls away. `dir` is inherited from <html>, and the bar
+          is built from logical utilities, so it mirrors correctly in Arabic. */}
+      <MobileCallBarSpacer />
+      <MobileCallBar
+        phoneDisplay={business.phoneDisplay}
+        phoneHref={business.phoneHref}
+        whatsappNumber={business.whatsappNumber}
+        callLabel={strings.callLabel}
+      />
     </>
   );
 }

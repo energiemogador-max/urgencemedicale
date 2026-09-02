@@ -72,7 +72,7 @@ export default function HomePage() {
           alt: "Médecin en blouse blanche avec un stéthoscope",
         }}
       >
-        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} className="w-full sm:w-auto" />
+        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="hero" className="w-full sm:w-auto" />
       </Hero>
 
       {/*

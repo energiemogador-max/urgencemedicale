@@ -44,8 +44,8 @@ export default function Page() {
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8 grid gap-3 sm:grid-cols-2">
-        <CallButton phoneDisplay={business.phoneDisplay} phoneHref={business.phoneHref} />
-        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} />
+        <CallButton phoneDisplay={business.phoneDisplay} phoneHref={business.phoneHref} tap="reserver" />
+        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="reserver" />
       </div>
 
       <Section title="Ce qu'on vous demandera">
