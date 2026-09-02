@@ -785,14 +785,73 @@ if ("serviceWorker" in navigator) {
 }
 
 let deferredPrompt = null;
+
+/* Install affordance.
+ *
+ * `beforeinstallprompt` is not enough on its own: Chrome fires it only when it
+ * decides the user is "engaged", and Safari/iOS never fires it at all — there
+ * the only route is Share → Add to Home Screen, which nobody finds unaided.
+ * So the button is always present and explains the manual route when it has
+ * no prompt to show, rather than silently doing nothing.
+ */
 window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
+  const b = document.getElementById("install");
+  if (b) b.textContent = "Installer l'application";
+});
+
+function installHint() {
+  const ua = navigator.userAgent;
+  const ios = /iPad|iPhone|iPod/.test(ua);
+  const safari = ios || (/Safari/.test(ua) && !/Chrome|Chromium|Edg/.test(ua));
+  if (safari) {
+    return "Sur iPhone/iPad : appuyez sur le bouton Partager en bas de Safari, puis « Sur l'écran d'accueil ».";
+  }
+  if (/Firefox/.test(ua)) {
+    return "Sur Firefox : menu ⋮ puis « Installer » ou « Ajouter à l'écran d'accueil ».";
+  }
+  return "Menu ⋮ du navigateur, puis « Installer l'application » ou « Ajouter à l'écran d'accueil ».";
+}
+
+function setupInstall() {
+  // Already running as an installed app: nothing to offer.
+  const standalone = window.matchMedia("(display-mode: standalone)").matches || window.navigator.standalone;
+  if (standalone) return;
+
   const b = document.createElement("button");
+  b.id = "install";
   b.className = "ghost";
-  b.textContent = "Installer l'application";
-  b.onclick = async () => { b.remove(); deferredPrompt.prompt(); await deferredPrompt.userChoice; deferredPrompt = null; };
+  b.textContent = "Installer";
+  b.onclick = async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const res = await deferredPrompt.userChoice;
+      deferredPrompt = null;
+      if (res && res.outcome === "accepted") b.remove();
+      return;
+    }
+    const tip = document.getElementById("installtip");
+    if (tip) { tip.hidden = !tip.hidden; return; }
+    const p = document.createElement("div");
+    p.id = "installtip";
+    p.className = "card";
+    p.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:9;max-width:520px;margin:0 auto";
+    // No inline onclick: the admin CSP sets script-src-attr 'none', so a
+    // handler attribute here would be silently dead. Listener instead.
+    p.innerHTML = '<h3 style="margin-top:0">Installer le tableau de bord</h3>' +
+      '<p class="muted" style="margin:0 0 10px">' + installHint() + '</p>' +
+      '<button class="primary" id="installclose">Compris</button>';
+    document.body.appendChild(p);
+    p.querySelector("#installclose").onclick = () => p.remove();
+  };
   document.querySelector("header .sp").after(b);
+}
+setupInstall();
+
+window.addEventListener("appinstalled", () => {
+  const b = document.getElementById("install");
+  if (b) b.remove();
 });
 </script>
 
