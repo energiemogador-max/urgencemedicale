@@ -156,6 +156,46 @@ export const DATA = {
       "slug": "ain-chock",
       "name": "Ain Chock",
       "city": "casablanca"
+    },
+    {
+      "slug": "agdal",
+      "name": "Agdal",
+      "city": "rabat"
+    },
+    {
+      "slug": "souissi",
+      "name": "Souissi",
+      "city": "rabat"
+    },
+    {
+      "slug": "hassan",
+      "name": "Hassan",
+      "city": "rabat"
+    },
+    {
+      "slug": "hay-riad",
+      "name": "Hay Riad",
+      "city": "rabat"
+    },
+    {
+      "slug": "yacoub-el-mansour",
+      "name": "Yacoub El Mansour",
+      "city": "rabat"
+    },
+    {
+      "slug": "les-orangers",
+      "name": "Les Orangers",
+      "city": "rabat"
+    },
+    {
+      "slug": "l-ocean",
+      "name": "L'Océan",
+      "city": "rabat"
+    },
+    {
+      "slug": "aviation",
+      "name": "Aviation",
+      "city": "rabat"
     }
   ],
   "tariffs": [

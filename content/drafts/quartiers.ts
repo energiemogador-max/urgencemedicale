@@ -1,4 +1,5 @@
 import type { Quartier } from "../schema";
+import { QUARTIER_DRAFTS_RABAT } from "./quartiers-rabat";
 
 /**
  * Real prose for Casablanca quartier pages. Landmarks and access notes are
@@ -17,6 +18,7 @@ import type { Quartier } from "../schema";
  * placeholder, which fails the build loudly instead of shipping thin copy.
  */
 export const QUARTIER_DRAFTS: Record<string, Pick<Quartier, "intro" | "landmarks" | "accessNotes">> = {
+  ...QUARTIER_DRAFTS_RABAT,
   maarif: {
     intro:
       "Un médecin généraliste se déplace à votre domicile à Maarif, de jour comme de nuit. Il vous appelle avant d'arriver pour confirmer l'adresse et l'étage, et le tarif est annoncé avant votre confirmation, sans surprise à son arrivée.",
