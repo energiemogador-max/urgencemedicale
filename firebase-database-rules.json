@@ -1,0 +1,35 @@
+{
+  "rules": {
+    "taps":            { ".read": "auth != null", ".write": true },
+    "sessions":        { ".read": "auth != null", ".write": true },
+    "online_visitors": { ".read": "auth != null", ".write": true },
+
+    "counters":     { ".read": "auth != null", ".write": "auth != null" },
+    "interventions": {
+      ".read": "auth != null",
+      "$id": { ".write": "auth != null" }
+    },
+
+    "doctors": {
+      ".read": "auth != null",
+      ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'"
+    },
+
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin' || !root.child('users').exists()"
+      }
+    },
+
+    "payments": {
+      ".read": "auth != null",
+      "$id": {
+        ".write": "auth != null",
+        "status": {
+          ".validate": "newData.val() === 'declare' || root.child('users').child(auth.uid).child('role').val() === 'admin'"
+        }
+      }
+    }
+  }
+}

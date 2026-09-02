@@ -289,6 +289,15 @@ export const PriceTierSchema = z.object({
   label: filledText("price tier label"),
   window: filledText("price tier time window description"),
   amountMad: filledNumericString("price tier amount (MAD)"),
+  /**
+   * The doctor's share of this tier, in MAD. INTERNAL — never rendered on a
+   * public page; it exists so the admin cash ledger can compute what each
+   * doctor owes the company without the split being typed in twice.
+   *
+   * Kept beside the price on purpose: if a tariff changes and the split does
+   * not follow, the ledger silently mis-states every balance from that day on.
+   */
+  doctorShareMad: filledNumericString("doctor share (MAD)"),
 });
 export type PriceTier = z.infer<typeof PriceTierSchema>;
 
