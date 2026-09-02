@@ -24,8 +24,10 @@
 const TRACK_PATH = "/api/track";
 const STATS_PATH = "/admin/stats";
 
-/** Events the page may report. Anything else is dropped. */
-const ALLOWED_EVENTS = new Set(["call", "whatsapp"]);
+/** Conversions — a tap on the number or on WhatsApp. */
+const CONVERSIONS = new Set(["call", "whatsapp"]);
+/** Presence — arrival and the 30s heartbeat. */
+const PRESENCE = new Set(["view", "ping"]);
 
 const SCHEMA = `CREATE TABLE IF NOT EXISTS taps (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -101,14 +103,92 @@ function sourceOf(referer) {
  * require an authenticated staff account, writes are open so this Worker can
  * post without carrying a credential.
  */
-async function pushToFirebase(env, row) {
-  if (!env.FIREBASE_DB_URL) return false;
-  const res = await fetch(`${env.FIREBASE_DB_URL.replace(/\/$/, "")}/taps.json`, {
+function dbUrl(env, path) {
+  return `${env.FIREBASE_DB_URL.replace(/\/$/, "")}/${path}.json`;
+}
+
+/** POST — append under a generated key (Firebase push()). */
+async function dbPush(env, path, value) {
+  const res = await fetch(dbUrl(env, path), {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify(row),
+    body: JSON.stringify(value),
   });
   return res.ok;
+}
+
+/** PATCH — merge fields without disturbing the rest (Firebase update()). */
+async function dbUpdate(env, path, fields) {
+  const res = await fetch(dbUrl(env, path), {
+    method: "PATCH",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(fields),
+  });
+  return res.ok;
+}
+
+async function pushToFirebase(env, row) {
+  if (!env.FIREBASE_DB_URL) return false;
+  return dbPush(env, "taps", row);
+}
+
+/**
+ * Presence and session history, mirroring the Nova Style model.
+ *
+ *   online_visitors/{vid}      one row per person, overwritten by the
+ *                              heartbeat. "Who is here now" = rows whose
+ *                              lastSeen is recent; the dashboard decides the
+ *                              cutoff, so no server-side expiry is needed.
+ *   sessions/{YYYY-MM-DD}/{sid} one row per visit, bucketed by day. Bucketing
+ *                              by date is what makes "today / 7 days / 30
+ *                              days" a cheap read instead of a full scan.
+ *
+ * `view` writes both and seeds startedAt; `ping` only refreshes liveness and
+ * duration, so a reload cannot rewrite when the visit began.
+ */
+async function recordPresence(env, ev, row) {
+  if (!env.FIREBASE_DB_URL) return false;
+  const now = Date.now();
+  const day = row.at.slice(0, 10);
+
+  const live = {
+    visitorId: row.visitor,
+    sessionId: row.session,
+    page: row.page,
+    device: row.device,
+    browser: row.browser,
+    city: row.city,
+    region: row.region,
+    country: row.country,
+    source: row.source,
+    lastSeen: now,
+  };
+  if (ev === "view") live.arrivalAt = now;
+
+  const tasks = [dbUpdate(env, `online_visitors/${row.visitor}`, live)];
+
+  if (ev === "view") {
+    tasks.push(
+      dbUpdate(env, `sessions/${day}/${row.session}`, {
+        visitorId: row.visitor,
+        startedAt: now,
+        lastSeen: now,
+        page: row.page,
+        device: row.device,
+        browser: row.browser,
+        city: row.city,
+        region: row.region,
+        country: row.country,
+        source: row.source,
+        screenW: row.screenW,
+      })
+    );
+  } else {
+    tasks.push(dbUpdate(env, `sessions/${day}/${row.session}`, { lastSeen: now }));
+  }
+
+  const results = await Promise.all(tasks);
+  return results.every(Boolean);
 }
 
 async function recordTap(env, row) {
@@ -270,21 +350,34 @@ export default {
 
     try {
       const event = url.searchParams.get("e") ?? "";
-      if (ALLOWED_EVENTS.has(event)) {
+      if (CONVERSIONS.has(event) || PRESENCE.has(event)) {
         const referer = (request.headers.get("referer") ?? "").slice(0, 200) || null;
+        const q = (k, n) => (url.searchParams.get(k) ?? "").slice(0, n);
         const row = {
           at: new Date().toISOString(),
           event,
-          page: (url.searchParams.get("p") ?? "").slice(0, 200),
-          visitor: (url.searchParams.get("v") ?? "").slice(0, 40),
+          page: q("p", 200),
+          visitor: q("v", 40),
+          session: q("s", 40),
           ...geoOf(request),
-          device: deviceOf(request),
+          // The client reports its own device/browser; fall back to the
+          // user-agent when it did not (very old browser, or JS partly blocked).
+          device: q("d", 20) || deviceOf(request),
+          browser: q("b", 20) || null,
+          screenW: Number(q("w", 6)) || null,
           source: sourceOf(referer),
           referer,
         };
-        const mode = await recordTap(env, row);
-        // Stable prefix so this is one filter term in Workers Logs.
-        console.log(`TAP ${mode} ${JSON.stringify(row)}`);
+
+        if (PRESENCE.has(event)) {
+          const ok = await recordPresence(env, event, row);
+          // Pings are frequent; only log arrivals, or the log is unreadable.
+          if (event === "view") console.log(`VIEW ${ok ? "stored" : "log-only"} ${JSON.stringify(row)}`);
+        } else {
+          const mode = await recordTap(env, row);
+          // Stable prefix so this is one filter term in Workers Logs.
+          console.log(`TAP ${mode} ${JSON.stringify(row)}`);
+        }
       }
     } catch (error) {
       console.error("track failed", error instanceof Error ? error.message : String(error));

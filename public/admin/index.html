@@ -47,6 +47,20 @@
   .msg{padding:10px 12px;border-radius:10px;background:#fde7e7;color:#a10000;font-weight:600;margin-bottom:12px}
   .muted{color:var(--muted);font-size:13px}
   [hidden]{display:none!important}
+  .live{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:14px;font-weight:600}
+  .live b{font-size:20px;color:var(--navy);font-variant-numeric:tabular-nums}
+  .dot{width:10px;height:10px;border-radius:50%;background:#12683a;box-shadow:0 0 0 4px rgba(18,104,58,.15)}
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .tabs button{background:#fff;border:1px solid var(--line);color:var(--muted)}
+  .tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+  .cols{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-bottom:8px}
+  .card h3{margin:0 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .bars{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .bars li{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:13px}
+  .bars .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bars .bar{grid-column:1/-1;height:6px;border-radius:4px;background:#dfe9f0;overflow:hidden}
+  .bars .bar i{display:block;height:100%;background:var(--navy)}
+  .bars b{font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -78,15 +92,33 @@
   </div>
 
   <div id="app" hidden>
+    <div class="live"><span class="dot"></span><b id="s-live">0</b> visiteur(s) en ligne maintenant</div>
+
+    <div class="tabs" id="tabs">
+      <button data-r="24h" class="on">24 heures</button>
+      <button data-r="today">Aujourd'hui</button>
+      <button data-r="7d">7 jours</button>
+      <button data-r="30d">30 jours</button>
+    </div>
+
     <div class="stats">
-      <div class="stat"><span>Aujourd'hui</span><b id="s-today">–</b></div>
-      <div class="stat"><span>7 derniers jours</span><b id="s-week">–</b></div>
+      <div class="stat"><span>Visiteurs</span><b id="s-vis">–</b></div>
+      <div class="stat"><span>Visites</span><b id="s-ses">–</b></div>
       <div class="stat"><span>Appels</span><b id="s-call">–</b></div>
       <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b></div>
-      <div class="stat"><span>Visiteurs distincts</span><b id="s-vis">–</b></div>
+      <div class="stat"><span>Taux d'appel</span><b id="s-rate">–</b></div>
     </div>
-    <p class="muted">Chaque ligne = un visiteur qui a appuyé sur le numéro. À comparer avec le journal du téléphone :
-      l'écart entre les deux est le nombre d'appels manqués.</p>
+
+    <div class="cols">
+      <section class="card"><h3>Pages les plus vues</h3><ol id="b-pages" class="bars"></ol></section>
+      <section class="card"><h3>Provenance</h3><ol id="b-src" class="bars"></ol></section>
+      <section class="card"><h3>Villes</h3><ol id="b-city" class="bars"></ol></section>
+      <section class="card"><h3>Appareils</h3><ol id="b-dev" class="bars"></ol></section>
+    </div>
+
+    <h3 style="margin:22px 0 8px">Appels déclenchés depuis le site</h3>
+    <p class="muted">Chaque ligne = un visiteur qui a appuyé sur le numéro. À comparer avec le journal du
+      téléphone : l'écart entre les deux est le nombre d'appels manqués.</p>
     <div class="wrap">
       <table>
         <thead><tr><th>Date</th><th>Type</th><th>Page</th><th>Localisation</th><th>Appareil</th><th>Source</th><th>Visiteur</th></tr></thead>
@@ -128,24 +160,95 @@ if (!isConfigured()) {
   $("out").onclick = () => signOut(auth);
 
   const fmt = (iso) => { try { return new Date(iso).toLocaleString("fr-FR"); } catch (e) { return iso; } };
+  const DAY = 86400000;
 
-  function render(list) {
-    list.sort((a, b) => (a.at < b.at ? 1 : -1));
-    const DAY = 86400000;
-    const since = (ms) => list.filter((r) => Date.now() - new Date(r.at).getTime() < ms).length;
-    $("s-today").textContent = since(DAY);
-    $("s-week").textContent = since(7 * DAY);
-    $("s-call").textContent = list.filter((r) => r.event === "call").length;
-    $("s-wa").textContent = list.filter((r) => r.event === "whatsapp").length;
-    $("s-vis").textContent = new Set(list.map((r) => r.visitor).filter(Boolean)).size;
+  let taps = [], sessions = [], live = {}, range = "24h";
 
-    $("rows").innerHTML = list.map((r) => {
+  /* Ranges are computed here rather than stored, so the same records answer
+     every question. "today" is calendar-local (since midnight) while "24h" is
+     a rolling window — they are different numbers and the operator will ask
+     why, so both are offered rather than one pretending to be the other. */
+  function windowStart() {
+    if (range === "today") { const d = new Date(); d.setHours(0, 0, 0, 0); return d.getTime(); }
+    if (range === "7d") return Date.now() - 7 * DAY;
+    if (range === "30d") return Date.now() - 30 * DAY;
+    return Date.now() - DAY;
+  }
+
+  function bars(el, items) {
+    const top = Object.entries(items).sort((a, b) => b[1] - a[1]).slice(0, 6);
+    const max = top.length ? top[0][1] : 1;
+    document.getElementById(el).innerHTML = top.length
+      ? top.map(([k, n]) =>
+          '<li><span class="lab" title="' + esc(k) + '">' + esc(k) + '</span><b>' + n + '</b>' +
+          '<span class="bar"><i style="width:' + Math.round((n / max) * 100) + '%"></i></span></li>').join("")
+      : '<li class="lab" style="color:var(--muted)">Aucune donnée</li>';
+  }
+
+  function tally(list, key) {
+    return list.reduce((acc, r) => { const v = r[key] || "—"; acc[v] = (acc[v] || 0) + 1; return acc; }, {});
+  }
+
+  function render() {
+    const from = windowStart();
+    const ses = sessions.filter((r) => (r.startedAt || 0) >= from);
+    const tp = taps.filter((r) => new Date(r.at).getTime() >= from);
+
+    const visitors = new Set(ses.map((r) => r.visitorId).filter(Boolean)).size;
+    const calls = tp.filter((r) => r.event === "call").length;
+    const wa = tp.filter((r) => r.event === "whatsapp").length;
+
+    document.getElementById("s-vis").textContent = visitors;
+    document.getElementById("s-ses").textContent = ses.length;
+    document.getElementById("s-call").textContent = calls;
+    document.getElementById("s-wa").textContent = wa;
+    document.getElementById("s-rate").textContent =
+      visitors ? Math.round(((calls + wa) / visitors) * 100) + "%" : "–";
+
+    bars("b-pages", tally(ses, "page"));
+    bars("b-src", tally(ses, "source"));
+    bars("b-city", tally(ses, "city"));
+    bars("b-dev", tally(ses, "device"));
+
+    tp.sort((a, b) => (a.at < b.at ? 1 : -1));
+    document.getElementById("rows").innerHTML = tp.map((r) => {
       const loc = [r.city, r.region, r.country].filter(Boolean).join(", ");
       const cls = r.event === "call" ? "call" : "whatsapp";
       return "<tr><td>" + esc(fmt(r.at)) + "</td><td><span class=\"tag " + cls + "\">" + esc(r.event) + "</span></td>" +
         "<td>" + esc(r.page) + "</td><td>" + esc(loc) + "</td><td>" + esc(r.device) + "</td>" +
         "<td>" + esc(r.source) + "</td><td>" + esc(r.visitor) + "</td></tr>";
     }).join("");
+
+    /* Live = a heartbeat in the last 10 minutes. The beat is every 30s, so 10
+       minutes tolerates a sleeping phone or a lost signal without showing
+       someone who has actually gone. Nothing expires server-side; the cutoff
+       is decided here, which keeps the write path cheap. */
+    const cutoff = Date.now() - 10 * 60 * 1000;
+    document.getElementById("s-live").textContent =
+      Object.values(live).filter((v) => (v.lastSeen || 0) > cutoff).length;
+  }
+
+  document.getElementById("tabs").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-r]");
+    if (!b) return;
+    range = b.dataset.r;
+    [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
+    render();
+  });
+
+  /* Sessions are stored bucketed by day, so only the days in the widest range
+     are subscribed to — never the whole history. */
+  function subscribeSessions(db) {
+    const days = [];
+    for (let i = 0; i < 31; i++) days.push(new Date(Date.now() - i * DAY).toISOString().slice(0, 10));
+    const byDay = {};
+    days.forEach((day) => {
+      onValue(ref(db, "sessions/" + day), (snap) => {
+        byDay[day] = Object.values(snap.val() || {});
+        sessions = Object.values(byDay).flat();
+        render();
+      }, () => {});
+    });
   }
 
   onAuthStateChanged(auth, (user) => {
@@ -154,12 +257,17 @@ if (!isConfigured()) {
     $("out").hidden = !user;
     $("who").textContent = user ? user.email : "";
     if (!user) return;
-    onValue(query(ref(db, "taps"), limitToLast(500)), (snap) => {
-      render(Object.values(snap.val() || {}));
+
+    onValue(query(ref(db, "taps"), limitToLast(1000)), (snap) => {
+      taps = Object.values(snap.val() || {});
+      render();
     }, () => {
       $("err").textContent = "Lecture refusée — vérifiez les règles de la base.";
       $("err").hidden = false;
     });
+
+    onValue(ref(db, "online_visitors"), (snap) => { live = snap.val() || {}; render(); }, () => {});
+    subscribeSessions(db);
   });
 }
 </script>
