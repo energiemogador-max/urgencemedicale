@@ -196,6 +196,56 @@ export const DATA = {
       "slug": "aviation",
       "name": "Aviation",
       "city": "rabat"
+    },
+    {
+      "slug": "mohammedia-centre",
+      "name": "Centre-ville",
+      "city": "mohammedia"
+    },
+    {
+      "slug": "al-alia",
+      "name": "Al Alia",
+      "city": "mohammedia"
+    },
+    {
+      "slug": "quartier-du-parc",
+      "name": "Quartier du Parc",
+      "city": "mohammedia"
+    },
+    {
+      "slug": "hassania",
+      "name": "Hassania",
+      "city": "mohammedia"
+    },
+    {
+      "slug": "bouskoura-ville-verte",
+      "name": "Ville Verte",
+      "city": "bouskoura"
+    },
+    {
+      "slug": "bouskoura-centre",
+      "name": "Centre de Bouskoura",
+      "city": "bouskoura"
+    },
+    {
+      "slug": "bouskoura-golf-city",
+      "name": "Golf City",
+      "city": "bouskoura"
+    },
+    {
+      "slug": "tamaris",
+      "name": "Tamaris",
+      "city": "dar-bouazza"
+    },
+    {
+      "slug": "dar-bouazza-centre",
+      "name": "Centre de Dar Bouazza",
+      "city": "dar-bouazza"
+    },
+    {
+      "slug": "sable-dor",
+      "name": "Sable d'Or",
+      "city": "dar-bouazza"
     }
   ],
   "tariffs": [

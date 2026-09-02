@@ -59,6 +59,24 @@ const QUARTIER_NAMES: { slug: string; name: string; city: City["slug"] }[] = [
   { slug: "les-orangers", name: "Les Orangers", city: "rabat" },
   { slug: "l-ocean", name: "L'Océan", city: "rabat" },
   { slug: "aviation", name: "Aviation", city: "rabat" },
+  // ── Mohammedia ────────────────────────────────────────────────────────
+  { slug: "mohammedia-centre", name: "Centre-ville", city: "mohammedia" },
+  { slug: "al-alia", name: "Al Alia", city: "mohammedia" },
+  { slug: "quartier-du-parc", name: "Quartier du Parc", city: "mohammedia" },
+  { slug: "hassania", name: "Hassania", city: "mohammedia" },
+
+  // ── Bouskoura ─────────────────────────────────────────────────────────
+  // sosadomicilemaroc.com targets "bouskoura" in its title with a 620-word
+  // site and no sitemap at all. This is the least defended ground in the
+  // whole market.
+  { slug: "bouskoura-ville-verte", name: "Ville Verte", city: "bouskoura" },
+  { slug: "bouskoura-centre", name: "Centre de Bouskoura", city: "bouskoura" },
+  { slug: "bouskoura-golf-city", name: "Golf City", city: "bouskoura" },
+
+  // ── Dar Bouazza ───────────────────────────────────────────────────────
+  { slug: "tamaris", name: "Tamaris", city: "dar-bouazza" },
+  { slug: "dar-bouazza-centre", name: "Centre de Dar Bouazza", city: "dar-bouazza" },
+  { slug: "sable-dor", name: "Sable d'Or", city: "dar-bouazza" },
 ];
 
 export const cities: City[] = CITY_NAMES.map((c) => {
