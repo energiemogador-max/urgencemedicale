@@ -107,24 +107,46 @@ function dbUrl(env, path) {
   return `${env.FIREBASE_DB_URL.replace(/\/$/, "")}/${path}.json`;
 }
 
+/*
+ * Both helpers record WHY a write failed, not just that it did.
+ *
+ * They used to return a bare boolean, which made every failure look identical
+ * from the outside: a missing variable, a wrong database URL, a rules
+ * rejection and a network error all surfaced as the same dead dashboard. The
+ * last diagnostic pass had to guess between them. `lastDbError` is read back
+ * into the x-track-sink header so the next failure names itself.
+ */
+let lastDbError = null;
+
+async function dbWrite(env, path, method, body) {
+  const url = dbUrl(env, path);
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    if (!res.ok) {
+      const detail = (await res.text().catch(() => "")).slice(0, 120).replace(/\s+/g, " ");
+      lastDbError = `${res.status}@${path}${detail ? " " + detail : ""}`;
+      return false;
+    }
+    return true;
+  } catch (error) {
+    // A malformed FIREBASE_DB_URL lands here, not in the !res.ok branch.
+    lastDbError = `fetch@${path} ${error instanceof Error ? error.message : String(error)}`.slice(0, 160);
+    return false;
+  }
+}
+
 /** POST — append under a generated key (Firebase push()). */
 async function dbPush(env, path, value) {
-  const res = await fetch(dbUrl(env, path), {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(value),
-  });
-  return res.ok;
+  return dbWrite(env, path, "POST", value);
 }
 
 /** PATCH — merge fields without disturbing the rest (Firebase update()). */
 async function dbUpdate(env, path, fields) {
-  const res = await fetch(dbUrl(env, path), {
-    method: "PATCH",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify(fields),
-  });
-  return res.ok;
+  return dbWrite(env, path, "PATCH", fields);
 }
 
 async function pushToFirebase(env, row) {
@@ -198,7 +220,10 @@ async function recordTap(env, row) {
   } catch (error) {
     console.error("firebase push failed", error instanceof Error ? error.message : String(error));
   }
-  if (!env.DB) return sinks.length ? sinks.join("+") : "log-only";
+  if (!env.DB) {
+    if (sinks.length) return sinks.join("+");
+    return env.FIREBASE_DB_URL ? `firebase-failed(${lastDbError ?? "unknown"})` : "log-only";
+  }
   await env.DB.prepare(SCHEMA).run();
   await env.DB.prepare(
     "INSERT INTO taps (at, event, page, visitor, country, city, region, timezone, isp, device, source, referer) " +
@@ -349,6 +374,7 @@ export default {
     if (url.pathname !== TRACK_PATH) return env.ASSETS.fetch(request);
 
     let sink = "none";
+    lastDbError = null;
     try {
       const event = url.searchParams.get("e") ?? "";
       if (CONVERSIONS.has(event) || PRESENCE.has(event)) {
@@ -373,7 +399,11 @@ export default {
 
         if (PRESENCE.has(event)) {
           const ok = await recordPresence(env, event, row);
-          sink = ok ? "firebase" : env.FIREBASE_DB_URL ? "firebase-failed" : "log-only";
+          sink = ok
+            ? "firebase"
+            : env.FIREBASE_DB_URL
+              ? `firebase-failed(${lastDbError ?? "unknown"})`
+              : "log-only";
           // Pings are frequent; only log arrivals, or the log is unreadable.
           if (event === "view") console.log(`VIEW ${ok ? "stored" : "log-only"} ${JSON.stringify(row)}`);
         } else {
@@ -400,7 +430,15 @@ export default {
      */
     return new Response(null, {
       status: 204,
-      headers: { "cache-control": "no-store", "x-track-sink": sink },
+      headers: {
+        "cache-control": "no-store",
+        "x-track-sink": sink,
+        /* Which database host the Worker is actually configured with. A URL
+           that is wrong, truncated, or missing its region reads exactly like a
+           rules rejection without this. Host only, and there is no credential
+           in it either way. */
+        "x-track-db": env.FIREBASE_DB_URL ? new URL(env.FIREBASE_DB_URL).host : "unset",
+      },
     });
   },
 };
