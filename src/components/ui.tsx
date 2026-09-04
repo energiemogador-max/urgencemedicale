@@ -91,7 +91,7 @@ export function FactPill({ label, value }: { label: string; value: string }) {
   return (
     <div className="rounded-lg border border-border bg-surface px-4 py-3">
       <div className="text-xs font-bold uppercase tracking-[0.08em] text-ink-muted">{label}</div>
-      <div className="mt-1 font-serif text-lg font-bold text-primary">{value}</div>
+      <div className="mt-1 text-lg font-bold text-primary">{value}</div>
     </div>
   );
 }

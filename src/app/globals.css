@@ -60,7 +60,7 @@
    * scale as `--font-size-*`, which Tailwind ignores entirely — so for the
    * whole build so far the site silently rendered at Tailwind's stock sizes
    * (text-xs 12px, text-sm 14px, text-3xl 30px) while this block looked
-   * authoritative. Only `--font-size-base` had any effect, because the `body`
+   * authoritative. Only `--body-text-size` had any effect, because the `body`
    * rule below references it directly in plain CSS rather than via a utility.
    *
    * Small sizes are raised to the brief's legibility floor: nothing renders
@@ -91,11 +91,10 @@
   --text-4xl--line-height: 1.08;
 
   /* Consumed by the `body` rule directly, not by a utility. */
-  --font-size-base: 1.125rem;
+  --body-text-size: 1.125rem;
 
-  --font-family-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --body-text-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
   /* Display is the same family at heavy weight, matching the logo lettering. */
-  --font-family-serif: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
@@ -179,8 +178,8 @@
   body {
     background-color: var(--color-bg);
     color: var(--color-ink);
-    font-family: var(--font-family-sans);
-    font-size: var(--font-size-base);
+    font-family: var(--body-text-family);
+    font-size: var(--body-text-size);
     font-weight: 500; /* floor — nothing renders lighter than medium */
     line-height: 1.55;
     -webkit-font-smoothing: antialiased;
@@ -189,7 +188,7 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-family-sans);
+    font-family: var(--body-text-family);
     font-weight: 800;
     text-wrap: balance;
     letter-spacing: -0.02em;

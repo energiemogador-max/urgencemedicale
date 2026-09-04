@@ -131,7 +131,7 @@ export default function HomePage() {
             },
           ].map((step) => (
             <li key={step.n} className="rounded-lg border border-border bg-surface p-5">
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary font-serif text-lg font-bold text-white">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-lg font-bold text-white">
                 {step.n}
               </span>
               <span className="mt-3 block font-bold text-ink">{step.t}</span>
