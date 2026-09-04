@@ -3,6 +3,7 @@ import Link from "next/link";
 import { content, getTrustBlockProps, getQuartiersForCity } from "@/lib/content";
 import { TrustBlock } from "@/components/TrustBlock";
 import { Reviews } from "@/components/Reviews";
+import { LiveStatus } from "@/components/LiveStatus";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
@@ -23,7 +24,10 @@ export function generateMetadata(): Metadata {
 }
 
 export default function HomePage() {
-  const { business, specialties, situations, services, cities, pricing } = content;
+  /* Distinct languages across the team, in the order they were supplied, so
+     adding a doctor who speaks another one updates the hero automatically. */
+  const spokenLanguages = [...new Set(content.doctors.flatMap((d) => d.languages))];
+  const { business, doctors, specialties, situations, services, cities, pricing } = content;
   const casablancaQuartiers = getQuartiersForCity("casablanca");
 
   /**
@@ -56,21 +60,44 @@ export default function HomePage() {
         callLabel="Appelez-nous"
         siteLabel={SITE_DOMAIN}
         siteTagline="Votre santé, notre priorité"
+        /*
+         * Every value here is a fact a reader can check, and every number is
+         * derived from the content layer so it cannot drift.
+         *
+         * What was here before was "Rapide", "Qualifiés", "Fiable", "Confort
+         * & sécurité" — four adjectives that every competitor in this market
+         * also claims, on a site whose entire advantage is that its claims can
+         * be verified. Adjectives were the weakest copy on the strongest page.
+         */
         features={[
-          { title: "Intervention", emphasis: "Rapide", detail: `${business.hoursOpen}`, icon: "clock" },
-          { title: "Médecins", emphasis: "Qualifiés", detail: "Inscrits à l'Ordre", icon: "doctor" },
-          { title: "Soins", emphasis: "À domicile", detail: "Confort & sécurité", icon: "home" },
-          { title: "Service", emphasis: "Fiable", detail: "Tarif annoncé d'avance", icon: "shield" },
+          {
+            title: "Intervention",
+            emphasis: `${business.defaultResponseTimeMinutes} min`,
+            detail: business.hoursOpen,
+            icon: "clock",
+          },
+          {
+            title: `${doctors.length} médecins`,
+            emphasis: "Nommés",
+            detail: "Numéro d'Ordre public",
+            icon: "doctor",
+          },
+          {
+            title: "Consultation",
+            emphasis: `${spokenLanguages.length} langues`,
+            detail: spokenLanguages.join(" · "),
+            icon: "home",
+          },
+          {
+            title: "Tarifs",
+            emphasis: "Publiés",
+            detail: `${pricing.tiers[0]?.amountMad} et ${pricing.tiers[1]?.amountMad} ${pricing.currency}`,
+            icon: "shield",
+          },
         ]}
         coverageTitle={coverageTitle}
         coverageNote={coverageNote}
-        image={{
-          src: "/images/doctor-640.webp",
-          srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
-          width: 640,
-          height: 960,
-          alt: "Médecin en blouse blanche avec un stéthoscope",
-        }}
+        aside={<LiveStatus />}
       >
         <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="hero" className="w-full sm:w-auto" />
       </Hero>

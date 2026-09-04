@@ -49,6 +49,7 @@ export function Hero({
   features,
   coverageTitle,
   coverageNote,
+  aside,
   image,
   children,
 }: {
@@ -65,6 +66,14 @@ export function Hero({
   features: HeroFeature[];
   coverageTitle: string;
   coverageNote: string;
+  /**
+   * Right-hand panel. Takes precedence over `image`.
+   *
+   * The homepage passes <LiveStatus/> here. What used to sit in this slot was
+   * a stock photograph of a doctor — the most valuable space on the site,
+   * spent on the one image every competitor also has.
+   */
+  aside?: ReactNode;
   image?: { src: string; srcSet: string; width: number; height: number; alt: string };
   children?: ReactNode;
 }) {
@@ -154,8 +163,9 @@ export function Hero({
           {children && <div className="mt-6">{children}</div>}
         </div>
 
-        {/* ---- Right: photo masked into the brand's curve ---- */}
-        {image && (
+        {/* ---- Right: live status panel, or the legacy photo ---- */}
+        {aside}
+        {!aside && image && (
           <div className="relative min-h-[150px] sm:min-h-[300px] lg:min-h-[520px]">
             <div className="absolute inset-0 overflow-hidden lg:[clip-path:ellipse(115%_130%_at_78%_50%)]">
               <div className="absolute inset-0 bg-gradient-to-b from-primary-tint to-surface-2" />
