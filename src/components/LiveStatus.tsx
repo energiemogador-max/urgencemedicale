@@ -1,145 +1,95 @@
 import { content } from "@/lib/content";
 
 /**
- * The hero's right-hand panel: a live service status, in place of a photograph.
+ * Live service status, floated over the hero photograph as a compact badge.
  *
- * WHY THIS REPLACED THE PHOTO
+ * WHAT IT IS FOR
  *
- * What was there was a stock image of a doctor in a white coat — the same
- * image, in spirit, that every competitor in this market uses. It occupied the
- * most valuable space on the site and told a visitor nothing they did not
- * already assume.
+ * It answers, without being asked, the two questions someone has at 02h00 with
+ * a sick child: is anyone awake, and what will this cost. No competitor
+ * surveyed publishes a price at all, let alone the one that applies right now.
  *
- * This answers, without being asked, the three questions someone actually has
- * at 02h00 with a sick child: is anyone awake, how long, and what will it
- * cost. No competitor surveyed publishes a price at all, let alone the one
- * that applies right now.
+ * It is a badge rather than a full panel because the hero is now a photograph:
+ * a large information panel would fight the image for the same space. Small
+ * and specific beats large and general here — the tariff table lives on
+ * /tarifs, and this only has to carry the number that applies tonight.
  *
  * HOW IT DEGRADES
  *
- * Everything factual is server-rendered: both tariffs, both time windows, the
- * response time, the cities. With JavaScript off — or before hydration, or if
- * the inline script throws — the panel is complete and correct; it simply does
- * not know the hour.
- *
- * The live line starts `hidden` and the script unhides it. That ordering
- * matters: a visitor must never see a tariff highlighted as "now" that is
- * wrong for their clock, so nothing is highlighted until the clock is read.
+ * The fallback line is server-rendered and always true: open 24/7, 500 to 700
+ * MAD. The live line starts `hidden`; the script reads the clock, fills it,
+ * unhides it, and hides the fallback. With JavaScript off, or before the
+ * script runs, or if it throws, the badge is still correct — it just does not
+ * know the hour. Nobody is ever shown a tariff asserted as "now" that is wrong
+ * for their clock, because nothing is asserted until the clock is read.
  *
  * WHY THE RULE IS SAFE TO COMPUTE
  *
  * The published tariffs make this purely a function of the hour: 07h00-20h00
- * is the day rate, and the day rate explicitly includes Saturday and Sunday,
- * so the weekend needs no special case. Public holidays are billed at the
- * night rate and are NOT computed — Morocco's holidays include moveable
+ * is the day rate, and that rate explicitly includes Saturday and Sunday, so
+ * the weekend needs no special case. Public holidays are billed at the night
+ * rate and are deliberately NOT computed — Morocco's holidays include moveable
  * Islamic dates, and a page that quietly gets one wrong is worse than one that
- * says so. The panel states the holiday rule in words and lets the person on
- * the phone confirm, which is where the tariff is confirmed anyway.
+ * stays silent. The tariff is confirmed on the phone before the visit either
+ * way, which is where that edge belongs.
+ *
+ * Solid white, not a translucent panel: this sits on a photograph, and
+ * translucency would make the contrast of the text depend on the pixels
+ * underneath it.
  */
 export function LiveStatus() {
-  const { business, pricing } = content;
+  const { pricing } = content;
   const day = pricing.tiers.find((t) => t.slug === "jour-weekend");
   const night = pricing.tiers.find((t) => t.slug === "nuit-ferie");
 
   return (
-    <div className="relative flex h-full flex-col justify-center overflow-hidden bg-primary px-6 py-8 sm:px-8 lg:px-10">
-      {/* Crescent watermark — the brand's own mark, at a size that reads as
-          texture rather than decoration. Masked, so it needs no extra asset. */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 bg-white/[0.06]"
-        style={{
-          maskImage: "var(--crescent-mask)",
-          WebkitMaskImage: "var(--crescent-mask)",
-          maskSize: "contain",
-          WebkitMaskSize: "contain",
-          maskRepeat: "no-repeat",
-          WebkitMaskRepeat: "no-repeat",
-        }}
-      />
+    <div
+      id="um-status"
+      className="absolute right-4 top-4 z-10 max-w-[13.5rem] rounded-2xl bg-white/95 px-4 py-3 shadow-2xl ring-1 ring-white/50 backdrop-blur lg:bottom-8 lg:right-8 lg:top-auto"
+    >
+      <p className="flex items-center gap-2">
+        <span className="relative flex h-2.5 w-2.5 shrink-0">
+          <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-whatsapp opacity-75 motion-reduce:animate-none" />
+          <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-whatsapp" />
+        </span>
+        <span className="text-[0.65rem] font-black uppercase tracking-[0.14em] text-ink">Service ouvert</span>
+      </p>
 
-      <div id="um-status" className="relative">
-        <p className="flex items-center gap-2.5">
-          <span className="relative flex h-2.5 w-2.5 shrink-0">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-whatsapp opacity-75 motion-reduce:animate-none" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-whatsapp" />
-          </span>
-          <span className="text-xs font-bold uppercase tracking-[0.18em] text-on-primary-muted">
-            Service ouvert — {business.hoursOpen}
-          </span>
-        </p>
+      {/* Server-rendered truth. Replaced by the live line once the clock is read. */}
+      <p id="um-fallback" className="mt-1.5 text-sm text-ink-muted">
+        24h/24 · {day?.amountMad} à {night?.amountMad} {pricing.currency}
+      </p>
 
-        {/* Filled in by the script below; absent without JavaScript. */}
-        <p id="um-live" hidden className="mt-5 leading-none">
-          <span
-            id="um-clock"
-            className="block text-[clamp(2.6rem,7vw,3.6rem)] font-black tabular-nums tracking-tight text-white"
-          />
-          <span id="um-period" className="mt-2 block text-sm font-bold uppercase tracking-[0.14em] text-call-ink" />
-        </p>
-
-        <dl className="mt-7 grid gap-2.5">
-          {[
-            { id: "um-tier-jour", tier: day },
-            { id: "um-tier-nuit", tier: night },
-          ].map(({ id, tier }) =>
-            tier ? (
-              <div
-                key={tier.slug}
-                id={id}
-                data-active="0"
-                className="flex items-baseline justify-between gap-4 rounded-xl border border-white/10 px-4 py-3 transition-colors data-[active=1]:border-call data-[active=1]:bg-white/10"
-              >
-                <dt className="min-w-0">
-                  <span className="block text-sm font-bold text-white">{tier.label}</span>
-                  <span className="mt-0.5 block text-xs text-on-primary-faint">{tier.window}</span>
-                </dt>
-                <dd className="shrink-0 text-xl font-black tabular-nums text-white">
-                  {tier.amountMad} <span className="text-sm font-bold text-on-primary-muted">{pricing.currency}</span>
-                </dd>
-              </div>
-            ) : null
-          )}
-        </dl>
-
-        <p className="mt-3 text-xs text-on-primary-faint">
-          Les jours fériés sont au tarif de nuit. Le tarif applicable vous est confirmé au téléphone avant que vous ne
-          validiez la visite.
-        </p>
-
-        <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-white/15 pt-5">
-          <span className="text-sm text-on-primary-muted">
-            Intervention en{" "}
-            <span className="font-black text-white">{business.defaultResponseTimeMinutes} min</span>
-          </span>
-          <span className="text-sm text-on-primary-muted">
-            <span className="font-black text-white">{content.cities.length} villes</span> couvertes
-          </span>
-        </div>
-      </div>
+      <p id="um-live" hidden className="mt-1.5">
+        <span id="um-clock" className="block text-2xl font-black leading-none tabular-nums text-primary" />
+        <span id="um-period" className="mt-1 block text-xs font-bold uppercase tracking-wide text-ink-muted" />
+        <span id="um-rate" className="mt-1.5 block text-lg font-black leading-none tabular-nums text-call-ink" />
+      </p>
 
       <script
         dangerouslySetInnerHTML={{
           __html: `
 (function(){
   try {
-    var root = document.getElementById("um-status");
-    if (!root) return;
     var live = document.getElementById("um-live");
+    var fallback = document.getElementById("um-fallback");
     var clock = document.getElementById("um-clock");
     var period = document.getElementById("um-period");
-    var dayEl = document.getElementById("um-tier-jour");
-    var nightEl = document.getElementById("um-tier-nuit");
+    var rate = document.getElementById("um-rate");
+    if (!live || !clock) return;
+    var DAY = ${JSON.stringify(day?.amountMad ?? "")};
+    var NIGHT = ${JSON.stringify(night?.amountMad ?? "")};
+    var CUR = ${JSON.stringify(pricing.currency)};
     var pad = function(n){ return n < 10 ? "0" + n : "" + n; };
     function tick(){
       var d = new Date(), h = d.getHours();
       /* Published rule: 07h00-20h00 is the day rate, weekends included. */
       var isNight = h < 7 || h >= 20;
-      if (clock) clock.textContent = pad(h) + "h" + pad(d.getMinutes());
-      if (period) period.textContent = isNight ? "Nous sommes au tarif de nuit" : "Nous sommes au tarif de journée";
-      if (dayEl) dayEl.setAttribute("data-active", isNight ? "0" : "1");
-      if (nightEl) nightEl.setAttribute("data-active", isNight ? "1" : "0");
-      if (live) live.hidden = false;
+      clock.textContent = pad(h) + "h" + pad(d.getMinutes());
+      if (period) period.textContent = isNight ? "Tarif de nuit" : "Tarif de journée";
+      if (rate) rate.textContent = (isNight ? NIGHT : DAY) + " " + CUR;
+      live.hidden = false;
+      if (fallback) fallback.hidden = true;
     }
     tick();
     setInterval(tick, 30000);

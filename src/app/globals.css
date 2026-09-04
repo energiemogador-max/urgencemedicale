@@ -43,6 +43,11 @@
    * brand colour. `--color-call` stays as-is for backgrounds and icons,
    * where white-on-red is 4.95:1 and passes. */
   --color-call-ink: #b80000;
+  /* The brand red on the NAVY ground of the cinematic hero. #e20102 measures
+     only 3.07:1 there — acceptable for a 32px headline, a fail for the 12px
+     feature labels. This lightened tint measures 5.48:1, so one accent works
+     at both sizes without changing the brand colour anywhere else. */
+  --color-call-bright: #ff6b6b;
   --color-whatsapp: #25d366;
   --color-whatsapp-dark: #1da851;
 
@@ -135,6 +140,7 @@
     --color-call: #e20102;
     --color-call-dark: #a10000;
     --color-call-ink: #b80000;
+    --color-call-bright: #ff6b6b;
     --color-border: #c9d9e6;
     --color-star: #c8860d;
   }

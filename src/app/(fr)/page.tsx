@@ -17,7 +17,6 @@ import { homeFaqs } from "@/lib/faqs";
 import { buildMedicalBusiness } from "@/lib/schema-org/business";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
 import { pageMetadata } from "@/lib/seo";
-import { SITE_DOMAIN } from "@/lib/site";
 
 export function generateMetadata(): Metadata {
   return pageMetadata({ title: "Médecin à domicile Casablanca et Rabat 24/7", description: `${content.business.legalName} envoie un médecin à domicile en ${content.business.defaultResponseTimeMinutes} minutes.`, path: "/" });
@@ -36,30 +35,29 @@ export default function HomePage() {
    * would have gone on saying it after the area was cut to 5 — the kind of
    * claim that quietly becomes false when data changes underneath it.
    */
-  const coverageTitle = `${cities.length} villes couvertes`;
-  const coverageNote = cities.map((c) => c.name).join(", ");
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <JsonLd data={[buildMedicalBusiness(), buildBreadcrumbList([{ name: "Accueil", path: paths.home() }])]} />
 
       <Hero
-        logo={{
-          src: "/images/logo-420.webp",
-          srcSet: "/images/logo-420.webp 420w, /images/logo-840.webp 840w",
-          width: 420,
-          height: 161,
-          alt: `${business.legalName} — logo`,
-        }}
         title="L'urgence médicale"
         titleAccent="à domicile,"
         titleTail={business.hoursOpen}
-        lead="Assistance médicale à domicile : des médecins qualifiés chez vous, en un temps record. Le tarif vous est annoncé au téléphone avant que vous ne confirmiez la visite."
+        lead={`Un médecin inscrit à l'Ordre National des Médecins se déplace chez vous à ${cities
+          .map((c) => c.name)
+          .join(", ")}. Le tarif applicable vous est annoncé au téléphone avant que vous ne confirmiez la visite.`}
         phoneDisplay={business.phoneDisplay}
         phoneHref={business.phoneHref}
         callLabel="Appelez-nous"
-        siteLabel={SITE_DOMAIN}
-        siteTagline="Votre santé, notre priorité"
+        image={{
+          src: "/images/doctor-640.webp",
+          srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
+          width: 640,
+          height: 960,
+          alt: "Médecin en blouse blanche avec un stéthoscope",
+        }}
+        badge={<LiveStatus />}
         /*
          * Every value here is a fact a reader can check, and every number is
          * derived from the content layer so it cannot drift.
@@ -95,9 +93,6 @@ export default function HomePage() {
             icon: "shield",
           },
         ]}
-        coverageTitle={coverageTitle}
-        coverageNote={coverageNote}
-        aside={<LiveStatus />}
       >
         <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="hero" className="w-full sm:w-auto" />
       </Hero>

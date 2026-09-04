@@ -62,10 +62,12 @@ export function SiteHeader({
             aria-label={`${legalName} — accueil`}
           >
             {/*
-              Lighthouse identifies this 44px mark as the actual LCP element on
-              the homepage — not the hero imagery — because it is the first
-              painted image in the sticky bar. It therefore carries the high
-              fetch priority, and the hero images do not.
+              This 44px mark WAS the homepage's LCP element, back when the hero
+              held no large image — so it carried fetchPriority="high".
+              The cinematic hero photograph is now the LCP candidate and holds
+              that hint instead. Two competing "high" hints dilute the
+              prioritisation the attribute exists to give, and this mark is a
+              ~2KB WebP the browser will fetch early regardless of the hint.
             */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
@@ -75,7 +77,6 @@ export function SiteHeader({
               width={96}
               height={103}
               alt=""
-              fetchPriority="high"
               decoding="sync"
               className="h-11 w-auto"
             />
