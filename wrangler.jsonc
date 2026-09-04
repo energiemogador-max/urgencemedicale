@@ -40,31 +40,6 @@
     "run_worker_first": ["/admin/*", "/api/*"]
   },
 
-  /*
-   * Where /api/track writes.
-   *
-   * Kept HERE rather than as a dashboard variable on purpose. Without it the
-   * Worker still answers every beacon with 204 and simply drops the row —
-   * `x-track-sink: log-only` — so tracking fails completely silently, and the
-   * dashboard looks like a site with no visitors rather than a broken
-   * pipeline. That is exactly what happened: the variable was never set, and
-   * every view, ping and tap since launch went nowhere. In the repo it cannot
-   * be forgotten and cannot be lost by a redeploy.
-   *
-   * Not a secret. This URL is already public in the admin page's Firebase SDK
-   * config; the database is protected by its rules (writes open on the
-   * tracking nodes, reads admin-only), not by the URL being unknown. Public
-   * pages never see it — the beacon posts to /api/track on this origin.
-   *
-   * To verify after deploying:
-   *   curl -sI "https://urgencemedicale.ma/api/track?e=view&p=/x" | grep x-track-sink
-   * Expect `firebase`. `log-only` means this var is missing;
-   * `firebase-failed` means it is set but the write was rejected.
-   */
-  "vars": {
-    "FIREBASE_DB_URL": "https://urgencemedicale-8b903-default-rtdb.europe-west1.firebasedatabase.app"
-  },
-
   "observability": {
     "enabled": true
   }

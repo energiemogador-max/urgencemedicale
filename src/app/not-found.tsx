@@ -4,6 +4,7 @@ import { paths } from "@/lib/urls";
 import { archivo } from "@/app/fonts";
 import { MobileCallBar, MobileCallBarSpacer } from "@/components/MobileCallBar";
 import { toWhatsAppHref } from "@/lib/phone";
+import { TAP_TRACKING_SCRIPT } from "@/lib/analytics";
 import "@/app/globals.css";
 
 /**
@@ -119,6 +120,7 @@ export default function NotFound() {
           phoneHref={business.phoneHref}
           whatsappNumber={business.whatsappNumber}
         />
+        <script dangerouslySetInnerHTML={{ __html: TAP_TRACKING_SCRIPT }} />
       </body>
     </html>
   );

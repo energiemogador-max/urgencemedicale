@@ -14,6 +14,7 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_URL } from "@/lib/site";
 import { archivo } from "@/app/fonts";
+import { TAP_TRACKING_SCRIPT } from "@/lib/analytics";
 import "@/app/globals.css";
 
 export const viewport: Viewport = {
@@ -28,7 +29,13 @@ export const metadata: Metadata = {
 export default function ENRootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={archivo.variable}>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+        {/* Same tracker as the French pages. These locales were previously
+            invisible in the dashboard: a visit to /ar counted as no visit at
+            all, and a tap from an English-speaking visitor as no tap. */}
+        <script dangerouslySetInnerHTML={{ __html: TAP_TRACKING_SCRIPT }} />
+      </body>
     </html>
   );
 }

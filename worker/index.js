@@ -21,7 +21,7 @@
  * never become a broken phone number.
  */
 
-const TRACK_PATH = "/api/track";
+const GEO_PATH = "/api/geo";
 const STATS_PATH = "/admin/stats";
 
 /** Conversions — a tap on the number or on WhatsApp. */
@@ -91,152 +91,26 @@ function sourceOf(referer) {
 }
 
 /**
- * Push the tap into the Firebase Realtime Database the admin dashboard reads.
+ * NOTE — the Worker no longer writes to Firebase, and must not.
  *
- * Done server-side, from the Worker, on purpose: the public pages must never
- * load the Firebase SDK. The dashboard (public/admin/) is the only place that
- * does, and it is a separate document, so the emergency pages stay at zero
- * bytes of it.
+ * It used to: /api/track received a beacon and POSTed it to the Realtime
+ * Database. That worked from *.workers.dev and failed on urgencemedicale.ma
+ * with HTTP 525 (SSL handshake failed), deterministically, 5 tries out of 5.
+ * A Worker's outgoing fetch() inherits the SSL/TLS mode of the zone it runs
+ * on, so on the custom domain every write was refused by Cloudflare before it
+ * ever reached Google. Every view, heartbeat and tap since launch was dropped,
+ * silently, while /api/track answered 204.
  *
- * FIREBASE_DB_URL is a Worker variable, not a secret — a Realtime Database URL
- * is public by design. What protects the data is the database rules: reads
- * require an authenticated staff account, writes are open so this Worker can
- * post without carrying a credential.
+ * The fix is the model novastyle.ma has been using all along: the browser
+ * writes to the Realtime Database REST API directly. No Worker subrequest, so
+ * no zone TLS setting can break it. See lib/analytics.ts.
+ *
+ * What is left here is /api/geo, which reads Cloudflare's own edge geolocation
+ * off the inbound request. It makes NO outbound request, so it cannot fail the
+ * same way — and it keeps visitor IPs from being handed to a third-party
+ * geo-IP service, which is what Nova does and what this site should not, being
+ * medical.
  */
-function dbUrl(env, path) {
-  return `${env.FIREBASE_DB_URL.replace(/\/$/, "")}/${path}.json`;
-}
-
-/*
- * Both helpers record WHY a write failed, not just that it did.
- *
- * They used to return a bare boolean, which made every failure look identical
- * from the outside: a missing variable, a wrong database URL, a rules
- * rejection and a network error all surfaced as the same dead dashboard. The
- * last diagnostic pass had to guess between them. `lastDbError` is read back
- * into the x-track-sink header so the next failure names itself.
- */
-let lastDbError = null;
-
-async function dbWrite(env, path, method, body) {
-  const url = dbUrl(env, path);
-  try {
-    const res = await fetch(url, {
-      method,
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    if (!res.ok) {
-      const detail = (await res.text().catch(() => "")).slice(0, 120).replace(/\s+/g, " ");
-      lastDbError = `${res.status}@${path}${detail ? " " + detail : ""}`;
-      return false;
-    }
-    return true;
-  } catch (error) {
-    // A malformed FIREBASE_DB_URL lands here, not in the !res.ok branch.
-    lastDbError = `fetch@${path} ${error instanceof Error ? error.message : String(error)}`.slice(0, 160);
-    return false;
-  }
-}
-
-/** POST — append under a generated key (Firebase push()). */
-async function dbPush(env, path, value) {
-  return dbWrite(env, path, "POST", value);
-}
-
-/** PATCH — merge fields without disturbing the rest (Firebase update()). */
-async function dbUpdate(env, path, fields) {
-  return dbWrite(env, path, "PATCH", fields);
-}
-
-async function pushToFirebase(env, row) {
-  if (!env.FIREBASE_DB_URL) return false;
-  return dbPush(env, "taps", row);
-}
-
-/**
- * Presence and session history, mirroring the Nova Style model.
- *
- *   online_visitors/{vid}      one row per person, overwritten by the
- *                              heartbeat. "Who is here now" = rows whose
- *                              lastSeen is recent; the dashboard decides the
- *                              cutoff, so no server-side expiry is needed.
- *   sessions/{YYYY-MM-DD}/{sid} one row per visit, bucketed by day. Bucketing
- *                              by date is what makes "today / 7 days / 30
- *                              days" a cheap read instead of a full scan.
- *
- * `view` writes both and seeds startedAt; `ping` only refreshes liveness and
- * duration, so a reload cannot rewrite when the visit began.
- */
-async function recordPresence(env, ev, row) {
-  if (!env.FIREBASE_DB_URL) return false;
-  const now = Date.now();
-  const day = row.at.slice(0, 10);
-
-  const live = {
-    visitorId: row.visitor,
-    sessionId: row.session,
-    page: row.page,
-    device: row.device,
-    browser: row.browser,
-    city: row.city,
-    region: row.region,
-    country: row.country,
-    source: row.source,
-    lastSeen: now,
-  };
-  if (ev === "view") live.arrivalAt = now;
-
-  const tasks = [dbUpdate(env, `online_visitors/${row.visitor}`, live)];
-
-  if (ev === "view") {
-    tasks.push(
-      dbUpdate(env, `sessions/${day}/${row.session}`, {
-        visitorId: row.visitor,
-        startedAt: now,
-        lastSeen: now,
-        page: row.page,
-        device: row.device,
-        browser: row.browser,
-        city: row.city,
-        region: row.region,
-        country: row.country,
-        source: row.source,
-        screenW: row.screenW,
-      })
-    );
-  } else {
-    tasks.push(dbUpdate(env, `sessions/${day}/${row.session}`, { lastSeen: now }));
-  }
-
-  const results = await Promise.all(tasks);
-  return results.every(Boolean);
-}
-
-async function recordTap(env, row) {
-  let sinks = [];
-  try {
-    if (await pushToFirebase(env, row)) sinks.push("firebase");
-  } catch (error) {
-    console.error("firebase push failed", error instanceof Error ? error.message : String(error));
-  }
-  if (!env.DB) {
-    if (sinks.length) return sinks.join("+");
-    return env.FIREBASE_DB_URL ? `firebase-failed(${lastDbError ?? "unknown"})` : "log-only";
-  }
-  await env.DB.prepare(SCHEMA).run();
-  await env.DB.prepare(
-    "INSERT INTO taps (at, event, page, visitor, country, city, region, timezone, isp, device, source, referer) " +
-      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
-  )
-    .bind(
-      row.at, row.event, row.page, row.visitor, row.country, row.city,
-      row.region, row.timezone, row.isp, row.device, row.source, row.referer
-    )
-    .run();
-  sinks.push("d1");
-  return sinks.join("+");
-}
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -371,73 +245,26 @@ export default {
       return serveAdmin(request, env);
     }
 
-    if (url.pathname !== TRACK_PATH) return env.ASSETS.fetch(request);
-
-    let sink = "none";
-    lastDbError = null;
-    try {
-      const event = url.searchParams.get("e") ?? "";
-      if (CONVERSIONS.has(event) || PRESENCE.has(event)) {
-        const referer = (request.headers.get("referer") ?? "").slice(0, 200) || null;
-        const q = (k, n) => (url.searchParams.get(k) ?? "").slice(0, n);
-        const row = {
-          at: new Date().toISOString(),
-          event,
-          page: q("p", 200),
-          visitor: q("v", 40),
-          session: q("s", 40),
-          ...geoOf(request),
-          // The client reports its own device/browser; fall back to the
-          // user-agent when it did not (very old browser, or JS partly blocked).
-          device: q("d", 20) || deviceOf(request),
-          browser: q("b", 20) || null,
-          screenW: Number(q("w", 6)) || null,
-          cta: q("c", 24) || null,
-          source: sourceOf(referer),
-          referer,
-        };
-
-        if (PRESENCE.has(event)) {
-          const ok = await recordPresence(env, event, row);
-          sink = ok
-            ? "firebase"
-            : env.FIREBASE_DB_URL
-              ? `firebase-failed(${lastDbError ?? "unknown"})`
-              : "log-only";
-          // Pings are frequent; only log arrivals, or the log is unreadable.
-          if (event === "view") console.log(`VIEW ${ok ? "stored" : "log-only"} ${JSON.stringify(row)}`);
-        } else {
-          const mode = await recordTap(env, row);
-          sink = mode;
-          // Stable prefix so this is one filter term in Workers Logs.
-          console.log(`TAP ${mode} ${JSON.stringify(row)}`);
-        }
-      }
-    } catch (error) {
-      console.error("track failed", error instanceof Error ? error.message : String(error));
-    }
+    if (url.pathname !== GEO_PATH) return env.ASSETS.fetch(request);
 
     /*
-     * `x-track-sink` reports where the beacon actually went: "firebase" when
-     * the row was written, "log-only" when FIREBASE_DB_URL is not set on the
-     * Worker, "firebase-failed" when it is set but the write was rejected.
+     * Edge geolocation for the client-side tracker.
      *
-     * Without this the whole pipeline is opaque from outside — the endpoint
-     * returns 204 whether it stored anything or silently dropped it, which is
-     * exactly how an unset variable went unnoticed while the dashboard sat
-     * empty. One header turns "why is there no data" into a single curl.
-     * It exposes no secret: the URL itself is public by design.
+     * Cloudflare already knows the city and country of the inbound request, so
+     * the browser never has to ask a third party — and the visitor's IP is
+     * never sent anywhere. `request.cf` is read from the request that is
+     * already here; nothing is fetched.
+     *
+     * Cached for a day at the edge and in the browser: a visitor's city does
+     * not change between page views, and this must never sit on the critical
+     * path of a page whose job is a phone number.
      */
-    return new Response(null, {
-      status: 204,
+    const geo = geoOf(request);
+    return new Response(JSON.stringify(geo), {
       headers: {
-        "cache-control": "no-store",
-        "x-track-sink": sink,
-        /* Which database host the Worker is actually configured with. A URL
-           that is wrong, truncated, or missing its region reads exactly like a
-           rules rejection without this. Host only, and there is no credential
-           in it either way. */
-        "x-track-db": env.FIREBASE_DB_URL ? new URL(env.FIREBASE_DB_URL).host : "unset",
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=86400",
+        "access-control-allow-origin": "*",
       },
     });
   },

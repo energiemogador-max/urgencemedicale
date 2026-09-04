@@ -42,8 +42,20 @@
 #
 # Phase 7 analytics are Cloudflare Web Analytics, allow-listed above:
 # static.cloudflareinsights.com (the beacon script) and cloudflareinsights.com
-# (where it reports). Cookie-less, so no consent banner. The tap tracking
-# beacon posts to /api/track on this origin and needs no extra permission.
+# (where it reports). Cookie-less, so no consent banner.
+#
+# connect-src also allows the Realtime Database host, because the visitor
+# tracker writes to it DIRECTLY FROM THE BROWSER (see lib/analytics.ts). It
+# used to POST to /api/track and let the Worker write, which needed no extra
+# permission — and which failed with HTTP 525 on this domain for months,
+# because a Worker's outgoing fetch() inherits the zone's SSL/TLS mode. The
+# browser has no such constraint. This is the one third-party origin the
+# public pages talk to, and it is a write-only endpoint holding no personal
+# data: no name, no phone number, no medical information — a random visitor
+# id, a page path, and a city from our own edge.
+#
+# Geolocation deliberately does NOT appear here: it comes from /api/geo on
+# this origin, so no visitor IP is ever sent to a third-party geo-IP service.
 # ---------------------------------------------------------------------------
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
@@ -51,7 +63,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: DENY
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://static.cloudflareinsights.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' https://cloudflareinsights.com https://urgencemedicale-8b903-default-rtdb.europe-west1.firebasedatabase.app; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
 
 # ---------------------------------------------------------------------------
 # The OG image is a metadata route emitting a real PNG at an extensionless

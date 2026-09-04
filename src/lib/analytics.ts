@@ -11,7 +11,7 @@
  * 2. First-party tap tracking for the actual conversion. Cloudflare Web
  *    Analytics has no custom-event API, and the conversion here is a phone
  *    tap: the visitor leaves the browser entirely, which every analytics
- *    product records as a bounce. `worker/index.js` answers the beacon.
+ *    product records as a bounce.
  *
  * The token is operator-supplied and NOT invented. Unlike the Ordre numbers
  * this does not gate the build — analytics missing is an inconvenience, a
@@ -40,104 +40,209 @@ export const CF_ANALYTICS_ORIGINS = {
 } as const;
 
 /**
+ * Realtime Database endpoint the tracker writes to.
+ *
+ * Public by design: it is already in the admin page's Firebase SDK config, and
+ * what protects the data is the database rules (writes open on the three
+ * tracking nodes, reads staff-only), not this URL being secret. It must also
+ * be allow-listed in `connect-src` in public/_headers.
+ */
+export const FIREBASE_DB_URL =
+  "https://urgencemedicale-8b903-default-rtdb.europe-west1.firebasedatabase.app";
+
+/**
  * The visitor tracker, as a string because it ships as an inline <script>.
  *
- * Records three things: arrival (view), liveness (ping every 30s while the
- * tab is visible and the person active), and the conversion (call /
- * whatsapp). Everything goes to /api/track on this origin, so the public
- * Content-Security-Policy stays `connect-src 'self'` — no third-party
- * origin is added to the emergency pages, and the database URL is never
- * exposed to the browser. The Worker enriches each beacon with the city
- * and region Cloudflare already knows.
+ * IT WRITES TO FIREBASE DIRECTLY FROM THE BROWSER. That is not an oversight —
+ * it is the point, and it is the model novastyle.ma has used all along.
  *
- * Inline and dependency-free on purpose: it must run before the React bundle
- * has loaded. Someone who lands on the page and taps the number immediately
- * is the most valuable visitor on the site, and waiting for hydration would
- * miss exactly them.
+ * The previous version POSTed to /api/track and let the Worker do the write.
+ * That worked from *.workers.dev and failed on urgencemedicale.ma with HTTP
+ * 525 (SSL handshake failed) on every single request: a Worker's outgoing
+ * fetch() inherits the SSL/TLS mode of the zone it runs on, so on the custom
+ * domain Cloudflare refused the connection before it ever reached Google. The
+ * Worker still answered 204, so the site looked healthy while the dashboard
+ * stayed empty, and every view, heartbeat and tap since launch was discarded.
  *
- * It uses a capturing listener on `document` so it sees the click no matter
- * which component rendered the link, and `sendBeacon`, which is the only
- * request type the browser guarantees to finish once the page is being torn
- * down by the dialler opening.
+ * Writing from the browser takes the Worker out of the path entirely, so no
+ * zone-level setting can break it again.
+ *
+ * Two deliberate differences from Nova, both because this site is medical:
+ *
+ *  - Geolocation comes from /api/geo — Cloudflare's own edge data about the
+ *    request that is already arriving — instead of Nova's three third-party
+ *    geo-IP services. No visitor IP is handed to anyone, and the emergency
+ *    pages keep making zero third-party requests.
+ *  - It stays INLINE rather than a module, so the click listener is attached
+ *    before hydration. Someone who lands and taps the number immediately is
+ *    the most valuable visitor on the site; a deferred module would miss them.
+ *
+ * Node shapes match what public/admin/index.html already reads, so the
+ * dashboard needed no changes:
+ *   online_visitors/{vid}         PUT, refreshed by a 30s heartbeat
+ *   sessions/{YYYY-MM-DD}/{sid}   PUT on arrival, PATCH on leave
+ *   taps                          POST per tap-to-call / WhatsApp click
  */
 export const TAP_TRACKING_SCRIPT = `
 (function(){
   try {
-    var send = function(params){
-      var url = "/api/track?" + params;
-      if (navigator.sendBeacon) { navigator.sendBeacon(url); return; }
-      try { fetch(url, { keepalive: true, mode: "no-cors" }); } catch (e) {}
-    };
+    var DB = ${JSON.stringify(FIREBASE_DB_URL)};
 
-    /* Visitor id: localStorage, so the same person across tabs and days is one
-       visitor. Session id: sessionStorage, so each visit is counted separately.
-       Neither is a tracking cookie — random, first-party, never leaves this
-       site. They exist so "one person hesitating" and "three people calling"
-       are distinguishable, which is the number that gets argued about. */
+    /* The operator's own visits would otherwise dominate a small site's
+       numbers. Set localStorage.um_is_admin = "1" in your own browser. */
+    try { if (localStorage.getItem("um_is_admin") === "1") return; } catch (e) {}
+
+    /* keepalive so a write started as the dialler opens still completes. */
+    function send(path, method, value){
+      try {
+        return fetch(DB + "/" + path + ".json", {
+          method: method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(value),
+          keepalive: true
+        }).catch(function(){});
+      } catch (e) {}
+    }
+    var put = function(p, v){ return send(p, "PUT", v); };
+    var patch = function(p, v){ return send(p, "PATCH", v); };
+    var push = function(p, v){ return send(p, "POST", v); };
+
+    /* Visitor id in localStorage: the same person across tabs and days is one
+       visitor. Session id in sessionStorage: each visit counted separately. */
     var vid, sid;
     try {
       vid = localStorage.getItem("um_v");
       if (!vid) { vid = "v_" + Math.random().toString(36).slice(2, 11); localStorage.setItem("um_v", vid); }
       sid = sessionStorage.getItem("um_s");
       if (!sid) { sid = "s_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); sessionStorage.setItem("um_s", sid); }
-    } catch (e) { vid = "nostore"; sid = "nostore"; }
+    } catch (e) { vid = "v_nostore"; sid = "s_" + Date.now().toString(36); }
 
-    var dev = /iPad/.test(navigator.userAgent) ? "tablette"
-            : /Mobi|Android/.test(navigator.userAgent) ? "mobile" : "ordinateur";
     var ua = navigator.userAgent;
+    var dev = /iPad/.test(ua) ? "tablette" : /Mobi|Android/.test(ua) ? "mobile" : "ordinateur";
     var br = ua.indexOf("Edg") > -1 ? "Edge"
-           : (ua.indexOf("Chrome") > -1 ? "Chrome"
-           : (ua.indexOf("Firefox") > -1 ? "Firefox"
-           : (ua.indexOf("Safari") > -1 ? "Safari" : "Autre")));
+           : ua.indexOf("Chrome") > -1 ? "Chrome"
+           : ua.indexOf("Firefox") > -1 ? "Firefox"
+           : ua.indexOf("Safari") > -1 ? "Safari" : "Autre";
 
-    var base = function(ev){
-      return "e=" + ev +
-             "&p=" + encodeURIComponent(location.pathname) +
-             "&v=" + encodeURIComponent(vid) +
-             "&s=" + encodeURIComponent(sid) +
-             "&d=" + dev + "&b=" + br +
-             "&w=" + (screen.width || 0);
-    };
+    var arrival = Date.now();
+    var day = new Date().toISOString().slice(0, 10);
+    var visPath = "online_visitors/" + vid;
+    var sessPath = "sessions/" + day + "/" + sid;
 
-    /* Arrival. The Worker adds city/region from Cloudflare's edge — the page
-       cannot know that, and asking a geo-IP service would mean a third-party
-       request on an emergency page. */
-    send(base("view"));
+    /* Acquisition channel, captured on the first page and locked for the whole
+       visit — otherwise an internal click rewrites the source and every visit
+       ends up looking Direct. */
+    function classify(r){
+      if (!r) return "Direct";
+      if (r.indexOf("urgencemedicale.ma") > -1 || r.indexOf("workers.dev") > -1) return "__self__";
+      if (r.indexOf("google") > -1) return "Google";
+      if (r.indexOf("bing") > -1) return "Bing";
+      if (r.indexOf("facebook") > -1 || r.indexOf("fb.") > -1) return "Facebook";
+      if (r.indexOf("instagram") > -1) return "Instagram";
+      if (r.indexOf("whatsapp") > -1 || r.indexOf("wa.me") > -1) return "WhatsApp";
+      if (r.indexOf("tiktok") > -1) return "TikTok";
+      if (r.indexOf("chatgpt") > -1 || r.indexOf("openai") > -1) return "ChatGPT";
+      try { return new URL(r).hostname.replace("www.", ""); } catch (e) { return "Autre"; }
+    }
+    function source(){
+      try { var v = sessionStorage.getItem("um_src"); if (v) return v; } catch (e) {}
+      var c = classify(document.referrer);
+      if (c === "__self__") c = "Direct";
+      try { sessionStorage.setItem("um_src", c); } catch (e) {}
+      return c;
+    }
+    var landing = location.pathname;
+    try {
+      var st = sessionStorage.getItem("um_landing");
+      if (st) landing = st; else sessionStorage.setItem("um_landing", landing);
+    } catch (e) {}
 
-    /* Heartbeat, so time-on-site and "who is here now" are real. Only while
-       the tab is visible and the person is active: a forgotten background tab
-       must not inflate the numbers. */
+    /* City/country from our own edge, cached a day. Never awaited: a visitor
+       who leaves before it resolves must still be counted. */
+    var geo = null;
+    try {
+      var cg = JSON.parse(localStorage.getItem("um_geo") || "null");
+      if (cg && Date.now() - cg.ts < 86400000) geo = cg.data;
+    } catch (e) {}
+    if (!geo) {
+      fetch("/api/geo").then(function(r){ return r.json(); }).then(function(g){
+        if (!g) return;
+        geo = g;
+        try { localStorage.setItem("um_geo", JSON.stringify({ ts: Date.now(), data: g })); } catch (e) {}
+        beat();
+        patch(sessPath, { city: g.city, region: g.region, country: g.country });
+      }).catch(function(){});
+    }
+
     var lastActive = Date.now();
+    var IDLE = 5 * 60 * 1000, MAX_OPEN = 2 * 60 * 60 * 1000, hb = null;
+
+    /* One row per visitor, overwritten by the heartbeat. A hidden, idle or
+       long-abandoned tab stops writing, so it ages out of "en ligne
+       maintenant" instead of haunting it. */
+    function beat(){
+      if (document.visibilityState === "hidden") return;
+      if (Date.now() - lastActive > IDLE) return;
+      if (Date.now() - arrival > MAX_OPEN) { put(visPath, null); if (hb) clearInterval(hb); return; }
+      var p = {
+        visitorId: vid, sessionId: sid, page: location.pathname,
+        device: dev, browser: br, source: source(),
+        arrivalAt: arrival, lastSeen: Date.now(),
+        duration: Math.round((Date.now() - arrival) / 1000),
+        screenW: screen.width || 0
+      };
+      if (geo) { p.city = geo.city; p.region = geo.region; p.country = geo.country; }
+      put(visPath, p);
+    }
+
+    var srec = {
+      visitorId: vid, startedAt: arrival, lastSeen: arrival, page: location.pathname,
+      device: dev, browser: br, source: source(), screenW: screen.width || 0
+    };
+    if (geo) { srec.city = geo.city; srec.region = geo.region; srec.country = geo.country; }
+    put(sessPath, srec);
+
+    beat();
+    hb = setInterval(beat, 30000);
     ["mousemove","scroll","keydown","touchstart","click"].forEach(function(ev){
       window.addEventListener(ev, function(){ lastActive = Date.now(); }, { passive: true });
     });
-    setInterval(function(){
-      if (document.visibilityState !== "visible") return;
-      if (Date.now() - lastActive > 5 * 60 * 1000) return;
-      send(base("ping"));
-    }, 30000);
     document.addEventListener("visibilitychange", function(){
-      if (document.visibilityState === "visible") { lastActive = Date.now(); send(base("ping")); }
+      if (document.visibilityState === "visible") { lastActive = Date.now(); beat(); }
+      else patch(sessPath, { duration: Math.round((Date.now() - arrival) / 1000), endedAt: Date.now(), lastSeen: Date.now() });
     });
 
-    /* The conversion itself. Capturing listener on document so it fires no
-       matter which component rendered the link, and sendBeacon because it is
-       the only request the browser guarantees to finish while the page is
-       being torn down by the dialler opening. */
+    /* Deepest scroll on this page, so a tap can be read against engagement. */
+    var maxScroll = 0;
+    window.addEventListener("scroll", function(){
+      var d = document.documentElement;
+      var denom = (d.scrollHeight || document.body.scrollHeight) - d.clientHeight;
+      if (denom > 0) {
+        var pct = Math.round(((d.scrollTop || document.body.scrollTop) / denom) * 100);
+        if (pct > maxScroll) maxScroll = pct > 100 ? 100 : pct;
+      }
+    }, { passive: true });
+
+    /* The conversion. Capturing listener on document so it fires whichever
+       component rendered the link; data-tap names the surface. */
     document.addEventListener("click", function(ev){
       try {
         var a = ev.target && ev.target.closest && ev.target.closest("a[href]");
         if (!a) return;
         var href = a.getAttribute("href") || "";
-        var event = href.indexOf("tel:") === 0 ? "call"
-                  : href.indexOf("wa.me") > -1 ? "whatsapp"
-                  : null;
+        var event = href.indexOf("tel:") === 0 ? "call" : href.indexOf("wa.me") > -1 ? "whatsapp" : null;
         if (!event) return;
-        /* Which call surface was tapped — header, hero, banner, footer, or the
-           fixed mobile bar. Without this every tap looks the same in the
-           dashboard, and no CTA can be shown to be earning its place. */
-        var cta = a.getAttribute("data-tap") || "autre";
-        send(base(event) + "&c=" + encodeURIComponent(cta));
+        var row = {
+          at: new Date().toISOString(), event: event, page: location.pathname,
+          visitor: vid, session: sid, device: dev, browser: br, screenW: screen.width || 0,
+          cta: a.getAttribute("data-tap") || "autre",
+          source: source(), landingPage: landing,
+          secondsOnPage: Math.round((Date.now() - arrival) / 1000),
+          scrollPct: maxScroll,
+          referer: (document.referrer || "").slice(0, 200) || null
+        };
+        if (geo) { row.city = geo.city; row.region = geo.region; row.country = geo.country; }
+        push("taps", row);
       } catch (e) {}
     }, true);
   } catch (e) {}
