@@ -7,6 +7,40 @@ import type { CitySlug, ServiceSlug } from "../schema";
  * Key as `${serviceSlug}:${citySlug}`.
  */
 export const SERVICE_CITY_DRAFTS: Partial<Record<string, { intro: string; body: string }>> = {
+  /*
+   * Ambulance x city. Added 2026-09-04 on Search Console evidence: /ambulance
+   * was drawing impressions on explicitly city-level queries — "ambulance
+   * casablanca ain sebaa", "urgence ambulance", "ambulance" — while sitting at
+   * position 62, because the only ambulance page on the site named no city at
+   * all. Two spokes, for the two cities that already carry spokes; no quartier
+   * split, which would be thin.
+   */
+  "ambulance:casablanca": {
+    intro:
+      "Un transport sanitaire par la route à Casablanca, vers ou depuis un établissement de santé, avec un véhicule adapté à l'état du patient. Le tarif dépend du trajet et du type de transport, et vous est annoncé avant le départ.",
+    body: `Le transport sanitaire répond à un besoin précis : déplacer une personne qui ne peut pas prendre un véhicule ordinaire. Une sortie d'hospitalisation avec un patient qui ne tient pas assis, un transfert entre deux établissements pour un examen, une admission programmée, un retour à domicile après une intervention — ce sont des trajets où la position allongée, la présence d'un accompagnant formé et un véhicule équipé changent tout.
+
+Casablanca pose ses propres contraintes. L'agglomération s'étend sur des dizaines de kilomètres et un trajet entre Ain Sebaâ et Sidi Maarouf n'a rien à voir, en durée, avec la même distance ailleurs. Aux heures de pointe, l'itinéraire compte autant que la distance, et c'est pourquoi la destination exacte est demandée dès l'appel plutôt qu'au moment du départ.
+
+L'accès au domicile est l'autre variable. Beaucoup d'immeubles du centre et des quartiers anciens n'ont pas d'ascenseur, ou en ont un trop étroit pour un brancard. Certaines rues ne permettent pas à un véhicule de stationner devant la porte. Signaler l'étage, la présence ou non d'un ascenseur, et si le patient peut descendre assis ou doit être porté, permet d'envoyer le véhicule et l'équipe adaptés du premier coup.
+
+Les informations utiles au moment de l'appel sont toujours les mêmes : l'adresse complète avec l'étage, l'établissement de destination, si le patient peut se tenir assis, s'il est sous oxygène ou porteur d'une perfusion, et un numéro joignable.
+
+Ce service ne remplace pas les secours. Devant une détresse vitale — douleur thoracique, difficulté à respirer, perte de connaissance, saignement important, suites d'un accident — il faut appeler directement les secours, qui disposent des moyens de réanimation et de la priorité de circulation.`,
+  },
+  "ambulance:rabat": {
+    intro:
+      "Un transport sanitaire par la route à Rabat, entre le domicile et un établissement de santé ou entre deux établissements. Le tarif dépend du trajet et du type de transport, et il est communiqué avant le départ.",
+    body: `À Rabat, les transports sanitaires relèvent souvent de situations programmées plutôt que d'urgences : une admission prévue, un examen dans un autre établissement, un retour à domicile après une hospitalisation, le transfert d'un patient âgé vers une structure de suivi. Ce sont des trajets qui se préparent, et qui gagnent à être organisés à l'avance plutôt que le matin même.
+
+La géographie de l'agglomération a une conséquence pratique. Rabat et Salé forment un même bassin de vie mais restent séparées par le Bouregreg, et le nombre de franchissements est limité : un trajet court à vol d'oiseau peut demander un large détour selon l'heure. Pour un patient fatigué ou douloureux, cette différence n'est pas théorique, et elle est prise en compte dans le délai annoncé.
+
+Les quartiers résidentiels — Agdal, Souissi, Hassan, Yacoub El Mansour — présentent des accès très différents, de la villa en retrait de la rue à l'immeuble à gardien. Comme partout, ce qui fait gagner du temps est de préciser l'étage, l'existence d'un ascenseur et sa taille, et si le patient peut descendre par ses propres moyens.
+
+Les transferts entre Rabat et Casablanca sont fréquents, notamment vers des structures spécialisées de la capitale économique. Ce trajet interurbain relève du même service et se prépare de la même façon : destination exacte, état du patient, matériel éventuellement nécessaire pendant le trajet.
+
+Ce service ne remplace pas les secours. En cas de détresse vitale, il faut les appeler directement plutôt que d'attendre un transport programmé.`,
+  },
   "soins-infirmiers-a-domicile:casablanca": {
     intro:
       "Un infirmier se déplace à votre domicile à Casablanca pour réaliser les soins prescrits par votre médecin. Dans une ville où traverser l'agglomération pour un pansement quotidien coûte plus de temps que le soin lui-même, c'est souvent la solution la plus simple.",

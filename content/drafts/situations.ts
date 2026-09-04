@@ -57,7 +57,25 @@ Après l'appel, la personne qui répond recueille le motif général de la deman
 
 Ce service s'adresse à toute personne qui a besoin d'un avis médical documenté sans pouvoir se rendre facilement en cabinet : personnes à mobilité réduite, personnes âgées, convalescents, ou simplement emplois du temps qui rendent un rendez-vous classique difficile à caser. Si votre besoin porte sur un document très spécifique dont vous n'êtes pas sûr qu'il puisse être établi lors d'une visite à domicile, le plus simple est d'en parler directement au moment de l'appel : la personne qui répond peut vous orienter vers la solution la plus adaptée.
 
-Comme pour toute visite assurée par notre réseau, le médecin qui se déplace pour établir un certificat est identifiable : son nom et son numéro d'inscription à l'Ordre National des Médecins figurent sur la page Nos médecins, et le certificat qu'il rédige porte sa signature. Gardez une copie du document pour vos propres archives, en plus de l'exemplaire remis à l'établissement ou à l'organisme destinataire — cela évite d'avoir à redemander une nouvelle visite si le document venait à se perdre.`,
+Comme pour toute visite assurée par notre réseau, le médecin qui se déplace pour établir un certificat est identifiable : son nom et son numéro d'inscription à l'Ordre National des Médecins figurent sur la page Nos médecins, et le certificat qu'il rédige porte sa signature. Gardez une copie du document pour vos propres archives, en plus de l'exemplaire remis à l'établissement ou à l'organisme destinataire — cela évite d'avoir à redemander une nouvelle visite si le document venait à se perdre.
+
+**Un certificat médical sans consultation, est-ce possible ?**
+
+Non, et il vaut mieux le dire clairement. Un certificat médical est un document par lequel un médecin atteste de ce qu'il a personnellement constaté. Sans examen, il n'y a rien à attester : le médecin ne pourrait que recopier une déclaration, ce qui n'est pas un certificat mais une fausse attestation. C'est un manquement grave pour un médecin inscrit à l'Ordre, et un document sans valeur pour celui qui le présente — un employeur, une administration ou une fédération sportive qui découvre qu'aucun examen n'a eu lieu écarte le document, et la démarche est à refaire.
+
+Aucun médecin de ce réseau n'établit de certificat à distance, et si c'est ce que vous cherchez, autant le savoir avant d'appeler plutôt qu'à l'arrivée du médecin.
+
+Ce que la demande recouvre presque toujours, en revanche, c'est autre chose : ne pas avoir le temps ou la possibilité d'aller en cabinet, ni d'attendre dans une salle d'attente une demi-journée pour un document. C'est exactement ce à quoi répond la visite à domicile. L'examen a bien lieu, il a lieu chez vous, et le certificat est remis sur place à la fin de la consultation. Le document est régulier, signé, et opposable — il ne pose de problème à personne parce qu'il n'y a rien à cacher dans la façon dont il a été établi.
+
+**Certificat d'hospitalisation et documents de suite**
+
+Un certificat d'hospitalisation atteste d'un séjour dans un établissement de santé : dates, service, parfois motif selon ce que le patient autorise à mentionner. Il est demandé par un employeur, un organisme de prévoyance, une compagnie d'assurance ou une administration.
+
+Ce document est établi par l'établissement où le séjour a eu lieu, et par lui seul : c'est lui qui détient le dossier et qui peut attester des dates. Un médecin qui se déplace à votre domicile ne peut pas certifier une hospitalisation à laquelle il n'a pas participé. Si c'est ce document précis qu'il vous faut, la démarche à faire est auprès du service des admissions ou du bureau des entrées de l'établissement concerné.
+
+Ce qu'une visite à domicile peut établir, en revanche, c'est ce que le médecin constate chez vous après ce séjour : un certificat de suivi, une prolongation d'arrêt si l'état le justifie, une attestation de convalescence, un certificat de reprise. Ce sont des documents distincts du certificat d'hospitalisation, et ils demandent un examen, pas un dossier.
+
+Si vous n'êtes pas certain de quel document on vous demande, le plus efficace est de lire à voix haute, au téléphone, la phrase exacte figurant sur le courrier ou le formulaire que vous avez reçu. La formulation employée par l'organisme suffit presque toujours à identifier le document attendu, et évite une visite pour un papier qui ne conviendra pas.`,
   },
   "contre-visite-medicale": {
     intro:

@@ -1,3 +1,4 @@
+import { GEO_MULTIPLIED_SERVICE_SLUGS } from "./schema";
 import type { Service } from "./schema";
 
 /**
@@ -25,7 +26,7 @@ import type { Service } from "./schema";
  * No prices: the published tiers are consultation rates. Quoting them here
  * would misprice a different service.
  */
-export const services: Service[] = [
+const SERVICE_ENTRIES: Service[] = [
   {
     slug: "ambulance",
     name: "Ambulance et transport médicalisé",
@@ -169,3 +170,20 @@ Le suivi à domicile ne remplace pas le médecin traitant lorsqu'il y en a un, n
 La fréquence des visites et le tarif applicable sont convenus avant la mise en place du suivi, de sorte que rien ne soit découvert en cours de route.`,
   },
 ];
+
+/**
+ * `geoMultiplied` is DERIVED, never written by hand.
+ *
+ * It used to be a literal on each entry, and it drifted: GEO_MULTIPLIED_SERVICE_SLUGS
+ * gained "ambulance" so /ambulance/casablanca and /ambulance/rabat were
+ * generated and rendered, while services[].geoMultiplied still said false — so
+ * the sitemap never listed them. Two real pages that Google had no way to
+ * find. This is the same failure that once left the Rabat quartier pages in
+ * the sitemap but ungenerated, in the opposite direction.
+ *
+ * One list decides, everything else reads from it.
+ */
+export const services: Service[] = SERVICE_ENTRIES.map((s) => ({
+  ...s,
+  geoMultiplied: GEO_MULTIPLIED_SERVICE_SLUGS.includes(s.slug),
+}));

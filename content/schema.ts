@@ -224,7 +224,18 @@ export type ServiceSlug = (typeof SERVICE_SLUGS)[number];
 export const ServiceSlugEnum = z.enum(SERVICE_SLUGS);
 
 /** Services that also get per-city spoke pages (top 6 cities). */
-export const GEO_MULTIPLIED_SERVICE_SLUGS: ServiceSlug[] = ["soins-infirmiers-a-domicile"];
+/*
+ * Services that get their own city spokes. Kept deliberately short — the
+ * cartesian product of every service and every city would be thin content,
+ * which is fatal on a medical site.
+ *
+ * "ambulance" joined the list on 2026-09-04, on Search Console evidence
+ * rather than a hunch: /ambulance was taking impressions on explicitly
+ * city-level queries ("ambulance casablanca ain sebaa", "urgence ambulance")
+ * while ranking at position 62, because no ambulance page named a city. Each
+ * added pair still has to carry its own written prose or the build fails.
+ */
+export const GEO_MULTIPLIED_SERVICE_SLUGS: ServiceSlug[] = ["soins-infirmiers-a-domicile", "ambulance"];
 
 export const ServiceSchema = z.object({
   slug: ServiceSlugEnum,

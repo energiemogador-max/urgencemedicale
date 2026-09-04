@@ -97,10 +97,39 @@ export function CitySpecialtyRoute({ specialtySlug, citySlug }: { specialtySlug:
 
 // ---- situation standalone (/{situation}) -----------------------------------
 
+/**
+ * Appends the main city to a hub page's title when there is room for it.
+ *
+ * Search Console (2026-09-04) shows 80 of 97 query impressions coming from
+ * Morocco, on queries that are explicitly local — "urgences médicales
+ * casablanca", "ambulance casablanca ain sebaa", "medecin geriatre a
+ * domicile". The titles being served carried no city at all: they read
+ * "Certificat médical à domicile | 06 01 99 12 96", spending their last 17
+ * characters on the phone number and none on where the service operates.
+ *
+ * The city is added first and the phone number only if it still fits, because
+ * for a local query the city is what makes the result look like the right
+ * answer. clampTitle() drops the phone when it no longer fits, which is the
+ * correct trade rather than a regression.
+ *
+ * Only hub pages go through here. City and quartier pages already name their
+ * own place, and adding a second one would read as spam.
+ */
+function withCityScope(title: string): string {
+  const city = content.business.address.city;
+  if (title.includes(city)) return title;
+  const scoped = `${title} à ${city}`;
+  return scoped.length <= 60 ? scoped : title;
+}
+
 export function situationMetadata(situationSlug: SituationSlug): Metadata {
   const situation = getSituationBySlug(situationSlug);
   if (!situation) return {};
-  return pageMetadata({ title: situation.title, description: situation.intro, path: paths.situation(situation.slug) });
+  return pageMetadata({
+    title: withCityScope(situation.title),
+    description: situation.intro,
+    path: paths.situation(situation.slug),
+  });
 }
 
 export function SituationRoute({ situationSlug }: { situationSlug: SituationSlug }) {
@@ -150,7 +179,11 @@ export function SituationCityRoute({ situationSlug, citySlug }: { situationSlug:
 export function serviceMetadata(serviceSlug: ServiceSlug): Metadata {
   const service = getServiceBySlug(serviceSlug);
   if (!service) return {};
-  return pageMetadata({ title: service.name, description: service.intro, path: paths.service(service.slug) });
+  return pageMetadata({
+    title: withCityScope(service.name),
+    description: service.intro,
+    path: paths.service(service.slug),
+  });
 }
 
 export function ServiceRoute({ serviceSlug }: { serviceSlug: ServiceSlug }) {
