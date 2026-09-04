@@ -75,7 +75,29 @@ Ce document est établi par l'établissement où le séjour a eu lieu, et par lu
 
 Ce qu'une visite à domicile peut établir, en revanche, c'est ce que le médecin constate chez vous après ce séjour : un certificat de suivi, une prolongation d'arrêt si l'état le justifie, une attestation de convalescence, un certificat de reprise. Ce sont des documents distincts du certificat d'hospitalisation, et ils demandent un examen, pas un dossier.
 
-Si vous n'êtes pas certain de quel document on vous demande, le plus efficace est de lire à voix haute, au téléphone, la phrase exacte figurant sur le courrier ou le formulaire que vous avez reçu. La formulation employée par l'organisme suffit presque toujours à identifier le document attendu, et évite une visite pour un papier qui ne conviendra pas.`,
+Si vous n'êtes pas certain de quel document on vous demande, le plus efficace est de lire à voix haute, au téléphone, la phrase exacte figurant sur le courrier ou le formulaire que vous avez reçu. La formulation employée par l'organisme suffit presque toujours à identifier le document attendu, et évite une visite pour un papier qui ne conviendra pas.
+
+**Combien coûte un certificat médical à domicile ?**
+
+Le certificat n'est pas facturé comme un document isolé : il est remis à l'issue d'une consultation, puisque c'est l'examen qui lui donne sa valeur. C'est donc le tarif de la consultation à domicile qui s'applique, et il est publié sur ce site plutôt que communiqué au cas par cas.
+
+500 dirhams en journée et le week-end, entre 07h00 et 20h00, samedi et dimanche inclus. 700 dirhams la nuit, entre 20h00 et 07h00, ainsi que les jours fériés. Le montant exact applicable à votre demande vous est confirmé au téléphone avant que vous ne validiez la visite, de sorte que rien ne se découvre à la porte.
+
+Publier ces montants reste inhabituel dans ce secteur au Maroc, où l'usage est de renvoyer à un appel. Pour un document administratif à obtenir dans la journée, savoir à l'avance ce que l'on va payer fait partie de la réponse à la question.
+
+**Où faire établir un certificat médical ?**
+
+Trois possibilités existent, et la meilleure dépend surtout de votre situation.
+
+Un cabinet de médecin généraliste est la voie la plus courante. Elle suppose d'obtenir un rendez-vous, de se déplacer et d'attendre — ce qui convient très bien quand le document n'est pas urgent et que vous êtes mobile.
+
+Un centre de santé public constitue l'option la moins coûteuse, avec des délais et des horaires qui dépendent du centre et de l'affluence du jour.
+
+La visite à domicile est la troisième, et elle répond à un cas précis : quand le déplacement est justement le problème. Personne âgée, personne à mobilité réduite, patient en convalescence, parent seul avec des enfants, ou simplement une journée de travail qu'on ne peut pas interrompre une demi-journée pour un papier. Le médecin vient, l'examen a lieu chez vous, et le document est remis sur place.
+
+Dans les trois cas, le certificat a la même valeur : ce qui compte est qu'un médecin inscrit à l'Ordre National des Médecins ait examiné la personne et signe ce qu'il a constaté. Ce n'est pas le lieu de l'examen qui rend un certificat recevable.
+
+Une réserve utile : certains documents ne relèvent pas d'une consultation générale. Un certificat exigé pour la compétition sportive de haut niveau, une expertise demandée par une assurance, ou un document que seul un service hospitalier peut délivrer sortent de ce cadre. Là encore, lire au téléphone la phrase exacte du formulaire permet de vous dire tout de suite si une visite à domicile répond à votre besoin, ou si la démarche est ailleurs.`,
   },
   "contre-visite-medicale": {
     intro:
