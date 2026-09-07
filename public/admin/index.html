@@ -96,6 +96,7 @@
 <nav class="tabs" id="nav" hidden>
   <button data-t="dash" class="on">Visiteurs</button>
   <button data-t="ops">Interventions</button>
+  <button data-t="patients">Patients</button>
   <button data-t="cash">Médecins &amp; caisse</button>
   <button data-t="admin" id="tab-admin" hidden>Utilisateurs</button>
 </nav>
@@ -193,6 +194,31 @@
   </section>
 
   <!-- ── TAB 3: cash ledger ────────────────────────────────────────────── -->
+  <section id="t-patients" hidden>
+    <div class="stats">
+      <div class="stat"><span>Patients uniques</span><b id="pt-total">–</b></div>
+      <div class="stat"><span>Patients revenus</span><b id="pt-repeat">–</b></div>
+      <div class="stat"><span>Visites par patient</span><b id="pt-avg">–</b></div>
+      <div class="stat"><span>Chiffre d'affaires</span><b id="pt-ca">–</b></div>
+    </div>
+
+    <div class="card">
+      <h3>Fichier patients</h3>
+      <p class="muted" style="margin:0 0 12px">Construit à partir des interventions, regroupées par numéro de
+        téléphone : il n'y a rien à saisir deux fois. Un patient qui rappelle est reconnu même si son nom a été
+        orthographié autrement.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+        <input id="pt-search" placeholder="Nom, téléphone, ville, quartier…" style="flex:1;min-width:190px">
+        <button id="pt-csv" class="mini">Télécharger en CSV</button>
+      </div>
+      <div class="wrap"><table>
+        <thead><tr><th>Patient</th><th>Ville / quartier</th><th>Visites</th><th>Total</th>
+          <th>Dernière visite</th><th>Médecin habituel</th><th></th></tr></thead>
+        <tbody id="pt-rows"></tbody>
+      </table></div>
+    </div>
+  </section>
+
   <section id="t-cash" hidden>
     <div class="card">
       <h3>Encaissements par médecin</h3>
@@ -354,7 +380,7 @@ let users = [];
    site and one copy omitted "admin", so clicking Utilisateurs hid every other
    section and unhid nothing — a blank page. A list repeated three times is a
    list that will disagree with itself. */
-const TABS = ["dash", "ops", "cash", "admin"];
+const TABS = ["dash", "ops", "patients", "cash", "admin"];
 const showTab = (name) => TABS.forEach((t) => { $("t-" + t).hidden = t !== name; });
 
 const isAdmin = () => me?.role === "admin";
@@ -724,7 +750,7 @@ function renderOps() {
        staff to a dead link is worse than not offering the button. */
     const review = (r.status === "termine" && DATA.reviewUrl && r.patient_phone)
       ? ` <a class="mini" style="background:#12683a;text-decoration:none;display:inline-block" target="_blank" rel="noopener"
-           href="https://wa.me/${esc(String(r.patient_phone).replace(/[^0-9]/g, "").replace(/^0/, "212"))}?text=${
+           href="https://wa.me/${esc(phoneKey(r.patient_phone))}?text=${
              encodeURIComponent(
                `Bonjour, merci de votre confiance. Si la visite du médecin vous a été utile, votre avis aiderait beaucoup d'autres familles à nous trouver : ${DATA.reviewUrl}`
              )}">Demander un avis</a>`
@@ -791,11 +817,131 @@ function renderUsers() {
     `<td class="muted">${esc(u.uid)}</td></tr>`).join("");
 }
 
-function renderAll() { renderDash(); renderOps(); renderCash(); renderUsers(); }
+
+/* ── Fichier patients ───────────────────────────────────────────────────────
+ *
+ * Derived from interventions rather than entered separately, exactly as the
+ * Nova Style dashboard derives its client list from orders. Nothing is typed
+ * twice, and the file cannot drift from what actually happened.
+ *
+ * Grouped by PHONE NUMBER, not name: the same person is spelled three
+ * different ways across three calls at 2am, but the number they call from is
+ * stable. Digits only, and a leading 0 normalised to 212, so "0601991296" and
+ * "+212601991296" are one patient rather than two.
+ *
+ * The number that matters here is "patients revenus". A home-visit service
+ * lives on the family that calls again — for a second child, for a
+ * grandparent, the following winter. Acquisition cost is zero on that call,
+ * and nothing else in this dashboard shows it.
+ */
+const phoneKey = (p) => {
+  const d = String(p || "").replace(/[^0-9]/g, "");
+  if (!d) return "";
+  /* Order matters, and getting it wrong is silent. Chaining
+     .replace(/^0/,"212").replace(/^00/,"") turns "00212601991296" into
+     "2120212601991296", because ^0 matches the first zero before ^00 is ever
+     tried — and the patient then appears twice in the file under two keys.
+     Test each prefix explicitly instead. */
+  if (d.startsWith("00")) return d.slice(2);      // 00212… international
+  if (d.startsWith("0")) return "212" + d.slice(1); // 06…, 05… national
+  return d;                                         // already 212…
+};
+
+function patientFile() {
+  const map = {};
+  for (const r of interventions) {
+    if (r.status === "annule") continue;          // a cancelled call is not a patient
+    const key = phoneKey(r.patient_phone) || (r.patient_name || "").toLowerCase().trim();
+    if (!key) continue;
+    if (!map[key]) {
+      map[key] = {
+        name: r.patient_name || "—", phone: r.patient_phone || "—",
+        city: r.city || "", quartier: r.quartier || "",
+        visits: 0, total: 0, lastAt: 0, doctors: {},
+      };
+    }
+    const p = map[key];
+    p.visits += 1;
+    p.total += Number(r.amount) || 0;
+    if ((r.createdAt || 0) > p.lastAt) {
+      p.lastAt = r.createdAt || 0;
+      /* Keep the most recent spelling and address: people move, and the last
+         call is the one worth calling back. */
+      p.name = r.patient_name || p.name;
+      p.city = r.city || p.city;
+      p.quartier = r.quartier || p.quartier;
+    }
+    if (r.doctorName) p.doctors[r.doctorName] = (p.doctors[r.doctorName] || 0) + 1;
+  }
+  return Object.values(map).sort((a, b) => b.lastAt - a.lastAt);
+}
+
+function renderPatients() {
+  const all = patientFile();
+  const repeat = all.filter((p) => p.visits > 1);
+  const visits = all.reduce((s, p) => s + p.visits, 0);
+  const ca = all.reduce((s, p) => s + p.total, 0);
+
+  $("pt-total").textContent = all.length;
+  $("pt-repeat").textContent = all.length ? repeat.length + " (" + Math.round(repeat.length / all.length * 100) + "%)" : "0";
+  $("pt-avg").textContent = all.length ? (visits / all.length).toFixed(1) : "–";
+  $("pt-ca").textContent = ca.toLocaleString("fr-MA") + " " + DATA.currency;
+
+  const q = ($("pt-search").value || "").toLowerCase().trim();
+  const rows = q
+    ? all.filter((p) => [p.name, p.phone, p.city, p.quartier].join(" ").toLowerCase().includes(q))
+    : all;
+
+  $("pt-rows").innerHTML = rows.length
+    ? rows.map((p) => {
+        const usual = Object.entries(p.doctors).sort((a, b) => b[1] - a[1])[0];
+        const wa = phoneKey(p.phone);
+        return `<tr>
+          <td>${esc(p.name)}${p.visits > 1 ? ' <span class="tag call">fidèle</span>' : ""}
+              <br><span class="muted">${esc(p.phone)}</span></td>
+          <td>${esc([p.city, p.quartier].filter(Boolean).join(" · ") || "—")}</td>
+          <td>${p.visits}</td>
+          <td>${p.total.toLocaleString("fr-MA")} ${esc(DATA.currency)}</td>
+          <td>${p.lastAt ? esc(fmt(new Date(p.lastAt).toISOString())) : "—"}</td>
+          <td>${esc(usual ? usual[0] : "—")}</td>
+          <td>${wa ? `<a class="mini" style="background:#12683a;text-decoration:none;display:inline-block"
+                 target="_blank" rel="noopener" href="https://wa.me/${wa}">WhatsApp</a>` : ""}</td>
+        </tr>`;
+      }).join("")
+    : `<tr><td colspan="7" class="muted">Aucun patient${q ? " pour cette recherche" : " — le fichier se remplit à mesure que les interventions sont saisies"}.</td></tr>`;
+}
+
+/* Export so the file is usable outside this dashboard — that is the whole
+   point of keeping it. Built from the same aggregation the table shows, with
+   a BOM so Excel opens the accents correctly rather than as mojibake. */
+function patientsCsv() {
+  const head = ["Nom", "Telephone", "Ville", "Quartier", "Visites", "Total", "Derniere visite", "Medecin habituel"];
+  const esc2 = (v) => '"' + String(v ?? "").replace(/"/g, '""') + '"';
+  const lines = [head.map(esc2).join(",")];
+  for (const p of patientFile()) {
+    const usual = Object.entries(p.doctors).sort((a, b) => b[1] - a[1])[0];
+    lines.push([p.name, p.phone, p.city, p.quartier, p.visits, p.total,
+      p.lastAt ? new Date(p.lastAt).toISOString().slice(0, 10) : "", usual ? usual[0] : ""].map(esc2).join(","));
+  }
+  return "\uFEFF" + lines.join("\r\n");
+}
+
+function renderAll() { renderDash(); renderOps(); renderPatients(); renderCash(); renderUsers(); }
 
 /* Installable, like the Nova Style admin. Scope is /admin/ so the worker can
    never serve a stale page of the public site — a cached wrong phone number
    on an emergency service is the one cache bug that actually matters. */
+
+$("pt-search").addEventListener("input", renderPatients);
+$("pt-csv").addEventListener("click", () => {
+  const url = URL.createObjectURL(new Blob([patientsCsv()], { type: "text/csv;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "patients-" + new Date().toISOString().slice(0, 10) + ".csv";
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/admin/sw.js", { scope: "/admin/" }).catch(() => {});
