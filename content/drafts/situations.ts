@@ -14,18 +14,52 @@ import type { Situation } from "../schema";
 export const SITUATION_DRAFTS: Partial<Record<Situation["slug"], Pick<Situation, "intro" | "body">>> = {
   "medecin-de-garde": {
     intro:
-      "Un médecin de garde est un docteur joignable en dehors des heures de cabinet — la nuit, le week-end, les jours fériés. Ici, il ne s'agit pas d'aller le consulter quelque part : il se déplace à votre domicile, 24h/24 et 7j/7.",
-    body: `Chercher un médecin de garde, c'est presque toujours chercher quelqu'un maintenant. Les cabinets sont fermés, la pharmacie de garde est loin, et le problème ne peut pas attendre le lendemain matin sans que la nuit devienne très longue. La question posée est simple : qui peut voir cette personne, et dans combien de temps.
+      "Un médecin de garde se déplace à votre domicile à Casablanca et à Rabat, la nuit, le week-end et les jours fériés, en 10 à 15 minutes. Le service fonctionne 24h/24 et 7j/7, et le tarif applicable vous est annoncé au téléphone avant que vous ne confirmiez la visite.",
+    body: `Chercher un médecin de garde, c'est presque toujours chercher quelqu'un maintenant. Les cabinets sont fermés, le problème ne peut pas attendre le lendemain matin sans que la nuit devienne très longue, et la question posée est simple : qui peut voir cette personne, et dans combien de temps.
 
-La réponse habituelle au Maroc est d'aller aux urgences d'un hôpital ou d'une clinique. C'est le bon réflexe quand la situation est grave, et il ne faut pas hésiter dans ce cas. Mais pour un grand nombre de motifs — une fièvre qui monte, une douleur qui empêche de dormir, un malaise chez une personne âgée, un enfant qui vomit — cela signifie habiller un malade, le faire descendre, traverser la ville et attendre. La visite d'un docteur à domicile évite ce déplacement, et l'examen se fait au calme, chez vous.
+**Comment trouver un médecin de garde ce soir**
 
-Le médecin de garde qui se déplace fait le même travail qu'en cabinet : il interroge, il examine, et il décide. Selon ce qu'il constate, cela peut être un traitement remis sur place, une ordonnance, un certificat, ou l'orientation vers un service hospitalier lorsque l'état de la personne le justifie. C'est lui qui tranche, sur place, avec la personne devant lui — c'est précisément ce qu'un conseil au téléphone ne peut pas remplacer.
+Trois voies existent, et elles ne répondent pas au même besoin.
 
-En pratique, vous appelez et vous décrivez la situation : qui est malade, depuis quand, ce que vous observez. On vous indique le délai estimé et le tarif applicable avant que vous ne confirmiez, de sorte que rien ne se découvre au moment de payer. Le tarif de garde — nuit et jours fériés — est publié sur le site au même titre que celui de la journée, ce qui est rare dans ce secteur et volontaire ici.
+Les urgences d'un hôpital ou d'une clinique fonctionnent en continu, nuit comprise. C'est la bonne voie quand la situation est grave, et il ne faut pas hésiter dans ce cas : ces services disposent d'un plateau technique et de moyens de réanimation qu'aucune visite à domicile ne remplace. Le coût est le déplacement et l'attente, qui dépend de l'affluence du moment.
 
-Donnez au téléphone l'adresse complète, l'étage, le code de la porte s'il y en a un et un numéro joignable. Cela paraît accessoire, mais c'est ce qui fait la différence entre un médecin qui arrive et un médecin qui cherche l'immeuble à deux heures du matin. Si un proche peut descendre ouvrir ou guider, dites-le également.
+La pharmacie de garde règle un autre problème : obtenir un médicament en dehors des heures d'ouverture. Les tours de garde sont affichés en pharmacie et diffusés localement. Utile lorsque vous savez déjà ce qu'il faut, cela ne remplace pas un examen : un pharmacien ne peut ni examiner le malade, ni établir une ordonnance, ni rédiger un certificat.
 
-Un point important : ce service ne remplace pas les secours d'urgence. Douleur violente dans la poitrine, difficulté à respirer, perte de connaissance, saignement important, suite d'un accident — dans ces cas, contactez immédiatement les services d'urgence plutôt que d'attendre une visite. Une garde à domicile est faite pour ce qui ne peut pas attendre demain, pas pour ce qui ne peut pas attendre dix minutes.`,
+Un médecin de garde qui se déplace répond au cas où le déplacement est lui-même le problème. Une fièvre qui monte chez un enfant, une douleur qui empêche de dormir, un malaise chez une personne âgée, un vomissement répété : la consultation dure vingt minutes, mais habiller le malade, le faire descendre, traverser la ville et attendre en prend trois heures. C'est ce trajet-là que la visite supprime.
+
+**Généraliste de garde ou urgentiste : quelle différence ?**
+
+Un généraliste de garde prend en charge la grande majorité des motifs d'appel nocturnes, exactement comme il le ferait au cabinet : il interroge, il examine, il décide.
+
+Un médecin d'urgence, ou urgentiste, a pour spécialité l'évaluation rapide d'une situation aiguë : déterminer, avec la personne devant lui, ce qui peut être traité sur place et ce qui doit être orienté sans délai vers une structure hospitalière. C'est précisément le jugement qu'un avis téléphonique ne peut pas rendre.
+
+L'équipe compte les deux, et vous n'avez pas à choisir : vous décrivez la situation au téléphone, et le médecin envoyé est celui qui correspond au motif. Tous les médecins de garde qui se déplacent sont nommés sur ce site, chacun avec son numéro d'inscription à l'Ordre National des Médecins — un numéro public, que vous pouvez vérifier avant d'ouvrir votre porte à quelqu'un en pleine nuit.
+
+**À partir de quelle heure parle-t-on de garde ?**
+
+Le service fonctionne 24 heures sur 24 et 7 jours sur 7 : il n'y a pas d'heure à laquelle plus personne ne répond, ni de jour de fermeture.
+
+Ce qui change avec l'heure, c'est le tarif. La journée court de 07h00 à 20h00, samedi et dimanche inclus — le week-end n'est pas facturé différemment d'un mardi. Le tarif de nuit s'applique de 20h00 à 07h00, ainsi que les jours fériés.
+
+**Combien coûte un médecin de garde à domicile ?**
+
+500 dirhams en journée et le week-end, 700 dirhams la nuit et les jours fériés. Ces montants sont publiés ici, consultables avant même d'appeler, et le tarif applicable vous est confirmé au téléphone avant que vous ne validiez la visite.
+
+Publier ces montants reste inhabituel dans ce secteur au Maroc, où l'usage est de renvoyer à un appel. Nous faisons l'inverse pour une raison simple : quelqu'un qui cherche un médecin à deux heures du matin ne devrait pas avoir à négocier, ni à découvrir la somme une fois le médecin sur le palier.
+
+**Ce qu'il faut préparer avant d'appeler**
+
+Vous décrivez la situation : qui est malade, depuis quand, ce que vous observez. On vous indique en retour le délai estimé et le tarif applicable, avant que vous ne confirmiez quoi que ce soit.
+
+Donnez l'adresse complète, l'étage, le code de la porte s'il y en a un, et un numéro sur lequel on peut vous rappeler. Cela paraît accessoire ; c'est en réalité ce qui distingue un médecin qui arrive d'un médecin qui cherche un immeuble à deux heures du matin, dans une rue dont la numérotation n'est pas lisible de nuit. Si un proche peut descendre ouvrir ou guider à l'entrée de la résidence, dites-le aussi. Le médecin rappelle avant d'arriver pour confirmer l'accès.
+
+Sur place, l'examen est complet. Selon ce que le médecin constate, il remet un traitement, rédige une ordonnance, établit un certificat, ou oriente vers un examen complémentaire ou un service hospitalier. La décision lui appartient, avec la personne devant lui.
+
+**Ce que la garde à domicile ne remplace pas**
+
+Ce n'est pas un service d'urgence vitale. Une douleur violente dans la poitrine, une difficulté à respirer, une perte de connaissance, un saignement important ou les suites d'un accident relèvent des secours, qui disposent des moyens de réanimation et de la priorité de circulation. Dans ces situations, appelez-les directement plutôt que d'attendre une visite.
+
+Une garde à domicile est faite pour ce qui ne peut pas attendre demain. Pas pour ce qui ne peut pas attendre dix minutes.`,
   },
   "fievre-enfant-nuit": {
     intro:
