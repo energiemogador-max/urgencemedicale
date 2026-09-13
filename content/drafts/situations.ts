@@ -19,7 +19,7 @@ export const SITUATION_DRAFTS: Partial<Record<Situation["slug"], Pick<Situation,
 
 **Comment trouver un médecin de garde ce soir**
 
-Trois voies existent, et elles ne répondent pas au même besoin.
+Pour trouver un médecin de garde autour de chez vous à Casablanca, Rabat, Mohammedia, Bouskoura ou Dar Bouazza, trois voies existent, et elles ne répondent pas au même besoin.
 
 Les urgences d'un hôpital ou d'une clinique fonctionnent en continu, nuit comprise. C'est la bonne voie quand la situation est grave, et il ne faut pas hésiter dans ce cas : ces services disposent d'un plateau technique et de moyens de réanimation qu'aucune visite à domicile ne remplace. Le coût est le déplacement et l'attente, qui dépend de l'affluence du moment.
 
@@ -85,7 +85,7 @@ Le service fonctionne 24h/24 et 7j/7, toute l'année, week-ends et jours férié
 
 Le déroulement est le même qu'en cabinet : le médecin arrive, procède à l'examen clinique nécessaire, pose ses questions, puis rédige le certificat correspondant à ce qu'il a constaté. Selon le motif, le document peut être remis en main propre à la fin de la visite ou transmis un peu plus tard dans la journée. Dans tous les cas, c'est le médecin seul qui décide du contenu du certificat, en fonction de ce qu'il observe pendant l'examen — jamais avant, et jamais sur la base d'une description au téléphone.
 
-Les motifs de demande les plus courants sont variés : certificat de non-contre-indication pour une activité sportive, certificat pour une reprise ou un arrêt de travail, document demandé par un établissement scolaire, une compagnie d'assurance ou un employeur dans le cadre d'une procédure administrative. Chaque situation a ses propres exigences quant à la forme ou au contenu attendu du certificat, et c'est au médecin, sur place, d'apprécier ce qu'il peut attester au vu de son examen — ce service ne se substitue pas à un conseil juridique ou administratif sur la recevabilité d'un document pour une démarche donnée.
+Les raisons de chercher un médecin pour un certificat médical — ce que l'on appelle aussi couramment un billet médical — sont variées : certificat de non-contre-indication pour une activité sportive, certificat pour une reprise ou un arrêt de travail, document demandé par un établissement scolaire, une compagnie d'assurance ou un employeur dans le cadre d'une procédure administrative. Chaque situation a ses propres exigences quant à la forme ou au contenu attendu du certificat, et c'est au médecin, sur place, d'apprécier ce qu'il peut attester au vu de son examen — ce service ne se substitue pas à un conseil juridique ou administratif sur la recevabilité d'un document pour une démarche donnée.
 
 Après l'appel, la personne qui répond recueille le motif général de la demande, l'adresse et vos disponibilités, puis vous communique le délai avant l'arrivée du médecin ainsi que le tarif applicable, avant que vous ne confirmiez la visite. Le médecin qui se déplace est un généraliste inscrit à l'Ordre National des Médecins, comme pour toute consultation à domicile assurée par notre réseau.
 
