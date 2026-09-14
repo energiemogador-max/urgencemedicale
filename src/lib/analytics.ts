@@ -77,6 +77,25 @@ export const FIREBASE_DB_URL =
  *    before hydration. Someone who lands and taps the number immediately is
  *    the most valuable visitor on the site; a deferred module would miss them.
  *
+ * BOTS AND PRERENDERS ARE NOT VISITORS
+ *
+ * The first version counted them. The dashboard showed 123 visitors in a day
+ * while Search Console showed about one click: search-engine renderers execute
+ * this script, the Realtime Database's robots.txt allows `.json` writes, and
+ * every render starts with empty storage — so each one became a brand-new
+ * "unique visitor". isBot() stops that before a single write, and Chrome's
+ * speculative prerender (a page rendered for a click that may never happen) is
+ * held until the page is actually shown.
+ *
+ * isBot() deliberately contains no regex escapes. This script lives inside a
+ * template literal, where a lone backslash is silently dropped: `\+http` would
+ * ship as `+http`, an invalid regex, which throws inside the try below and
+ * turns off all tracking without an error anywhere. Plain indexOf checks
+ * cannot break that way.
+ *
+ * It also avoids a bare "bot" substring match: Cubot is an Android phone brand
+ * sold in Morocco, and "CUBOT" in a real user's UA must not be dropped.
+ *
  * Node shapes match what public/admin/index.html already reads, so the
  * dashboard needed no changes:
  *   online_visitors/{vid}         PUT, refreshed by a 30s heartbeat
@@ -85,12 +104,35 @@ export const FIREBASE_DB_URL =
  */
 export const TAP_TRACKING_SCRIPT = `
 (function(){
+  function isBot(ua, webdriver){
+    if (webdriver) return true;
+    var u = String(ua || "").toLowerCase();
+    if (!u) return true;
+    /* Crawlers publish a contact URL in their UA; browsers never do. */
+    if (u.indexOf("+http") > -1) return true;
+    if (u.indexOf("compatible;") > -1 &&
+        (u.indexOf("bot") > -1 || u.indexOf("crawl") > -1 || u.indexOf("spider") > -1)) return true;
+    var names = ["googlebot","google-inspectiontool","adsbot","mediapartners-google","storebot-google",
+      "feedfetcher","bingbot","bingpreview","yandexbot","baiduspider","duckduckbot","slurp","applebot",
+      "facebookexternalhit","facebot","twitterbot","linkedinbot","telegrambot","discordbot","slackbot",
+      "ahrefsbot","semrushbot","mj12bot","dotbot","petalbot","bytespider","gptbot","oai-searchbot",
+      "chatgpt-user","claudebot","claude-user","perplexitybot","amazonbot","ccbot","diffbot",
+      "headlesschrome","chrome-lighthouse","lighthouse","pagespeed","gtmetrix","pingdom","uptimerobot",
+      "statuscake","prerender","phantomjs","puppeteer","playwright","selenium"];
+    for (var i = 0; i < names.length; i++) if (u.indexOf(names[i]) > -1) return true;
+    return false;
+  }
+
+  function start(){
   try {
     var DB = ${JSON.stringify(FIREBASE_DB_URL)};
 
     /* The operator's own visits would otherwise dominate a small site's
        numbers. Set localStorage.um_is_admin = "1" in your own browser. */
     try { if (localStorage.getItem("um_is_admin") === "1") return; } catch (e) {}
+
+    /* Crawlers and headless tools: no visitor row, no session, no tap. */
+    if (isBot(navigator.userAgent, navigator.webdriver === true)) return;
 
     /* keepalive so a write started as the dialler opens still completes. */
     function send(path, method, value){
@@ -246,5 +288,13 @@ export const TAP_TRACKING_SCRIPT = `
       } catch (e) {}
     }, true);
   } catch (e) {}
+  }
+
+  /* Chrome can render a page speculatively for a click that never comes. Wait
+     until it is actually shown, or every prerender becomes a phantom visit. */
+  try {
+    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true });
+    else start();
+  } catch (e) { start(); }
 })();
 `.trim();
