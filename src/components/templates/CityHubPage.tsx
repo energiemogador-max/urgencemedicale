@@ -4,7 +4,8 @@ import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, LinkGrid, Section } from "@/components/ui";
+import { Breadcrumbs, CardLink, LinkGrid, Section } from "@/components/ui";
+import { PageHero } from "@/components/PageHero";
 import { content, getServiceBySlug, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { cityFaqs } from "@/lib/faqs";
@@ -54,8 +55,18 @@ export function CityHubPage({
         ]}
       />
       <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: city.name }]} />
-      <h1 className="mt-2 text-3xl font-bold text-ink">Médecin à domicile à {city.name}</h1>
-      <Lead>{city.intro}</Lead>
+      <PageHero
+        title="Médecin à domicile à"
+        accent={city.name}
+        lead={city.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        facts={[
+          { label: "Intervention", value: `${content.business.defaultResponseTimeMinutes} min` },
+          { label: "Consultation", value: `dès ${content.pricing.tiers[0]?.amountMad} ${content.pricing.currency}` },
+          { label: "Disponibilité", value: content.business.hoursOpen },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

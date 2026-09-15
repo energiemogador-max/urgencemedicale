@@ -4,8 +4,9 @@ import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, CardLink, Section } from "@/components/ui";
+import { PageHero } from "@/components/PageHero";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { serviceFaqs } from "@/lib/faqs";
 import { buildService } from "@/lib/schema-org/service";
@@ -32,8 +33,17 @@ export function ServicePage({
         ]}
       />
       <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: service.name }]} />
-      <h1 className="mt-2 text-3xl font-bold text-ink">{service.name}</h1>
-      <Lead>{service.intro}</Lead>
+      <PageHero
+        title={service.name}
+        lead={service.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        facts={[
+          { label: "Disponibilité", value: content.business.hoursOpen },
+          { label: "Demande", value: "Par téléphone" },
+          { label: "Tarif", value: "Annoncé avant l'intervention" },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

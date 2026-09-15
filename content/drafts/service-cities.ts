@@ -115,4 +115,89 @@ Fès est aussi une ville universitaire, où des étudiants vivent loin de leur f
 
 Pour les patients qui rentrent d'une hospitalisation, le compte-rendu de sortie est le document à garder à portée : c'est lui qui précise ce qui a été fait et ce qui doit être poursuivi, et l'avoir sous la main dès le premier passage évite d'avoir à le reconstituer. Le tarif dépend des actes prescrits et du nombre de passages, communiqué avant la première intervention.`,
   },
+  /*
+   * Dar Bouazza, Bouskoura, Mohammedia (2026-09-15).
+   *
+   * Written because a competitor based in Dar Bouazza holds dedicated
+   * ambulance pages for Dar Bouazza and Bouskoura while this site had none —
+   * "ambulance dar bouazza" sat at position 61 — and because
+   * /medecin-a-domicile/bouskoura already ranks around 8, so the authority to
+   * compete there exists. Every local fact below is one this site already
+   * publishes on its city and quartier pages; nothing operational (fleet,
+   * equipment, delays, prices) is invented.
+   */
+  "ambulance:dar-bouazza": {
+    intro:
+      "Un transport sanitaire par la route depuis ou vers Dar Bouazza, pour un patient qui ne peut pas utiliser un véhicule ordinaire : sortie d'hospitalisation, examen programmé, transfert entre deux établissements. Le tarif dépend du trajet et du type de transport, et il vous est annoncé avant le départ.",
+    body: `Dar Bouazza a une géographie qui compte pour un transport sanitaire. La commune ne s'organise pas autour d'un centre unique : elle s'étire le long de la route côtière qui relie Casablanca à El Jadida, en une succession de résidences, de villas et de lotissements. Deux adresses qui portent le même nom de secteur peuvent donc être séparées par une distance importante, et c'est pourquoi on vous demande au téléphone non seulement l'adresse, mais le point précis où quitter la route principale.
+
+Le sens du trajet et l'heure changent réellement la durée. La route côtière se charge l'été aux heures de sortie de plage, alors qu'elle reste fluide le reste de l'année. Pour un rendez-vous à heure fixe ou une admission programmée, réserver à l'avance permet de caler le départ en conséquence plutôt que de découvrir le trafic en route.
+
+Le dernier kilomètre est souvent la vraie difficulté. Beaucoup de résidences fonctionnent avec un gardien ou un digicode, certaines voies d'accès sont étroites et peu éclairées la nuit, et dans le centre plusieurs rues ne permettent pas à un véhicule de s'arrêter devant la porte. Pour une personne transportée allongée, il faut aussi savoir si le logement a un étage, s'il y a un ascenseur, et par où un brancard peut passer : beaucoup de maisons du centre ont un étage sans ascenseur. Prévenir le gardien, laisser l'éclairage extérieur allumé et rester joignable pendant l'approche font gagner plus de temps qu'une adresse écrite en détail.
+
+Au moment de l'appel, préparez l'adresse avec le nom de la résidence, l'établissement de destination, l'état de la personne — peut-elle se tenir assise, est-elle sous oxygène ou porteuse d'une perfusion — et un numéro joignable. Gardez aussi à portée de main le courrier qui motive le déplacement et les comptes-rendus récents : l'établissement d'accueil les demandera.
+
+Ce service ne remplace pas les secours. Devant une détresse vitale, un accident ou une perte de connaissance, appelez directement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation.`,
+  },
+  "ambulance:bouskoura": {
+    intro:
+      "Un transport sanitaire par la route depuis ou vers Bouskoura, au sud de Casablanca, pour un patient qui doit être transporté allongé ou accompagné : sortie d'hospitalisation, examen, transfert entre établissements. Le tarif dépend du trajet et du type de transport, et il vous est annoncé avant le départ.",
+    body: `Bouskoura s'est construite en quelques décennies comme une extension résidentielle de Casablanca, et la commune est traversée par plusieurs itinéraires, entre Casablanca et l'axe de Nouaceur. Cette position laisse de la marge pour éviter un axe chargé, à condition de connaître la destination exacte dès l'appel.
+
+Le facteur de temps propre à Bouskoura est la proximité de l'aéroport Mohammed V. Les routes qui relient l'aéroport à Casablanca portent un trafic particulier, plus dense tôt le matin et en fin de journée. Pour un examen programmé ou une admission à heure fixe, c'est la raison la plus concrète de réserver à l'avance : l'heure de départ se décide en fonction de ce trafic, pas seulement de la distance.
+
+L'accès au domicile dépend beaucoup du secteur. À la Ville Verte, les avenues sont larges et la circulation n'est jamais un obstacle, mais les résidences fermées se ressemblent et leurs voies internes ne portent pas toujours de nom lisible depuis l'entrée. À Golf City, l'entrée est contrôlée par un gardien et les distances entre les bâtiments sont longues. Au centre, qui garde le caractère d'un bourg, les rues sont plus étroites et le véhicule doit parfois s'arrêter à quelques dizaines de mètres de l'entrée — une information qui compte quand le patient doit être porté.
+
+Pour que le transport soit organisé correctement du premier coup, donnez au téléphone le nom exact de la résidence, le numéro de bâtiment ou de villa, l'étage et la présence d'un ascenseur, l'établissement de destination, et l'état de la personne : si elle peut tenir assise, si elle est sous oxygène ou porteuse d'une perfusion. Quand la résidence a un gardien, prévenez-le de l'arrivée du véhicule : c'est souvent la minute gagnée à la barrière qui compte le plus.
+
+Ce service ne remplace pas les secours. Devant une détresse vitale, appelez directement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation.`,
+  },
+  "ambulance:mohammedia": {
+    intro:
+      "Un transport sanitaire par la route depuis ou vers Mohammedia, entre le domicile et un établissement de santé ou entre deux établissements, pour un patient qui ne peut pas utiliser un véhicule ordinaire. Le tarif dépend du trajet et du type de transport, et il vous est annoncé avant le départ.",
+    body: `Mohammedia a une position particulière pour un transport sanitaire : la ville est sur la côte, entre Casablanca et Rabat. Selon l'établissement concerné, le trajet reste à l'intérieur de Mohammedia ou se fait vers l'une des deux agglomérations voisines. C'est pourquoi la destination exacte est demandée dès l'appel : elle détermine l'itinéraire, la durée et le tarif.
+
+À l'intérieur de la ville, la circulation reste en général plus fluide qu'à Casablanca, et les quartiers résidentiels sont pour la plupart d'accès direct. Le week-end et l'été, la plage et la marina attirent du monde et densifient ponctuellement les abords du front de mer, ce dont on tient compte pour un départ à heure fixe.
+
+L'accès au logement est ce qui varie le plus d'un quartier à l'autre. Au centre et à Hassania, beaucoup d'immeubles de plusieurs étages n'ont pas d'ascenseur, ce qui change complètement l'organisation quand la personne doit être descendue allongée. À Al Alia, les ensembles d'immeubles se ressemblent et la numérotation n'est pas toujours continue d'un ensemble à l'autre. Au Quartier du Parc, ce sont surtout des villas avec portail, dans des rues calmes où les numéros ne sont pas toujours visibles et où l'éclairage est discret la nuit.
+
+Au téléphone, indiquez l'adresse avec un repère — le nom de l'ensemble, un commerce proche, la couleur du portail —, l'étage et la présence ou non d'un ascenseur, l'établissement de destination, l'état de la personne et, s'il y a lieu, l'oxygène ou la perfusion en cours. Rester joignable pendant l'approche fait souvent gagner plus de temps qu'une adresse détaillée.
+
+Ce service ne remplace pas les secours. Devant une détresse vitale, appelez directement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation.`,
+  },
+  "soins-infirmiers-a-domicile:dar-bouazza": {
+    intro:
+      "Un infirmier se déplace à votre domicile à Dar Bouazza pour réaliser les soins prescrits par votre médecin — injections, perfusions, pansements, prise de constantes. Sur une commune aussi étirée le long de la côte, éviter un trajet pour chaque soin change le quotidien d'une semaine de traitement.",
+    body: `Tout part de l'ordonnance. L'infirmier exécute ce qu'elle prescrit — une injection, une perfusion et sa surveillance, la réfection d'un pansement, la prise de la tension ou de la température — sans rien y changer ni prescrire de lui-même. Si le traitement n'a pas encore été établi, la première étape est une consultation à domicile avec un médecin.
+
+À Dar Bouazza, l'intérêt tient d'abord à la géographie. La commune s'étend en longueur le long de la route côtière, de résidence en lotissement, et deux adresses du même secteur peuvent être éloignées l'une de l'autre. Un traitement qui demande un soin chaque jour représente, sinon, un déplacement quotidien pour un geste de quelques minutes.
+
+Des passages répétés se préparent une fois pour toutes. Donnez dès le premier appel le nom de la résidence, le point où l'on quitte la route principale, le numéro de villa ou de bâtiment, et prévenez le gardien des passages prévus s'il y en a un. Plusieurs voies d'accès sont peu éclairées et sans nom lisible la nuit : pour un soin du soir, laisser l'éclairage extérieur allumé évite de chercher la porte.
+
+Beaucoup de foyers se sont installés récemment dans la commune et n'y ont pas encore de médecin traitant, et l'été une partie des logements est louée à la saison. Dans les deux cas, gardez à portée de main l'ordonnance et les comptes-rendus disponibles : ce sont eux qui disent ce qui doit être fait, et à quelle fréquence.
+
+Les passages peuvent être organisés à heure régulière, ce qui compte pour un traitement dont l'horaire est fixé par la prescription. Le prix tient compte des gestes à réaliser et du nombre de visites prévues ; il vous est indiqué avant que le premier soin ne commence.`,
+  },
+  "soins-infirmiers-a-domicile:bouskoura": {
+    intro:
+      "Un infirmier se déplace à votre domicile à Bouskoura pour réaliser les soins prescrits par votre médecin — injections, perfusions, pansements, prise de constantes — sans que vous ayez à vous déplacer pour chaque soin.",
+    body: `Ce que fait l'infirmier est écrit sur l'ordonnance, et rien d'autre : des injections, des perfusions posées puis surveillées, des pansements refaits, des constantes relevées, le suivi d'un traitement étalé sur plusieurs jours. Il ne touche pas à la prescription. Quand elle manque encore, un médecin peut passer d'abord en consultation à domicile pour la rédiger.
+
+L'habitat de Bouskoura est en grande partie récent, organisé en résidences fermées avec gardien ou digicode. Pour un passage unique, c'est un détail ; pour des soins répétés, c'est ce qui fait gagner ou perdre du temps chaque jour. Donnez au premier appel le nom exact de la résidence, le numéro de bâtiment ou de villa et l'étage, et prévenez le gardien que des passages sont prévus. À Golf City et à la Ville Verte, les voies internes ne portent pas toujours de nom lisible depuis l'entrée ; au centre, les repères utiles sont plutôt une place, une mosquée ou un commerce.
+
+Le trafic entre l'aéroport Mohammed V et Casablanca est le facteur d'horaire propre à Bouskoura, plus dense tôt le matin et en fin de journée. Quand la prescription impose une heure précise — une injection le matin, une perfusion à surveiller en soirée —, on en tient compte pour fixer l'heure de passage plutôt que de la découvrir en route.
+
+Bouskoura compte beaucoup de jeunes familles qui ont choisi la commune pour son cadre plus vert : les soins à domicile évitent d'avoir à s'organiser, pour chaque soin, entre le travail, les enfants et le trajet. Le coût varie selon les actes et le nombre de passages, et il vous est annoncé avant la première visite.`,
+  },
+  "soins-infirmiers-a-domicile:mohammedia": {
+    intro:
+      "Un infirmier se déplace à votre domicile à Mohammedia pour réaliser les soins prescrits par votre médecin — injections, perfusions, pansements, prise de constantes —, du centre-ville aux quartiers résidentiels, à des heures convenues avec vous.",
+    body: `À Mohammedia comme ailleurs, l'infirmier intervient sur ordonnance. Il réalise les gestes qu'elle indique — une injection, une perfusion à poser puis à surveiller, un pansement à refaire, des constantes à relever — et s'y tient : modifier un traitement relève du médecin. Pas encore de prescription ? Un médecin peut d'abord venir en consultation à domicile pour l'établir.
+
+Mohammedia se prête bien aux passages réguliers : la circulation y est en général plus fluide qu'à Casablanca, et les quartiers résidentiels sont pour la plupart d'accès direct, ce qui rend les horaires de passage prévisibles d'un jour à l'autre. Beaucoup d'habitants travaillent dans l'industrie locale, autour du port et de la raffinerie, ou font la navette vers Casablanca : l'heure du passage peut être convenue en fonction de ces contraintes, dans la limite de ce que la prescription impose.
+
+L'accès au logement varie d'un quartier à l'autre, et il vaut la peine de le décrire au premier appel. Au centre et à Hassania, beaucoup d'immeubles n'ont pas d'ascenseur : pour une personne qui ne descend plus les escaliers, c'est l'infirmier qui monte. À Al Alia, la numérotation n'est pas toujours continue d'un ensemble d'immeubles à l'autre, et le nom de l'ensemble évite une recherche. Au Quartier du Parc, un repère visible — l'angle de rue, la couleur du portail — est plus utile qu'un numéro, surtout pour un passage en soirée.
+
+Posez l'ordonnance et les derniers comptes-rendus à un endroit convenu d'avance : l'infirmier les consulte avant chaque acte, et toute modification du traitement décidée par le médecin doit y apparaître. Le montant se calcule selon les soins prescrits et la fréquence des visites, et vous le connaissez avant le premier passage.`,
+  },
 };

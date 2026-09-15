@@ -46,7 +46,13 @@ Préparez les documents avant l'arrivée du véhicule : le courrier ou la convoc
 
 Un proche peut en général accompagner la personne transportée. C'est souvent souhaitable, en particulier pour quelqu'un d'âgé, désorienté ou anxieux à l'idée du déplacement — signalez-le en réservant plutôt qu'au moment du départ, pour que la place soit prévue.
 
-Pour un transport programmé — un examen à heure fixe, une sortie d'hospitalisation annoncée — réservez à l'avance : cela permet de caler le départ sur l'heure de rendez-vous et sur la circulation, qui reste un facteur réel à Casablanca comme sur les axes entre les grandes villes. Un transport non programmé reste possible, et le délai vous est annoncé au téléphone selon l'heure et la destination. Le tarif dépend de la distance et des conditions du transport ; il vous est communiqué avant le départ.`,
+Pour un transport programmé — un examen à heure fixe, une sortie d'hospitalisation annoncée — réservez à l'avance : cela permet de caler le départ sur l'heure de rendez-vous et sur la circulation, qui reste un facteur réel à Casablanca comme sur les axes entre les grandes villes. Un transport non programmé reste possible, et le délai vous est annoncé au téléphone selon l'heure et la destination. Le tarif dépend de la distance et des conditions du transport ; il vous est communiqué avant le départ.
+
+**Combien coûte une ambulance privée ?**
+
+Il n'existe pas de tarif unique, et un prix annoncé sans connaître le trajet ne voudrait rien dire. Le montant d'un transport sanitaire dépend de quelques éléments précis, qui sont justement ceux qu'on vous demande au téléphone : la distance entre le point de départ et la destination, le type de transport — patient assis ou allongé, transport simple ou médicalisé —, le matériel nécessaire pendant le trajet, comme l'oxygène ou une perfusion en cours, et les conditions d'accès aux deux extrémités, qui changent l'organisation du transport.
+
+Une fois ces éléments connus, le tarif vous est annoncé avant le départ, pour que rien ne se découvre à l'arrivée. Si un retour est prévu — après un examen, par exemple —, demandez que le montant de l'aller et du retour vous soit indiqué ensemble, avant de confirmer.`,
   },
   {
     slug: "soins-infirmiers-a-domicile",

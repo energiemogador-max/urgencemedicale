@@ -1,3 +1,4 @@
+import { EMERGENCY_NUMBERS } from "@/lib/emergency";
 import Link from "next/link";
 import type { City, Service, Specialty, Situation } from "@content/schema";
 import { CrescentMark } from "@/components/CrescentMark";
@@ -211,8 +212,23 @@ export function SiteFooter({
       <div className="relative border-t border-white/15 bg-primary-dark">
         <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-5 text-xs text-on-primary-faint sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl">
-            Ce service ne remplace pas les services d&apos;urgence. En cas d&apos;urgence vitale, contactez
-            immédiatement les secours.
+            Ce service ne remplace pas les services d&apos;urgence. En cas d&apos;urgence vitale, appelez immédiatement le{" "}
+            <a
+              href={`tel:${EMERGENCY_NUMBERS.samu.number}`}
+              data-tap="secours"
+              className="font-bold text-on-primary underline"
+            >
+              {EMERGENCY_NUMBERS.samu.number}
+            </a>{" "}
+            ({EMERGENCY_NUMBERS.samu.label}) ou le{" "}
+            <a
+              href={`tel:${EMERGENCY_NUMBERS.protectionCivile.number}`}
+              data-tap="secours"
+              className="font-bold text-on-primary underline"
+            >
+              {EMERGENCY_NUMBERS.protectionCivile.number}
+            </a>{" "}
+            ({EMERGENCY_NUMBERS.protectionCivile.label}).
           </p>
           <p className="shrink-0">
             © {new Date().getFullYear()} {legalName}

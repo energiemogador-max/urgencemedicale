@@ -4,8 +4,9 @@ import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, LinkGrid, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, CardLink, LinkGrid, Section } from "@/components/ui";
+import { PageHero } from "@/components/PageHero";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { serviceFaqs } from "@/lib/faqs";
 import { buildService } from "@/lib/schema-org/service";
@@ -43,10 +44,18 @@ export function ServiceCityPage({
           { label: city.name },
         ]}
       />
-      <h1 className="mt-2 text-3xl font-bold text-ink">
-        {service.name} à {city.name}
-      </h1>
-      <Lead>{serviceCity.intro}</Lead>
+      <PageHero
+        title={`${service.name} à`}
+        accent={city.name}
+        lead={serviceCity.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        facts={[
+          { label: "Zone", value: city.name },
+          { label: "Disponibilité", value: content.business.hoursOpen },
+          { label: "Tarif", value: "Annoncé avant l'intervention" },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

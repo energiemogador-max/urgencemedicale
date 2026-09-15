@@ -1,6 +1,7 @@
 import type { FaqEntry } from "@/lib/schema-org/faq";
 import type { Service, ServiceSlug } from "@content/schema";
 import { content } from "@/lib/content";
+import { secoursPhrase } from "@/lib/emergency";
 
 /**
  * FAQ answers are assembled from values that already exist in the content
@@ -38,8 +39,7 @@ const commonFaqs = (): FaqEntry[] => [
   },
   {
     question: "Et en cas d'urgence vitale ?",
-    answer:
-      "Ce service ne remplace pas les services d'urgence. Si l'état de la personne vous inquiète fortement ou semble se dégrader rapidement, contactez directement les secours plutôt que d'attendre une visite à domicile.",
+    answer: `Ce service ne remplace pas les services d'urgence. Si l'état de la personne vous inquiète fortement ou semble se dégrader rapidement, appelez directement ${secoursPhrase()} plutôt que d'attendre une visite à domicile.`,
   },
 ];
 
@@ -94,7 +94,7 @@ const SERVICE_SPECIFIC_FAQ: Record<ServiceSlug, FaqEntry> = {
   ambulance: {
     question: "Faut-il appeler une ambulance privée ou les secours ?",
     answer:
-      "S'il y a un doute sur la gravité — respiration difficile, perte de connaissance, douleur violente dans la poitrine, saignement important, accident — contactez immédiatement les services d'urgence : ils disposent des moyens de réanimation et de la priorité de circulation. Un transport privé s'adresse aux patients dont l'état est connu et stable et qui doivent être déplacés vers un examen, entre deux établissements, ou pour rentrer chez eux.",
+      `S'il y a un doute sur la gravité — respiration difficile, perte de connaissance, douleur violente dans la poitrine, saignement important, accident — appelez immédiatement ${secoursPhrase()} : ces services disposent des moyens de réanimation et de la priorité de circulation. Un transport privé s'adresse aux patients dont l'état est connu et stable et qui doivent être déplacés vers un examen, entre deux établissements, ou pour rentrer chez eux.`,
   },
   "oxygenotherapie-a-domicile": {
     question: "Faut-il fournir le matériel soi-même ?",
@@ -123,6 +123,24 @@ const SERVICE_SPECIFIC_FAQ: Record<ServiceSlug, FaqEntry> = {
   },
 };
 
+/**
+ * Questions a service needs beyond the one specific slot. Ambulance gets the
+ * price question because Search Console showed "prix ambulance", "prix d'une
+ * ambulance" and "ambulance privée prix" sitting at positions 62-70 with no
+ * page answering them — here or at any competitor. The answer states what the
+ * price depends on and when it is given; it states no amount, because none
+ * has been supplied.
+ */
+const EXTRA_SERVICE_FAQS: Partial<Record<ServiceSlug, FaqEntry[]>> = {
+  ambulance: [
+    {
+      question: "Combien coûte une ambulance privée ?",
+      answer:
+        "Il n'y a pas de tarif unique : le montant dépend de la distance, du type de transport (patient assis ou allongé, transport simple ou médicalisé), du matériel nécessaire pendant le trajet et des conditions d'accès au départ et à l'arrivée. Il vous est annoncé au téléphone avant le départ.",
+    },
+  ],
+};
+
 export function serviceFaqs(service: Service): FaqEntry[] {
   return [
     {
@@ -130,6 +148,7 @@ export function serviceFaqs(service: Service): FaqEntry[] {
       answer: `Vous appelez le ${content.business.phoneDisplay}. Nous vérifions avec vous ce qui est nécessaire, l'adresse et le moment souhaité, puis nous vous confirmons le tarif avant toute intervention.`,
     },
     SERVICE_SPECIFIC_FAQ[service.slug],
+    ...(EXTRA_SERVICE_FAQS[service.slug] ?? []),
     ...commonFaqs(),
   ];
 }

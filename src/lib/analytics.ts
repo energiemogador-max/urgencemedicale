@@ -274,6 +274,9 @@ export const TAP_TRACKING_SCRIPT = `
         var href = a.getAttribute("href") || "";
         var event = href.indexOf("tel:") === 0 ? "call" : href.indexOf("wa.me") > -1 ? "whatsapp" : null;
         if (!event) return;
+        /* Emergency numbers (141, 15) are links we tell people to use INSTEAD
+           of calling us; counting them would inflate "Appels site". */
+        if (a.getAttribute("data-tap") === "secours") return;
         var row = {
           at: new Date().toISOString(), event: event, page: location.pathname,
           visitor: vid, session: sid, device: dev, browser: br, screenW: screen.width || 0,
