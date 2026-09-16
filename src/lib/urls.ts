@@ -16,4 +16,5 @@ export const paths = {
   aPropos: () => "/a-propos",
   reserver: () => "/reserver",
   contact: () => "/contact",
+  numerosUrgence: () => "/numeros-urgence-maroc",
 };

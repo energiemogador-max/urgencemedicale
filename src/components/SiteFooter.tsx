@@ -228,7 +228,10 @@ export function SiteFooter({
             >
               {EMERGENCY_NUMBERS.protectionCivile.number}
             </a>{" "}
-            ({EMERGENCY_NUMBERS.protectionCivile.label}).
+            ({EMERGENCY_NUMBERS.protectionCivile.label}).{" "}
+            <Link href={paths.numerosUrgence()} prefetch={false} className="text-on-primary underline">
+              Tous les numéros d&apos;urgence
+            </Link>
           </p>
           <p className="shrink-0">
             © {new Date().getFullYear()} {legalName}

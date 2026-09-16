@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { isUnconfirmed } from "@content/schema";
 import Link from "next/link";
 import { content, getTrustBlockProps, getQuartiersForCity } from "@/lib/content";
 import { TrustBlock } from "@/components/TrustBlock";
@@ -162,6 +163,38 @@ export default function HomePage() {
             </li>
           ))}
         </ol>
+      </Section>
+
+      {/*
+        The named team, on the homepage itself. A live comparison (2026-09-16)
+        found allo-sosmedecin.ma naming five doctors on its homepage while this
+        one named none — the names and Ordre numbers existed only on
+        /nos-medecins. They are the strongest trust signal this service has, and
+        every value here comes from content/doctors.ts.
+      */}
+      <Section
+        title="Les médecins qui se déplacent"
+        lead="Chacun est nommé, avec son numéro d'inscription à l'Ordre National des Médecins — public, et vérifiable avant d'ouvrir votre porte."
+      >
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {doctors.map((d) => (
+            <li key={d.slug} className="rounded-xl border border-border bg-surface p-4">
+              <span className="block font-bold text-ink">{d.name}</span>
+              <span className="mt-1 inline-block rounded-full bg-primary-tint px-2.5 py-0.5 text-xs font-semibold text-primary">
+                {specialties.find((s) => s.slug === d.specialtySlug)?.name}
+              </span>
+              {!isUnconfirmed(d.ordreNumber) && (
+                <span className="mt-2 block text-sm text-ink-muted">Ordre National des Médecins n° {d.ordreNumber}</span>
+              )}
+              <span className="mt-0.5 block text-sm text-ink-muted">{d.languages.join(" · ")}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-4">
+          <Link href={paths.nosMedecins()} prefetch={false}>
+            Lire la présentation de chaque médecin
+          </Link>
+        </p>
       </Section>
 
       <Section title="Spécialités disponibles" lead="Chaque spécialité se déplace au domicile du patient.">

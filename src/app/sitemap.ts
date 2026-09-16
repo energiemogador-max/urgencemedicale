@@ -124,5 +124,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     entries.push({ url: url(path), lastModified, changeFrequency: "yearly", priority: 0.5 });
   }
 
+  // A reference page people actively search for, so it ranks above the
+  // administrative pages above.
+  entries.push({ url: url(paths.numerosUrgence()), lastModified, changeFrequency: "monthly", priority: 0.7 });
+
   return entries;
 }

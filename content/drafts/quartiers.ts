@@ -1,6 +1,7 @@
 import type { Quartier } from "../schema";
 import { QUARTIER_DRAFTS_RABAT } from "./quartiers-rabat";
 import { QUARTIER_DRAFTS_GRAND_CASA } from "./quartiers-grand-casa";
+import { QUARTIER_DRAFTS_CASA_ARRONDISSEMENTS } from "./quartiers-casa-arrondissements";
 
 /**
  * Real prose for Casablanca quartier pages. Landmarks and access notes are
@@ -21,6 +22,7 @@ import { QUARTIER_DRAFTS_GRAND_CASA } from "./quartiers-grand-casa";
 export const QUARTIER_DRAFTS: Record<string, Pick<Quartier, "intro" | "landmarks" | "accessNotes">> = {
   ...QUARTIER_DRAFTS_RABAT,
   ...QUARTIER_DRAFTS_GRAND_CASA,
+  ...QUARTIER_DRAFTS_CASA_ARRONDISSEMENTS,
   maarif: {
     intro:
       "Un médecin généraliste se déplace à votre domicile à Maarif, de jour comme de nuit. Il vous appelle avant d'arriver pour confirmer l'adresse et l'étage, et le tarif est annoncé avant votre confirmation, sans surprise à son arrivée.",

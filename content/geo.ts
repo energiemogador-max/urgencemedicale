@@ -47,6 +47,14 @@ const QUARTIER_NAMES: { slug: string; name: string; city: City["slug"] }[] = [
   { slug: "beausejour", name: "Beauséjour", city: "casablanca" },
   { slug: "val-fleuri", name: "Val Fleuri", city: "casablanca" },
   { slug: "ain-chock", name: "Ain Chock", city: "casablanca" },
+  // Seven arrondissements added 2026-09-16 — see drafts/quartiers-casa-arrondissements.ts
+  { slug: "hay-mohammadi", name: "Hay Mohammadi", city: "casablanca" },
+  { slug: "sidi-moumen", name: "Sidi Moumen", city: "casablanca" },
+  { slug: "moulay-rachid", name: "Moulay Rachid", city: "casablanca" },
+  { slug: "ben-msick", name: "Ben M'Sick", city: "casablanca" },
+  { slug: "sidi-othmane", name: "Sidi Othmane", city: "casablanca" },
+  { slug: "sidi-belyout", name: "Sidi Belyout", city: "casablanca" },
+  { slug: "sbata", name: "Sbata", city: "casablanca" },
   // ── Rabat ─────────────────────────────────────────────────────────────
   // Rabat is a served city that had no neighbourhood pages at all while
   // Casablanca had 19 — the largest content gap on the site, and these are

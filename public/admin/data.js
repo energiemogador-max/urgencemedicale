@@ -158,6 +158,41 @@ export const DATA = {
       "city": "casablanca"
     },
     {
+      "slug": "hay-mohammadi",
+      "name": "Hay Mohammadi",
+      "city": "casablanca"
+    },
+    {
+      "slug": "sidi-moumen",
+      "name": "Sidi Moumen",
+      "city": "casablanca"
+    },
+    {
+      "slug": "moulay-rachid",
+      "name": "Moulay Rachid",
+      "city": "casablanca"
+    },
+    {
+      "slug": "ben-msick",
+      "name": "Ben M'Sick",
+      "city": "casablanca"
+    },
+    {
+      "slug": "sidi-othmane",
+      "name": "Sidi Othmane",
+      "city": "casablanca"
+    },
+    {
+      "slug": "sidi-belyout",
+      "name": "Sidi Belyout",
+      "city": "casablanca"
+    },
+    {
+      "slug": "sbata",
+      "name": "Sbata",
+      "city": "casablanca"
+    },
+    {
       "slug": "agdal",
       "name": "Agdal",
       "city": "rabat"
