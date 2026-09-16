@@ -44,7 +44,8 @@ export function PageHero({
   facts: HeroFact[];
 }) {
   return (
-    <section className="rise relative isolate mt-3 overflow-hidden rounded-2xl bg-primary px-5 py-8 sm:px-8 sm:py-10">
+    // No .rise fade: this band is the LCP section of every page that uses it.
+    <section className="relative isolate mt-3 overflow-hidden rounded-2xl bg-primary px-5 py-8 sm:px-8 sm:py-10">
       <CrescentMark className="pointer-events-none absolute -right-12 -top-12 -z-10 h-56 w-56 text-white/[0.06] sm:h-80 sm:w-80" />
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1 bg-call" />
 

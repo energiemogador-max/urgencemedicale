@@ -85,7 +85,12 @@ export function Hero({
   children?: ReactNode;
 }) {
   return (
-    <section className="rise relative isolate overflow-hidden rounded-2xl bg-primary">
+    /*
+      No entrance animation here. The shared .rise fade starts at opacity 0,
+      and this section holds the page's LCP element (the photo): fading the
+      largest element in from invisible is a known way to push LCP back.
+    */
+    <section className="relative isolate overflow-hidden rounded-2xl bg-primary">
       <picture>
         {image.avifSrcSet && (
           <source type="image/avif" srcSet={image.avifSrcSet} sizes="(min-width: 1024px) 60vw, 100vw" />
