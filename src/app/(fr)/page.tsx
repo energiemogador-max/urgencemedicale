@@ -53,6 +53,7 @@ export default function HomePage() {
         image={{
           src: "/images/doctor-640.webp",
           srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
+          avifSrcSet: "/images/doctor-640.avif 640w, /images/doctor-1000.avif 1000w",
           width: 640,
           height: 960,
           alt: "Médecin en blouse blanche avec un stéthoscope",

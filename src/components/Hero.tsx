@@ -73,25 +73,36 @@ export function Hero({
   phoneHref: string;
   callLabel: string;
   features: HeroFeature[];
-  image: { src: string; srcSet: string; width: number; height: number; alt: string };
+  /**
+   * `avifSrcSet` is optional: when given, the photo is served as AVIF to
+   * browsers that support it and the WebP `srcSet` stays as the fallback.
+   * The photo is the homepage's LCP element; Lighthouse (2026-09-16) measured
+   * its 122 KB WebP download as the largest remaining part of that LCP.
+   */
+  image: { src: string; srcSet: string; avifSrcSet?: string; width: number; height: number; alt: string };
   /** Compact live-status card, floated over the photograph. */
   badge?: ReactNode;
   children?: ReactNode;
 }) {
   return (
     <section className="rise relative isolate overflow-hidden rounded-2xl bg-primary">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={image.src}
-        srcSet={image.srcSet}
-        sizes="(min-width: 1024px) 60vw, 100vw"
-        width={image.width}
-        height={image.height}
-        alt={image.alt}
-        fetchPriority="high"
-        decoding="async"
-        className="absolute inset-0 -z-10 h-full w-full object-cover object-[72%_top] lg:object-[80%_20%]"
-      />
+      <picture>
+        {image.avifSrcSet && (
+          <source type="image/avif" srcSet={image.avifSrcSet} sizes="(min-width: 1024px) 60vw, 100vw" />
+        )}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={image.src}
+          srcSet={image.srcSet}
+          sizes="(min-width: 1024px) 60vw, 100vw"
+          width={image.width}
+          height={image.height}
+          alt={image.alt}
+          fetchPriority="high"
+          decoding="async"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-[72%_top] lg:object-[80%_20%]"
+        />
+      </picture>
 
       {/*
         Two scrims. The first guarantees the type's ground; the second darkens
