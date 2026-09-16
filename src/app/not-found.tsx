@@ -71,7 +71,7 @@ export default function NotFound() {
                 </svg>
               </span>
               <span className="leading-tight">
-                <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white/85">
+                <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white">
                   Appelez-nous
                 </span>
                 <span className="block text-2xl font-black tabular-nums text-white">{business.phoneDisplay}</span>

@@ -48,7 +48,9 @@ const ICONS: Record<HeroFeature["icon"], ReactNode> = {
  * as a hero rather than a letterhead.
  *
  * The call button flips from navy to red: on a navy ground the navy plate
- * disappeared. White on `--color-call` measures 4.95:1, so the type is safe.
+ * disappeared. SOLID white on `--color-call` measures 4.95:1. It must stay
+ * solid: the small label once used white at 85% opacity, which blends to
+ * #fbd9d9 and measures 3.78:1 on this red - an AA failure Lighthouse caught.
  */
 export function Hero({
   title,
@@ -124,7 +126,7 @@ export function Hero({
               </svg>
             </span>
             <span>
-              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white/85">{callLabel}</span>
+              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">{callLabel}</span>
               <span className="block text-2xl font-black tracking-tight tabular-nums text-white" dir="ltr">
                 {phoneDisplay}
               </span>

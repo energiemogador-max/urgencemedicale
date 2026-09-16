@@ -72,7 +72,7 @@ export function PageHero({
             </svg>
           </span>
           <span>
-            <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white/85">Appelez maintenant</span>
+            <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">Appelez maintenant</span>
             <span className="block text-xl font-black tracking-tight tabular-nums text-white sm:text-2xl" dir="ltr">
               {phoneDisplay}
             </span>

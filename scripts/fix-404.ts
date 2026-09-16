@@ -16,10 +16,20 @@ import { SITE_URL } from "../src/lib/site";
  * (`not_found_handling: "404-page"`), so it is a real page real people reach.
  * Two fixes, both derived from the build's own output rather than hardcoded:
  *
- *  1. Copy the <link rel="stylesheet"> tags from a normal page. Their hashed
- *     filenames change every build, which is precisely why this reads them
- *     instead of naming them.
+ *  1. Copy the page's CSS from a normal page. Its hashed filename changes every
+ *     build, which is precisely why this reads it instead of naming it.
  *  2. Rewrite the localhost metadataBase fallback to the real origin.
+ *
+ * The CSS arrives in one of two shapes, and both are handled:
+ *
+ *  - <link rel="stylesheet" href="/_next/static/css/…">, the default.
+ *  - <style data-precedence="next" data-href="/_next/static/css/…">…</style>,
+ *    when next.config sets experimental.inlineCss — which it does since
+ *    2026-09-16, because the linked file was blocking render for ~2.1 s.
+ *
+ * Adding inlineCss is what broke the first version of this script: it only
+ * looked for <link>, found none, and failed the build. That failure was the
+ * right outcome — the alternative was a 404 page with no CSS at all.
  *
  * Fails the build loudly rather than shipping an unstyled dead end.
  */
@@ -39,10 +49,14 @@ let html = readFileSync(NOT_FOUND, "utf8");
 const reference = readFileSync(REFERENCE, "utf8");
 
 const sheets = reference.match(/<link[^>]+rel="stylesheet"[^>]*>/g) ?? [];
-if (sheets.length === 0) fail(`no <link rel="stylesheet"> found in ${REFERENCE}`);
+const inlineStyles = reference.match(/<style[^>]*data-href="[^"]+"[^>]*>[\s\S]*?<\/style>/g) ?? [];
+if (sheets.length === 0 && inlineStyles.length === 0) {
+  fail(`no stylesheet found in ${REFERENCE} — neither <link rel="stylesheet"> nor an inlined <style data-href>`);
+}
 
-const missing = sheets.filter((tag) => {
-  const href = /href="([^"]+)"/.exec(tag)?.[1];
+const cssRef = (tag: string) => /(?:data-)?href="([^"]+)"/.exec(tag)?.[1];
+const missing = [...sheets, ...inlineStyles].filter((tag) => {
+  const href = cssRef(tag);
   return href ? !html.includes(href) : false;
 });
 
@@ -59,7 +73,7 @@ writeFileSync(NOT_FOUND, html);
 
 // Assert the result rather than trusting the edits above.
 const done = readFileSync(NOT_FOUND, "utf8");
-if (!/<link[^>]+rel="stylesheet"/.test(done)) fail("stylesheet still absent after injection");
+if (!/<link[^>]+rel="stylesheet"|<style[^>]*data-href=/.test(done)) fail("stylesheet still absent after injection");
 if (done.includes("localhost:3000")) fail("localhost URLs still present after rewrite");
 if (!done.includes("tel:")) fail("the 404 has no phone number on it");
 

@@ -55,7 +55,7 @@ export function MobileCallBar({
             </svg>
           </span>
           <span className="min-w-0 leading-tight">
-            <span className="block text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white/85">
+            <span className="block text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white">
               {callLabel}
             </span>
             <span className="block text-lg font-black tabular-nums text-white" dir="ltr">
