@@ -9,12 +9,16 @@
  * vehicles; nothing on this site establishes a fleet of four.
  *
  * So they are published as what they are: a visible caption under the images
- * labels them as AI illustrations, the alt text starts with "Illustration",
- * and the image files carry the IPTC `trainedAlgorithmicMedia` source type
- * (the label Google documents for generated images). Every licence plate is
- * pixelated, because an invented plate number can belong to a real person's
- * car. None of that may be removed while the images stay generated. Real
- * photographs of the operator's vehicles replace them, caption and all.
+ * reads "Image d'illustration" (the standard French label for a picture that
+ * is not a documentary photo; on 2026-09-17 the operator asked for the longer
+ * "généré par IA" wording to go, and the neutral label is what replaced it),
+ * the alt text starts with "Illustration", and the image files carry the IPTC
+ * `trainedAlgorithmicMedia` source type (the label Google documents for
+ * generated images). Every licence plate is pixelated, because an invented
+ * plate number can belong to a real person's car. None of that may be removed
+ * while the images stay generated: shown as real, they would present a fleet
+ * of four vehicles as the operator's on a medical site. Real photographs of
+ * the operator's vehicles replace them, caption and all.
  *
  * Lazy-loaded: on every page that uses them they sit below the hero.
  */
@@ -62,9 +66,7 @@ export function AmbulanceVisuals({ variant = "pair" }: { variant?: "pair" | "sin
           </div>
         )}
       </div>
-      <figcaption className="mt-2 text-sm text-ink-muted">
-        Visuel d&apos;illustration généré par IA, non contractuel.
-      </figcaption>
+      <figcaption className="mt-1.5 text-xs text-ink-muted">Image d&apos;illustration</figcaption>
     </figure>
   );
 }
