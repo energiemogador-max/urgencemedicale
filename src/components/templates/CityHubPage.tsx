@@ -7,9 +7,11 @@ import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, CardLink, LinkGrid, Section } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
-import { content, getServiceBySlug, getTrustBlockProps } from "@/lib/content";
+import { api } from "@/lib/locale-content";
 import { paths } from "@/lib/urls";
-import { cityFaqs } from "@/lib/faqs";
+import { faqs } from "@/lib/faqs";
+import { localizedPath, type Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { buildAreaServedFragment } from "@/lib/schema-org/business";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
 
@@ -17,22 +19,26 @@ export function CityHubPage({
   city,
   quartiers,
   specialties,
+  locale = "fr",
 }: {
   city: City;
   quartiers: Quartier[];
   specialties: Specialty[];
+  locale?: Locale;
 }) {
+  const { content, getServiceBySlug, getTrustBlockProps } = api(locale);
+  const t = dict(locale);
+  const L = (p: string) => localizedPath(p, locale);
+
   /*
    * Service spokes that exist for this city (/ambulance/casablanca, …).
    *
    * These were orphans. Search Console (2026-09-13) showed /ambulance/casablanca
    * and /ambulance/rabat not even *discovered* two weeks after going live, and
    * an internal-link count explained it: each had exactly one inbound link,
-   * from /ambulance. Google deprioritises URLs it can only reach through a
-   * sitemap and a single hub. The city hub is the natural parent — it is
-   * linked from the homepage and every quartier — so listing the spokes here
-   * gives each one a strong crawl path, and gives a visitor already on
-   * "médecin à domicile à Rabat" the services available in Rabat.
+   * from /ambulance. The city hub is the natural parent — it is linked from the
+   * homepage and every quartier — so listing the spokes here gives each one a
+   * strong crawl path.
    *
    * Derived from content.serviceCities, so a spoke added for a new city shows
    * up here without anyone remembering to link it.
@@ -50,52 +56,48 @@ export function CityHubPage({
         data={[
           buildAreaServedFragment({ "@type": "City", name: city.name }),
           buildBreadcrumbList([
-            { name: "Accueil", path: paths.home() },
-            { name: city.name, path: paths.cityHub(city.slug) },
+            { name: t.nav.home, path: L(paths.home()) },
+            { name: city.name, path: L(paths.cityHub(city.slug)) },
           ]),
         ]}
       />
-      <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: city.name }]} />
+      <Breadcrumbs locale={locale} trail={[{ href: L(paths.home()), label: t.nav.home }, { label: city.name }]} />
       <PageHero
-        title="Médecin à domicile à"
+        locale={locale}
+        title={t.city.heroTitle}
         accent={city.name}
         lead={city.intro}
         phoneDisplay={content.business.phoneDisplay}
         phoneHref={content.business.phoneHref}
         whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
         facts={[
-          { label: "Intervention", value: `${content.business.defaultResponseTimeMinutes} min` },
-          { label: "Consultation", value: `dès ${content.pricing.tiers[0]?.amountMad} ${content.pricing.currency}` },
-          { label: "Disponibilité", value: content.business.hoursOpen },
+          { label: t.facts.intervention, value: `${t.range(content.business.defaultResponseTimeMinutes)} ${t.minutes}` },
+          { label: t.facts.consultation, value: t.facts.fromPrice(content.pricing.tiers[0]?.amountMad ?? "", t.currency) },
+          { label: t.facts.availability, value: t.hours247 },
         ]}
       />
-      <TrustBlock {...getTrustBlockProps()} />
+      <TrustBlock locale={locale} {...getTrustBlockProps()} />
 
       <div className="mt-8">
         <Prose text={city.body} />
       </div>
 
-      <CallBanner />
+      <CallBanner locale={locale} />
 
       {quartiers.length > 0 && (
-        <Section
-          title={`Quartiers couverts à ${city.name}`}
-          lead="Chaque quartier a sa propre page, avec ses repères locaux et ses conditions d'accès."
-        >
-          <LinkGrid
-            links={quartiers.map((q) => ({ href: paths.quartier(city.slug, q.slug), label: q.name }))}
-          />
+        <Section title={t.city.quartiersTitle(city.name)} lead={t.city.quartiersLead}>
+          <LinkGrid links={quartiers.map((q) => ({ href: L(paths.quartier(city.slug, q.slug)), label: q.name }))} />
         </Section>
       )}
 
       {specialties.length > 0 && (
-        <Section title={`Spécialités disponibles à ${city.name}`}>
+        <Section title={t.city.specialtiesTitle(city.name)}>
           <div className="grid gap-3 sm:grid-cols-2">
             {specialties.map((s) => (
               <CardLink
                 key={s.slug}
-                href={paths.citySpecialty(s.slug, city.slug)}
-                title={`${s.name} à ${city.name}`}
+                href={L(paths.citySpecialty(s.slug, city.slug))}
+                title={t.inCity(s.name, city.name)}
                 description={s.shortDescription}
               />
             ))}
@@ -104,13 +106,13 @@ export function CityHubPage({
       )}
 
       {services.length > 0 && (
-        <Section title={`Services à domicile à ${city.name}`}>
+        <Section title={t.city.servicesTitle(city.name)}>
           <div className="grid gap-3 sm:grid-cols-2">
             {services.map(({ slug, service }) => (
               <CardLink
                 key={slug}
-                href={paths.serviceCity(slug, city.slug)}
-                title={`${service.name} à ${city.name}`}
+                href={L(paths.serviceCity(slug, city.slug))}
+                title={t.inCity(service.name, city.name)}
                 description={service.shortDescription}
               />
             ))}
@@ -118,7 +120,7 @@ export function CityHubPage({
         </Section>
       )}
 
-      <FaqBlock entries={cityFaqs(city.name)} />
+      <FaqBlock locale={locale} entries={faqs(locale).cityFaqs(city.name)} />
     </main>
   );
 }

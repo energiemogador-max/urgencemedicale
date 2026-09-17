@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { paths } from "@/lib/urls";
+import { localizedPath, type Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 
 /**
  * Doctor credentials, address, response-time commitment — the signals the
@@ -20,7 +22,9 @@ export function TrustBlock({
   doctorCount,
   city,
   responseTimeMinutes,
+  locale = "fr",
 }: {
+  locale?: Locale;
   doctorName?: string;
   ordreNumber?: string;
   doctorCount?: number;
@@ -33,6 +37,8 @@ export function TrustBlock({
    */
   responseTimeMinutes?: string;
 }) {
+  const t = dict(locale);
+  const L = (p: string) => localizedPath(p, locale);
   const item = "flex items-center gap-2.5 px-3 py-1.5";
   const icon = (d: string) => (
     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-tint text-primary">
@@ -48,32 +54,32 @@ export function TrustBlock({
         {icon("M12 3l8 3v6c0 5-3.4 8.3-8 9-4.6-.7-8-4-8-9V6l8-3Zm-2.5 9 2 2 4-4")}
         {doctorName ? (
           <span>
-            <Link href={paths.nosMedecins()} className="font-bold text-ink no-underline hover:underline">
+            <Link href={L(paths.nosMedecins())} className="font-bold text-ink no-underline hover:underline">
               {doctorName}
             </Link>
-            {ordreNumber && <> — Ordre National des Médecins n° {ordreNumber}</>}
+            {ordreNumber && <> — {t.trust.ordreNumber(ordreNumber)}</>}
           </span>
         ) : (
           doctorCount !== undefined && (
             <span>
-              <Link href={paths.nosMedecins()} className="font-bold text-ink no-underline hover:underline">
-                {doctorCount} médecins
+              <Link href={L(paths.nosMedecins())} className="font-bold text-ink no-underline hover:underline">
+                {t.trust.doctorsCount(doctorCount)}
               </Link>{" "}
-              inscrits à l&apos;Ordre National des Médecins
+              {t.trust.registered}
             </span>
           )
         )}
       </span>
       <span className={item}>
         {icon("M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Zm0-9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z")}
-        <Link href={paths.contact()} className="font-semibold no-underline hover:underline">
+        <Link href={L(paths.contact())} className="font-semibold no-underline hover:underline">
           {city}
         </Link>
       </span>
       {responseTimeMinutes && (
         <span className={item}>
           {icon("M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z")}
-          <span className="font-bold text-primary">Intervention en {responseTimeMinutes} min</span>
+          <span className="font-bold text-primary">{t.trust.intervention(t.range(responseTimeMinutes))}</span>
         </span>
       )}
     </div>

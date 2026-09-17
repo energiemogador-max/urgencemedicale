@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { JsonLd } from "@/components/JsonLd";
 import { buildFaqPage, type FaqEntry } from "@/lib/schema-org/faq";
 
@@ -6,13 +8,13 @@ import { buildFaqPage, type FaqEntry } from "@/lib/schema-org/faq";
  * drift apart (Phase 4 rule: "FAQPage wherever an FAQ block appears").
  * Uses <details> so it works with JavaScript disabled.
  */
-export function FaqBlock({ entries }: { entries: FaqEntry[] }) {
+export function FaqBlock({ entries, locale = "fr" }: { entries: FaqEntry[]; locale?: Locale }) {
   if (entries.length === 0) return null;
 
   return (
     <section className="mt-12">
       <JsonLd data={buildFaqPage(entries)} />
-      <h2 className="text-xl font-bold text-ink">Questions fréquentes</h2>
+      <h2 className="text-xl font-bold text-ink">{dict(locale).faqTitle}</h2>
       <div className="mt-4 divide-y divide-border overflow-hidden rounded-lg border border-border bg-surface">
         {entries.map((e) => (
           <details key={e.question} className="group">

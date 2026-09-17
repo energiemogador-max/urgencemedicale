@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { CrescentMark } from "@/components/CrescentMark";
 import { EcgTrace, LiveryBand } from "@/components/Livery";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -37,7 +39,9 @@ export function PageHero({
   phoneHref,
   whatsappHref,
   facts,
+  locale = "fr",
 }: {
+  locale?: Locale;
   title: string;
   /** Rendered in the on-navy red after the title — the city, typically. */
   accent?: string;
@@ -51,7 +55,7 @@ export function PageHero({
   return (
     // No .rise fade: this band is the LCP section of every page that uses it.
     <section className="relative isolate mt-3 overflow-hidden rounded-3xl bg-primary px-5 pb-10 pt-8 sm:px-8 sm:pb-12 sm:pt-10">
-      <CrescentMark className="pointer-events-none absolute -right-12 -top-12 -z-10 h-56 w-56 text-white/[0.06] sm:h-80 sm:w-80" />
+      <CrescentMark className="pointer-events-none absolute -end-12 -top-12 -z-10 h-56 w-56 text-white/[0.06] sm:h-80 sm:w-80" />
       <LiveryBand className="absolute inset-x-0 bottom-0 h-2" />
 
       <h1 className="max-w-[24ch] text-[clamp(1.7rem,4.4vw,2.6rem)] font-black leading-[1.08] tracking-tight text-white">
@@ -80,13 +84,15 @@ export function PageHero({
             </svg>
           </span>
           <span>
-            <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">Appelez maintenant</span>
+            <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">{dict(locale).call.callNow}</span>
             <span className="block text-xl font-black tracking-tight tabular-nums text-white sm:text-2xl" dir="ltr">
               {phoneDisplay}
             </span>
           </span>
         </a>
-        {whatsappHref && <WhatsAppButton href={whatsappHref} tap="hero" className="w-full justify-center sm:w-auto" />}
+        {whatsappHref && (
+          <WhatsAppButton href={whatsappHref} tap="hero" locale={locale} className="w-full justify-center sm:w-auto" />
+        )}
       </div>
 
       {facts.length > 0 && (

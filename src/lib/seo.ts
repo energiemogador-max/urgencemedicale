@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
 import { business } from "@content/business";
 import { DEFAULT_LOCALE, HREFLANG, LOCALES, isTranslated, localizedPath, type Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 
 const PHONE_DISPLAY = business.phoneDisplay;
 
@@ -35,7 +36,7 @@ function clampDescription(text: string): string {
   if (clean.length <= DESC_MAX) return clean;
 
   // Prefer whole sentences that fit.
-  const sentences = clean.match(/[^.!?]+[.!?]+/g) ?? [];
+  const sentences = clean.match(/[^.!?؟]+[.!?؟]+/g) ?? [];
   let built = "";
   for (const sentence of sentences) {
     if ((built + sentence).trim().length > DESC_MAX) break;
@@ -107,26 +108,29 @@ export function localeMetadata({
   title: string;
   description: string;
 }): Metadata {
-  const self = `${SITE_URL}${localizedPath(frenchPath, locale)}`;
-  return {
-    title: { absolute: title },
-    description: clampDescription(description),
-    alternates: { canonical: localizedPath(frenchPath, locale), languages: buildAlternates(frenchPath) },
-    openGraph: { type: "website", siteName: SITE_NAME, locale, title, description, url: self },
-  };
+  return pageMetadata({ title, description, path: frenchPath, locale });
 }
 
+/**
+ * `path` is always the FRENCH path; `locale` picks which version this page
+ * is. The canonical points at the page itself (never at the French original:
+ * a translation is its own page, not a duplicate), and every version carries
+ * the same hreflang cluster.
+ */
 export function pageMetadata({
   title,
   description,
   path,
+  locale = DEFAULT_LOCALE,
 }: {
   title: string;
   description: string;
   path: string;
+  locale?: Locale;
 }): Metadata {
-  const canonical = path === "/" ? "/" : path;
-  const absolute = `${SITE_URL}${path === "/" ? "" : path}`;
+  const self = localizedPath(path, locale);
+  const canonical = self;
+  const absolute = `${SITE_URL}${self === "/" ? "" : self}`;
   const desc = clampDescription(description);
 
   return {
@@ -139,7 +143,7 @@ export function pageMetadata({
     openGraph: {
       type: "website",
       siteName: SITE_NAME,
-      locale: "fr_MA",
+      locale: dict(locale).ogLocale,
       title,
       description: desc,
       url: absolute,

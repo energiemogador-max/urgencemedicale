@@ -1,3 +1,6 @@
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
+
 /**
  * Plain `<a>` to a wa.me link — no JS required to work, same as CallButton.
  * Pure presentational (a URL prop, not a content/ import) for the same
@@ -15,8 +18,10 @@ export function WhatsAppButton({
   showLabel = true,
   className = "",
   tap,
+  locale = "fr",
 }: {
   href: string;
+  locale?: Locale;
   showLabel?: boolean;
   className?: string;
   /** Names this surface for the beacon — see lib/analytics.ts. */
@@ -28,7 +33,7 @@ export function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       data-tap={tap}
-      aria-label="Contacter sur WhatsApp"
+      aria-label={dict(locale).call.whatsappAria}
       className={`flex items-center justify-center gap-2 rounded-xl bg-whatsapp px-3.5 py-3 font-bold text-ink hover:bg-whatsapp-dark sm:px-4 ${className}`}
     >
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-5 w-5 shrink-0 sm:h-6 sm:w-6">

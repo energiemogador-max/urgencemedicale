@@ -8,9 +8,11 @@ import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, CardLink, Section } from "@/components/ui";
-import { content, getTrustBlockProps } from "@/lib/content";
+import { api } from "@/lib/locale-content";
 import { paths } from "@/lib/urls";
-import { specialtyFaqs } from "@/lib/faqs";
+import { faqs } from "@/lib/faqs";
+import { localizedPath, type Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { buildSpecialtyFragment } from "@/lib/schema-org/business";
 import { buildPhysician } from "@/lib/schema-org/physician";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
@@ -20,65 +22,75 @@ export function SpecialtyHubPage({
   cities,
   otherSpecialties,
   doctors,
+  locale = "fr",
 }: {
   specialty: Specialty;
   cities: City[];
   otherSpecialties: Specialty[];
   doctors: Doctor[];
+  locale?: Locale;
 }) {
+  const { content, getTrustBlockProps } = api(locale);
+  const t = dict(locale);
+  const L = (p: string) => localizedPath(p, locale);
+  const label = t.specialtyAtHome(specialty.name);
+  // Physician nodes always use the French record: one doctor, one entity, in
+  // every language.
+  const frenchDoctors = api("fr").content.doctors.filter((d) => doctors.some((x) => x.slug === d.slug));
+
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
       <JsonLd
         data={[
           buildSpecialtyFragment(specialty.slug),
-          ...doctors.map(buildPhysician),
+          ...frenchDoctors.map(buildPhysician),
           buildBreadcrumbList([
-            { name: "Accueil", path: paths.home() },
-            { name: `${specialty.name} à domicile`, path: paths.specialtyHub(specialty.slug) },
+            { name: t.nav.home, path: L(paths.home()) },
+            { name: label, path: L(paths.specialtyHub(specialty.slug)) },
           ]),
         ]}
       />
-      <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: `${specialty.name} à domicile` }]} />
+      <Breadcrumbs locale={locale} trail={[{ href: L(paths.home()), label: t.nav.home }, { label }]} />
       <PageHero
-        title={`${specialty.name} à domicile`}
+        locale={locale}
+        title={label}
         lead={specialty.intro}
         phoneDisplay={content.business.phoneDisplay}
         phoneHref={content.business.phoneHref}
         whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
         facts={[
           ...(doctors.length > 0
-            ? [{ label: doctors.length > 1 ? "Médecins nommés" : "Médecin nommé", value: `${doctors.length} · n° d'Ordre publié` }]
+            ? [{ label: t.facts.namedDoctors(doctors.length), value: t.facts.namedDoctorsValue(doctors.length) }]
             : []),
-          { label: "Demande", value: "Par téléphone" },
-          { label: "Tarif", value: "Annoncé avant la visite" },
+          { label: t.facts.request, value: t.facts.byPhone },
+          { label: t.facts.fee, value: t.facts.feeBeforeVisit },
         ]}
       />
-      <TrustBlock {...getTrustBlockProps()} />
+      <TrustBlock locale={locale} {...getTrustBlockProps()} />
 
       <div className="mt-8">
         <Prose text={specialty.body} />
       </div>
 
-      <CallBanner />
+      <CallBanner locale={locale} />
 
       {/*
         Naming the physicians who actually cover this specialty is the one
-        E-E-A-T signal no competitor in this market publishes — not one of the
-        nine audited names a single doctor anywhere on their site. The
-        Physician nodes reuse their /nos-medecins @id, so this is the same
-        entity surfaced in a second place, not a duplicate.
+        E-E-A-T signal no competitor in this market publishes. The Physician
+        nodes reuse their /nos-medecins @id, so this is the same entity
+        surfaced in a second place, not a duplicate.
       */}
       {doctors.length > 0 && (
-        <Section title={doctors.length > 1 ? `Nos ${specialty.name.toLowerCase()}s` : `Votre ${specialty.name.toLowerCase()}`}>
+        <Section title={t.specialty.doctorsTitle(specialty.name, doctors.length)}>
           <ul className="grid gap-3 sm:grid-cols-2">
             {doctors.map((d) => (
               <li key={d.slug} className="rounded-lg border border-border bg-surface p-4">
-                <Link href={paths.nosMedecins()} className="font-bold text-ink no-underline hover:underline">
+                <Link href={L(paths.nosMedecins())} className="font-bold text-ink no-underline hover:underline">
                   {d.name}
                 </Link>
                 <p className="mt-1.5 text-sm text-ink-muted">{d.bio}</p>
                 <p className="mt-1.5 text-sm text-ink-muted">
-                  <span className="font-semibold text-ink">Langues :</span> {d.languages.join(", ")}
+                  <span className="font-semibold text-ink">{t.specialty.languages}</span> {d.languages.join(locale === "ar" ? "، " : ", ")}
                 </p>
               </li>
             ))}
@@ -87,14 +99,14 @@ export function SpecialtyHubPage({
       )}
 
       {cities.length > 0 && (
-        <Section title={`${specialty.name} à domicile par ville`}>
+        <Section title={t.specialty.byCity(label)}>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {cities.map((c) => (
               <CardLink
                 key={c.slug}
-                href={paths.citySpecialty(specialty.slug, c.slug)}
+                href={L(paths.citySpecialty(specialty.slug, c.slug))}
                 title={c.name}
-                description={`${specialty.name} à domicile à ${c.name}`}
+                description={t.meta.citySpecialty(specialty.name, c.name)}
               />
             ))}
           </div>
@@ -102,13 +114,13 @@ export function SpecialtyHubPage({
       )}
 
       {otherSpecialties.length > 0 && (
-        <Section title="Autres spécialités à domicile">
+        <Section title={t.specialty.others}>
           <div className="grid gap-3 sm:grid-cols-2">
             {otherSpecialties.map((s) => (
               <CardLink
                 key={s.slug}
-                href={paths.specialtyHub(s.slug)}
-                title={`${s.name} à domicile`}
+                href={L(paths.specialtyHub(s.slug))}
+                title={t.specialtyAtHome(s.name)}
                 description={s.shortDescription}
               />
             ))}
@@ -116,7 +128,7 @@ export function SpecialtyHubPage({
         </Section>
       )}
 
-      <FaqBlock entries={specialtyFaqs(specialty.name)} />
+      <FaqBlock locale={locale} entries={faqs(locale).specialtyFaqs(specialty.name)} />
     </main>
   );
 }

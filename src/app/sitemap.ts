@@ -1,132 +1,54 @@
 import type { MetadataRoute } from "next";
-import { SPECIALTY_ELIGIBLE_CITY_SLUGS } from "@content/schema";
 import { SITE_URL } from "@/lib/site";
-import { content, getQuartiersForCity } from "@/lib/content";
-import { paths } from "@/lib/urls";
-import { DEFAULT_LOCALE, LOCALES, TRANSLATED_PATHS, localizedPath } from "@/lib/i18n";
+import { allPages, isPageTranslated } from "@/lib/page-registry";
+import { HREFLANG, localizedPath } from "@/lib/i18n";
 
 export const dynamic = "force-static";
 
 /**
- * Generated from the content graph, so a page can never exist without being
- * in the sitemap (Phase 1 rule). Priorities encode the funnel rather than
- * being decorative: the homepage and city hubs are the entry points, quartier
- * and situation pages are the long-tail targets, and the corporate pages
- * (about, contact, booking) rank lowest because they are not what anyone
- * searches for at 2am.
+ * Generated from the page registry, so a page can never exist without being
+ * in the sitemap (Phase 1 rule), in any language.
  *
- * The brief calls for splitting above 5k URLs. At ~130 URLs a single sitemap
- * is well inside the 50k spec limit, so splitting would add moving parts for
- * no benefit — revisit if the taxonomy grows an order of magnitude.
+ * Each French page is listed with its English and Arabic versions when they
+ * exist, and every one of those entries carries the same `alternates`
+ * cluster, which is how Google pairs the three versions of one page.
+ *
+ * Priorities encode the funnel: the homepage and city hubs are the entry
+ * points, quartier and situation pages the long tail, and the corporate
+ * pages rank lowest because they are not what anyone searches for at 2am.
+ * Translated pages sit a notch below their French original: French is the
+ * primary market.
+ *
+ * At ~350 URLs a single sitemap is far inside the 50k spec limit.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
   const url = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
+  const entries: MetadataRoute.Sitemap = [];
 
-  const entries: MetadataRoute.Sitemap = [
-    { url: url(paths.home()), lastModified, changeFrequency: "weekly", priority: 1 },
-  ];
+  for (const page of allPages()) {
+    const locales = (["en", "ar"] as const).filter((l) => isPageTranslated(page.ref, l));
+    const languages: Record<string, string> = { [HREFLANG.fr]: url(page.path) };
+    for (const l of locales) languages[HREFLANG[l]] = url(localizedPath(page.path, l));
+    const alternates = locales.length > 0 ? { languages } : undefined;
 
-  for (const city of content.cities) {
     entries.push({
-      url: url(paths.cityHub(city.slug)),
+      url: url(page.path),
       lastModified,
-      changeFrequency: "weekly",
-      priority: 0.9,
+      changeFrequency: page.changeFrequency,
+      priority: page.priority,
+      alternates,
     });
-
-    for (const quartier of getQuartiersForCity(city.slug)) {
+    for (const l of locales) {
       entries.push({
-        url: url(paths.quartier(city.slug, quartier.slug)),
+        url: url(localizedPath(page.path, l)),
         lastModified,
-        changeFrequency: "monthly",
-        priority: 0.8,
+        changeFrequency: page.changeFrequency,
+        priority: Math.round(page.priority * 0.9 * 10) / 10,
+        alternates,
       });
     }
   }
-
-  for (const specialty of content.specialties) {
-    entries.push({
-      url: url(paths.specialtyHub(specialty.slug)),
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    });
-
-    for (const citySlug of SPECIALTY_ELIGIBLE_CITY_SLUGS) {
-      entries.push({
-        url: url(paths.citySpecialty(specialty.slug, citySlug)),
-        lastModified,
-        changeFrequency: "monthly",
-        priority: 0.7,
-      });
-    }
-  }
-
-  for (const situation of content.situations) {
-    entries.push({
-      url: url(paths.situation(situation.slug)),
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    });
-
-    if (situation.geoMultiplied) {
-      for (const city of content.cities) {
-        entries.push({
-          url: url(paths.situationCity(situation.slug, city.slug)),
-          lastModified,
-          changeFrequency: "monthly",
-          priority: 0.6,
-        });
-      }
-    }
-  }
-
-  for (const service of content.services) {
-    entries.push({
-      url: url(paths.service(service.slug)),
-      lastModified,
-      changeFrequency: "monthly",
-      priority: 0.8,
-    });
-
-    if (service.geoMultiplied) {
-      for (const sc of content.serviceCities.filter((s) => s.serviceSlug === service.slug)) {
-        entries.push({
-          url: url(paths.serviceCity(service.slug, sc.citySlug)),
-          lastModified,
-          changeFrequency: "monthly",
-          priority: 0.6,
-        });
-      }
-    }
-  }
-
-  /*
-   * Translated pages. Only paths listed in TRANSLATED_PATHS have a locale
-   * version, so this can never emit a URL that does not exist — the same
-   * registry drives the hreflang cluster and the language switcher.
-   */
-  for (const frenchPath of TRANSLATED_PATHS) {
-    for (const locale of LOCALES) {
-      if (locale === DEFAULT_LOCALE) continue;
-      entries.push({
-        url: url(localizedPath(frenchPath, locale)),
-        lastModified,
-        changeFrequency: "weekly",
-        priority: 0.9,
-      });
-    }
-  }
-
-  for (const path of [paths.tarifs(), paths.nosMedecins(), paths.aPropos(), paths.reserver(), paths.contact()]) {
-    entries.push({ url: url(path), lastModified, changeFrequency: "yearly", priority: 0.5 });
-  }
-
-  // A reference page people actively search for, so it ranks above the
-  // administrative pages above.
-  entries.push({ url: url(paths.numerosUrgence()), lastModified, changeFrequency: "monthly", priority: 0.7 });
 
   return entries;
 }

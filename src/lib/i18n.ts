@@ -15,6 +15,8 @@
  * duplicate, is worse than omitting it: Google treats the cluster as broken
  * and may ignore all of it.
  */
+import { isTranslatedPath } from "@/lib/page-registry";
+
 export const LOCALES = ["fr", "ar", "en"] as const;
 export type Locale = (typeof LOCALES)[number];
 
@@ -46,16 +48,16 @@ export function localePrefix(locale: Locale): string {
 }
 
 /**
- * Paths that exist in Arabic and English, as French paths.
+ * Whether a French path also exists in Arabic and English.
  *
- * This is the single source of truth for hreflang and for the language
- * switcher. A path absent here renders no alternate links and no switcher
- * entry, so an untranslated page never claims a translation it does not have.
+ * The answer comes from the page registry (src/lib/page-registry.ts), the
+ * single list behind the sitemap, hreflang, the language switcher and the
+ * translated routes. A path is "translated" only when every piece of text its
+ * page needs exists in both locales, so an untranslated page never claims a
+ * translation it does not have.
  */
-export const TRANSLATED_PATHS = new Set<string>(["/"]);
-
 export function isTranslated(path: string): boolean {
-  return TRANSLATED_PATHS.has(path);
+  return isTranslatedPath(path);
 }
 
 /** The equivalent of a French path in another locale. */

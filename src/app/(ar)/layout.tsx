@@ -1,40 +1,39 @@
-/**
- * Root layout for the ar locale.
- *
- * App Router allows a per-locale <html lang>/<dir> only through separate root
- * layouts in route groups, which is why the French routes moved into (fr).
- * Arabic is right-to-left, so this cannot be faked with a wrapper element.
- *
- * The French header and footer are deliberately NOT reused here: they are
- * built with physical direction utilities (ml-auto, pl-3, text-left) that
- * mirror incorrectly under dir="rtl". This locale gets a purpose-built shell
- * instead, which is smaller and correct rather than large and subtly broken.
- */
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_URL } from "@/lib/site";
-import { archivo } from "@/app/fonts";
-import { TAP_TRACKING_SCRIPT } from "@/lib/analytics";
+import { business } from "@content/business";
+import { archivo, cairo } from "@/app/fonts";
+import { SiteChrome } from "@/components/SiteChrome";
 import "@/app/globals.css";
+
+/**
+ * Root layout for the Arabic site.
+ *
+ * Arabic is right-to-left, which cannot be faked with a wrapper element: it
+ * needs its own <html dir="rtl">, and App Router allows that only through a
+ * separate root layout. The shared chrome and every template are written
+ * with logical direction utilities (`ms-`, `ps-`, `start-`), so they mirror
+ * correctly here instead of putting the call button on the wrong side.
+ *
+ * Both fonts are loaded: Cairo draws the Arabic, Archivo the Latin brand
+ * name and the phone numbers (see `.brand-latin` in globals.css).
+ */
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: { default: `طبيب في المنزل بالدار البيضاء والرباط | ${business.phoneDisplay}`, template: "%s" },
+  description: "طبيب يتنقل إلى منزلك في الدار البيضاء والمحمدية وبوسكورة ودار بوعزة والرباط، على مدار الساعة.",
+};
 
 export const viewport: Viewport = {
   colorScheme: "only light",
   themeColor: "#002454",
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-};
-
 export default function ARRootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className={archivo.variable}>
+    <html lang="ar" dir="rtl" className={`${archivo.variable} ${cairo.variable}`}>
       <body className="flex min-h-full flex-col">
-        {children}
-        {/* Same tracker as the French pages. These locales were previously
-            invisible in the dashboard: a visit to /ar counted as no visit at
-            all, and a tap from an English-speaking visitor as no tap. */}
-        <script dangerouslySetInnerHTML={{ __html: TAP_TRACKING_SCRIPT }} />
+        <SiteChrome locale="ar">{children}</SiteChrome>
       </body>
     </html>
   );

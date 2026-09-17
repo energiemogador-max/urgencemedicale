@@ -1,4 +1,6 @@
-import { content } from "@/lib/content";
+import { api } from "@/lib/locale-content";
+import type { Locale } from "@/lib/i18n";
+import { dict, type Dict } from "@/lib/dictionaries";
 
 /**
  * Live service status: a compact badge in the hero.
@@ -53,24 +55,25 @@ const SHORT = "lg:hidden";
 const LONG = "hidden lg:inline";
 const PRICE = "text-lg font-black leading-none tabular-nums text-call-ink lg:mt-1 lg:block lg:text-xl";
 
-const SCRIPT = `(function(){
+const script = (t: Dict) => `(function(){
 var els=document.querySelectorAll("[data-live-status]");if(!els.length)return;
 function pad(n){return(n<10?"0":"")+n}
 function span(cls,text){var s=document.createElement("span");s.className=cls;if(text!=null)s.textContent=text;return s}
 function render(){var d=new Date(),h=d.getHours(),night=h<7||h>=20;
 for(var i=0;i<els.length;i++){var el=els[i],x=el.dataset,p=span(${JSON.stringify(PERIOD)});
-p.appendChild(span(${JSON.stringify(SHORT)},night?"Tarif nuit":"Tarif jour"));
-p.appendChild(span(${JSON.stringify(LONG)},night?"Tarif de nuit":"Tarif de journ\\u00e9e"));
+p.appendChild(span(${JSON.stringify(SHORT)},night?${JSON.stringify(t.liveStatus.nightShort)}:${JSON.stringify(t.liveStatus.dayShort)}));
+p.appendChild(span(${JSON.stringify(LONG)},night?${JSON.stringify(t.liveStatus.nightLong)}:${JSON.stringify(t.liveStatus.dayLong)}));
 el.className=${JSON.stringify(LINE)};el.textContent="";
-el.appendChild(span(${JSON.stringify(CLOCK)},pad(h)+"h"+pad(d.getMinutes())));
+el.appendChild(span(${JSON.stringify(CLOCK)},pad(h)+${JSON.stringify(t.liveStatus.clockSep)}+pad(d.getMinutes())));
 el.appendChild(p);
 el.appendChild(span(${JSON.stringify(PRICE)},(night?x.night:x.day)+" "+x.currency));}}
 render();setInterval(render,30000);
 document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")render()});
 })();`;
 
-export function LiveStatus() {
-  const { pricing } = content;
+export function LiveStatus({ locale = "fr" }: { locale?: Locale }) {
+  const { pricing } = api(locale).content;
+  const t = dict(locale);
   const day = pricing.tiers.find((t) => t.slug === "jour-weekend")?.amountMad ?? "";
   const night = pricing.tiers.find((t) => t.slug === "nuit-ferie")?.amountMad ?? "";
 
@@ -81,13 +84,13 @@ export function LiveStatus() {
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-whatsapp opacity-75 motion-reduce:animate-none" />
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-whatsapp" />
         </span>
-        <span className="text-[0.7rem] font-black uppercase tracking-[0.14em] text-ink">Service ouvert</span>
+        <span className="text-[0.7rem] font-black uppercase tracking-[0.14em] text-ink">{t.liveStatus.open}</span>
       </p>
 
-      <p data-live-status="" data-day={day} data-night={night} data-currency={pricing.currency} className={FALLBACK}>
-        24h/24 · {day} à {night} {pricing.currency}
+      <p data-live-status="" data-day={day} data-night={night} data-currency={t.currency} className={FALLBACK}>
+        {t.liveStatus.fallback(day, night, t.currency)}
       </p>
-      <script dangerouslySetInnerHTML={{ __html: SCRIPT }} />
+      <script dangerouslySetInnerHTML={{ __html: script(t) }} />
     </div>
   );
 }

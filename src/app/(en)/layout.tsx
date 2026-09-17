@@ -1,40 +1,36 @@
-/**
- * Root layout for the en locale.
- *
- * App Router allows a per-locale <html lang>/<dir> only through separate root
- * layouts in route groups, which is why the French routes moved into (fr).
- * English shares direction with French but needs its own lang attribute.
- *
- * The French header and footer are deliberately NOT reused here: they are
- * built with physical direction utilities (ml-auto, pl-3, text-left) that
- * mirror incorrectly under dir="rtl". This locale gets a purpose-built shell
- * instead, which is smaller and correct rather than large and subtly broken.
- */
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_URL } from "@/lib/site";
+import { business } from "@content/business";
 import { archivo } from "@/app/fonts";
-import { TAP_TRACKING_SCRIPT } from "@/lib/analytics";
+import { SiteChrome } from "@/components/SiteChrome";
 import "@/app/globals.css";
+
+/**
+ * Root layout for the English site — for the expatriate, diplomatic and
+ * visiting population in Casablanca and Rabat, who search in English and are
+ * the least likely to have a regular doctor locally.
+ *
+ * App Router allows a per-locale <html lang>/<dir> only through separate root
+ * layouts in route groups, which is why this exists next to (fr) and (ar).
+ * Everything inside it is the shared chrome.
+ */
+export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
+  title: { default: `Doctor at home in Casablanca and Rabat | ${business.phoneDisplay}`, template: "%s" },
+  description: "A doctor visits you at home in Casablanca, Mohammedia, Bouskoura, Dar Bouazza and Rabat, 24/7.",
+};
 
 export const viewport: Viewport = {
   colorScheme: "only light",
   themeColor: "#002454",
 };
 
-export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
-};
-
 export default function ENRootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" dir="ltr" className={archivo.variable}>
       <body className="flex min-h-full flex-col">
-        {children}
-        {/* Same tracker as the French pages. These locales were previously
-            invisible in the dashboard: a visit to /ar counted as no visit at
-            all, and a tap from an English-speaking visitor as no tap. */}
-        <script dangerouslySetInnerHTML={{ __html: TAP_TRACKING_SCRIPT }} />
+        <SiteChrome locale="en">{children}</SiteChrome>
       </body>
     </html>
   );

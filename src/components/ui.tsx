@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { CrescentMark } from "@/components/CrescentMark";
@@ -70,7 +72,7 @@ export function CardLink({
       <svg
         viewBox="0 0 24 24"
         aria-hidden="true"
-        className="h-5 w-5 shrink-0 text-primary/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary sm:mt-0.5"
+        className="h-5 w-5 shrink-0 text-primary/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary sm:mt-0.5 rtl:rotate-180 rtl:group-hover:-translate-x-0.5"
       >
         <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
@@ -113,9 +115,15 @@ export function FactPill({ label, value }: { label: string; value: string }) {
 }
 
 /** Breadcrumb trail rendered above the H1 on spoke pages. */
-export function Breadcrumbs({ trail }: { trail: { href?: string; label: string }[] }) {
+export function Breadcrumbs({
+  trail,
+  locale = "fr",
+}: {
+  trail: { href?: string; label: string }[];
+  locale?: Locale;
+}) {
   return (
-    <nav aria-label="Fil d'Ariane" className="text-sm text-ink-muted">
+    <nav aria-label={dict(locale).nav.breadcrumb} className="text-sm text-ink-muted">
       <ol className="flex flex-wrap items-center gap-1.5">
         {trail.map((item, i) => (
           <li key={item.label} className="flex items-center gap-1.5">

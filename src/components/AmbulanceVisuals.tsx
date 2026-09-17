@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 /**
  * The ambulance livery visuals supplied by the operator (2026-09-17).
  *
@@ -23,18 +25,12 @@
  * Lazy-loaded: on every page that uses them they sit below the hero.
  */
 const IMAGES = {
-  face: {
-    base: "/images/ambulances-livree-face",
-    alt: "Illustration : ambulances aux couleurs d'Urgence Médicale à domicile, vues de face",
-  },
-  arriere: {
-    base: "/images/ambulances-livree-arriere",
-    alt: "Illustration : ambulances aux couleurs d'Urgence Médicale à domicile, vues de l'arrière",
-  },
+  face: "/images/ambulances-livree-face",
+  arriere: "/images/ambulances-livree-arriere",
 } as const;
 
-function Visual({ which, sizes }: { which: keyof typeof IMAGES; sizes: string }) {
-  const { base, alt } = IMAGES[which];
+function Visual({ which, sizes, alt }: { which: keyof typeof IMAGES; sizes: string; alt: string }) {
+  const base = IMAGES[which];
   return (
     <picture>
       <source type="image/avif" srcSet={`${base}-800.avif 800w, ${base}-1280.avif 1280w`} sizes={sizes} />
@@ -53,20 +49,25 @@ function Visual({ which, sizes }: { which: keyof typeof IMAGES; sizes: string })
   );
 }
 
-export function AmbulanceVisuals({ variant = "pair" }: { variant?: "pair" | "single" }) {
+export function AmbulanceVisuals({ variant = "pair", locale = "fr" }: { variant?: "pair" | "single"; locale?: Locale }) {
+  const t = dict(locale);
   return (
     <figure className="mt-8">
       <div className={`grid gap-2 ${variant === "pair" ? "sm:grid-cols-2" : ""}`}>
         <div className="overflow-hidden rounded-2xl bg-primary-tint">
-          <Visual which="face" sizes={variant === "pair" ? "(min-width: 640px) 480px, 100vw" : "(min-width: 1024px) 960px, 100vw"} />
+          <Visual
+            which="face"
+            alt={t.ambulanceAltFront}
+            sizes={variant === "pair" ? "(min-width: 640px) 480px, 100vw" : "(min-width: 1024px) 960px, 100vw"}
+          />
         </div>
         {variant === "pair" && (
           <div className="overflow-hidden rounded-2xl bg-primary-tint">
-            <Visual which="arriere" sizes="(min-width: 640px) 480px, 100vw" />
+            <Visual which="arriere" alt={t.ambulanceAltBack} sizes="(min-width: 640px) 480px, 100vw" />
           </div>
         )}
       </div>
-      <figcaption className="mt-1.5 text-xs text-ink-muted">Image d&apos;illustration</figcaption>
+      <figcaption className="mt-1.5 text-xs text-ink-muted">{t.illustration}</figcaption>
     </figure>
   );
 }

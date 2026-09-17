@@ -1,6 +1,8 @@
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
-import { content } from "@/lib/content";
+import { api } from "@/lib/locale-content";
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { EcgTrace, LiveryBand } from "@/components/Livery";
 
 /**
@@ -19,8 +21,9 @@ import { EcgTrace, LiveryBand } from "@/components/Livery";
  * and it is the same tel: href the header uses so a tap is a tap regardless
  * of where it happens.
  */
-export function CallBanner({ label, text }: { label?: string; text?: string }) {
-  const { business } = content;
+export function CallBanner({ label, text, locale = "fr" }: { label?: string; text?: string; locale?: Locale }) {
+  const { business } = api(locale).content;
+  const t = dict(locale);
 
   return (
     <aside className="relative isolate mt-12 overflow-hidden rounded-3xl bg-primary px-5 pb-8 pt-6 sm:px-8 sm:pt-8">
@@ -28,11 +31,10 @@ export function CallBanner({ label, text }: { label?: string; text?: string }) {
         <div className="min-w-0">
           <EcgTrace className="h-5 w-32 text-call-bright" />
           <p className="mt-3 text-[clamp(1.35rem,1.1rem+1vw,1.75rem)] font-black uppercase leading-tight tracking-tight text-on-primary">
-            {label ?? "Besoin d'un médecin maintenant ?"}
+            {label ?? t.banner.defaultLabel}
           </p>
           <p className="mt-1.5 max-w-[48ch] text-sm text-on-primary-muted">
-            {text ??
-              `Un médecin se déplace chez vous, ${business.hoursOpen}. Le tarif vous est annoncé avant que vous ne confirmiez.`}
+            {text ?? t.banner.defaultText(t.hoursProse)}
           </p>
         </div>
 
@@ -48,13 +50,18 @@ export function CallBanner({ label, text }: { label?: string; text?: string }) {
               </svg>
             </span>
             <span className="leading-tight">
-              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">Appelez</span>
+              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">{t.call.call}</span>
               <span className="block text-xl font-black tabular-nums text-white" dir="ltr">
                 {business.phoneDisplay}
               </span>
             </span>
           </a>
-          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="banniere" className="justify-center rounded-2xl" />
+          <WhatsAppButton
+            href={toWhatsAppHref(business.whatsappNumber)}
+            tap="banniere"
+            locale={locale}
+            className="justify-center rounded-2xl"
+          />
         </div>
       </div>
       <LiveryBand className="absolute inset-x-0 bottom-0 h-2" />

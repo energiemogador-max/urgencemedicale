@@ -1,4 +1,6 @@
-import { content } from "@/lib/content";
+import { api } from "@/lib/locale-content";
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 import { Section } from "@/components/ui";
 
 /**
@@ -13,7 +15,6 @@ import { Section } from "@/components/ui";
  * no Review/AggregateRating JSON-LD.
  */
 
-const dateFr = new Intl.DateTimeFormat("fr-MA", { day: "numeric", month: "long", year: "numeric" });
 
 /**
  * Five stars with `rating` filled.
@@ -30,9 +31,9 @@ const dateFr = new Intl.DateTimeFormat("fr-MA", { day: "numeric", month: "long",
  * while the shapes stay aria-hidden — a screen reader reads "Note : 4 sur 5",
  * not five separate stars.
  */
-function Stars({ rating }: { rating: number }) {
+function Stars({ rating, label }: { rating: number; label: string }) {
   return (
-    <span className="flex items-center gap-0.5 text-star" role="img" aria-label={`Note : ${rating} sur 5`}>
+    <span className="flex items-center gap-0.5 text-star" role="img" aria-label={label}>
       {[1, 2, 3, 4, 5].map((i) =>
         i <= rating ? (
           <svg key={i} viewBox="0 0 20 20" aria-hidden="true" className="h-4 w-4" fill="currentColor">
@@ -57,28 +58,30 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-export function Reviews() {
-  const { reviews, business } = content;
+export function Reviews({ locale = "fr" }: { locale?: Locale }) {
+  const { reviews, business } = api(locale).content;
+  const t = dict(locale);
+  const date = new Intl.DateTimeFormat(t.reviews.dateLocale, { day: "numeric", month: "long", year: "numeric" });
   if (reviews.length === 0) return null;
 
   const listing = business.profiles[0];
 
   return (
     <Section
-      title="Avis de patients"
-      lead="Publiés par les patients sur notre fiche Google, reproduits ici mot pour mot."
+      title={t.reviews.title}
+      lead={t.reviews.lead}
     >
       <ul className="grid gap-4 sm:grid-cols-2">
         {reviews.map((r) => (
           <li key={`${r.author}-${r.date}`} className="rounded-xl border border-border bg-surface p-5">
-            <Stars rating={r.rating} />
+            <Stars rating={r.rating} label={t.reviews.rating(r.rating)} />
             <blockquote className="mt-3 text-ink" lang={r.lang}>
               {r.text}
             </blockquote>
             <p className="mt-3 text-sm text-ink-muted">
               <span className="font-semibold text-ink">{r.author}</span>
               {" — "}
-              <time dateTime={r.date}>{dateFr.format(new Date(`${r.date}T12:00:00Z`))}</time>
+              <time dateTime={r.date}>{date.format(new Date(`${r.date}T12:00:00Z`))}</time>
             </p>
           </li>
         ))}
@@ -87,13 +90,13 @@ export function Reviews() {
       <p className="mt-5 text-sm text-ink-muted">
         {listing && (
           <a href={listing} target="_blank" rel="noopener noreferrer">
-            Consulter la fiche Google
+            {t.reviews.googleListing}
           </a>
         )}
         {listing && business.reviewUrl && " · "}
         {business.reviewUrl && (
           <a href={business.reviewUrl} target="_blank" rel="noopener noreferrer">
-            Laisser un avis
+            {t.reviews.leaveReview}
           </a>
         )}
       </p>

@@ -1,5 +1,7 @@
 import type { Pricing } from "@content/schema";
 import { CrescentMark } from "@/components/CrescentMark";
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 
 /**
  * The two consultation tariffs, as two large price cards.
@@ -24,13 +26,16 @@ export function PriceBoard({
   phoneDisplay,
   phoneHref,
   tap,
+  locale = "fr",
 }: {
+  locale?: Locale;
   pricing: Pricing;
   phoneDisplay: string;
   phoneHref: string;
   /** `data-tap` label for the call link, so the dashboard can attribute it. */
   tap: string;
 }) {
+  const d = dict(locale);
   return (
     <div>
       <ul className="grid gap-3 sm:grid-cols-2">
@@ -44,12 +49,12 @@ export function PriceBoard({
               }`}
             >
               {night ? (
-                <CrescentMark className="pointer-events-none absolute -right-6 -top-6 -z-10 h-32 w-32 text-white/[0.08]" />
+                <CrescentMark className="pointer-events-none absolute -end-6 -top-6 -z-10 h-32 w-32 text-white/[0.08]" />
               ) : (
                 <svg
                   viewBox="0 0 24 24"
                   aria-hidden="true"
-                  className="pointer-events-none absolute -right-5 -top-5 -z-10 h-28 w-28 text-primary/[0.07]"
+                  className="pointer-events-none absolute -end-5 -top-5 -z-10 h-28 w-28 text-primary/[0.07]"
                 >
                   <circle cx="12" cy="12" r="5" fill="currentColor" />
                   <path
@@ -77,7 +82,7 @@ export function PriceBoard({
                   {t.amountMad}
                 </span>
                 <span className={`text-lg font-black ${night ? "text-call-bright" : "text-call-ink"}`}>
-                  {pricing.currency}
+                  {d.currency}
                 </span>
               </p>
             </li>
@@ -87,8 +92,8 @@ export function PriceBoard({
 
       <div className="mt-3 flex flex-col gap-3 rounded-2xl border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-ink-muted">
-          Le tarif applicable vous est <strong className="text-ink">confirmé au téléphone, avant la visite</strong>.
-          Il ne change pas à l&apos;arrivée du médecin.
+          {d.price.confirmedBefore} <strong className="text-ink">{d.price.confirmedStrong}</strong>.{" "}
+          {d.price.unchanged}
         </p>
         <a
           href={`tel:${phoneHref}`}

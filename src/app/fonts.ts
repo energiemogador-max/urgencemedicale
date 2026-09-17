@@ -1,4 +1,4 @@
-import { Archivo } from "next/font/google";
+import { Archivo, Cairo } from "next/font/google";
 
 /**
  * One family, two roles.
@@ -26,5 +26,20 @@ export const archivo = Archivo({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
   variable: "--font-sans",
+  display: "swap",
+});
+
+/**
+ * Arabic pages. Archivo has no Arabic glyphs, so without this the Arabic site
+ * was set in whatever the phone had (Droid Naskh, Segoe UI, Tahoma), which
+ * looked like a different brand on every device.
+ *
+ * Cairo: a contemporary sans with a genuinely heavy weight, which the
+ * headings need to sit next to the Archivo wordmark. Loaded only by the
+ * Arabic layout, Arabic subset only.
+ */
+export const cairo = Cairo({
+  subsets: ["arabic"],
+  variable: "--font-arabic",
   display: "swap",
 });

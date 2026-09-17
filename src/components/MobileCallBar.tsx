@@ -1,4 +1,6 @@
 import { toWhatsAppHref } from "@/lib/phone";
+import type { Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 
 /**
  * Fixed call bar, phones only.
@@ -28,13 +30,14 @@ export function MobileCallBar({
   phoneDisplay,
   phoneHref,
   whatsappNumber,
-  callLabel = "Appeler maintenant",
+  locale = "fr",
 }: {
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
-  callLabel?: string;
+  locale?: Locale;
 }) {
+  const t = dict(locale);
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-surface p-2 shadow-[0_-4px_16px_rgba(11,28,51,0.14)] md:hidden print:hidden">
       <div className="flex items-stretch gap-2">
@@ -56,7 +59,7 @@ export function MobileCallBar({
           </span>
           <span className="min-w-0 leading-tight">
             <span className="block text-[0.6rem] font-bold uppercase tracking-[0.14em] text-white">
-              {callLabel}
+              {t.call.callNow}
             </span>
             <span className="block text-lg font-black tabular-nums text-white" dir="ltr">
               {phoneDisplay}
@@ -69,7 +72,7 @@ export function MobileCallBar({
           target="_blank"
           rel="noopener noreferrer"
           data-tap="barre-mobile"
-          aria-label="Contacter sur WhatsApp"
+          aria-label={t.call.whatsappAria}
           className="flex w-14 shrink-0 items-center justify-center rounded-xl bg-whatsapp text-ink no-underline active:bg-whatsapp-dark"
         >
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7">

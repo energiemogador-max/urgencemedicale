@@ -211,6 +211,29 @@
   }
 }
 
+/* ---- Arabic ------------------------------------------------------------------
+ * Cairo draws the Arabic (loaded by the Arabic layout only). Three things
+ * that are right for Latin type are wrong for Arabic:
+ *
+ *  - letter-spacing breaks the joins between Arabic letters, and the design
+ *    uses tracking on labels and headings throughout;
+ *  - the display leading (1.02) clips the marks above and below the line;
+ *  - the brand name and the phone numbers are Latin, and should stay in
+ *    Archivo rather than being drawn by the Arabic face.
+ */
+html[lang="ar"] {
+  --body-text-family: var(--font-arabic), var(--font-sans), "Segoe UI", Tahoma, sans-serif;
+}
+html[lang="ar"] * {
+  letter-spacing: 0 !important;
+}
+html[lang="ar"] :is(h1, h2, h3) {
+  line-height: 1.35 !important;
+}
+.brand-latin {
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
 /* ---- The crescent motif ----------------------------------------------------
  * Morocco's health symbol is the crescent, not the cross: pharmacies sign
  * with a green crescent, and the relief society is the Croissant-Rouge.
@@ -240,12 +263,12 @@
 
 .crescent-marker {
   position: relative;
-  padding-left: 1.6rem;
+  padding-inline-start: 1.6rem;
 }
 .crescent-marker::before {
   content: "";
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 0.5em;
   width: 0.8rem;
   height: 0.8rem;

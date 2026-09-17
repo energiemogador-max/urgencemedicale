@@ -95,7 +95,7 @@ export function Hero({
           alt={image.alt}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-x-0 top-0 -z-10 h-72 w-full object-cover object-[70%_14%] sm:h-80 lg:inset-y-0 lg:left-auto lg:h-full lg:w-1/2 lg:object-[50%_12%]"
+          className="absolute inset-x-0 top-0 -z-10 h-72 w-full object-cover object-[70%_14%] sm:h-80 lg:inset-y-0 lg:start-auto lg:h-full lg:w-1/2 lg:object-[50%_12%]"
         />
       </picture>
 
@@ -107,12 +107,12 @@ export function Hero({
       {/* Desktop: solid navy under the type, fading over the photo's left edge. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-primary from-50% via-primary/60 via-60% to-primary/0 to-75% lg:block"
+        className="absolute inset-0 -z-10 hidden from-primary from-50% via-primary/60 via-60% to-primary/0 to-75% lg:block ltr:bg-gradient-to-r rtl:bg-gradient-to-l"
       />
 
       <div className="relative mx-auto px-5 pb-10 pt-36 sm:px-8 sm:pt-48 lg:flex lg:min-h-[40rem] lg:max-w-5xl lg:items-center lg:px-4 lg:py-16">
         <div className="lg:max-w-[54%]">
-          {badge && <div className="mb-5 lg:absolute lg:bottom-14 lg:right-4 lg:z-10 lg:mb-0">{badge}</div>}
+          {badge && <div className="mb-5 lg:absolute lg:bottom-14 lg:end-4 lg:z-10 lg:mb-0">{badge}</div>}
 
           <h1 className="text-[clamp(2.1rem,5.6vw,3.5rem)] font-black uppercase leading-[1.02] tracking-tight text-white">
             {title}

@@ -5,6 +5,8 @@ import { CrescentMark } from "@/components/CrescentMark";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
 import { paths } from "@/lib/urls";
+import { localizedPath, type Locale } from "@/lib/i18n";
+import { dict } from "@/lib/dictionaries";
 
 /**
  * Navy footer, bookending the hero so the page closes deliberately.
@@ -38,28 +40,31 @@ import { paths } from "@/lib/urls";
  * what lets the deeper spoke pages accumulate links.
  */
 export function SiteFooter({
+  locale = "fr",
   legalName,
   address,
   phoneDisplay,
   phoneHref,
   whatsappNumber,
-  hoursOpen,
   cities,
   specialties,
   situations,
   services,
 }: {
+  locale?: Locale;
   legalName: string;
   address: { street: string; city: string; postalCode: string; region: string };
   phoneDisplay: string;
   phoneHref: string;
   whatsappNumber: string;
-  hoursOpen: string;
+  hoursOpen?: string;
   cities: City[];
   specialties: Specialty[];
   situations: Situation[];
   services: Service[];
 }) {
+  const t = dict(locale);
+  const L = (p: string) => localizedPath(p, locale);
   const linkClass = "text-on-primary-muted no-underline transition-colors hover:text-on-primary hover:underline";
   const headingClass = "text-sm font-bold uppercase tracking-[0.1em] text-primary-bright";
 
@@ -70,7 +75,7 @@ export function SiteFooter({
 
       {/* One large crescent instead of a repeating tile. Sits behind the
           content, clipped by the footer, hidden from assistive tech. */}
-      <CrescentMark className="pointer-events-none absolute -right-16 -top-10 h-72 w-72 text-white/[0.04] sm:-right-8 sm:h-96 sm:w-96" />
+      <CrescentMark className="pointer-events-none absolute -end-16 -top-10 h-72 w-72 text-white/[0.04] sm:-end-8 sm:h-96 sm:w-96" />
 
       <div className="relative mx-auto max-w-5xl px-4 py-14">
         {/* --- Brand + direct actions -------------------------------------- */}
@@ -78,12 +83,11 @@ export function SiteFooter({
           <div>
             <div className="flex items-center gap-3">
               <CrescentMark className="h-8 w-8 shrink-0 text-primary-bright" />
-              <span className="text-xl font-black uppercase tracking-tight text-on-primary">{legalName}</span>
+              <span className="brand-latin text-xl font-black uppercase tracking-tight text-on-primary" dir="ltr">
+                {legalName}
+              </span>
             </div>
-            <p className="mt-3 max-w-md text-on-primary-muted">
-              Un médecin à votre domicile, {hoursOpen}. Le tarif vous est annoncé avant que vous ne confirmiez la
-              visite.
-            </p>
+            <p className="mt-3 max-w-md text-on-primary-muted">{t.footer.tagline(t.hoursProse)}</p>
           </div>
 
           {/* The footer is the last chance to convert on a long page — on an
@@ -102,43 +106,48 @@ export function SiteFooter({
               </span>
               <span className="leading-tight">
                 <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white">
-                  Appelez maintenant
+                  {t.call.callNow}
                 </span>
-                <span className="block text-lg font-black tabular-nums text-white">{phoneDisplay}</span>
+                <span className="block text-lg font-black tabular-nums text-white" dir="ltr">
+                  {phoneDisplay}
+                </span>
               </span>
             </a>
-            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} tap="pied" className="justify-center rounded-xl" />
+            <WhatsAppButton
+              href={toWhatsAppHref(whatsappNumber)}
+              tap="pied"
+              locale={locale}
+              className="justify-center rounded-xl"
+            />
           </div>
         </div>
 
         {/* --- Link graph --------------------------------------------------- */}
         <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {/*
-            Spécialités and Services share a column rather than the footer
+            Specialties and services share a column rather than the footer
             going to five: five columns at max-w-5xl leaves each too narrow
-            for names like "Soins infirmiers à domicile", and the two lists
-            answer the same question — what the service actually does.
+            for names like "Soins infirmiers à domicile".
           */}
           <div className="space-y-8">
             <section>
-              <h2 className={headingClass}>Spécialités</h2>
+              <h2 className={headingClass}>{t.nav.specialties}</h2>
               <ul className="mt-4 space-y-2 text-sm">
                 {specialties.map((s) => (
                   <li key={s.slug}>
-                    <Link href={paths.specialtyHub(s.slug)} prefetch={false} className={linkClass}>
-                      {s.name} à domicile
+                    <Link href={L(paths.specialtyHub(s.slug))} prefetch={false} className={linkClass}>
+                      {t.specialtyAtHome(s.name)}
                     </Link>
                   </li>
                 ))}
               </ul>
             </section>
-
             <section>
-              <h2 className={headingClass}>Services</h2>
+              <h2 className={headingClass}>{t.nav.services}</h2>
               <ul className="mt-4 space-y-2 text-sm">
                 {services.map((s) => (
                   <li key={s.slug}>
-                    <Link href={paths.service(s.slug)} prefetch={false} className={linkClass}>
+                    <Link href={L(paths.service(s.slug))} prefetch={false} className={linkClass}>
                       {s.name}
                     </Link>
                   </li>
@@ -148,11 +157,11 @@ export function SiteFooter({
           </div>
 
           <section>
-            <h2 className={headingClass}>Villes</h2>
+            <h2 className={headingClass}>{t.nav.cities}</h2>
             <ul className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
               {cities.map((c) => (
                 <li key={c.slug}>
-                  <Link href={paths.cityHub(c.slug)} prefetch={false} className={linkClass}>
+                  <Link href={L(paths.cityHub(c.slug))} prefetch={false} className={linkClass}>
                     {c.name}
                   </Link>
                 </li>
@@ -161,11 +170,11 @@ export function SiteFooter({
           </section>
 
           <section>
-            <h2 className={headingClass}>Situations</h2>
+            <h2 className={headingClass}>{t.nav.situations}</h2>
             <ul className="mt-4 space-y-2 text-sm">
               {situations.map((s) => (
                 <li key={s.slug}>
-                  <Link href={paths.situation(s.slug)} prefetch={false} className={linkClass}>
+                  <Link href={L(paths.situation(s.slug))} prefetch={false} className={linkClass}>
                     {s.title}
                   </Link>
                 </li>
@@ -174,7 +183,7 @@ export function SiteFooter({
           </section>
 
           <section>
-            <h2 className={headingClass}>Le cabinet</h2>
+            <h2 className={headingClass}>{t.footer.office}</h2>
             <address className="mt-4 text-sm not-italic leading-relaxed text-on-primary-muted">
               {address.street}
               <br />
@@ -183,26 +192,18 @@ export function SiteFooter({
               {address.region}
             </address>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <Link href={paths.aPropos()} prefetch={false} className={linkClass}>
-                  À propos
-                </Link>
-              </li>
-              <li>
-                <Link href={paths.nosMedecins()} prefetch={false} className={linkClass}>
-                  Nos médecins
-                </Link>
-              </li>
-              <li>
-                <Link href={paths.tarifs()} prefetch={false} className={linkClass}>
-                  Tarifs
-                </Link>
-              </li>
-              <li>
-                <Link href={paths.contact()} prefetch={false} className={linkClass}>
-                  Contact
-                </Link>
-              </li>
+              {[
+                { href: paths.aPropos(), label: t.nav.about },
+                { href: paths.nosMedecins(), label: t.nav.doctors },
+                { href: paths.tarifs(), label: t.nav.prices },
+                { href: paths.contact(), label: t.nav.contact },
+              ].map((l) => (
+                <li key={l.href}>
+                  <Link href={L(l.href)} prefetch={false} className={linkClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </section>
         </div>
@@ -212,7 +213,7 @@ export function SiteFooter({
       <div className="relative border-t border-white/15 bg-primary-dark">
         <div className="mx-auto flex max-w-5xl flex-col gap-2 px-4 py-5 text-xs text-on-primary-faint sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-2xl">
-            Ce service ne remplace pas les services d&apos;urgence. En cas d&apos;urgence vitale, appelez immédiatement le{" "}
+            {t.footer.disclaimerStart}{" "}
             <a
               href={`tel:${EMERGENCY_NUMBERS.samu.number}`}
               data-tap="secours"
@@ -220,7 +221,7 @@ export function SiteFooter({
             >
               {EMERGENCY_NUMBERS.samu.number}
             </a>{" "}
-            ({EMERGENCY_NUMBERS.samu.label}) ou le{" "}
+            ({t.footer.samu}) {t.footer.or}{" "}
             <a
               href={`tel:${EMERGENCY_NUMBERS.protectionCivile.number}`}
               data-tap="secours"
@@ -228,13 +229,13 @@ export function SiteFooter({
             >
               {EMERGENCY_NUMBERS.protectionCivile.number}
             </a>{" "}
-            ({EMERGENCY_NUMBERS.protectionCivile.label}).{" "}
-            <Link href={paths.numerosUrgence()} prefetch={false} className="text-on-primary underline">
-              Tous les numéros d&apos;urgence
+            ({t.footer.civil}).{" "}
+            <Link href={L(paths.numerosUrgence())} prefetch={false} className="text-on-primary underline">
+              {t.footer.allNumbers}
             </Link>
           </p>
           <p className="shrink-0">
-            © {new Date().getFullYear()} {legalName}
+            © {new Date().getFullYear()} <span dir="ltr">{legalName}</span>
           </p>
         </div>
       </div>
