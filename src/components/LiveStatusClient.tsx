@@ -42,11 +42,20 @@ export function LiveStatusClient({ day, night, currency }: { day: string; night:
     };
   }, []);
 
+  /*
+   * The fallback and the live line share one box of fixed height below `lg`.
+   * On a phone this card sits in the flow above the headline, so a live line
+   * even one pixel taller than the fallback would push the H1 down after
+   * hydration: a layout shift on the page's most important block. From `lg`
+   * up the card floats over the photograph and may grow freely.
+   */
+  const line = "mt-1 flex h-7 items-center gap-x-2.5 whitespace-nowrap lg:mt-1.5 lg:block lg:h-auto";
+
   if (!now) {
     // Server-rendered and always true: nothing is asserted as "now" until the
     // visitor's clock has actually been read.
     return (
-      <p className="mt-1.5 text-sm text-ink-muted">
+      <p className={`${line} text-sm text-ink-muted`}>
         24h/24 · {day} à {night} {currency}
       </p>
     );
@@ -59,14 +68,15 @@ export function LiveStatusClient({ day, night, currency }: { day: string; night:
   const pad = (n: number) => String(n).padStart(2, "0");
 
   return (
-    <p className="mt-1.5">
-      <span className="block text-2xl font-black leading-none tabular-nums text-primary">
+    <p className={line}>
+      <span className="text-xl font-black leading-none tabular-nums text-primary lg:block lg:text-3xl">
         {pad(hours)}h{pad(now.getMinutes())}
       </span>
-      <span className="mt-1 block text-xs font-bold uppercase tracking-wide text-ink-muted">
-        {isNight ? "Tarif de nuit" : "Tarif de journée"}
+      <span className="text-xs font-bold uppercase tracking-wide text-ink-muted lg:mt-1.5 lg:block">
+        <span className="lg:hidden">{isNight ? "Tarif nuit" : "Tarif jour"}</span>
+        <span className="hidden lg:inline">{isNight ? "Tarif de nuit" : "Tarif de journée"}</span>
       </span>
-      <span className="mt-1.5 block text-lg font-black leading-none tabular-nums text-call-ink">
+      <span className="text-lg font-black leading-none tabular-nums text-call-ink lg:mt-1 lg:block lg:text-xl">
         {isNight ? night : day} {currency}
       </span>
     </p>

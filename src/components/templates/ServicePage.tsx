@@ -1,11 +1,13 @@
 import type { City, Service } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Breadcrumbs, CardLink, Section } from "@/components/ui";
 import { PageHero } from "@/components/PageHero";
+import { AmbulanceVisuals } from "@/components/AmbulanceVisuals";
 import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { serviceFaqs } from "@/lib/faqs";
@@ -38,19 +40,24 @@ export function ServicePage({
         lead={service.intro}
         phoneDisplay={content.business.phoneDisplay}
         phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
         facts={[
           { label: "Disponibilité", value: content.business.hoursOpen },
           { label: "Demande", value: "Par téléphone" },
           { label: "Tarif", value: "Annoncé avant l'intervention" },
         ]}
       />
-      <TrustBlock {...getTrustBlockProps()} />
+      <TrustBlock {...getTrustBlockProps()} responseTimeMinutes={undefined} />
+      {service.slug === "ambulance" && <AmbulanceVisuals />}
 
       <div className="mt-8">
         <Prose text={service.body} />
       </div>
 
-      <CallBanner />
+      <CallBanner
+        label="Une demande pour ce service ?"
+        text="La demande se fait par téléphone. Le tarif dépend de l'intervention et vous est annoncé avant qu'elle ne soit confirmée."
+      />
 
       {cities.length > 0 && (
         <Section title={`${service.name} par ville`}>

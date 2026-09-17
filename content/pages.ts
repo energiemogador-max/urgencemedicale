@@ -19,7 +19,7 @@ export const aboutPage: AboutPage = {
     "Urgence Médicale Casablanca envoie un médecin à votre domicile à Casablanca, Rabat, Mohammedia, Bouskoura et Dar Bouazza, 24h/24 et 7j/7.",
   body: `Urgence Médicale Casablanca est un service d'assistance médicale à domicile — ce qu'on appelle couramment un SOS médecin. Un médecin inscrit à l'Ordre National des Médecins se déplace là où se trouve le patient, à toute heure, y compris la nuit, le week-end et les jours fériés.
 
-Le principe est simple : pour un grand nombre de motifs, déplacer le malade est le vrai problème. Une fièvre qui monte chez un enfant, une douleur qui empêche de dormir, un malaise chez une personne âgée, une plaie à examiner — ce sont des situations où la consultation elle-même prend vingt minutes, mais où habiller quelqu'un, le faire descendre, traverser la ville et attendre dans une salle d'attente en prend trois heures. Le médecin qui vient chez vous supprime cette partie-là.
+Le principe est simple : pour un grand nombre de motifs, déplacer le malade est le vrai problème. Une fièvre qui monte chez un enfant, une douleur qui empêche de dormir, une personne âgée qui ne peut plus se déplacer, une plaie à examiner — ce sont des situations où la consultation elle-même prend vingt minutes, mais où habiller quelqu'un, le faire descendre, traverser la ville et attendre dans une salle d'attente en prend trois heures. Le médecin qui vient chez vous supprime cette partie-là.
 
 **Une équipe nommément identifiée**
 

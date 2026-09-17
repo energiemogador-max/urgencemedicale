@@ -1,11 +1,13 @@
 import type { City, Situation } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { PageHero } from "@/components/PageHero";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, LinkGrid, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, CardLink, LinkGrid, Section } from "@/components/ui";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { situationFaqs } from "@/lib/faqs";
 import { buildBreadcrumbList } from "@/lib/schema-org/breadcrumbs";
@@ -28,8 +30,18 @@ export function SituationPage({
         ])}
       />
       <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: situation.title }]} />
-      <h1 className="mt-2 text-3xl font-bold text-ink">{situation.title}</h1>
-      <Lead>{situation.intro}</Lead>
+      <PageHero
+        title={situation.title}
+        lead={situation.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
+        facts={[
+          { label: "Zone", value: `${content.cities.length} villes` },
+          { label: "Demande", value: "Par téléphone" },
+          { label: "Tarif", value: "Annoncé avant la visite" },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

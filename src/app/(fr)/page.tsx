@@ -12,7 +12,9 @@ import { FaqBlock } from "@/components/FaqBlock";
 import { Hero } from "@/components/Hero";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
-import { CardLink, FactPill, LinkGrid, Section } from "@/components/ui";
+import { CardLink, LinkGrid, Section } from "@/components/ui";
+import { PriceBoard } from "@/components/PriceBoard";
+import { AmbulanceVisuals } from "@/components/AmbulanceVisuals";
 import { paths } from "@/lib/urls";
 import { homeFaqs } from "@/lib/faqs";
 import { buildMedicalBusiness } from "@/lib/schema-org/business";
@@ -38,7 +40,7 @@ export default function HomePage() {
    */
 
   return (
-    <main className="mx-auto max-w-5xl px-4 py-10">
+    <main className="mx-auto max-w-5xl px-4 pb-10 pt-4 sm:pt-10">
       <JsonLd data={[buildMedicalBusiness(), buildBreadcrumbList([{ name: "Accueil", path: paths.home() }])]} />
 
       <Hero
@@ -77,21 +79,21 @@ export default function HomePage() {
             icon: "clock",
           },
           {
-            title: `${doctors.length} médecins`,
-            emphasis: "Nommés",
-            detail: "Numéro d'Ordre public",
+            title: "Médecins",
+            emphasis: `${doctors.length} nommés`,
+            detail: "N° d'Ordre publié",
             icon: "doctor",
           },
           {
-            title: "Consultation",
-            emphasis: `${spokenLanguages.length} langues`,
+            title: "Langues",
+            emphasis: `${spokenLanguages.length} parlées`,
             detail: spokenLanguages.join(" · "),
             icon: "home",
           },
           {
-            title: "Tarifs",
-            emphasis: "Publiés",
-            detail: `${pricing.tiers[0]?.amountMad} et ${pricing.tiers[1]?.amountMad} ${pricing.currency}`,
+            title: "Consultation",
+            emphasis: `dès ${pricing.tiers[0]?.amountMad} ${pricing.currency}`,
+            detail: `Jour ${pricing.tiers[0]?.amountMad} · nuit ${pricing.tiers[1]?.amountMad} ${pricing.currency}`,
             icon: "shield",
           },
         ]}
@@ -100,43 +102,63 @@ export default function HomePage() {
       </Hero>
 
       {/*
-        Service strip, matching the brand artwork. Every label links: the strip
-        is the first thing under the hero, so leaving it inert wasted four
-        prominent internal links from the site's strongest page.
+        Four shortcuts under the hero. Every label links: this is the first
+        thing under the hero, so leaving it inert wasted four prominent
+        internal links from the site's strongest page. Two by two on a phone,
+        where the old full-width navy bars stacked four deep.
+
+        The row of four fact tiles that used to follow is gone: it repeated
+        the hero's facts a third time, just below the hero and the trust strip.
       */}
-      <ul className="mt-4 grid gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-2 lg:grid-cols-4">
+      <ul className="mt-4 grid grid-cols-2 gap-2 lg:grid-cols-4">
         {[
-          { label: "Urgences médicales", href: paths.specialtyHub("urgentiste") },
-          { label: "Consultations à domicile", href: paths.specialtyHub("generaliste") },
-          { label: "Soins infirmiers", href: paths.service("soins-infirmiers-a-domicile") },
-          { label: "Suivi personnalisé", href: paths.service("suivi-medical-personnalise") },
-        ].map((s) => (
-          <li key={s.label} className="bg-primary">
+          { label: "Urgences médicales", href: paths.specialtyHub("urgentiste"), d: "M13 2 4 14h7l-1 8 9-12h-7l1-8Z" },
+          {
+            label: "Consultation à domicile",
+            href: paths.specialtyHub("generaliste"),
+            d: "M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5Z",
+          },
+          {
+            label: "Soins infirmiers",
+            href: paths.service("soins-infirmiers-a-domicile"),
+            d: "M12 21s-8-5.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 11-8 11Z",
+          },
+          {
+            label: "Suivi personnalisé",
+            href: paths.service("suivi-medical-personnalise"),
+            d: "M8 3v4M16 3v4M4 9h16M5 5h14a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm4 9 2 2 4-4",
+          },
+        ].map((q) => (
+          <li key={q.label}>
             <Link
-              href={s.href}
+              href={q.href}
               prefetch={false}
-              className="block px-4 py-3 text-center text-sm font-bold uppercase tracking-wide text-white no-underline hover:bg-primary-dark"
+              className="group flex h-full items-center gap-3 rounded-2xl border border-border bg-surface p-3 no-underline transition-colors hover:border-primary/40 hover:bg-primary-tint/50"
             >
-              {s.label}
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-white">
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
+                  <path d={q.d} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span className="text-sm font-bold leading-tight text-ink">{q.label}</span>
             </Link>
           </li>
         ))}
       </ul>
       <TrustBlock {...getTrustBlockProps()} />
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        <FactPill label="Disponibilité" value={`${business.hoursOpen}`} />
-        <FactPill label="Intervention" value={`${business.defaultResponseTimeMinutes} minutes`} />
-        <FactPill label="Consultation" value={`à partir de ${pricing.tiers[0]?.amountMad} ${pricing.currency}`} />
-        <FactPill label="Médecins" value="Inscrits à l'Ordre" />
-      </div>
-
       <Section
         title="Comment ça se passe"
         lead="Trois étapes, sans salle d'attente et sans mauvaise surprise sur le tarif."
         tone="panel"
       >
-        <ol className="grid gap-4 sm:grid-cols-3">
+        {/*
+          A real sequence, so it is drawn as one: a rail joins the three
+          steps, vertical on a phone and horizontal from `sm` up.
+        */}
+        <ol className="relative grid gap-3 sm:grid-cols-3 sm:gap-4">
+          <span aria-hidden="true" className="absolute bottom-8 left-[2.35rem] top-8 w-0.5 bg-primary/25 sm:hidden" />
+          <span aria-hidden="true" className="absolute left-[16%] right-[16%] top-[2.6rem] hidden h-0.5 bg-primary/25 sm:block" />
           {[
             {
               n: "1",
@@ -154,12 +176,14 @@ export default function HomePage() {
               d: "Examen complet sur place, puis traitement, ordonnance ou orientation selon ce qu'il constate.",
             },
           ].map((step) => (
-            <li key={step.n} className="rounded-lg border border-border bg-surface p-5">
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary text-lg font-bold text-white">
+            <li key={step.n} className="relative flex gap-4 rounded-2xl border border-border bg-surface p-4 sm:block sm:p-5">
+              <span className="relative inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-lg font-black tabular-nums text-white ring-4 ring-surface-2">
                 {step.n}
               </span>
-              <span className="mt-3 block font-bold text-ink">{step.t}</span>
-              <span className="mt-1.5 block text-sm text-ink-muted">{step.d}</span>
+              <span className="min-w-0">
+                <span className="block text-lg font-black text-ink sm:mt-3">{step.t}</span>
+                <span className="mt-1 block text-sm text-ink-muted">{step.d}</span>
+              </span>
             </li>
           ))}
         </ol>
@@ -176,19 +200,49 @@ export default function HomePage() {
         title="Les médecins qui se déplacent"
         lead="Chacun est nommé, avec son numéro d'inscription à l'Ordre National des Médecins — public, et vérifiable avant d'ouvrir votre porte."
       >
-        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {doctors.map((d) => (
-            <li key={d.slug} className="rounded-xl border border-border bg-surface p-4">
-              <span className="block font-bold text-ink">{d.name}</span>
-              <span className="mt-1 inline-block rounded-full bg-primary-tint px-2.5 py-0.5 text-xs font-semibold text-primary">
-                {specialties.find((s) => s.slug === d.specialtySlug)?.name}
-              </span>
-              {!isUnconfirmed(d.ordreNumber) && (
-                <span className="mt-2 block text-sm text-ink-muted">Ordre National des Médecins n° {d.ordreNumber}</span>
-              )}
-              <span className="mt-0.5 block text-sm text-ink-muted">{d.languages.join(" · ")}</span>
-            </li>
-          ))}
+        {/*
+          A sideways rail on phones (seven cards stacked one per row were
+          1,000px of scrolling), a grid from `sm` up. Initials, not photos:
+          there are no real portraits yet, and a stock face beside a real
+          doctor's name and Ordre number would be exactly the wrong thing.
+        */}
+        <ul className="rail -mx-4 flex gap-3 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
+          {doctors.map((d) => {
+            const initials = d.name
+              .replace(/^(Docteur|Dr\.?)\s+/i, "")
+              .split(/\s+/)
+              .slice(0, 2)
+              .map((w) => w[0])
+              .join("");
+            return (
+              <li
+                key={d.slug}
+                className="flex w-[78%] shrink-0 flex-col rounded-2xl border border-border bg-surface p-4 sm:w-auto"
+              >
+                <span className="flex items-center gap-3">
+                  <span
+                    aria-hidden="true"
+                    className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-primary text-base font-black tracking-wide text-white"
+                  >
+                    {initials}
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block font-black leading-tight text-ink">{d.name}</span>
+                    <span className="mt-1 inline-block rounded-full bg-primary-tint px-2.5 py-0.5 text-xs font-bold text-primary">
+                      {specialties.find((s) => s.slug === d.specialtySlug)?.name}
+                    </span>
+                  </span>
+                </span>
+                {!isUnconfirmed(d.ordreNumber) && (
+                  <span className="mt-4 flex items-baseline justify-between gap-2 border-t border-dashed border-border pt-3 text-sm">
+                    <span className="text-ink-muted">N° d&apos;Ordre National</span>
+                    <span className="font-black tabular-nums text-ink">{d.ordreNumber}</span>
+                  </span>
+                )}
+                <span className="mt-1.5 block text-sm text-ink-muted">{d.languages.join(" · ")}</span>
+              </li>
+            );
+          })}
         </ul>
         <p className="mt-4">
           <Link href={paths.nosMedecins()} prefetch={false}>
@@ -197,17 +251,13 @@ export default function HomePage() {
         </p>
       </Section>
 
-      <Section title="Spécialités disponibles" lead="Chaque spécialité se déplace au domicile du patient.">
-        <div className="grid gap-3 sm:grid-cols-2">
-          {specialties.map((s) => (
-            <CardLink
-              key={s.slug}
-              href={paths.specialtyHub(s.slug)}
-              title={`${s.name} à domicile`}
-              description={s.shortDescription}
-            />
-          ))}
-        </div>
+      <Section title="Tarifs" lead="Publiés à l'avance, contrairement à l'usage du secteur." tone="panel">
+        <PriceBoard pricing={pricing} phoneDisplay={business.phoneDisplay} phoneHref={business.phoneHref} tap="tarifs" />
+        <p className="mt-4 text-sm">
+          <Link href={paths.tarifs()} prefetch={false}>
+            Détail des tarifs
+          </Link>
+        </p>
       </Section>
 
       <Section title="Motifs de consultation fréquents">
@@ -223,10 +273,26 @@ export default function HomePage() {
         </div>
       </Section>
 
+      <Section title="Spécialités disponibles" lead="Chaque spécialité se déplace au domicile du patient.">
+        <div className="grid gap-3 sm:grid-cols-2">
+          {specialties.map((s) => (
+            <CardLink
+              key={s.slug}
+              href={paths.specialtyHub(s.slug)}
+              title={`${s.name} à domicile`}
+              description={s.shortDescription}
+            />
+          ))}
+        </div>
+      </Section>
+
       <Section
         title="Services à domicile"
         lead="Au-delà de la consultation : ce que nous assurons aussi chez vous."
       >
+        <div className="-mt-2 mb-5">
+          <AmbulanceVisuals variant="single" />
+        </div>
         <div className="grid gap-3 sm:grid-cols-2">
           {services.map((s) => (
             <CardLink
@@ -239,35 +305,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section title="Tarifs" lead="Publiés à l'avance, contrairement à l'usage du secteur." tone="panel">
-        <div className="overflow-x-auto rounded-lg border border-border bg-surface">
-          <table className="w-full table-fixed border-collapse text-left">
-            <thead className="border-b border-border">
-              <tr>
-                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Consultation</th>
-                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Horaire</th>
-                <th className="px-2 py-2.5 text-[0.8rem] font-bold uppercase tracking-wide text-ink-muted sm:px-4 sm:py-3 sm:text-sm">Prix</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pricing.tiers.map((t) => (
-                <tr key={t.slug} className="border-b border-border last:border-0">
-                  <td className="px-4 py-3">{t.label}</td>
-                  <td className="px-2 py-2.5 text-[0.85rem] text-ink-muted sm:px-4 sm:py-3 sm:text-base">{t.window}</td>
-                  <td className="px-2 py-2.5 text-[0.95rem] font-bold whitespace-nowrap tabular-nums text-primary sm:px-4 sm:py-3 sm:text-base">
-                    {t.amountMad} {pricing.currency}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        <p className="mt-3 text-sm text-ink-muted">
-          <Link href={paths.tarifs()} prefetch={false}>
-            Détail des tarifs
-          </Link>
-        </p>
-      </Section>
+      <CallBanner label="Un médecin chez vous, maintenant ?" />
 
       <Section title="Villes couvertes">
         <LinkGrid links={cities.map((c) => ({ href: paths.cityHub(c.slug), label: c.name }))} />

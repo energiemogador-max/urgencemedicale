@@ -1,12 +1,14 @@
 import Link from "next/link";
 import type { City, Doctor, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { PageHero } from "@/components/PageHero";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, CardLink, Section } from "@/components/ui";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { specialtyFaqs } from "@/lib/faqs";
 import { buildSpecialtyFragment } from "@/lib/schema-org/business";
@@ -37,8 +39,20 @@ export function SpecialtyHubPage({
         ]}
       />
       <Breadcrumbs trail={[{ href: paths.home(), label: "Accueil" }, { label: `${specialty.name} à domicile` }]} />
-      <h1 className="mt-2 text-3xl font-bold text-ink">{specialty.name} à domicile</h1>
-      <Lead>{specialty.intro}</Lead>
+      <PageHero
+        title={`${specialty.name} à domicile`}
+        lead={specialty.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
+        facts={[
+          ...(doctors.length > 0
+            ? [{ label: doctors.length > 1 ? "Médecins nommés" : "Médecin nommé", value: `${doctors.length} · n° d'Ordre publié` }]
+            : []),
+          { label: "Demande", value: "Par téléphone" },
+          { label: "Tarif", value: "Annoncé avant la visite" },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

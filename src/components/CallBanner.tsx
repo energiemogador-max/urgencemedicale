@@ -1,6 +1,7 @@
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { toWhatsAppHref } from "@/lib/phone";
 import { content } from "@/lib/content";
+import { EcgTrace, LiveryBand } from "@/components/Livery";
 
 /**
  * Mid-page call-to-action.
@@ -18,19 +19,20 @@ import { content } from "@/lib/content";
  * and it is the same tel: href the header uses so a tap is a tap regardless
  * of where it happens.
  */
-export function CallBanner({ label }: { label?: string }) {
+export function CallBanner({ label, text }: { label?: string; text?: string }) {
   const { business } = content;
 
   return (
-    <aside className="mt-10 rounded-2xl border border-border bg-primary p-5 sm:p-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <p className="text-lg font-black uppercase tracking-tight text-on-primary">
+    <aside className="relative isolate mt-12 overflow-hidden rounded-3xl bg-primary px-5 pb-8 pt-6 sm:px-8 sm:pt-8">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
+          <EcgTrace className="h-5 w-32 text-call-bright" />
+          <p className="mt-3 text-[clamp(1.35rem,1.1rem+1vw,1.75rem)] font-black uppercase leading-tight tracking-tight text-on-primary">
             {label ?? "Besoin d'un médecin maintenant ?"}
           </p>
-          <p className="mt-1 text-sm text-on-primary-muted">
-            Un médecin se déplace chez vous, {business.hoursOpen}. Le tarif vous est annoncé avant que vous ne
-            confirmiez.
+          <p className="mt-1.5 max-w-[48ch] text-sm text-on-primary-muted">
+            {text ??
+              `Un médecin se déplace chez vous, ${business.hoursOpen}. Le tarif vous est annoncé avant que vous ne confirmiez.`}
           </p>
         </div>
 
@@ -38,21 +40,24 @@ export function CallBanner({ label }: { label?: string }) {
           <a
             href={`tel:${business.phoneHref}`}
             data-tap="banniere"
-            className="flex items-center justify-center gap-3 rounded-xl bg-call px-5 py-3 no-underline transition-colors hover:bg-call-dark"
+            className="flex items-center justify-center gap-3 rounded-2xl bg-call px-5 py-3 no-underline shadow-[0_14px_30px_-10px_rgba(226,1,2,0.6)] transition-colors hover:bg-call-dark"
           >
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4 text-call">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5 text-call">
                 <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1L6.6 10.8z" />
               </svg>
             </span>
             <span className="leading-tight">
-              <span className="block text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white">Appelez</span>
-              <span className="block text-lg font-black tabular-nums text-white">{business.phoneDisplay}</span>
+              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">Appelez</span>
+              <span className="block text-xl font-black tabular-nums text-white" dir="ltr">
+                {business.phoneDisplay}
+              </span>
             </span>
           </a>
-          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="banniere" className="justify-center rounded-xl" />
+          <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="banniere" className="justify-center rounded-2xl" />
         </div>
       </div>
+      <LiveryBand className="absolute inset-x-0 bottom-0 h-2" />
     </aside>
   );
 }

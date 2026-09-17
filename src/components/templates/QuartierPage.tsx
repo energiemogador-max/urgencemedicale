@@ -1,10 +1,12 @@
 import type { City, Quartier } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { PageHero } from "@/components/PageHero";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, Lead, LinkGrid, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, LinkGrid, Section } from "@/components/ui";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { isUnconfirmed } from "@content/schema";
 import { paths } from "@/lib/urls";
 import { quartierFaqs } from "@/lib/faqs";
@@ -43,10 +45,19 @@ export function QuartierPage({
           { label: quartier.name },
         ]}
       />
-      <h1 className="mt-2 text-3xl font-bold text-ink">
-        Médecin à domicile à {quartier.name}, {city.name}
-      </h1>
-      <Lead>{quartier.intro}</Lead>
+      <PageHero
+        title={`Médecin à domicile à ${quartier.name},`}
+        accent={city.name}
+        lead={quartier.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
+        facts={[
+          { label: "Intervention", value: `${quartier.responseTimeMinutes} min` },
+          { label: "Consultation", value: `dès ${content.pricing.tiers[0]?.amountMad} ${content.pricing.currency}` },
+          { label: "Disponibilité", value: content.business.hoursOpen },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps(quartier.responseTimeMinutes)} />
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">

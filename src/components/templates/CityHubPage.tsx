@@ -1,5 +1,6 @@
 import type { City, Quartier, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
@@ -61,6 +62,7 @@ export function CityHubPage({
         lead={city.intro}
         phoneDisplay={content.business.phoneDisplay}
         phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
         facts={[
           { label: "Intervention", value: `${content.business.defaultResponseTimeMinutes} min` },
           { label: "Consultation", value: `dès ${content.pricing.tiers[0]?.amountMad} ${content.pricing.currency}` },

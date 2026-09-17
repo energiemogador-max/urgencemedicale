@@ -176,7 +176,7 @@ Devant un signe grave, appelez les secours sans attendre.`,
       "À Oujda, un médecin de garde se déplace à votre domicile la nuit, le week-end et les jours fériés.",
     body: `Oujda est la grande ville de l'Oriental, et sa situation géographique compte : elle est loin des autres grands centres du pays. Ce qui se règle ailleurs en changeant d'établissement se règle ici sur place — ce qui charge les structures locales, en particulier la nuit et les jours fériés.
 
-Une consultation de garde à domicile décharge une partie de ces passages. Pour une fièvre, une douleur qui empêche de dormir, un malaise chez une personne âgée, l'examen se fait chez le patient plutôt que dans une salle d'attente.
+Une consultation de garde à domicile décharge une partie de ces passages. Pour une fièvre, une douleur qui empêche de dormir, une personne âgée qui ne peut plus se déplacer, l'examen se fait chez le patient plutôt que dans une salle d'attente.
 
 Le médecin examine et décide : traitement remis sur place, ordonnance, ou orientation vers un service hospitalier si l'état le justifie. Voir la personne chez elle donne aussi au médecin des éléments — autonomie réelle, présence d'un aidant — qu'une consultation en cabinet ne montre pas.
 

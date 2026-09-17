@@ -25,7 +25,7 @@ Les urgences d'un hôpital ou d'une clinique fonctionnent en continu, nuit compr
 
 La pharmacie de garde règle un autre problème : obtenir un médicament en dehors des heures d'ouverture. Les tours de garde sont affichés en pharmacie et diffusés localement. Utile lorsque vous savez déjà ce qu'il faut, cela ne remplace pas un examen : un pharmacien ne peut ni examiner le malade, ni établir une ordonnance, ni rédiger un certificat.
 
-Un médecin de garde qui se déplace répond au cas où le déplacement est lui-même le problème. Une fièvre qui monte chez un enfant, une douleur qui empêche de dormir, un malaise chez une personne âgée, un vomissement répété : la consultation dure vingt minutes, mais habiller le malade, le faire descendre, traverser la ville et attendre en prend trois heures. C'est ce trajet-là que la visite supprime.
+Un médecin de garde qui se déplace répond au cas où le déplacement est lui-même le problème. Une fièvre qui monte chez un enfant, une douleur qui empêche de dormir, une personne âgée qui ne peut plus se déplacer, un vomissement répété : la consultation dure vingt minutes, mais habiller le malade, le faire descendre, traverser la ville et attendre en prend trois heures. C'est ce trajet-là que la visite supprime.
 
 **Généraliste de garde ou urgentiste : quelle différence ?**
 

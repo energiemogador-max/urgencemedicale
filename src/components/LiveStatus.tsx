@@ -42,14 +42,21 @@ export function LiveStatus() {
   const day = pricing.tiers.find((t) => t.slug === "jour-weekend");
   const night = pricing.tiers.find((t) => t.slug === "nuit-ferie");
 
+  /*
+   * Positioning belongs to the parent (Hero), not to this card. It used to be
+   * absolutely positioned at top-right on every screen size, which on a phone
+   * put it squarely over the headline: "L'URGEN… MÉDICAL… À DOMIC…". On
+   * phones it now sits in the flow above the headline; the hero floats it over
+   * the photograph from `lg` up.
+   */
   return (
-    <div className="absolute right-4 top-4 z-10 max-w-[13.5rem] rounded-2xl bg-white/95 px-4 py-3 shadow-2xl ring-1 ring-white/50 backdrop-blur lg:bottom-8 lg:right-8 lg:top-auto">
+    <div className="inline-block rounded-2xl bg-white px-4 py-2.5 shadow-2xl ring-1 ring-white/50 lg:px-5 lg:py-4">
       <p className="flex items-center gap-2">
         <span className="relative flex h-2.5 w-2.5 shrink-0">
           <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-whatsapp opacity-75 motion-reduce:animate-none" />
           <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-whatsapp" />
         </span>
-        <span className="text-[0.65rem] font-black uppercase tracking-[0.14em] text-ink">Service ouvert</span>
+        <span className="text-[0.7rem] font-black uppercase tracking-[0.14em] text-ink">Service ouvert</span>
       </p>
 
       <LiveStatusClient day={day?.amountMad ?? ""} night={night?.amountMad ?? ""} currency={pricing.currency} />

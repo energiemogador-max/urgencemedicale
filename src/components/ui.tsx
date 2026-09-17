@@ -23,27 +23,30 @@ export function Section({
 }) {
   const heading = (
     <>
-      <h2 className="flex items-center gap-2.5 text-xl font-bold text-ink">
-        <CrescentMark className="h-4 w-4 shrink-0 text-primary" />
+      <h2 className="flex items-start gap-3 text-[clamp(1.5rem,1.2rem+1.2vw,2rem)] font-black leading-tight tracking-tight text-ink">
+        <CrescentMark className="mt-[0.3em] h-[0.7em] w-[0.7em] shrink-0 text-primary" />
         {title}
       </h2>
-      {lead && <p className="mt-1.5 max-w-[68ch] text-ink-muted">{lead}</p>}
-      <div className="mt-5">{children}</div>
+      {lead && <p className="mt-2 max-w-[62ch] text-ink-muted">{lead}</p>}
+      <div className="mt-6">{children}</div>
     </>
   );
 
   if (tone === "panel") {
     return (
-      <section className="mt-14 rounded-2xl border border-border bg-surface-2 px-5 py-8 sm:px-8">{heading}</section>
+      <section className="mt-16 rounded-3xl border border-border bg-surface-2 px-5 py-9 sm:px-8 sm:py-10">{heading}</section>
     );
   }
 
-  return <section className="mt-14">{heading}</section>;
+  return <section className="mt-16">{heading}</section>;
 }
 
 /**
- * Card link with a green rule down its left edge that thickens on hover —
- * keeps the accent present without repeating the crescent on every card.
+ * Link card. On phones it is a single compact row, title and arrow: the
+ * homepage stacked 19 of these one per row with their descriptions, and the
+ * page ran past 15,000px — the titles ("Certificat médical à domicile") say
+ * what the page is on their own. From `sm` up there is room, so the
+ * description returns.
  */
 export function CardLink({
   href,
@@ -58,10 +61,19 @@ export function CardLink({
     <Link
       href={href}
       prefetch={false}
-      className="group block rounded-lg border border-border border-l-4 border-l-primary/25 bg-surface p-4 no-underline transition-colors hover:border-l-primary hover:bg-primary-tint/40"
+      className="group flex items-center gap-3 rounded-xl border border-border bg-surface px-4 py-3 no-underline transition-colors hover:border-primary/40 hover:bg-primary-tint/50 sm:items-start sm:p-4"
     >
-      <span className="block font-bold text-ink">{title}</span>
-      {description && <span className="mt-1 block text-sm text-ink-muted">{description}</span>}
+      <span className="min-w-0 flex-1">
+        <span className="block font-bold leading-snug text-ink">{title}</span>
+        {description && <span className="mt-1 hidden text-sm text-ink-muted sm:block">{description}</span>}
+      </span>
+      <svg
+        viewBox="0 0 24 24"
+        aria-hidden="true"
+        className="h-5 w-5 shrink-0 text-primary/40 transition-transform group-hover:translate-x-0.5 group-hover:text-primary sm:mt-0.5"
+      >
+        <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
     </Link>
   );
 }
@@ -69,10 +81,14 @@ export function CardLink({
 /** Compact grid of plain text links — used for long lists (cities, quartiers). */
 export function LinkGrid({ links }: { links: { href: string; label: string }[] }) {
   return (
-    <ul className="grid grid-cols-2 gap-x-4 gap-y-2 sm:grid-cols-3">
+    <ul className="grid grid-cols-2 gap-x-3 gap-y-0.5 sm:grid-cols-3">
       {links.map((l) => (
         <li key={l.href}>
-          <Link href={l.href} prefetch={false} className="no-underline hover:underline">
+          <Link
+            href={l.href}
+            prefetch={false}
+            className="-mx-2 block rounded-lg px-2 py-1.5 font-semibold no-underline hover:bg-primary-tint"
+          >
             {l.label}
           </Link>
         </li>

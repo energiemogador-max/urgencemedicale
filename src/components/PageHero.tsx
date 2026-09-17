@@ -1,4 +1,6 @@
 import { CrescentMark } from "@/components/CrescentMark";
+import { EcgTrace, LiveryBand } from "@/components/Livery";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 export interface HeroFact {
   label: string;
@@ -33,6 +35,7 @@ export function PageHero({
   lead,
   phoneDisplay,
   phoneHref,
+  whatsappHref,
   facts,
 }: {
   title: string;
@@ -41,13 +44,15 @@ export function PageHero({
   lead: string;
   phoneDisplay: string;
   phoneHref: string;
+  /** Optional second action. Most people call; some can only type. */
+  whatsappHref?: string;
   facts: HeroFact[];
 }) {
   return (
     // No .rise fade: this band is the LCP section of every page that uses it.
-    <section className="relative isolate mt-3 overflow-hidden rounded-2xl bg-primary px-5 py-8 sm:px-8 sm:py-10">
+    <section className="relative isolate mt-3 overflow-hidden rounded-3xl bg-primary px-5 pb-10 pt-8 sm:px-8 sm:pb-12 sm:pt-10">
       <CrescentMark className="pointer-events-none absolute -right-12 -top-12 -z-10 h-56 w-56 text-white/[0.06] sm:h-80 sm:w-80" />
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1 bg-call" />
+      <LiveryBand className="absolute inset-x-0 bottom-0 h-2" />
 
       <h1 className="max-w-[24ch] text-[clamp(1.7rem,4.4vw,2.6rem)] font-black leading-[1.08] tracking-tight text-white">
         {title}
@@ -59,13 +64,15 @@ export function PageHero({
         )}
       </h1>
 
+      <EcgTrace className="mt-4 h-5 w-36 text-call-bright" />
+
       <p className="mt-4 max-w-[62ch] text-on-primary-muted">{lead}</p>
 
-      <div className="mt-6 flex flex-wrap items-center gap-3">
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
         <a
           href={`tel:${phoneHref}`}
           data-tap="hero"
-          className="flex min-w-0 items-center gap-3 rounded-2xl bg-call px-4 py-3 no-underline shadow-xl transition-transform hover:-translate-y-0.5 sm:px-5"
+          className="flex min-w-0 items-center gap-3 rounded-2xl bg-call px-4 py-3 no-underline shadow-[0_18px_40px_-12px_rgba(226,1,2,0.55)] transition-transform hover:-translate-y-0.5 sm:px-5"
         >
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white">
             <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5 text-call">
@@ -79,13 +86,14 @@ export function PageHero({
             </span>
           </span>
         </a>
+        {whatsappHref && <WhatsAppButton href={whatsappHref} tap="hero" className="w-full justify-center sm:w-auto" />}
       </div>
 
       {facts.length > 0 && (
         <dl className="mt-7 grid gap-2 sm:grid-cols-3">
           {facts.map((f) => (
-            <div key={f.label} className="rounded-xl bg-white/[0.07] px-4 py-3 ring-1 ring-white/15">
-              <dt className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-on-primary-muted">{f.label}</dt>
+            <div key={f.label} className="rounded-2xl bg-primary-dark px-4 py-3 ring-1 ring-white/15">
+              <dt className="text-xs font-bold uppercase tracking-[0.06em] text-on-primary-muted">{f.label}</dt>
               <dd className="mt-0.5 font-black text-white">{f.value}</dd>
             </div>
           ))}

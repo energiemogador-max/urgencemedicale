@@ -8,9 +8,10 @@ import { LocaleSwitcher } from "@/components/LocaleSwitcher";
 /**
  * Header carrying the brand mark, the call action, and the navigation.
  *
- * The call block is styled to match the hero's action block — navy plate,
+ * The call block is styled to match the hero's action block — red plate,
  * white disc, red glyph — so the primary action looks identical wherever it
- * appears, rather than the header having its own dialect.
+ * appears, rather than the header having its own dialect. Red is the one
+ * colour the site reserves for calling.
  *
  * Dropdowns are <details>/<summary>, not JavaScript. The site is a static
  * export that must work with JS disabled, and <details> gives real keyboard
@@ -89,10 +90,15 @@ export function SiteHeader({
           </Link>
 
           <div className="ml-auto flex items-stretch gap-2">
+            {/* The language switcher lives here from `lg` up so the navigation
+                below fits on one line; it used to wrap onto a second row. */}
+            <div className="hidden items-center pe-2 lg:flex">
+              <LocaleSwitcher current="fr" frenchPath="/" />
+            </div>
             <a
               href={`tel:${phoneHref}`}
               data-tap="entete"
-              className="flex items-center gap-2.5 rounded-xl bg-primary px-3 py-1.5 no-underline hover:bg-primary-dark sm:px-4"
+              className="flex items-center gap-2.5 rounded-xl bg-call px-3 py-1.5 no-underline hover:bg-call-dark sm:px-4"
             >
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white">
                 <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4 text-call">
@@ -100,22 +106,85 @@ export function SiteHeader({
                 </svg>
               </span>
               <span className="leading-tight">
-                <span className="hidden text-[0.65rem] font-bold uppercase tracking-[0.12em] text-on-primary-muted sm:block">
+                <span className="hidden text-[0.65rem] font-bold uppercase tracking-[0.12em] text-white sm:block">
                   Appelez-nous
                 </span>
                 <span className="block text-lg font-black tabular-nums text-white sm:text-xl" dir="ltr">{phoneDisplay}</span>
               </span>
             </a>
-            <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} showLabel={false} tap="entete" className="shrink-0 rounded-xl" />
+            {/* Phones already have WhatsApp in the fixed bottom bar; the room
+                goes to the menu button instead. */}
+            <div className="hidden shrink-0 md:flex">
+              <WhatsAppButton href={toWhatsAppHref(whatsappNumber)} showLabel={false} tap="entete" className="rounded-xl" />
+            </div>
+            <nav aria-label="Navigation principale" className="flex md:hidden">
+            <details className="group/menu">
+              <summary
+                aria-label="Menu"
+                className="flex h-12 w-12 cursor-pointer list-none items-center justify-center rounded-xl border border-border text-primary marker:content-none group-open/menu:bg-primary group-open/menu:text-white"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-6 w-6 group-open/menu:hidden">
+                  <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                </svg>
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="hidden h-6 w-6 group-open/menu:block">
+                  <path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
+                </svg>
+              </summary>
+
+              <div className="absolute inset-x-0 top-full max-h-[calc(100dvh-4.5rem)] overflow-y-auto border-b border-border bg-surface px-2 pb-4 pt-2 shadow-2xl">
+                <Link href={paths.home()} prefetch={false} className={mobileItemClass}>
+                  Accueil
+                </Link>
+
+                {[
+                  {
+                    label: "Spécialités",
+                    links: specialties.map((x) => ({ href: paths.specialtyHub(x.slug), label: `${x.name} à domicile` })),
+                  },
+                  { label: "Services", links: services.map((x) => ({ href: paths.service(x.slug), label: x.name })) },
+                  { label: "Situations", links: situations.map((x) => ({ href: paths.situation(x.slug), label: x.title })) },
+                  { label: "Villes", links: cities.map((x) => ({ href: paths.cityHub(x.slug), label: x.name })) },
+                ].map((group) => (
+                  <details key={group.label} name="mobilenav" className="group/sub">
+                    <summary
+                      className={`${mobileItemClass} flex cursor-pointer list-none items-center justify-between marker:content-none`}
+                    >
+                      {group.label}
+                      <span className="transition-transform group-open/sub:rotate-180">{chevron}</span>
+                    </summary>
+                    <div className="mb-1 ml-3 grid gap-0.5 border-l border-border pl-3">
+                      {group.links.map((l) => (
+                        <Link key={l.href} href={l.href} prefetch={false} className={mobileSubItemClass}>
+                          {l.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </details>
+                ))}
+
+                <Link href={paths.tarifs()} prefetch={false} className={mobileItemClass}>
+                  Tarifs
+                </Link>
+                <Link href={paths.nosMedecins()} prefetch={false} className={mobileItemClass}>
+                  Nos médecins
+                </Link>
+                <Link href={paths.contact()} prefetch={false} className={mobileItemClass}>
+                  Contact
+                </Link>
+              </div>
+            </details>
+            </nav>
           </div>
         </div>
       </div>
 
       {/*
         Two navigations, one source of links.
-        - Mobile (< md): a single "Menu" disclosure. Eight top-level items
-          wrapping across three lines was unreadable on a phone.
-        - Desktop (>= md): the horizontal bar with dropdown panels.
+        - Mobile (< md): a "Menu" disclosure inside the STICKY bar above, so
+          it stays reachable while scrolling and costs no row of its own.
+          Eight top-level items wrapping across three lines was unreadable on
+          a phone.
+        - Desktop (>= md): this horizontal bar with dropdown panels.
 
         Both are <details>, so navigation works with JavaScript disabled —
         this is a static export and an emergency service, so the menu must
@@ -126,64 +195,9 @@ export function SiteHeader({
         whose `overflow-y` is `visible` computes overflow-y to `auto` too,
         which silently clipped every dropdown to the height of the nav strip.
       */}
-      <nav aria-label="Navigation principale" className="border-b border-border bg-surface">
-        {/* ---- mobile ---- */}
-        <details className="group/menu md:hidden">
-          <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-2.5 font-bold text-primary marker:content-none">
-            <span className="flex items-center gap-2">
-              <svg viewBox="0 0 24 24" aria-hidden="true" className="h-5 w-5">
-                <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" />
-              </svg>
-              Menu
-            </span>
-            <span className="transition-transform group-open/menu:rotate-180">{chevron}</span>
-          </summary>
-
-          <div className="border-t border-border px-2 pb-3 pt-2">
-            <Link href={paths.home()} prefetch={false} className={mobileItemClass}>
-              Accueil
-            </Link>
-
-            {[
-              {
-                label: "Spécialités",
-                links: specialties.map((x) => ({ href: paths.specialtyHub(x.slug), label: `${x.name} à domicile` })),
-              },
-              { label: "Services", links: services.map((x) => ({ href: paths.service(x.slug), label: x.name })) },
-              { label: "Situations", links: situations.map((x) => ({ href: paths.situation(x.slug), label: x.title })) },
-              { label: "Villes", links: cities.map((x) => ({ href: paths.cityHub(x.slug), label: x.name })) },
-            ].map((group) => (
-              <details key={group.label} name="mobilenav" className="group/sub">
-                <summary
-                  className={`${mobileItemClass} flex cursor-pointer list-none items-center justify-between marker:content-none`}
-                >
-                  {group.label}
-                  <span className="transition-transform group-open/sub:rotate-180">{chevron}</span>
-                </summary>
-                <div className="mb-1 ml-3 grid gap-0.5 border-l border-border pl-3">
-                  {group.links.map((l) => (
-                    <Link key={l.href} href={l.href} prefetch={false} className={mobileSubItemClass}>
-                      {l.label}
-                    </Link>
-                  ))}
-                </div>
-              </details>
-            ))}
-
-            <Link href={paths.tarifs()} prefetch={false} className={mobileItemClass}>
-              Tarifs
-            </Link>
-            <Link href={paths.nosMedecins()} prefetch={false} className={mobileItemClass}>
-              Nos médecins
-            </Link>
-            <Link href={paths.contact()} prefetch={false} className={mobileItemClass}>
-              Contact
-            </Link>
-          </div>
-        </details>
-
+      <nav aria-label="Navigation principale" className="hidden border-b border-border bg-surface md:block">
         {/* ---- desktop ---- */}
-        <div className="mx-auto hidden max-w-5xl px-3 md:block">
+        <div className="mx-auto max-w-5xl px-3">
           <ul className="flex flex-wrap items-center gap-x-0.5 gap-y-1 py-1.5 text-sm">
             <li>
               <Link href={paths.home()} prefetch={false} className={linkClass}>
@@ -274,7 +288,7 @@ export function SiteHeader({
             {/* Renders only on pages that genuinely have translations — the
                 registry in lib/i18n.ts is the single source of truth, shared
                 with hreflang and the sitemap. */}
-            <li className="ms-auto">
+            <li className="ms-auto lg:hidden">
               <LocaleSwitcher current="fr" frenchPath="/" />
             </li>
           </ul>

@@ -272,6 +272,70 @@
   margin-bottom: 0;
 }
 
+/* ---- Livery band -------------------------------------------------------------
+ * The red-and-white chevrons are taken from the operator's own ambulance
+ * livery, the same pattern that is printed on the vehicle in their logo. It
+ * closes the hero, the page bands and the call banner, so every navy block
+ * ends the same way the vehicle does.
+ *
+ * Pure CSS: a repeating gradient costs no request and no layout. It is
+ * decorative, so every element using it is aria-hidden.
+ */
+.livery {
+  background-image: repeating-linear-gradient(
+    -55deg,
+    var(--color-call) 0 14px,
+    var(--color-surface) 14px 28px
+  );
+}
+
+/* ---- ECG trace ---------------------------------------------------------------
+ * The trace from the logo, drawn once when the page opens. It replaces the
+ * short red rule under the hero lead, a line that said nothing.
+ *
+ * Only `stroke-dashoffset` animates, which runs on the compositor and moves
+ * no layout. The element is 24px tall and never the LCP candidate. With
+ * reduced motion it is simply drawn.
+ */
+@keyframes ecg-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.ecg-trace path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+  animation: ecg-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) 0.2s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ecg-trace path {
+    animation: none;
+  }
+}
+
+/* ---- Horizontal rail ---------------------------------------------------------
+ * A row that scrolls sideways on phones (the doctors), and becomes a normal
+ * grid from `sm` up. Snap points keep a card whole under the thumb; the
+ * scrollbar is hidden because the half-visible next card already says
+ * "there is more".
+ */
+.rail {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail > * {
+  scroll-snap-align: start;
+}
+
 /* ---- Motion ----------------------------------------------------------------
  * One restrained entrance on the hero only. An emergency service should feel
  * immediate, so nothing else on the page animates, and everything is static

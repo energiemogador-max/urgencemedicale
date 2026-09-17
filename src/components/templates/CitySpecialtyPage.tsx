@@ -1,11 +1,13 @@
 import type { City, CitySpecialty, Quartier, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
+import { PageHero } from "@/components/PageHero";
+import { toWhatsAppHref } from "@/lib/phone";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
-import { Breadcrumbs, CardLink, Lead, LinkGrid, Section } from "@/components/ui";
-import { getTrustBlockProps } from "@/lib/content";
+import { Breadcrumbs, CardLink, LinkGrid, Section } from "@/components/ui";
+import { content, getTrustBlockProps } from "@/lib/content";
 import { paths } from "@/lib/urls";
 import { specialtyFaqs } from "@/lib/faqs";
 import { buildSpecialtyFragment } from "@/lib/schema-org/business";
@@ -43,10 +45,19 @@ export function CitySpecialtyPage({
           { label: city.name },
         ]}
       />
-      <h1 className="mt-2 text-3xl font-bold text-ink">
-        {specialty.name} à domicile à {city.name}
-      </h1>
-      <Lead>{citySpecialty.intro}</Lead>
+      <PageHero
+        title={`${specialty.name} à domicile à`}
+        accent={city.name}
+        lead={citySpecialty.intro}
+        phoneDisplay={content.business.phoneDisplay}
+        phoneHref={content.business.phoneHref}
+        whatsappHref={toWhatsAppHref(content.business.whatsappNumber)}
+        facts={[
+          { label: "Zone", value: city.name },
+          { label: "Demande", value: "Par téléphone" },
+          { label: "Tarif", value: "Annoncé avant la visite" },
+        ]}
+      />
       <TrustBlock {...getTrustBlockProps()} />
 
       <div className="mt-8">

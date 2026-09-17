@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { EcgTrace, LiveryBand } from "@/components/Livery";
 
 export interface HeroFeature {
   title: string;
@@ -89,13 +90,18 @@ export function Hero({
       No entrance animation here. The shared .rise fade starts at opacity 0,
       and this section holds the page's LCP element (the photo): fading the
       largest element in from invisible is a known way to push LCP back.
+
+      PHONES: the photograph is a portrait band across the top, and the type
+      starts where the band has faded to solid navy. It used to cover the
+      whole hero behind the text, with the live card floated over the
+      headline — which hid half of the H1.
+      DESKTOP: the cinematic layout the operator chose, photo anchored right.
     */
-    <section className="relative isolate overflow-hidden rounded-2xl bg-primary">
+    <section className="relative isolate overflow-hidden rounded-3xl bg-primary">
       <picture>
         {image.avifSrcSet && (
           <source type="image/avif" srcSet={image.avifSrcSet} sizes="(min-width: 1024px) 60vw, 100vw" />
         )}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image.src}
           srcSet={image.srcSet}
@@ -105,45 +111,52 @@ export function Hero({
           alt={image.alt}
           fetchPriority="high"
           decoding="async"
-          className="absolute inset-0 -z-10 h-full w-full object-cover object-[72%_top] lg:object-[80%_20%]"
+          className="absolute inset-x-0 top-0 -z-10 h-72 w-full object-cover object-[70%_14%] sm:h-80 lg:inset-y-0 lg:h-full lg:object-[80%_20%]"
         />
       </picture>
 
       {/*
-        Two scrims. The first guarantees the type's ground; the second darkens
-        the whole frame slightly so the photograph reads as background rather
-        than competing with the headline.
+        Scrims. Each guarantees the ground under the type instead of leaving
+        contrast to the photograph: the type only ever starts where the scrim
+        is solid navy (15:1 for white).
       */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-primary from-62% via-primary/92 to-primary/45 lg:bg-gradient-to-r lg:from-55% lg:via-primary/80 lg:to-primary/15"
+        className="absolute inset-x-0 top-0 -z-10 h-72 bg-gradient-to-b from-primary/25 via-primary/60 to-primary sm:h-80 lg:hidden"
       />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-primary/20" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 hidden bg-gradient-to-r from-primary from-55% via-primary/80 to-primary/15 lg:block"
+      />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 hidden bg-primary/20 lg:block" />
 
-      <div className="relative flex min-h-[34rem] flex-col justify-end px-5 py-8 sm:px-8 sm:py-10 lg:min-h-[38rem] lg:max-w-[62%] lg:justify-center lg:py-14">
-        <h1 className="text-[clamp(2rem,5.4vw,3.4rem)] font-black uppercase leading-[1.03] tracking-tight text-white">
+      <div className="relative px-5 pb-10 pt-36 sm:px-8 sm:pt-48 lg:static lg:flex lg:min-h-[40rem] lg:max-w-[60%] lg:flex-col lg:justify-center lg:py-16">
+        {badge && <div className="mb-5 lg:absolute lg:bottom-14 lg:right-8 lg:z-10 lg:mb-0">{badge}</div>}
+
+        <h1 className="text-[clamp(2.1rem,5.6vw,3.5rem)] font-black uppercase leading-[1.02] tracking-tight text-white">
           {title}
           <br />
           <span className="text-call-bright">{titleAccent}</span> {titleTail}
         </h1>
 
-        <p className="mt-4 max-w-[46ch] text-on-primary-muted">{lead}</p>
-        <div aria-hidden="true" className="mt-5 h-1 w-16 rounded-full bg-call" />
+        <EcgTrace className="mt-4 h-6 w-44 text-call-bright sm:mt-5" />
 
-        <div className="mt-7 flex flex-wrap items-center gap-3">
+        <p className="mt-4 max-w-[46ch] text-sm text-on-primary-muted sm:text-base">{lead}</p>
+
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center">
           <a
             href={`tel:${phoneHref}`}
             data-tap="hero"
-            className="flex min-w-0 items-center gap-3 rounded-2xl bg-call px-4 py-3 no-underline shadow-xl transition-transform hover:-translate-y-0.5 sm:px-5"
+            className="flex min-w-0 items-center gap-3.5 rounded-2xl bg-call px-4 py-3.5 no-underline shadow-[0_18px_40px_-12px_rgba(226,1,2,0.55)] transition-transform hover:-translate-y-0.5 sm:px-5"
           >
-            <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-5 w-5 text-call">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-6 w-6 text-call">
                 <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.4 0 .8-.3 1L6.6 10.8z" />
               </svg>
             </span>
-            <span>
-              <span className="block text-xs font-bold uppercase tracking-[0.12em] text-white">{callLabel}</span>
-              <span className="block text-2xl font-black tracking-tight tabular-nums text-white" dir="ltr">
+            <span className="min-w-0">
+              <span className="block text-xs font-bold uppercase tracking-[0.14em] text-white">{callLabel}</span>
+              <span className="block text-[1.7rem] font-black leading-tight tracking-tight tabular-nums text-white" dir="ltr">
                 {phoneDisplay}
               </span>
             </span>
@@ -151,29 +164,30 @@ export function Hero({
           {children}
         </div>
 
-        <ul className="mt-8 grid grid-cols-2 gap-x-4 gap-y-4 sm:grid-cols-4">
+        {/*
+          The facts, value first. They were four columns inside a 60%-wide
+          text block — 148px each — and the labels ran into the next icon.
+          Two columns give every value room on every screen. Solid navy cells,
+          not a translucent tint: the right column reaches the edge of the
+          scrim on desktop.
+        */}
+        <dl className="mt-9 grid grid-cols-2 gap-px overflow-hidden rounded-2xl bg-white/15 ring-1 ring-white/15">
           {features.map((f) => (
-            <li key={f.title} className="flex items-start gap-2.5">
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/10 text-white ring-1 ring-white/25">
-                <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4">
+            <div key={f.title} className="bg-primary-dark px-4 py-3.5">
+              <dt className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.03em] text-on-primary-muted sm:tracking-[0.12em]">
+                <svg viewBox="0 0 24 24" aria-hidden="true" className="hidden h-4 w-4 shrink-0 text-call-bright sm:block">
                   {ICONS[f.icon]}
                 </svg>
-              </span>
-              <span className="min-w-0">
-                <span className="block text-xs font-bold uppercase leading-tight tracking-wide text-on-primary-muted">
-                  {f.title}
-                </span>
-                <span className="block text-xs font-black uppercase leading-tight tracking-wide text-call-bright">
-                  {f.emphasis}
-                </span>
-                <span className="mt-0.5 block text-xs text-on-primary-faint">{f.detail}</span>
-              </span>
-            </li>
+                {f.title}
+              </dt>
+              <dd className="mt-1.5 text-lg font-black leading-tight text-white sm:text-xl">{f.emphasis}</dd>
+              <dd className="mt-0.5 text-xs text-on-primary-muted">{f.detail}</dd>
+            </div>
           ))}
-        </ul>
+        </dl>
       </div>
 
-      {badge}
+      <LiveryBand className="absolute inset-x-0 bottom-0 h-2" />
     </section>
   );
 }
