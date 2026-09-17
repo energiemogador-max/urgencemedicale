@@ -13,8 +13,17 @@ import { Archivo } from "next/font/google";
  * small sizes and on poor screens). Dropping the second family also removes
  * a whole font download from the critical path.
  */
+/*
+ * Latin only. `latin-ext` was a second preloaded file (~34 KB) fetched at
+ * high priority on every page, competing with the page itself on 4G. A scan
+ * of every exported French and English page (2026-09-17) found no character
+ * it covers: French is entirely inside `latin`, œ and € included. The only
+ * characters outside `latin` are the Arabic language name (Archivo has no
+ * Arabic, so the system font draws it either way) and one arrow that neither
+ * subset contains.
+ */
 export const archivo = Archivo({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
   variable: "--font-sans",
   display: "swap",
