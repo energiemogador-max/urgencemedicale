@@ -34,11 +34,11 @@ export function Section({
 
   if (tone === "panel") {
     return (
-      <section className="mt-16 rounded-3xl border border-border bg-surface-2 px-5 py-9 sm:px-8 sm:py-10">{heading}</section>
+      <section className="defer-render mt-16 rounded-3xl border border-border bg-surface-2 px-5 py-9 sm:px-8 sm:py-10">{heading}</section>
     );
   }
 
-  return <section className="mt-16">{heading}</section>;
+  return <section className="defer-render mt-16">{heading}</section>;
 }
 
 /**

@@ -1,28 +1,30 @@
 import { content } from "@/lib/content";
-import { LiveStatusClient } from "@/components/LiveStatusClient";
 
 /**
- * Live service status, floated over the hero photograph as a compact badge.
+ * Live service status: a compact badge in the hero.
  *
  * WHAT IT IS FOR
  *
  * It answers, without being asked, the two questions someone has at 02h00 with
  * a sick child: is anyone awake, and what will this cost.
  *
- * It is a badge rather than a full panel because the hero is a photograph: a
- * large information panel would fight the image for the same space.
+ * HOW THE CLOCK WORKS
  *
- * HOW IT DEGRADES
+ * The server renders a line that is always true (open 24h/24, 500 to 700
+ * MAD). A few lines of plain JavaScript, inline right after the badge,
+ * replace it with the visitor's hour and the tariff for that hour. With
+ * JavaScript off, the badge is still correct; it just doesn't know the hour.
+ * Nothing is asserted as "now" until the visitor's clock has been read.
  *
- * The fallback line (open 24/7, 500 to 700 MAD) is server-rendered and always
- * true. LiveStatusClient replaces it with the clock after hydration. With
- * JavaScript off, the badge is still correct — it just does not know the hour.
- * Nobody is ever shown a tariff asserted as "now" that is wrong for their
- * clock, because nothing is asserted until the clock is read.
+ * WHY NOT A REACT CLIENT COMPONENT ANY MORE
  *
- * This component used to carry its own inline <script> doing that swap before
- * hydration. It caused React hydration error #418 on every homepage load — see
- * LiveStatusClient for the details.
+ * It was one (LiveStatusClient). That was the site's only client component,
+ * and it cost every page the whole React runtime plus the RSC payload: on a
+ * mid-range phone, Lighthouse (2026-09-17) measured 3.7s just parsing that
+ * payload, for one clock. scripts/strip-runtime.ts now removes the runtime
+ * from the exported HTML, so no page hydrates. That also makes this inline
+ * script safe: the hydration error #418 an earlier inline version caused only
+ * happened because React hydrated over the DOM it had edited.
  *
  * WHY THE RULE IS SAFE TO COMPUTE
  *
@@ -33,22 +35,45 @@ import { LiveStatusClient } from "@/components/LiveStatusClient";
  * quietly gets one wrong is worse than one that stays silent. The tariff is
  * confirmed on the phone before the visit either way.
  *
- * Solid white, not a translucent panel: this sits on a photograph, and
- * translucency would make the contrast of the text depend on the pixels
- * underneath it.
+ * LAYOUT
+ *
+ * Positioning belongs to the parent (Hero). On phones the badge sits in the
+ * flow above the headline, so the fallback and the live line share one box of
+ * fixed height: a live line even one pixel taller would push the H1 down. From
+ * `lg` up the badge floats over the photograph and may grow.
  */
+
+/* Class lists live here as plain strings so Tailwind generates them; the
+   script below applies them. */
+const LINE = "mt-1 flex h-7 items-center gap-x-2.5 whitespace-nowrap lg:mt-1.5 lg:block lg:h-auto";
+const FALLBACK = `${LINE} text-sm text-ink-muted`;
+const CLOCK = "text-xl font-black leading-none tabular-nums text-primary lg:block lg:text-3xl";
+const PERIOD = "text-xs font-bold uppercase tracking-wide text-ink-muted lg:mt-1.5 lg:block";
+const SHORT = "lg:hidden";
+const LONG = "hidden lg:inline";
+const PRICE = "text-lg font-black leading-none tabular-nums text-call-ink lg:mt-1 lg:block lg:text-xl";
+
+const SCRIPT = `(function(){
+var els=document.querySelectorAll("[data-live-status]");if(!els.length)return;
+function pad(n){return(n<10?"0":"")+n}
+function span(cls,text){var s=document.createElement("span");s.className=cls;if(text!=null)s.textContent=text;return s}
+function render(){var d=new Date(),h=d.getHours(),night=h<7||h>=20;
+for(var i=0;i<els.length;i++){var el=els[i],x=el.dataset,p=span(${JSON.stringify(PERIOD)});
+p.appendChild(span(${JSON.stringify(SHORT)},night?"Tarif nuit":"Tarif jour"));
+p.appendChild(span(${JSON.stringify(LONG)},night?"Tarif de nuit":"Tarif de journ\\u00e9e"));
+el.className=${JSON.stringify(LINE)};el.textContent="";
+el.appendChild(span(${JSON.stringify(CLOCK)},pad(h)+"h"+pad(d.getMinutes())));
+el.appendChild(p);
+el.appendChild(span(${JSON.stringify(PRICE)},(night?x.night:x.day)+" "+x.currency));}}
+render();setInterval(render,30000);
+document.addEventListener("visibilitychange",function(){if(document.visibilityState==="visible")render()});
+})();`;
+
 export function LiveStatus() {
   const { pricing } = content;
-  const day = pricing.tiers.find((t) => t.slug === "jour-weekend");
-  const night = pricing.tiers.find((t) => t.slug === "nuit-ferie");
+  const day = pricing.tiers.find((t) => t.slug === "jour-weekend")?.amountMad ?? "";
+  const night = pricing.tiers.find((t) => t.slug === "nuit-ferie")?.amountMad ?? "";
 
-  /*
-   * Positioning belongs to the parent (Hero), not to this card. It used to be
-   * absolutely positioned at top-right on every screen size, which on a phone
-   * put it squarely over the headline: "L'URGEN… MÉDICAL… À DOMIC…". On
-   * phones it now sits in the flow above the headline; the hero floats it over
-   * the photograph from `lg` up.
-   */
   return (
     <div className="inline-block rounded-2xl bg-white px-4 py-2.5 shadow-2xl ring-1 ring-white/50 lg:px-5 lg:py-4">
       <p className="flex items-center gap-2">
@@ -59,7 +84,10 @@ export function LiveStatus() {
         <span className="text-[0.7rem] font-black uppercase tracking-[0.14em] text-ink">Service ouvert</span>
       </p>
 
-      <LiveStatusClient day={day?.amountMad ?? ""} night={night?.amountMad ?? ""} currency={pricing.currency} />
+      <p data-live-status="" data-day={day} data-night={night} data-currency={pricing.currency} className={FALLBACK}>
+        24h/24 · {day} à {night} {pricing.currency}
+      </p>
+      <script dangerouslySetInnerHTML={{ __html: SCRIPT }} />
     </div>
   );
 }

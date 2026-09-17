@@ -13,9 +13,10 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "postbuild": "npm run fix:404 && npm run validate:csp && npm run validate:tokens",
+    "postbuild": "npm run fix:404 && npm run strip:runtime && npm run validate:csp && npm run validate:tokens",
     "deploy": "wrangler deploy",
     "fix:404": "tsx scripts/fix-404.ts",
+    "strip:runtime": "tsx scripts/strip-runtime.ts",
     "validate:tokens": "tsx scripts/validate-tokens.ts",
     "indexnow": "tsx scripts/indexnow.ts"
   },

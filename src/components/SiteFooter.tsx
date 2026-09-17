@@ -64,7 +64,7 @@ export function SiteFooter({
   const headingClass = "text-sm font-bold uppercase tracking-[0.1em] text-primary-bright";
 
   return (
-    <footer className="relative mt-20 shrink-0 overflow-hidden bg-primary text-on-primary">
+    <footer className="defer-render relative mt-20 shrink-0 overflow-hidden bg-primary text-on-primary">
       {/* Brand red hairline — the one place the accent appears down here. */}
       <div aria-hidden="true" className="h-1 w-full bg-call" />
 

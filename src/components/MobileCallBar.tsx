@@ -36,7 +36,7 @@ export function MobileCallBar({
   callLabel?: string;
 }) {
   return (
-    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-surface/95 p-2 shadow-[0_-4px_16px_rgba(11,28,51,0.14)] backdrop-blur md:hidden print:hidden">
+    <div className="fixed inset-x-0 bottom-0 z-50 border-t border-border bg-surface p-2 shadow-[0_-4px_16px_rgba(11,28,51,0.14)] md:hidden print:hidden">
       <div className="flex items-stretch gap-2">
         {/*
           `data-tap` names the surface for the beacon in lib/analytics.ts.

@@ -336,6 +336,19 @@
   scroll-snap-align: start;
 }
 
+/* ---- Deferred rendering ------------------------------------------------------
+ * Sections below the hero are laid out only when they come near the
+ * viewport. The homepage is long (seven doctors, nineteen link cards, 26
+ * districts, the FAQ, the footer), and on a mid-range phone Lighthouse
+ * measured 2.3s of style and layout work before this. `auto` in the
+ * intrinsic size makes the browser remember each section's real height once
+ * rendered, so the scrollbar does not jump.
+ */
+.defer-render {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 640px;
+}
+
 /* ---- Motion ----------------------------------------------------------------
  * One restrained entrance on the hero only. An emergency service should feel
  * immediate, so nothing else on the page animates, and everything is static
