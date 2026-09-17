@@ -11,7 +11,6 @@ import { Prose } from "@/components/Prose";
 import { FaqBlock } from "@/components/FaqBlock";
 import { Hero } from "@/components/Hero";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
-import { toWhatsAppHref } from "@/lib/phone";
 import { CardLink, LinkGrid, Section } from "@/components/ui";
 import { PriceBoard } from "@/components/PriceBoard";
 import { AmbulanceVisuals } from "@/components/AmbulanceVisuals";
@@ -40,9 +39,11 @@ export default function HomePage() {
    */
 
   return (
-    <main className="mx-auto max-w-5xl px-4 pb-10 pt-4 sm:pt-10">
+    <main className="pb-10">
       <JsonLd data={[buildMedicalBusiness(), buildBreadcrumbList([{ name: "Accueil", path: paths.home() }])]} />
 
+      {/* Phones: inside the page column. Desktop: full width, edge to edge. */}
+      <div className="mx-auto max-w-5xl px-4 pt-4 sm:pt-10 lg:max-w-none lg:px-0 lg:pt-0">
       <Hero
         title="L'urgence médicale"
         titleAccent="à domicile,"
@@ -50,9 +51,6 @@ export default function HomePage() {
         lead={`Un médecin inscrit à l'Ordre National des Médecins se déplace chez vous à ${cities
           .map((c) => c.name)
           .join(", ")}. Le tarif applicable vous est annoncé au téléphone avant que vous ne confirmiez la visite.`}
-        phoneDisplay={business.phoneDisplay}
-        phoneHref={business.phoneHref}
-        callLabel="Appelez-nous"
         image={{
           src: "/images/doctor-640.webp",
           srcSet: "/images/doctor-640.webp 640w, /images/doctor-1000.webp 1000w",
@@ -97,9 +95,10 @@ export default function HomePage() {
             icon: "shield",
           },
         ]}
-      >
-        <WhatsAppButton href={toWhatsAppHref(business.whatsappNumber)} tap="hero" className="w-full sm:w-auto" />
-      </Hero>
+      />
+      </div>
+
+      <div className="mx-auto max-w-5xl px-4">
 
       {/*
         Four shortcuts under the hero. Every label links: this is the first
@@ -334,6 +333,7 @@ export default function HomePage() {
       <FaqBlock entries={homeFaqs()} />
       <CallBanner />
 
+      </div>
     </main>
   );
 }
