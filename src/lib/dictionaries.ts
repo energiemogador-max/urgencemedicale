@@ -103,6 +103,7 @@ export interface Dict {
     disclaimerStart: string;
     or: string;
     allNumbers: string;
+    pharmacieGarde: string;
     samu: string;
     civil: string;
   };
@@ -251,6 +252,7 @@ const fr: Dict = {
     disclaimerStart: "Ce service ne remplace pas les services d'urgence. En cas d'urgence vitale, appelez immédiatement le",
     or: "ou le",
     allNumbers: "Tous les numéros d'urgence",
+    pharmacieGarde: "Pharmacie de garde à Casablanca",
     samu: "SAMU",
     civil: "Protection civile",
   },
@@ -391,6 +393,7 @@ const en: Dict = {
     disclaimerStart: "This service does not replace the emergency services. If a life may be at risk, call",
     or: "or",
     allNumbers: "All emergency numbers",
+    pharmacieGarde: "On-call pharmacy in Casablanca",
     samu: "SAMU, medical emergencies",
     civil: "Civil Protection",
   },
@@ -530,6 +533,7 @@ const ar: Dict = {
     disclaimerStart: "هذه الخدمة لا تعوض مصالح الإسعاف. إذا كانت الحياة في خطر، اتصل فورًا بالرقم",
     or: "أو",
     allNumbers: "جميع أرقام الطوارئ",
+    pharmacieGarde: "صيدلية الحراسة بالدار البيضاء",
     samu: "الإسعاف الطبي SAMU",
     civil: "الوقاية المدنية",
   },

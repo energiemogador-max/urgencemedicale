@@ -232,6 +232,9 @@ export function SiteFooter({
             ({t.footer.civil}).{" "}
             <Link href={L(paths.numerosUrgence())} prefetch={false} className="text-on-primary underline">
               {t.footer.allNumbers}
+            </Link>{" · "}
+            <Link href={L(paths.pharmacieGarde())} prefetch={false} className="text-on-primary underline">
+              {t.footer.pharmacieGarde}
             </Link>
           </p>
           <p className="shrink-0">

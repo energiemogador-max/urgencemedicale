@@ -1,0 +1,1494 @@
+{
+  "casablanca": {
+    "collectedAt": "2026-09-18T09:01:43.739Z",
+    "forDate": "2026-09-18",
+    "entries": [
+      {
+        "name": "Pharmacie Abou Soulaimane",
+        "address": "4, rue Abou Soulaimane El Khattabi",
+        "phone": "+212522829044",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Acharaf",
+        "address": "96, rue Socrate",
+        "phone": "+212522252209",
+        "kind": "24h",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Achir",
+        "address": "lotiss. Mandarona, rue 14 n°101, Aïn Chok",
+        "phone": "+212522528253",
+        "kind": "jour",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Adil",
+        "address": "hay Mohammadi, ElMassira imm.71, n°3",
+        "phone": "+212522638758",
+        "kind": "24h",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Afak",
+        "address": "hay Mohammadi, bloc 22 rue 6 n°74",
+        "phone": "+212522628370",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Agdal Al Hadika",
+        "address": "lotiss. Alhadika, M5",
+        "phone": "+212520281007",
+        "kind": "jour",
+        "district": "Sidi Moumen",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Akhawayn",
+        "address": "Pharmacie Al Akhawayn, Lotiss. Badr -ex Vermont, C. Com. Badr N°27",
+        "phone": "+212522214848",
+        "kind": "jour",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Azhar Bernoussi",
+        "address": "lot. El Azhar, diar Al Hana GH1, imm.9 n°8",
+        "phone": "+212522756120",
+        "kind": "jour",
+        "district": "Alazhar Panorama",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Korama",
+        "address": "rue Essaka El Hadidia -ex Margaux ang. rue de Carbone, résid. Andalous IV",
+        "phone": "+212522835950",
+        "kind": "jour",
+        "district": "Derb el Kabir",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Mouna",
+        "address": "hay Omar Ibn Khattab, rue 1 n°57 bis",
+        "phone": "+212522826708",
+        "kind": "24h",
+        "district": "el Fida et Mers Sultan",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Osra",
+        "address": "52 bd amgala - hay yasmina 1, aïn chok al inara",
+        "phone": "+212522217192",
+        "kind": "jour",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Albadr",
+        "address": "262, lotiss. Hadioui , Sidi Maârouf",
+        "phone": "+212522584987",
+        "kind": "24h",
+        "district": "Sidi Maarouf",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Alouati",
+        "address": "bd du Fouarat lot.16 Capeluto rue 1",
+        "phone": "+212522601675",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie AlWissal",
+        "address": "bd Dr Mohamed Jennaoui -ex Mostachfa Med V, projet Hassan II bloc 2 n°18",
+        "phone": "+212522636633",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Asmaa",
+        "address": "derb Sidi El Khadir, lotiss. Nour n°98",
+        "phone": "+212522930041",
+        "kind": "jour",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Assim",
+        "address": "quartier Beausite 57 lot. Essalam El Gantour",
+        "phone": "+212522358626",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Athina",
+        "address": "cité Chabab, grp. C 2 n°7 Ain Sebaa",
+        "phone": "+212522737473",
+        "kind": "24h",
+        "district": "Sidi Bernoussi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Centrale Aïn Borja",
+        "address": "hay arsalane, rue 7 lot. 82",
+        "phone": "+212522604176",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Chaabia",
+        "address": "N°1, Lotissement. Anassi, Grp. 11 Ahl Loghlam",
+        "phone": "+212522767958",
+        "kind": "jour",
+        "district": "Anassi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Cité Addaman",
+        "address": "avenue de Dakhla -ex H (Inara) résid. addaman GH 9B n° 4 Aïn Chok",
+        "phone": "+212522213499",
+        "kind": "24h",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Dadi",
+        "address": "500 bd de Dakhla Jamila 5 cité Djemaâ",
+        "phone": "+212522372828",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie de la Mosquée",
+        "address": "76 rue de l' Atlas (Mâarif) Maarif",
+        "phone": "+212522984273",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie des Abattoirs",
+        "address": "N°78, Rue Abou Bakr El Wahrani . La Villette",
+        "phone": "+212522625651",
+        "kind": "24h",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie des Oudayas",
+        "address": "rue des Thermes ang. rue Loudayas",
+        "phone": "+212522613026",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Diyar Al Oukhouwa",
+        "address": "1 douar Lamkanssa rue 100 résid. les Jardins",
+        "phone": "+212520548054",
+        "kind": "24h",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Elhouda",
+        "address": "19 rue Lamartine Quartier mers sultan 1",
+        "phone": "+212522289944",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie ElManar",
+        "address": "Pharmacie Elmanar, 48, Avenue Mehdi Ben Berka -ex Cimetière",
+        "phone": "+212522261372",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie ElMansour",
+        "address": "106, avenue Joulan - ex D",
+        "phone": "+212522373498",
+        "kind": "24h",
+        "district": "Sbata",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie ElMorakab Ettakafi",
+        "address": "derb Amal rue 6 n°74 H.M Hay Mohammadi",
+        "phone": "+212522630246",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Errayane",
+        "address": "1 lotiss. ennour sidi maârouf sidi maarouf",
+        "phone": "+212522973214",
+        "kind": "24h",
+        "district": "Sidi Maarouf",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Espoir Santé",
+        "address": "28 X avenue de Tizi Ousli El Gantour",
+        "phone": "+212522673600",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Fatihat Elkheir",
+        "address": "411, avenue Souhaib Erroumi -ex H, lot.El Mansour",
+        "phone": "+212522733256",
+        "kind": "jour",
+        "district": "Sidi Bernoussi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Fourkane",
+        "address": "lot Espérance II (Ain Sebaâ), bd C n°209",
+        "phone": "+212522352928",
+        "kind": "24h",
+        "district": "Ain Sebaa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Gare Routière Ouled Ziane",
+        "address": "Pharmacie Gare Routière Ouled Ziane",
+        "phone": "+212522820755",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Grar",
+        "address": "cité Sidi Bernoussi, Imm 13, n°7, hay Alazhar, Ahl Loughlam",
+        "phone": "+212522741243",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Habib",
+        "address": "84, rue Allal Ben Ahmed Amkik",
+        "phone": "+212522243625",
+        "kind": "24h",
+        "district": "Belvédère et Roches Noires",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie hay Makam",
+        "address": "quartier Aïn Borja, hay makam n°117.",
+        "phone": "+212522638787",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Ibn Sina",
+        "address": "319 bd. Chouhada (hay Mohammadi) bloc 15",
+        "phone": "+212522620731",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Ibtisseme",
+        "address": "98, hay Pam , Ouled Haddou Sidi Maârouf",
+        "phone": "+212522972754",
+        "kind": "24h",
+        "district": "Sidi Maarouf",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Ichrak Center",
+        "address": "Pharmacie Ichrak Center, Zone Ind. Lissasfa, Lot Diamant Vert Centre Ichrak Imm. N°26 Mag. N° 7",
+        "phone": "+212530129314",
+        "kind": "jour",
+        "district": "Lissasfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Jawhara",
+        "address": "22, rue Mohamed El Hayani -ex Lamenais",
+        "phone": "+212522980034",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Kissariat Aziza",
+        "address": "86, bd de la Grande Ceinture (h.Mohammadi), Kiss. Aziza n°21",
+        "phone": "+212522635113",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie la Ceinture Verte",
+        "address": "hay Sidi Moumen, résid. Safaa rue 1 n°45",
+        "phone": "+212522711490",
+        "kind": "24h",
+        "district": "Sidi Moumen",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie la Grande Artère",
+        "address": "1258 bd Mohammed VI Souk du bois Koréa",
+        "phone": "+212522822330",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie La Rotonde",
+        "address": "100, bd Abdelmoumen",
+        "phone": "+212522234776",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie la Villette",
+        "address": "23 rue Abou Bakr El Wahrani",
+        "phone": "+212522613213",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Lamia",
+        "address": "lot. Lamia (bd Fouarat), bloc 10 n°7",
+        "phone": "+212522604630",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie le Projet",
+        "address": "rue Mostachfa Mohammed V projet Hassan II bloc 11 n°61-62",
+        "phone": "+212522628020",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Lebbar Hicham",
+        "address": "298 boulevard Panoramique Aïn Chok",
+        "phone": "+212522210668",
+        "kind": "jour",
+        "district": "Ain Chock",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie les Arcades",
+        "address": "3, rue Rouissi",
+        "phone": "+212522255031",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Lixus",
+        "address": "76, lotiss. Riad El Oulfa, extention Gh36",
+        "phone": "+212522935169",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Luxembourg",
+        "address": "qu. les Crêtes, lot. Yasmina lot. n°24 Bachkou",
+        "phone": "+212522855556",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Lycée Bnou Rochd",
+        "address": "quartier Lissasfa I (route d'El Jadida) Lotiss. Itifaq n°11 Bis Oulfa",
+        "phone": "+212522650181",
+        "kind": "24h",
+        "district": "Lissasfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Marhaba",
+        "address": "61, av des Forces Armées Royales",
+        "phone": "+212522311640",
+        "kind": "jour",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Milad",
+        "address": "283, bd Sidi Abderrahman, hay Salam C.i.l.",
+        "phone": "+212522946530",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Moulay Ahmed",
+        "address": "lotiss. Jnane Louz, lot 1 unité 6 Oulad Azouz",
+        "phone": "+212522658608",
+        "kind": "24h",
+        "district": "Lissasfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Moulay Slimane",
+        "address": "118, bd Moulay Slimane Aïn Sebaâ",
+        "phone": "+212522343402",
+        "kind": "jour",
+        "district": "Ain Sebaa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nadir",
+        "address": "3, bd Al Abtal, Q. Guynmer, hay Arraha",
+        "phone": "+212522250943",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nasser",
+        "address": "derb Sidi Maarouf IV (El Fida), rue 48 n°11",
+        "phone": "+212522280226",
+        "kind": "24h",
+        "district": "el Fida et Mers Sultan",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nouamani",
+        "address": "quartier Lissasfa III (route d'El Jadida), bloc E n°139, km 9",
+        "phone": "+212522651242",
+        "kind": "24h",
+        "district": "Lissasfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nouassi",
+        "address": "route 110. rue 3 n°1. Quartier industriel. Bernoussi",
+        "phone": "+212522355179",
+        "kind": "24h",
+        "district": "Sidi Bernoussi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nouvelle",
+        "address": "16, bd de la Liberté",
+        "phone": "+212522314717",
+        "kind": "24h",
+        "district": "Ville et Bourgogne et Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Oued Addahab",
+        "address": "lot. Anassi, bloc 36, n° 140, Ahl Loghlam",
+        "phone": "+212522757551",
+        "kind": "jour",
+        "district": "Anassi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Ouzineb",
+        "address": "161, Bd Oqba Bnou Nafiaa",
+        "phone": "+212522620095",
+        "kind": "jour",
+        "district": "Hay Mohammadi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Principale",
+        "address": "Pharmacie Principale, N°21, rond-point Mers Sultan",
+        "phone": "+212522220174",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Rhamna",
+        "address": "N°22, Avenue Lhoussine Assoussi, Hay Sidi Moumen",
+        "phone": "+212522343840",
+        "kind": "jour",
+        "district": "Sidi Moumen",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Rocroy",
+        "address": "10, rue Soukaina Bent El Houcine ex Rocroi, mag.n°1",
+        "phone": "+212522248650",
+        "kind": "24h",
+        "district": "Belvédère et Roches Noires",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Route d'Eljadida",
+        "address": "240 route d' El Jadida",
+        "phone": "+212522995746",
+        "kind": "24h",
+        "district": "Ville Bourgogne Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Saïb",
+        "address": "154 avenue Oued Daoura lot. Elazhari 2 Oulfa",
+        "phone": "+212522911654",
+        "kind": "jour",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Salma",
+        "address": "Boulevard Oued Oum Errabia, El Ouafaa 1 N°15",
+        "phone": "+212522895772",
+        "kind": "jour",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Sidi Elkhadir",
+        "address": "1367, rue Moulay Bouchaïb Radad, derb Jamila",
+        "phone": "+212522913046",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Tarik El Kheir",
+        "address": "hay Tarik Elkheir (Al Qods) rue9 n°3/5 Sidi Bernoussi",
+        "phone": "+212522753352",
+        "kind": "jour",
+        "district": "Sidi Bernoussi",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Tessema",
+        "address": "168 avenue Joulan - ex D Jamila 6 (cité Djemaâ)",
+        "phone": "+212522556969",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Tissir II",
+        "address": "Lot N° 169, Boulevard de la grande ceinture Hay Tissir 2",
+        "phone": "+212522626701",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Tontonville",
+        "address": "Pharmacie Tontonville",
+        "phone": "+212522860398",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Val d'Anfa",
+        "address": "194 bd d' Anfa",
+        "phone": "+212522364348",
+        "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Yasmine",
+        "address": "N°207, Bd Sidi Abderrahman",
+        "phone": "+212522365472",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Zamzam",
+        "address": "lotiss. Lina, H2 lot. Hammam, Sidi Maârouf",
+        "phone": "+212522580198",
+        "kind": "24h",
+        "district": "Sidi Maarouf",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-09-18"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-18"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+# Relève quotidienne des pharmacies de garde de Casablanca.
+#
+# La garde tourne chaque jour : une page construite hier affiche la liste
+# d'hier. Cette tâche régénère le jeu de données et pousse sur main, ce qui
+# déclenche le build Cloudflare et republie la page du jour.
+#
+# Si la collecte échoue ou passe sous le seuil, le script sort en erreur et
+# rien n'est poussé : le site continue de servir le dernier relevé valide,
+# que son propre script inline signale au lecteur comme n'étant pas du jour.
+name: Pharmacies de garde
+
+on:
+  schedule:
+    # 05h10 et 19h10 UTC — le matin pour la garde de jour, le soir pour
+    # rattraper les corrections publiées dans la journée.
+    - cron: "10 5 * * *"
+    - cron: "10 19 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: pharmacies-garde
+  cancel-in-progress: false
+
+jobs:
+  releve:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Relever les pharmacies de garde
+        run: npx tsx scripts/scrape-pharmacies.ts
+
+      - name: Pousser si la liste a changé
+        run: |
+          if git diff --quiet -- content/pharmacies-garde.json; then
+            echo "Liste inchangée, rien à pousser."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/pharmacies-garde.json
+          DATE=$(node -p "require('./content/pharmacies-garde.json').casablanca.forDate")
+          N=$(node -p "require('./content/pharmacies-garde.json').casablanca.entries.filter(e=>e.confirmed).length")
+          git commit -m "Pharmacies de garde : relevé du $DATE ($N officines)"
+          git push

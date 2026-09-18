@@ -34,13 +34,14 @@ export type PageRef =
   | { kind: "aPropos" }
   | { kind: "contact" }
   | { kind: "reserver" }
-  | { kind: "numerosUrgence" };
+  | { kind: "numerosUrgence" }
+  | { kind: "pharmacieGarde" };
 
 export interface PageEntry {
   path: string;
   ref: PageRef;
   priority: number;
-  changeFrequency: "weekly" | "monthly" | "yearly";
+  changeFrequency: "daily" | "weekly" | "monthly" | "yearly";
 }
 
 let cached: PageEntry[] | undefined;
@@ -87,8 +88,10 @@ export function allPages(): PageEntry[] {
     }
   }
 
-  // A reference page people actively search for, above the admin pages.
+  // Reference pages people actively search for, above the admin pages.
   add(paths.numerosUrgence(), { kind: "numerosUrgence" }, 0.7, "monthly");
+  // Daily: the rota changes every day, and the page is rebuilt every day.
+  add(paths.pharmacieGarde(), { kind: "pharmacieGarde" }, 0.7, "daily");
   add(paths.tarifs(), { kind: "tarifs" }, 0.5, "yearly");
   add(paths.nosMedecins(), { kind: "nosMedecins" }, 0.5, "yearly");
   add(paths.aPropos(), { kind: "aPropos" }, 0.5, "yearly");
@@ -114,6 +117,7 @@ export function isPageTranslated(ref: PageRef, locale: "en" | "ar"): boolean {
     case "contact":
     case "reserver":
     case "numerosUrgence":
+    case "pharmacieGarde":
       return shared && has("cities", "casablanca") && has("specialties", "generaliste");
     case "aPropos":
       return shared && has("aboutPage");

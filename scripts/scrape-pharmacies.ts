@@ -30,8 +30,20 @@ const UA =
 
 const DELAY_MS = 2500;
 
-/** Villes desservies. dar-bouazza n'est couvert par aucune source connue. */
-const CITIES = ["casablanca", "rabat", "mohammedia", "bouskoura"] as const;
+/** Jeu de données lu par le site, régénéré à chaque collecte. */
+const DEFAULT_OUT = "content/pharmacies-garde.json";
+
+/**
+ * Casablanca seulement.
+ *
+ * Le relevé du 18/09/2026 a montré qu'aucune autre ville desservie n'est
+ * couvrable ainsi : Rabat ne recoupait que 7 officines sur 18, les trois
+ * sources de Mohammedia étaient périmées le même jour (15, 16 et 17
+ * septembre), Bouskoura ne rend aucune fiche, et Dar Bouazza n'apparaît
+ * chez aucune source. Publier une liste qu'on ne peut pas vérifier, c'est
+ * envoyer quelqu'un devant une porte fermée à deux heures du matin.
+ */
+const CITIES = ["casablanca"] as const;
 type City = (typeof CITIES)[number];
 
 export type GardeKind = "jour" | "nuit" | "24h" | "inconnu";
@@ -324,12 +336,12 @@ const SOURCES: {
 }[] = [
   {
     name: "aidoctor.ma",
-    url: (c) => (c === "bouskoura" ? null : `https://aidoctor.ma/pharmacie-de-garde/${c}`),
+    url: (c) => `https://aidoctor.ma/pharmacie-de-garde/${c}`,
     parse: parseAidoctor,
   },
   {
     name: "sahha.ma",
-    url: (c) => (c === "bouskoura" ? null : `https://sahha.ma/pharmacie-de-garde/${c}`),
+    url: (c) => `https://sahha.ma/pharmacie-de-garde/${c}`,
     parse: parseSahha,
   },
   {
@@ -401,7 +413,7 @@ export function merge(entries: RawEntry[], today: string): MergedEntry[] {
 
 async function main() {
   const args = process.argv.slice(2);
-  const outPath = args[args.indexOf("--out") + 1] && args.includes("--out") ? args[args.indexOf("--out") + 1]! : "";
+  const outPath = args.includes("--out") ? args[args.indexOf("--out") + 1]! : DEFAULT_OUT;
   const only = args.includes("--city") ? args[args.indexOf("--city") + 1] : null;
   const cities = (only ? [only] : CITIES) as City[];
 
@@ -440,6 +452,28 @@ async function main() {
       `  ${city.padEnd(12)} => ${entries.length} officine(s), ${confirmed} publiable(s), ${stale} sans source du jour\n`,
     );
     result[city] = { collectedAt: new Date().toISOString(), forDate: today, entries };
+  }
+
+  /**
+   * Garde-fou : si les sources tombent, sont bloquées ou changent de balisage,
+   * la collecte rend une liste vide ou minuscule. Écraser le jeu de données
+   * avec ça viderait la page en silence. On refuse, on sort en erreur pour que
+   * la tâche planifiée échoue visiblement, et le site continue de servir le
+   * dernier relevé valide — daté, donc signalé comme tel au lecteur.
+   */
+  const publishable = Object.values(result).reduce(
+    (n, c) => n + c.entries.filter((e) => e.confirmed).length,
+    0,
+  );
+  const FLOOR = 20;
+  if (publishable < FLOOR && !args.includes("--force")) {
+    console.error(
+      `
+ÉCHEC : ${publishable} officine(s) publiable(s), seuil ${FLOOR}. ` +
+        `Le jeu de données n'est PAS réécrit. Les sources sont probablement ` +
+        `indisponibles ou ont changé de balisage.`,
+    );
+    process.exit(1);
   }
 
   const json = JSON.stringify(result, null, 2);

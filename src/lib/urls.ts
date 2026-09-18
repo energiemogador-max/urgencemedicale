@@ -17,4 +17,5 @@ export const paths = {
   reserver: () => "/reserver",
   contact: () => "/contact",
   numerosUrgence: () => "/numeros-urgence-maroc",
+  pharmacieGarde: () => "/pharmacie-de-garde-casablanca",
 };
