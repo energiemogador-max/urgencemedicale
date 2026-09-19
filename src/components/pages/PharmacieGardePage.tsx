@@ -3,7 +3,15 @@ import { api } from "@/lib/locale-content";
 import { paths } from "@/lib/urls";
 import { localizedPath, type Locale } from "@/lib/i18n";
 import { dict } from "@/lib/dictionaries";
-import { garde, gardeSources, formatGardeDate, type GardeEntry } from "@/lib/pharmacies";
+import {
+  garde,
+  gardeSources,
+  gardeDistricts,
+  gardeWithoutDistrict,
+  districtKey,
+  formatGardeDate,
+  type GardeEntry,
+} from "@/lib/pharmacies";
 import { CallBanner } from "@/components/CallBanner";
 import { JsonLd } from "@/components/JsonLd";
 import { FaqBlock } from "@/components/FaqBlock";
@@ -46,6 +54,10 @@ interface Text {
   openNight: string;
   callPharmacy: string;
   listTitle: string;
+  filterLabel: string;
+  filterAll: (n: number) => string;
+  filterNone: (n: number) => string;
+  showing: (n: number) => string;
   staleWarning: string;
   callFirstTitle: string;
   callFirst: string;
@@ -73,6 +85,10 @@ const TEXT: Record<Locale, Text> = {
     openNight: "Garde de nuit",
     callPharmacy: "Appeler",
     listTitle: "Les officines de garde aujourd'hui",
+    filterLabel: "Filtrer par quartier",
+    filterAll: (n) => `Tous les quartiers (${n})`,
+    filterNone: (n) => `Quartier non précisé (${n})`,
+    showing: (n) => `${n} officine(s) affichée(s)`,
     staleWarning:
       "Cette liste date d'un jour précédent et la garde a pu changer depuis. Appelez l'officine avant de vous déplacer.",
     callFirstTitle: "Appelez avant de vous déplacer",
@@ -124,6 +140,10 @@ const TEXT: Record<Locale, Text> = {
     openNight: "Night duty",
     callPharmacy: "Call",
     listTitle: "On-call pharmacies today",
+    filterLabel: "Filter by district",
+    filterAll: (n) => `All districts (${n})`,
+    filterNone: (n) => `District not stated (${n})`,
+    showing: (n) => `${n} pharmacy(ies) shown`,
     staleWarning:
       "This list is from an earlier day and the rota may have changed since. Call the pharmacy before travelling.",
     callFirstTitle: "Call before you travel",
@@ -175,6 +195,10 @@ const TEXT: Record<Locale, Text> = {
     openNight: "حراسة ليلية",
     callPharmacy: "اتصل",
     listTitle: "صيدليات الحراسة اليوم",
+    filterLabel: "التصفية حسب الحي",
+    filterAll: (n) => `جميع الأحياء (${n})`,
+    filterNone: (n) => `حي غير محدد (${n})`,
+    showing: (n) => `${n} صيدلية معروضة`,
     staleWarning: "هذه اللائحة تعود إلى يوم سابق وقد تكون الحراسة تغيرت منذ ذلك الحين. اتصل بالصيدلية قبل أن تتنقل.",
     callFirstTitle: "اتصل قبل أن تتنقل",
     callFirst:
@@ -231,6 +255,39 @@ var today=new Date().toLocaleDateString('en-CA',{timeZone:'Africa/Casablanca'});
 if(today!==${JSON.stringify(forDate)})el.hidden=false;
 }catch(e){}})();`;
 
+/**
+ * Filtre par quartier.
+ *
+ * Les 73 fiches sont rendues côté serveur et restent dans le HTML : le filtre
+ * ne fait que masquer, il ne charge rien. Un robot voit donc la liste
+ * entière, et la page fonctionne telle quelle si le script ne s'exécute pas
+ * — c'est pourquoi le sélecteur est masqué au départ et révélé par le script
+ * lui-même, plutôt que d'afficher un contrôle mort.
+ *
+ * Vanille et inline, comme l'horloge et le contrôle de fraîcheur : pas de
+ * runtime React sur le site, et aucun gestionnaire d'événement en attribut,
+ * que la validation CSP refuse.
+ */
+const FILTER_SCRIPT = `(function(){try{
+var sel=document.getElementById('garde-quartier');
+var list=document.getElementById('garde-list');
+var out=document.getElementById('garde-count');
+if(!sel||!list||!out)return;
+var wrap=document.getElementById('garde-filter');
+if(wrap)wrap.hidden=false;
+var cards=list.querySelectorAll('li[data-district]');
+var tpl=out.getAttribute('data-template')||'{n}';
+sel.addEventListener('change',function(){
+  var want=sel.value,n=0;
+  for(var i=0;i<cards.length;i++){
+    var ok=want===''||cards[i].getAttribute('data-district')===want;
+    cards[i].hidden=!ok;
+    if(ok)n++;
+  }
+  out.textContent=tpl.replace('{n}',String(n));
+});
+}catch(e){}})();`;
+
 function Badge({ kind, t }: { kind: GardeEntry["kind"]; t: Text }) {
   const label = kind === "24h" ? t.openAll : kind === "nuit" ? t.openNight : t.openDay;
   const tone =
@@ -246,7 +303,7 @@ function Badge({ kind, t }: { kind: GardeEntry["kind"]; t: Text }) {
 
 function PharmacyCard({ e, t }: { e: GardeEntry; t: Text }) {
   return (
-    <li className="rounded-2xl border border-border bg-surface p-4">
+    <li data-district={e.district ? districtKey(e.district) : "-"} className="rounded-2xl border border-border bg-surface p-4">
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base font-bold leading-snug text-ink">{e.name}</h3>
         <Badge kind={e.kind} t={t} />
@@ -284,6 +341,8 @@ export function PharmacieGardePage({ locale = "fr" }: { locale?: Locale }) {
   const a = api(locale);
   const L = (p: string) => localizedPath(p, locale);
   const { forDate, entries } = garde();
+  const districts = gardeDistricts();
+  const noDistrict = gardeWithoutDistrict();
   const dateLabel = formatGardeDate(forDate, locale);
   const { samu, protectionCivile } = EMERGENCY_NUMBERS;
 
@@ -310,11 +369,38 @@ export function PharmacieGardePage({ locale = "fr" }: { locale?: Locale }) {
       <script dangerouslySetInnerHTML={{ __html: STALE_CHECK(forDate) }} />
 
       <Section title={t.listTitle}>
-        <ul className="grid gap-3 sm:grid-cols-2">
+        <div id="garde-filter" hidden className="mb-5 flex flex-wrap items-end gap-x-4 gap-y-2">
+          <label className="flex w-full min-w-0 flex-col gap-1 sm:w-auto sm:max-w-xs sm:flex-1">
+            <span className="text-xs font-bold uppercase tracking-wide text-ink-muted">{t.filterLabel}</span>
+            <select
+              id="garde-quartier"
+              className="min-h-11 w-full rounded-xl border border-border bg-surface px-3 py-2 text-sm font-semibold text-ink"
+            >
+              <option value="">{t.filterAll(entries.length)}</option>
+              {districts.map((d) => (
+                <option key={d.key} value={d.key}>
+                  {d.label} ({d.count})
+                </option>
+              ))}
+              {noDistrict > 0 && <option value="-">{t.filterNone(noDistrict)}</option>}
+            </select>
+          </label>
+          <p
+            id="garde-count"
+            data-template={t.showing(0).replace("0", "{n}")}
+            aria-live="polite"
+            className="text-sm font-semibold text-ink-muted"
+          >
+            {t.showing(entries.length)}
+          </p>
+        </div>
+
+        <ul id="garde-list" className="grid gap-3 sm:grid-cols-2">
           {entries.map((e) => (
             <PharmacyCard key={e.phone} e={e} t={t} />
           ))}
         </ul>
+        <script dangerouslySetInnerHTML={{ __html: FILTER_SCRIPT }} />
         <p className="mt-5 rounded-xl border border-border bg-surface-2 px-4 py-3 text-sm text-ink-muted">
           {t.sourcesNote(gardeSources().join(", "), dateLabel)}
         </p>

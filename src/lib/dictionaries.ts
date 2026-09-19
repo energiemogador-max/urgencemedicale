@@ -40,6 +40,7 @@ export interface Dict {
     doctors: string;
     contact: string;
     about: string;
+    pharmacieGarde: string;
     menu: string;
     mainNav: string;
     breadcrumb: string;
@@ -198,6 +199,7 @@ const fr: Dict = {
     doctors: "Nos médecins",
     contact: "Contact",
     about: "À propos",
+    pharmacieGarde: "Pharmacie de garde",
     menu: "Menu",
     mainNav: "Navigation principale",
     breadcrumb: "Fil d'Ariane",
@@ -340,6 +342,7 @@ const en: Dict = {
     doctors: "Our doctors",
     contact: "Contact",
     about: "About us",
+    pharmacieGarde: "On-call pharmacy",
     menu: "Menu",
     mainNav: "Main navigation",
     breadcrumb: "Breadcrumb",
@@ -481,6 +484,7 @@ const ar: Dict = {
     doctors: "أطباؤنا",
     contact: "اتصل بنا",
     about: "من نحن",
+    pharmacieGarde: "صيدلية الحراسة",
     menu: "القائمة",
     mainNav: "القائمة الرئيسية",
     breadcrumb: "مسار التصفح",

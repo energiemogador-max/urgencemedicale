@@ -70,6 +70,62 @@ export function gardeSources(): string[] {
   return [...new Set(garde().entries.flatMap((e) => e.sources.map((s) => s.name)))].sort();
 }
 
+/**
+ * Clé de regroupement d'un secteur de garde.
+ *
+ * Les sources écrivent le même secteur de plusieurs façons — « Ville et
+ * Bourgogne et Maarif » et « Ville Bourgogne Maarif » sont le même tour de
+ * garde. On enlève les liaisons et les accents pour les réunir sous une
+ * seule entrée du filtre, sinon le lecteur voit deux lignes pour un secteur
+ * et croit en avoir manqué une.
+ */
+export function districtKey(label: string): string {
+  return label
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/\b(et|de|du|la|le|les|d')\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+export interface GardeDistrict {
+  key: string;
+  label: string;
+  count: number;
+}
+
+/**
+ * Les secteurs présents dans le relevé du jour, avec leur effectif, le plus
+ * fourni d'abord. Le libellé retenu est la variante la plus complète : entre
+ * « Ville Bourgogne Maarif » et « Ville et Bourgogne et Maarif », la seconde
+ * se lit mieux.
+ */
+export function gardeDistricts(): GardeDistrict[] {
+  const groups = new Map<string, { labels: string[]; count: number }>();
+  for (const e of garde().entries) {
+    if (!e.district) continue;
+    const key = districtKey(e.district);
+    const g = groups.get(key) ?? { labels: [], count: 0 };
+    g.labels.push(e.district);
+    g.count += 1;
+    groups.set(key, g);
+  }
+  return [...groups]
+    .map(([key, g]) => ({
+      key,
+      label: g.labels.sort((a, b) => b.length - a.length)[0]!,
+      count: g.count,
+    }))
+    .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label, "fr"));
+}
+
+/** Nombre de fiches sans secteur indiqué — le filtre leur réserve une entrée. */
+export function gardeWithoutDistrict(): number {
+  return garde().entries.filter((e) => !e.district).length;
+}
+
 /** « 2026-09-18 » -> « vendredi 18 septembre 2026 », dans la locale demandée. */
 export function formatGardeDate(iso: string, locale: "fr" | "en" | "ar"): string {
   const tag = locale === "ar" ? "ar-MA" : locale === "en" ? "en-GB" : "fr-MA";
