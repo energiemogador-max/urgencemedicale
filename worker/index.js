@@ -21,6 +21,8 @@
  * never become a broken phone number.
  */
 
+import { CHAT_PATH, handleChat } from "./chat.js";
+
 const GEO_PATH = "/api/geo";
 const STATS_PATH = "/admin/stats";
 
@@ -243,6 +245,24 @@ export default {
 
     if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) {
       return serveAdmin(request, env);
+    }
+
+    if (url.pathname === CHAT_PATH) {
+      /*
+       * L'assistant. Enveloppé comme tout le reste : ce Worker est devant un
+       * service d'urgence, et un assistant en panne ne doit jamais devenir un
+       * site en panne. En cas d'échec la page affiche son message de repli et
+       * son bouton d'appel, qui est de toute façon la vraie conversion.
+       */
+      try {
+        return await handleChat(request, env);
+      } catch (error) {
+        console.error("chat failed", error instanceof Error ? error.message : String(error));
+        return new Response(JSON.stringify({ error: "failed" }), {
+          status: 502,
+          headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+        });
+      }
     }
 
     if (url.pathname !== GEO_PATH) return env.ASSETS.fetch(request);

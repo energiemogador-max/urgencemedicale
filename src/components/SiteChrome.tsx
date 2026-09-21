@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 import { MobileCallBar, MobileCallBarSpacer } from "@/components/MobileCallBar";
+import { ChatWidget } from "@/components/ChatWidget";
 import { LOCALE_LINK_SCRIPT } from "@/components/LocaleSwitcher";
 import { CF_BEACON_TOKEN, TAP_TRACKING_SCRIPT, hasWebAnalytics } from "@/lib/analytics";
 
@@ -52,6 +53,7 @@ export function SiteChrome({ locale, children }: { locale: Locale; children: Rea
         phoneHref={business.phoneHref}
         whatsappNumber={business.whatsappNumber}
       />
+      <ChatWidget locale={locale} phoneDisplay={business.phoneDisplay} phoneHref={business.phoneHref} />
 
       {/*
         Conversion tracking. See src/lib/analytics.ts.

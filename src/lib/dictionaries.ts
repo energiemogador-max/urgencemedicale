@@ -95,6 +95,20 @@ export interface Dict {
 
   faqTitle: string;
   illustration: string;
+
+  chat: {
+    toggleLabel: string;
+    title: string;
+    disclaimer: string;
+    greeting: string;
+    placeholder: string;
+    send: string;
+    callCta: string;
+    closeLabel: string;
+    thinking: string;
+    errorReply: string;
+    urgentBadge: string;
+  };
   ambulanceAltFront: string;
   ambulanceAltBack: string;
 
@@ -246,6 +260,21 @@ const fr: Dict = {
   },
   faqTitle: "Questions fréquentes",
   illustration: "Image d'illustration",
+
+  chat: {
+    toggleLabel: "Poser une question",
+    title: "Assistant Urgence Médicale",
+    disclaimer: "Ne remplace pas un médecin — pour un avis sur votre situation, appelez.",
+    greeting:
+      "Bonjour, je peux vous expliquer comment fonctionne le service et répondre à vos questions pratiques. Pour tout ce qui touche à votre santé, un médecin doit vous examiner : vous pouvez l'appeler à tout moment avec le bouton ci-dessous.",
+    placeholder: "Écrivez votre message…",
+    send: "Envoyer",
+    callCta: "Parler à un médecin",
+    closeLabel: "Fermer",
+    thinking: "L'assistant écrit…",
+    errorReply: "La connexion a échoué. Un médecin peut vous répondre directement au téléphone.",
+    urgentBadge: "Urgence",
+  },
   ambulanceAltFront: "Illustration : ambulances aux couleurs d'Urgence Médicale à domicile, vues de face",
   ambulanceAltBack: "Illustration : ambulances aux couleurs d'Urgence Médicale à domicile, vues de l'arrière",
   footer: {
@@ -388,6 +417,21 @@ const en: Dict = {
   },
   faqTitle: "Frequently asked questions",
   illustration: "Illustration",
+
+  chat: {
+    toggleLabel: "Ask a question",
+    title: "Urgence Médicale Assistant",
+    disclaimer: "Not a substitute for a doctor — call for advice on your situation.",
+    greeting:
+      "Hello, I can explain how the service works and answer practical questions. For anything about your health, a doctor needs to examine you: you can call at any time with the button below.",
+    placeholder: "Type your message…",
+    send: "Send",
+    callCta: "Speak to a doctor",
+    closeLabel: "Close",
+    thinking: "The assistant is typing…",
+    errorReply: "The connection failed. A doctor can answer you directly by phone.",
+    urgentBadge: "Emergency",
+  },
   ambulanceAltFront: "Illustration: ambulances in the Urgence Médicale à domicile livery, front view",
   ambulanceAltBack: "Illustration: ambulances in the Urgence Médicale à domicile livery, rear view",
   footer: {
@@ -529,6 +573,21 @@ const ar: Dict = {
   },
   faqTitle: "أسئلة شائعة",
   illustration: "صورة توضيحية",
+
+  chat: {
+    toggleLabel: "اطرح سؤالاً",
+    title: "مساعد Urgence Médicale",
+    disclaimer: "لا يعوض الطبيب — للحصول على رأي بخصوص حالتك، اتصل بنا.",
+    greeting:
+      "مرحباً، يمكنني أن أشرح لك كيف تعمل الخدمة وأجيب عن أسئلتك العملية. أما كل ما يتعلق بصحتك، فيجب أن يفحصك طبيب: يمكنك الاتصال في أي وقت عبر الزر أدناه.",
+    placeholder: "اكتب رسالتك…",
+    send: "إرسال",
+    callCta: "التحدث إلى طبيب",
+    closeLabel: "إغلاق",
+    thinking: "المساعد يكتب…",
+    errorReply: "فشل الاتصال. يمكن لطبيب أن يجيبك مباشرة عبر الهاتف.",
+    urgentBadge: "حالة طارئة",
+  },
   ambulanceAltFront: "صورة توضيحية: سيارات إسعاف بألوان Urgence Médicale à domicile، من الأمام",
   ambulanceAltBack: "صورة توضيحية: سيارات إسعاف بألوان Urgence Médicale à domicile، من الخلف",
   footer: {
