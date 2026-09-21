@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-09-21T10:38:58.702Z",
+    "collectedAt": "2026-09-21T22:34:38.062Z",
     "forDate": "2026-09-21",
     "entries": [
       {
@@ -236,9 +236,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -260,6 +264,34 @@
         "address": "lot. El Azhar, diar Al Hana GH1, imm.9 n°8",
         "phone": "+212522756120",
         "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al Ichraf",
+        "address": "Pharmacie Al Ichraf, 9, lotiss. Al Ichraf",
+        "phone": "+212522584771",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Al khalil",
+        "address": "Pharmacie Al khalil, 506, bd El Khalil, hay Mly. Abdellah",
+        "phone": "+212522528767",
+        "kind": "24h",
         "sources": [
           {
             "name": "sahha.ma",
@@ -325,9 +357,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -457,9 +493,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -471,9 +511,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -571,6 +615,20 @@
         "stale": false
       },
       {
+        "name": "Pharmacie des Amis",
+        "address": "Pharmacie des Amis, 12, rue de Guise 4, Lotiss. Bahmad",
+        "phone": "+212522404020",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie des Anges",
         "address": "Pharmacie Des Anges, Quartier Oulad Taleb, Rue10 N°9 Résid. Sans Pareil Majorelle",
         "phone": "+212522218886",
@@ -579,9 +637,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -621,9 +683,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -791,9 +857,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -824,9 +894,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -847,7 +921,7 @@
         "name": "Pharmacie hay Makam",
         "address": "quartier Aïn Borja, hay makam n°117.",
         "phone": "+212522638787",
-        "kind": "jour",
+        "kind": "24h",
         "district": "Hay Mohammadi",
         "sources": [
           {
@@ -863,6 +937,20 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Hôpital Cheikh Khalifa",
+        "address": "Pharmacie Hôpital Cheikh Khalifa, hay El Oulfa Opération Al Firdaous Gh 26 imm. 249 n°1 Oulfa",
+        "phone": "+212522931773",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Houar Rifai",
         "address": "135 Bd Du Fouarat",
         "phone": "+212522601724",
@@ -871,9 +959,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -885,9 +977,13 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -917,6 +1013,24 @@
         "sources": [
           {
             "name": "pharmacieenpermanence.ma",
+            "date": "2026-09-21"
+          },
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Ibnou Rochd",
+        "address": "Pharmacie Ibnou Rochd, 355, avenue Reda Guedira -ex Nil, cité Djemaa",
+        "phone": "+212522370706",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
             "date": "2026-09-21"
           }
         ],
@@ -957,10 +1071,52 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Ifni",
+        "address": "Pharmacie Ifni, rue d' Ifni ang. bd Mohamed VI imm.Wafabank n°7 la Gironde",
+        "phone": "+212522449466",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Janquière",
+        "address": "Pharmacie Janquière, 39, rue beni amar",
+        "phone": "+212522616956",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Jawhara",
         "address": "22, rue Mohamed El Hayani -ex Lamenais",
         "phone": "+212522980034",
         "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Karam Elmers",
+        "address": "Pharmacie Karam Elmers, hay Sidi Moumen rue 26 kiss. ElMers n°20 Sidi Moumen",
+        "phone": "+212522708880",
+        "kind": "24h",
         "sources": [
           {
             "name": "sahha.ma",
@@ -1127,6 +1283,20 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Lissane Eddine",
+        "address": "Pharmacie Lissane Eddine, 69 Bis, hay El Qods, grp. Albaida",
+        "phone": "+212522740740",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Lixus",
         "address": "76, lotiss. Riad El Oulfa, extention Gh36",
         "phone": "+212522935169",
@@ -1143,6 +1313,34 @@
           }
         ],
         "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Lotf Allah",
+        "address": "Pharmacie Lotf Allah, hay Mohammadi, hay Mino, rue 3, n°7",
+        "phone": "+212522604884",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Loubila",
+        "address": "Pharmacie Loubila, derb Loubila, rue 15 n°16",
+        "phone": "+212522260014",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1217,10 +1415,38 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Mohamed Guessous",
+        "address": "Pharmacie Mohamed Guessous, Lot. Missimi, rue 20 n°7, bd. Oued Abi Raqraq",
+        "phone": "+212522890379",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Moulay Ahmed",
         "address": "lotiss. Jnane Louz, lot 1 unité 6 Oulad Azouz",
         "phone": "+212522658608",
         "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Moulay Cherif",
+        "address": "Pharmacie Moulay Cherif, 1, rue Abou Ali Kali",
+        "phone": "+212522620226",
+        "kind": "jour",
         "sources": [
           {
             "name": "sahha.ma",
@@ -1334,6 +1560,34 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Panorama",
+        "address": "Pharmacie Panorama, cité Sidi Bernoussi, Panorama Tranche 4, bloc 6",
+        "phone": "+212522767157",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Pitchou",
+        "address": "Pharmacie Pitchou, derb Fokara, rue 10, n°7",
+        "phone": "+212522287211",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Principale",
         "address": "N°21, rond-point Mers Sultan",
         "phone": "+212522220174",
@@ -1369,6 +1623,34 @@
           }
         ],
         "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Riad Raha",
+        "address": "Pharmacie Riad Raha, quartier Les Jardins de Lissasfa, GH 4 - 2 entrée 20 n°4",
+        "phone": "+212522655689",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Rizk",
+        "address": "Pharmacie Rizk, 5, place Haj Ahmed Mekouar-ex Soucarre",
+        "phone": "+212522358520",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1462,6 +1744,48 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Sindibad",
+        "address": "Pharmacie Sindibad, bd de la Grande Ceinture (A.Diab) ex S. Abderrahman, 418 résid. Rio",
+        "phone": "+212522797968",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Slaoui",
+        "address": "Pharmacie Slaoui, 154, bd du Fouarat, hay Mohammadi",
+        "phone": "+212522626245",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Socrate",
+        "address": "Pharmacie Socrate, 93 Bis, rue Ibn Majat, lotiss Chantimar 2",
+        "phone": "+212522948110",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Tarik El Kheir",
         "address": "hay Tarik Elkheir (Al Qods) rue9 n°3/5 Sidi Bernoussi",
         "phone": "+212522753352",
@@ -1538,6 +1862,20 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Tramway",
+        "address": "Pharmacie Tramway, lotiss. Rahmani (Sidi Moumen) rue 27 n°43 Sidi Moumen",
+        "phone": "+212522706466",
+        "kind": "24h",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
         "name": "Pharmacie Val d'Anfa",
         "address": "194 bd d' Anfa",
         "phone": "+212522364348",
@@ -1554,6 +1892,20 @@
           }
         ],
         "confirmed": true,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Velodrome",
+        "address": "Pharmacie Velodrome, 16, Rond Point des Sports",
+        "phone": "+212522362065",
+        "kind": "jour",
+        "sources": [
+          {
+            "name": "sahha.ma",
+            "date": "2026-09-21"
+          }
+        ],
+        "confirmed": false,
         "stale": false
       },
       {
