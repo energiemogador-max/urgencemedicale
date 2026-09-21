@@ -95,6 +95,7 @@ const RED_FLAGS = [
   "serrement poitrine", "oppression thoracique", "infarctus", "crise cardiaque",
   "n arrive pas a respirer", "n'arrive pas à respirer", "peine a respirer", "peine à respirer",
   "difficulte a respirer", "difficulté à respirer", "etouffe", "étouffe", "suffoque",
+  "manque d air", "manque d'air", "a du mal a respirer", "a du mal à respirer",
   "perte de connaissance", "inconscient", "inconsciente", "evanoui", "évanoui", "ne repond plus",
   "ne répond plus", "coma", "convulsion", "crise d epilepsie", "crise d'épilepsie",
   "hemorragie", "hémorragie", "saigne beaucoup", "saignement abondant", "sang partout",
@@ -105,7 +106,8 @@ const RED_FLAGS = [
   "accouche", "perd les eaux",
   // anglais
   "chest pain", "heart attack", "cannot breathe", "can t breathe", "can't breathe",
-  "struggling to breathe", "choking", "unconscious", "passed out", "not responding",
+  "struggling to breathe", "choking", "gasping for air",
+  "unconscious", "passed out", "not responding",
   "seizure", "convulsing", "heavy bleeding", "bleeding a lot", "haemorrhage", "hemorrhage",
   "stroke", "paralysed", "paralyzed", "slurred speech", "overdose", "poisoning",
   "swallowed bleach", "suicide", "kill myself", "drowning", "severe burn",
@@ -151,9 +153,83 @@ function flatten(text) {
     .trim();
 }
 
+/**
+ * Détresse respiratoire : détection par proximité, pas par phrase exacte.
+ *
+ * Testé en direct sur un vrai message reçu par le chat en production —
+ * "mon pere respire lontement" — qui n'a déclenché AUCUNE alerte. La cause
+ * est structurelle, pas une phrase manquante : la respiration lente ou
+ * faible est un signe grave (dépression respiratoire, peut précéder un
+ * arrêt), mais personne ne la décrit avec deux mots collés. Un mot s'insère
+ * presque toujours entre le terme et son qualificatif — "respiration EST
+ * faible", "breathing VERY slowly", "تنفس والدي بطيء" — et une correspondance
+ * de sous-chaîne exacte échoue à chaque fois qu'un mot s'intercale.
+ *
+ * On repère donc un terme de respiration et un qualificatif de détresse
+ * n'importe où dans le message, tant qu'ils sont à WORD_WINDOW mots ou moins
+ * l'un de l'autre — assez large pour "respiration est vraiment faible",
+ * trop étroit pour qu'un mot sans rapport à l'autre bout d'un long message
+ * déclenche l'alerte à tort.
+ */
+const WORD_WINDOW = 4;
+
+/** Le mot "respiration" lui-même — ses formes fléchies partagent un préfixe fiable, sans typo observée. */
+const BREATH_STEMS = ["respir", "souffle", "breath", "تنفس"];
+
+/**
+ * Le QUALIFICATIF de détresse ("lentement", "faible"…) est là où le typo
+ * réel s'est produit ("lontement" pour "lentement"), pas sur le mot
+ * "respire" lui-même — cohérent avec un message tapé vite, sous stress,
+ * au sujet d'un proche. Ces mots restent donc comparés par distance
+ * d'édition, tolérante à une faute de frappe, plutôt que par préfixe exact.
+ */
+const BREATH_DISTRESS_WORDS = [
+  // français
+  "lent", "lente", "lentement", "faible", "faiblement", "difficile", "difficilement",
+  "irregulier", "irreguliere", "superficielle", "peine", "mal",
+  // anglais
+  "slow", "slowly", "weak", "weakly", "shallow", "irregular", "hardly", "barely",
+  // arabe
+  "بطيء", "بطيئا", "ضعيف", "ضعيفا", "صعوبة", "منتظم",
+];
+
+/** Distance d'édition de Levenshtein — chaînes courtes, quelques mots par message : coût négligeable. */
+function levenshtein(a, b) {
+  if (a === b) return 0;
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+  let prev = Array.from({ length: b.length + 1 }, (_, j) => j);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] : 1 + Math.min(prev[j - 1], prev[j], cur[j - 1]);
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
+/** Une faute de frappe plausible sur un mot d'au moins 4 lettres ; les mots plus courts doivent matcher exactement. */
+function fuzzyMatchesAny(word, candidates) {
+  if (word.length < 4) return candidates.includes(word);
+  const tolerance = word.length <= 6 ? 1 : 2;
+  return candidates.some((c) => Math.abs(word.length - c.length) <= tolerance && levenshtein(word, c) <= tolerance);
+}
+
+function hasNearbyDistress(words) {
+  const idxBreath = [];
+  const idxDistress = [];
+  words.forEach((w, i) => {
+    if (BREATH_STEMS.some((s) => w.includes(s))) idxBreath.push(i);
+    if (fuzzyMatchesAny(w, BREATH_DISTRESS_WORDS)) idxDistress.push(i);
+  });
+  return idxBreath.some((i) => idxDistress.some((j) => Math.abs(i - j) <= WORD_WINDOW));
+}
+
 export function hasRedFlag(text) {
   const flat = flatten(text);
-  return RED_FLAGS.some((f) => flat.includes(flatten(f)));
+  if (RED_FLAGS.some((f) => flat.includes(flatten(f)))) return true;
+  return hasNearbyDistress(flat.split(" "));
 }
 
 function systemPrompt(locale) {
