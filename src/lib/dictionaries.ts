@@ -41,6 +41,7 @@ export interface Dict {
     contact: string;
     about: string;
     pharmacieGarde: string;
+    assistantIa: string;
     menu: string;
     mainNav: string;
     breadcrumb: string;
@@ -98,8 +99,10 @@ export interface Dict {
 
   chat: {
     toggleLabel: string;
+    aiBadge: string;
     title: string;
     disclaimer: string;
+    learnMore: string;
     greeting: string;
     placeholder: string;
     send: string;
@@ -119,6 +122,7 @@ export interface Dict {
     or: string;
     allNumbers: string;
     pharmacieGarde: string;
+    assistantIa: string;
     samu: string;
     civil: string;
   };
@@ -214,6 +218,7 @@ const fr: Dict = {
     contact: "Contact",
     about: "À propos",
     pharmacieGarde: "Pharmacie de garde",
+    assistantIa: "Assistant IA",
     menu: "Menu",
     mainNav: "Navigation principale",
     breadcrumb: "Fil d'Ariane",
@@ -262,9 +267,11 @@ const fr: Dict = {
   illustration: "Image d'illustration",
 
   chat: {
-    toggleLabel: "Poser une question",
-    title: "Assistant Urgence Médicale",
+    toggleLabel: "Poser une question à l'assistant IA",
+    aiBadge: "IA",
+    title: "Assistant médical IA",
     disclaimer: "Ne remplace pas un médecin — pour un avis sur votre situation, appelez.",
+    learnMore: "En savoir plus",
     greeting:
       "Bonjour, je peux vous expliquer comment fonctionne le service et répondre à vos questions pratiques. Pour tout ce qui touche à votre santé, un médecin doit vous examiner : vous pouvez l'appeler à tout moment avec le bouton ci-dessous.",
     placeholder: "Écrivez votre message…",
@@ -284,6 +291,7 @@ const fr: Dict = {
     or: "ou le",
     allNumbers: "Tous les numéros d'urgence",
     pharmacieGarde: "Pharmacie de garde à Casablanca",
+    assistantIa: "Assistant médical IA",
     samu: "SAMU",
     civil: "Protection civile",
   },
@@ -372,6 +380,7 @@ const en: Dict = {
     contact: "Contact",
     about: "About us",
     pharmacieGarde: "On-call pharmacy",
+    assistantIa: "AI Assistant",
     menu: "Menu",
     mainNav: "Main navigation",
     breadcrumb: "Breadcrumb",
@@ -419,9 +428,11 @@ const en: Dict = {
   illustration: "Illustration",
 
   chat: {
-    toggleLabel: "Ask a question",
-    title: "Urgence Médicale Assistant",
+    toggleLabel: "Ask the AI assistant a question",
+    aiBadge: "AI",
+    title: "AI Medical Assistant",
     disclaimer: "Not a substitute for a doctor — call for advice on your situation.",
+    learnMore: "Learn more",
     greeting:
       "Hello, I can explain how the service works and answer practical questions. For anything about your health, a doctor needs to examine you: you can call at any time with the button below.",
     placeholder: "Type your message…",
@@ -441,6 +452,7 @@ const en: Dict = {
     or: "or",
     allNumbers: "All emergency numbers",
     pharmacieGarde: "On-call pharmacy in Casablanca",
+    assistantIa: "AI medical assistant",
     samu: "SAMU, medical emergencies",
     civil: "Civil Protection",
   },
@@ -529,6 +541,7 @@ const ar: Dict = {
     contact: "اتصل بنا",
     about: "من نحن",
     pharmacieGarde: "صيدلية الحراسة",
+    assistantIa: "المساعد الذكي",
     menu: "القائمة",
     mainNav: "القائمة الرئيسية",
     breadcrumb: "مسار التصفح",
@@ -575,9 +588,11 @@ const ar: Dict = {
   illustration: "صورة توضيحية",
 
   chat: {
-    toggleLabel: "اطرح سؤالاً",
-    title: "مساعد Urgence Médicale",
+    toggleLabel: "اطرح سؤالاً على المساعد الذكي",
+    aiBadge: "ذكاء اصطناعي",
+    title: "مساعد طبي بالذكاء الاصطناعي",
     disclaimer: "لا يعوض الطبيب — للحصول على رأي بخصوص حالتك، اتصل بنا.",
+    learnMore: "معرفة المزيد",
     greeting:
       "مرحباً، يمكنني أن أشرح لك كيف تعمل الخدمة وأجيب عن أسئلتك العملية. أما كل ما يتعلق بصحتك، فيجب أن يفحصك طبيب: يمكنك الاتصال في أي وقت عبر الزر أدناه.",
     placeholder: "اكتب رسالتك…",
@@ -597,6 +612,7 @@ const ar: Dict = {
     or: "أو",
     allNumbers: "جميع أرقام الطوارئ",
     pharmacieGarde: "صيدلية الحراسة بالدار البيضاء",
+    assistantIa: "المساعد الطبي الذكي",
     samu: "الإسعاف الطبي SAMU",
     civil: "الوقاية المدنية",
   },
