@@ -12,23 +12,30 @@ import { chatWidgetScript } from "@/lib/chat-widget";
  * mistake a bot's words for a person's, or for medical advice given by one.
  *
  * Source: assistantAI.png (1254², supplied), cropped to its circular content
- * and re-exported at 96/192px WebP — 5.7KB/13KB, in the same family as the
- * site's own mark-96/mark-192 (see SiteHeader). The original PNG stays out
- * of the repo; only the sizes actually served are committed.
+ * and re-exported at 96/192/288px WebP — 5.7KB/13KB/21KB, in the same family
+ * as the site's own mark-96/mark-192 (see SiteHeader). The original PNG
+ * stays out of the repo; only the sizes actually served are committed.
+ *
+ * Sized entirely through `className` (Tailwind's own height/width scale,
+ * including md: variants), never a fixed pixel prop — a badge that reads
+ * fine on a phone reads as an afterthought on a desktop screen with far
+ * more room and no thumb to reach it, so every call site below sizes up at
+ * `md:`. `sizes` mirrors that same breakpoint so the browser actually
+ * fetches the sharper source once the badge is displayed larger, rather
+ * than upscaling the small one.
  */
-function AiMark({ size, className = "" }: { size: number; className?: string }) {
+function AiMark({ className, sizes }: { className: string; sizes: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src="/images/assistant-ai-96.webp"
-      srcSet="/images/assistant-ai-96.webp 96w, /images/assistant-ai-192.webp 192w"
-      sizes={`${size}px`}
+      srcSet="/images/assistant-ai-96.webp 96w, /images/assistant-ai-192.webp 192w, /images/assistant-ai-288.webp 288w"
+      sizes={sizes}
       width={96}
       height={96}
       alt=""
       decoding="async"
       className={className}
-      style={{ width: size, height: size }}
     />
   );
 }
@@ -86,9 +93,9 @@ export function ChatWidget({
         aria-expanded="false"
         aria-controls="chat-panel"
         aria-label={t.toggleLabel}
-        className="fixed bottom-[5.75rem] end-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:bottom-5"
+        className="fixed bottom-[5.75rem] end-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:bottom-6 md:end-6 md:h-20 md:w-20"
       >
-        <AiMark size={48} className="rounded-full" />
+        <AiMark className="h-12 w-12 rounded-full md:h-16 md:w-16" sizes="(min-width: 768px) 64px, 48px" />
       </button>
 
       <div
@@ -97,12 +104,12 @@ export function ChatWidget({
         aria-modal="false"
         aria-label={t.title}
         hidden
-        className="fixed bottom-[9.5rem] end-3 start-3 z-40 flex max-h-[min(32rem,70vh)] flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_12px_36px_rgba(11,28,51,0.35)] md:bottom-24 md:start-auto md:end-5 md:w-[380px]"
+        className="fixed bottom-[9.5rem] end-3 start-3 z-40 flex max-h-[min(32rem,70vh)] flex-col overflow-hidden rounded-2xl border border-border bg-surface shadow-[0_12px_36px_rgba(11,28,51,0.35)] md:bottom-28 md:start-auto md:end-6 md:w-[380px]"
       >
         <div className="flex shrink-0 items-start justify-between gap-2 border-b border-border bg-primary px-4 py-3 text-on-primary">
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 truncate font-bold">
-              <AiMark size={22} className="shrink-0 rounded-full" />
+              <AiMark className="h-6 w-6 shrink-0 rounded-full md:h-7 md:w-7" sizes="28px" />
               {t.title}
             </p>
             <p className="mt-0.5 text-xs leading-snug text-on-primary-muted">
