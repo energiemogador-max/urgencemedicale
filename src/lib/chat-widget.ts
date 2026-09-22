@@ -135,6 +135,37 @@ try{
     if (ev.key === 'Escape' && !panel.hidden) close();
   });
 
+  /*
+   * Attention jump: the launcher hops twice, a few seconds after the page
+   * settles, so a visitor who hasn't noticed the assistant yet has a
+   * reason to look at the corner of the screen. Skipped outright if the
+   * chat is already open by then — someone already talking to it doesn't
+   * need the button under their thumb hopping around.
+   *
+   * The dismiss button (chat-dismiss) appears on the SAME schedule whether
+   * or not the animation actually ran: prefers-reduced-motion turns the
+   * jump into a no-op in CSS (see globals.css, .chat-jump), and a setTimeout
+   * matched to the animation's own duration is simpler and more robust
+   * here than listening for animationend, which would just never fire
+   * under that same setting and silently strand the dismiss control.
+   */
+  var dismissBtn = document.getElementById('chat-dismiss');
+  var wrapper = dismissBtn && dismissBtn.parentElement;
+  if (toggle && dismissBtn && wrapper) {
+    setTimeout(function () {
+      if (!panel.hidden) return;
+      toggle.classList.add('chat-jump');
+      setTimeout(function () {
+        dismissBtn.hidden = false;
+      }, 1500); // 2 iterations of the 0.7s jump, plus a small margin
+    }, 2500);
+
+    dismissBtn.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      wrapper.hidden = true;
+    });
+  }
+
   // Enter sends, Shift+Enter inserts a newline — a <textarea> submits on
   // neither by default, so both behaviours have to be wired by hand.
   input.addEventListener('keydown', function (ev) {

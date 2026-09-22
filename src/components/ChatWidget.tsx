@@ -87,16 +87,58 @@ export function ChatWidget({
         dangerouslySetInnerHTML={{ __html: textJson }}
       />
 
-      <button
-        id="chat-toggle"
-        type="button"
-        aria-expanded="false"
-        aria-controls="chat-panel"
-        aria-label={t.toggleLabel}
-        className="fixed bottom-[5.75rem] end-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:bottom-6 md:end-6 md:h-20 md:w-20"
-      >
-        <AiMark className="h-12 w-12 rounded-full md:h-16 md:w-16" sizes="(min-width: 768px) 64px, 48px" />
-      </button>
+      {/*
+        The launcher and its dismiss control are siblings in their own
+        positioning wrapper, not the X nested inside the button: a <button>
+        may not contain another interactive element, and the two need
+        independent click handling regardless (see chatWidgetScript).
+      */}
+      <div className="fixed bottom-[5.75rem] end-4 z-40 md:bottom-6 md:end-6">
+        <button
+          id="chat-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="chat-panel"
+          aria-label={t.toggleLabel}
+          className="relative flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:h-20 md:w-20"
+        >
+          <AiMark className="h-12 w-12 rounded-full md:h-16 md:w-16" sizes="(min-width: 768px) 64px, 48px" />
+          {/*
+            The mascot's own caption ("ASSISTANT-MEDICAL-IA") occupies well
+            under a tenth of the badge's height, so no button size fixes its
+            legibility — that text is structurally too small at icon scale,
+            on the source image itself, not a CSS sizing problem. Real text
+            in the DOM stays crisp at any size, so that carries the actual
+            "this is AI" label; the image supplies the identity, this the
+            guaranteed-readable one.
+          */}
+          <span
+            aria-hidden="true"
+            className="absolute -bottom-1 -end-1 whitespace-nowrap rounded-md bg-call px-1.5 py-0.5 text-[10px] font-black leading-none text-white ring-2 ring-surface md:text-xs"
+          >
+            {t.aiBadge}
+          </span>
+        </button>
+
+        {/*
+          Hidden until the attention jump finishes (chatWidgetScript adds
+          the .chat-jump class, then reveals this on the same timer) — a
+          visitor who has already found and opened the chat never needs a
+          way to make the launcher itself go away, so it stays out of the
+          way until the jump has had its one chance to be noticed.
+        */}
+        <button
+          id="chat-dismiss"
+          type="button"
+          aria-label={t.closeLabel}
+          hidden
+          className="absolute -top-1.5 -start-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-surface text-ink-muted shadow-[0_2px_8px_rgba(11,28,51,0.25)] ring-1 ring-border hover:text-ink md:h-7 md:w-7"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5">
+            <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
+          </svg>
+        </button>
+      </div>
 
       <div
         id="chat-panel"

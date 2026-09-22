@@ -397,3 +397,42 @@ html[lang="ar"] :is(h1, h2, h3) {
     animation: none;
   }
 }
+
+/* ---- Chat launcher jump ------------------------------------------------------
+ * A second, deliberate exception to "nothing else on the page animates"
+ * above — the chat launcher hops twice, a few seconds after a page settles,
+ * so a visitor who hasn't noticed the assistant yet has a reason to look at
+ * the corner of the screen (see chat-widget.ts for the timing). It holds
+ * itself to the same restraint as .rise: two hops and done, never a loop,
+ * and skipped entirely under reduced motion — a dismiss control still
+ * appears on the same schedule either way (see chat-widget.ts), just
+ * without the motion.
+ */
+@keyframes chat-jump {
+  0%,
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  20% {
+    transform: translateY(0) scale(1.08, 0.9);
+  }
+  45% {
+    transform: translateY(-16px) scale(0.92, 1.1);
+  }
+  60% {
+    transform: translateY(-16px) scale(0.92, 1.1);
+  }
+  80% {
+    transform: translateY(0) scale(1.06, 0.94);
+  }
+}
+
+.chat-jump {
+  animation: chat-jump 0.7s cubic-bezier(0.4, 0, 0.2, 1) 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-jump {
+    animation: none;
+  }
+}
