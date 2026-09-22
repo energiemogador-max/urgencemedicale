@@ -235,6 +235,9 @@ export function SiteFooter({
             </Link>{" · "}
             <Link href={L(paths.pharmacieGarde())} prefetch={false} className="text-on-primary underline">
               {t.footer.pharmacieGarde}
+            </Link>{" · "}
+            <Link href={L(paths.assistantIa())} prefetch={false} className="text-on-primary underline">
+              {t.footer.assistantIa}
             </Link>
           </p>
           <p className="shrink-0">

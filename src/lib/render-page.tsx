@@ -9,6 +9,7 @@ import { CityHubPage } from "@/components/templates/CityHubPage";
 import { QuartierPage } from "@/components/templates/QuartierPage";
 import { HomePage, homeMetadata } from "@/components/pages/HomePage";
 import { PharmacieGardePage, pharmacieGardeMetadata } from "@/components/pages/PharmacieGardePage";
+import { AssistantIaPage, assistantIaMetadata } from "@/components/pages/AssistantIaPage";
 import {
   AProposPage,
   ContactPage,
@@ -116,6 +117,8 @@ export function localePageMetadata(locale: TranslatedLocale, slug: string[] | un
       return numerosUrgenceMetadata(locale);
     case "pharmacieGarde":
       return pharmacieGardeMetadata(locale);
+    case "assistantIa":
+      return assistantIaMetadata(locale);
   }
 }
 
@@ -170,6 +173,8 @@ export function LocalePage({ locale, slug }: { locale: TranslatedLocale; slug: s
       return <NumerosUrgencePage locale={locale} />;
     case "pharmacieGarde":
       return <PharmacieGardePage locale={locale} />;
+    case "assistantIa":
+      return <AssistantIaPage locale={locale} />;
   }
 }
 

@@ -35,7 +35,8 @@ export type PageRef =
   | { kind: "contact" }
   | { kind: "reserver" }
   | { kind: "numerosUrgence" }
-  | { kind: "pharmacieGarde" };
+  | { kind: "pharmacieGarde" }
+  | { kind: "assistantIa" };
 
 export interface PageEntry {
   path: string;
@@ -92,6 +93,8 @@ export function allPages(): PageEntry[] {
   add(paths.numerosUrgence(), { kind: "numerosUrgence" }, 0.7, "monthly");
   // Daily: the rota changes every day, and the page is rebuilt every day.
   add(paths.pharmacieGarde(), { kind: "pharmacieGarde" }, 0.7, "daily");
+  // The AI assistant's own landing page — organic-search entry point.
+  add(paths.assistantIa(), { kind: "assistantIa" }, 0.6, "monthly");
   add(paths.tarifs(), { kind: "tarifs" }, 0.5, "yearly");
   add(paths.nosMedecins(), { kind: "nosMedecins" }, 0.5, "yearly");
   add(paths.aPropos(), { kind: "aPropos" }, 0.5, "yearly");
@@ -118,6 +121,7 @@ export function isPageTranslated(ref: PageRef, locale: "en" | "ar"): boolean {
     case "reserver":
     case "numerosUrgence":
     case "pharmacieGarde":
+    case "assistantIa":
       return shared && has("cities", "casablanca") && has("specialties", "generaliste");
     case "aPropos":
       return shared && has("aboutPage");

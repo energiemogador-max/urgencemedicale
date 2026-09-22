@@ -18,4 +18,5 @@ export const paths = {
   contact: () => "/contact",
   numerosUrgence: () => "/numeros-urgence-maroc",
   pharmacieGarde: () => "/pharmacie-de-garde-casablanca",
+  assistantIa: () => "/assistant-medical-ia",
 };

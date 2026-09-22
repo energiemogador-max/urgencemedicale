@@ -200,6 +200,9 @@ export function SiteHeader({
                   <Link href={L(paths.pharmacieGarde())} prefetch={false} className={mobileItemClass}>
                     {t.nav.pharmacieGarde}
                   </Link>
+                  <Link href={L(paths.assistantIa())} prefetch={false} className={mobileItemClass}>
+                    {t.nav.assistantIa}
+                  </Link>
                   <div className="mt-2 border-t border-border px-1 pt-3">
                     <LocaleSwitcher current={locale} />
                   </div>
@@ -261,6 +264,11 @@ export function SiteHeader({
             <li>
               <Link href={L(paths.pharmacieGarde())} prefetch={false} className={linkClass}>
                 {t.nav.pharmacieGarde}
+              </Link>
+            </li>
+            <li>
+              <Link href={L(paths.assistantIa())} prefetch={false} className={linkClass}>
+                {t.nav.assistantIa}
               </Link>
             </li>
 
