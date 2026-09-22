@@ -310,9 +310,16 @@ function OpenChatButton({ label }: { label: string }) {
       data-open-chat
       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-sm font-bold text-on-primary active:bg-primary-dark"
     >
-      <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4 shrink-0">
-        <path d="M12 2.5c.3 0 .55.2.63.48l1.4 4.9 4.9 1.4c.28.08.48.33.48.63s-.2.55-.48.63l-4.9 1.4-1.4 4.9a.65.65 0 0 1-1.26 0l-1.4-4.9-4.9-1.4a.65.65 0 0 1 0-1.26l4.9-1.4 1.4-4.9c.08-.28.33-.48.63-.48z" />
-      </svg>
+      {/* Same mark as the floating widget (ChatWidget.tsx) — one visual identity for the AI assistant, wherever it appears. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/assistant-ai-96.webp"
+        width={96}
+        height={96}
+        alt=""
+        decoding="async"
+        className="h-5 w-5 shrink-0 rounded-full"
+      />
       {label}
     </button>
   );
@@ -339,7 +346,20 @@ export function AssistantIaPage({ locale = "fr" }: { locale?: Locale }) {
       />
       <Breadcrumbs locale={locale} trail={[{ href: L(paths.home()), label: d.nav.home }, { label: t.title }]} />
 
-      <h1 className="mt-2 text-3xl font-bold text-ink">{t.title}</h1>
+      <div className="mt-2 flex items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/images/assistant-ai-96.webp"
+          srcSet="/images/assistant-ai-96.webp 96w, /images/assistant-ai-192.webp 192w, /images/assistant-ai-288.webp 288w"
+          sizes="64px"
+          width={96}
+          height={96}
+          alt=""
+          decoding="async"
+          className="h-16 w-16 shrink-0 rounded-full"
+        />
+        <h1 className="text-3xl font-bold text-ink">{t.title}</h1>
+      </div>
       <Lead>{t.lead}</Lead>
       <div className="mt-5">
         <OpenChatButton label={t.openChat} />

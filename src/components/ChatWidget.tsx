@@ -4,20 +4,32 @@ import { dict } from "@/lib/dictionaries";
 import { chatWidgetScript } from "@/lib/chat-widget";
 
 /**
- * The sparkle mark used everywhere this widget needs to say "this is AI,
- * not a person" — on the launcher button and again in the panel header.
- * A generic chat bubble reads as "customer support" to most people; this is
- * the added, deliberate signal, on top of the title text itself saying "IA"/
- * "AI"/"ذكاء اصطناعي" (Phase-agnostic rule this site follows throughout:
- * never let a visitor mistake a bot's words for a person's, or for medical
- * advice given by one).
+ * The mascot mark used everywhere this widget needs to say "this is AI, not
+ * a person" — as the launcher button's own face, and again, small, next to
+ * the panel title. A generic chat bubble reads as "customer support" to
+ * most people; this mark is the deliberate signal on top of the title text
+ * itself already saying "IA"/"AI"/"ذكاء اصطناعي": never let a visitor
+ * mistake a bot's words for a person's, or for medical advice given by one.
+ *
+ * Source: assistantAI.png (1254², supplied), cropped to its circular content
+ * and re-exported at 96/192px WebP — 5.7KB/13KB, in the same family as the
+ * site's own mark-96/mark-192 (see SiteHeader). The original PNG stays out
+ * of the repo; only the sizes actually served are committed.
  */
-function SparkleIcon({ className = "h-4 w-4" }: { className?: string }) {
+function AiMark({ size, className = "" }: { size: number; className?: string }) {
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M12 2.5c.3 0 .55.2.63.48l1.4 4.9 4.9 1.4c.28.08.48.33.48.63s-.2.55-.48.63l-4.9 1.4-1.4 4.9a.65.65 0 0 1-1.26 0l-1.4-4.9-4.9-1.4a.65.65 0 0 1 0-1.26l4.9-1.4 1.4-4.9c.08-.28.33-.48.63-.48z" />
-      <path d="M19 15.5c.2 0 .38.14.44.33l.5 1.7 1.7.5a.46.46 0 0 1 0 .88l-1.7.5-.5 1.7a.46.46 0 0 1-.88 0l-.5-1.7-1.7-.5a.46.46 0 0 1 0-.88l1.7-.5.5-1.7a.46.46 0 0 1 .44-.33z" />
-    </svg>
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/images/assistant-ai-96.webp"
+      srcSet="/images/assistant-ai-96.webp 96w, /images/assistant-ai-192.webp 192w"
+      sizes={`${size}px`}
+      width={96}
+      height={96}
+      alt=""
+      decoding="async"
+      className={className}
+      style={{ width: size, height: size }}
+    />
   );
 }
 
@@ -74,18 +86,9 @@ export function ChatWidget({
         aria-expanded="false"
         aria-controls="chat-panel"
         aria-label={t.toggleLabel}
-        className="fixed bottom-[5.75rem] end-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-on-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:bottom-5"
+        className="fixed bottom-[5.75rem] end-4 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-primary shadow-[0_6px_20px_rgba(11,28,51,0.35)] active:bg-primary-dark md:bottom-5"
       >
-        <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor" className="h-7 w-7">
-          <path d="M12 2C6.5 2 2 5.9 2 10.7c0 2.6 1.3 4.9 3.4 6.5-.1.9-.5 2.3-1.3 3.7-.2.3 0 .7.4.6 1.9-.4 3.5-1.1 4.4-1.6.9.2 1.9.3 3.1.3 5.5 0 10-3.9 10-8.7S17.5 2 12 2z" />
-        </svg>
-        {/* The AI mark, before anyone even opens the panel. */}
-        <span
-          aria-hidden="true"
-          className="absolute -top-1 -end-1 flex h-5 w-5 items-center justify-center rounded-full bg-call text-white ring-2 ring-surface"
-        >
-          <SparkleIcon className="h-3 w-3" />
-        </span>
+        <AiMark size={48} className="rounded-full" />
       </button>
 
       <div
@@ -99,7 +102,7 @@ export function ChatWidget({
         <div className="flex shrink-0 items-start justify-between gap-2 border-b border-border bg-primary px-4 py-3 text-on-primary">
           <div className="min-w-0">
             <p className="flex items-center gap-1.5 truncate font-bold">
-              <SparkleIcon className="h-4 w-4 shrink-0 text-primary-bright" />
+              <AiMark size={22} className="shrink-0 rounded-full" />
               {t.title}
             </p>
             <p className="mt-0.5 text-xs leading-snug text-on-primary-muted">
