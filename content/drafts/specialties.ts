@@ -24,7 +24,7 @@ Ce service ne remplace pas une prise en charge d'urgence vitale : en cas de dét
   },
   generaliste: {
     intro:
-      "Le médecin généraliste est le spécialiste le plus demandé en visite à domicile : il prend en charge la grande majorité des motifs de consultation courants, de la fièvre chez l'adulte à une petite plaie à nettoyer, en passant par le renouvellement d'une ordonnance. Il se déplace chez vous avec le même niveau d'examen qu'en cabinet, sans les délais d'une salle d'attente.",
+      "Le médecin généraliste est le spécialiste le plus demandé en visite à domicile. Il prend en charge la grande majorité des motifs courants — fièvre chez l'adulte, petite plaie, renouvellement d'ordonnance — avec le même niveau d'examen qu'en cabinet, sans les délais d'une salle d'attente.",
     body: `Faire appel à un médecin généraliste à domicile est la solution la plus courante pour toute personne qui se sent mal sans que la situation ne justifie un passage aux urgences : un adulte fiévreux qui n'a pas la force de se déplacer, un parent qui préfère ne pas sortir un enfant malade, une personne immobilisée après une petite blessure, ou simplement quelqu'un qui manque de temps pour un rendez-vous en cabinet. C'est le premier réflexe pour la grande majorité des appels reçus par ce service.
 
 La consultation à domicile reprend les mêmes étapes qu'une consultation en cabinet : interrogatoire, examen clinique complet (tension artérielle, auscultation, température, palpation selon le motif), puis diagnostic et, si nécessaire, prescription. Le généraliste peut aussi effectuer certains gestes simples sur place, comme le nettoyage et le pansement d'une petite plaie, et orienter vers un examen complémentaire ou un avis spécialisé quand la situation le demande.
@@ -39,7 +39,7 @@ Ce service ne remplace pas une prise en charge d'urgence vitale. En cas de signe
   },
   geriatre: {
     intro:
-      "Un gériatre peut se déplacer chez une personne âgée pour une consultation ou un suivi adaptés, sans lui imposer un trajet ni une attente qui peut être pénible en cas de difficultés à se déplacer. L'examen se déroule dans un cadre familier et à un rythme adapté, aussi complet qu'en cabinet.",
+      "Un gériatre peut se déplacer chez une personne âgée pour une consultation ou un suivi adaptés. Cela évite un trajet et une attente pénibles en cas de difficultés à se déplacer, dans un cadre familier et à un rythme adapté, aussi complet qu'en cabinet.",
     body: `La visite à domicile prend tout son sens pour les personnes âgées, chez qui un déplacement vers un cabinet peut représenter une réelle difficulté : arthrose, séquelles d'un accident vasculaire cérébral, essoufflement à l'effort, ou simple fatigue liée à l'âge. Elle s'adresse aussi bien à une personne qui vit seule qu'à celle qui est accompagnée par sa famille ou un aidant, et évite l'organisation d'un transport et l'attente en salle commune.
 
 Le gériatre effectue un examen clinique complet et prend le temps d'un entretien approfondi, souvent plus difficile à obtenir lors d'une consultation courte en cabinet. Il évalue l'état général, l'autonomie dans les gestes du quotidien, l'équilibre et le risque de chute, et peut faire le point sur l'ensemble des traitements en cours avec la personne et, si elle le souhaite, avec son entourage.
@@ -71,7 +71,7 @@ Ce service ne remplace pas une prise en charge d'urgence vitale : en cas de sign
   },
   urgentiste: {
     intro:
-      "Un médecin urgentiste peut se déplacer rapidement à domicile lorsqu'une situation demande une évaluation médicale sans délai, mais ne relève pas d'une urgence vitale nécessitant les services d'urgence. En cas d'urgence vitale — perte de connaissance, difficulté à respirer, hémorragie importante, par exemple — il faut appeler directement les services d'urgence plutôt que ce service.",
+      "Un médecin urgentiste peut se déplacer rapidement à domicile pour une évaluation médicale sans délai, en dehors d'une urgence vitale. Perte de connaissance, difficulté à respirer, hémorragie importante : ces signes relèvent directement des services d'urgence, pas de ce service.",
     body: `Ce service ne remplace en aucun cas un appel aux services d'urgence en cas de danger vital. Face à une perte de connaissance, une difficulté respiratoire sévère, une hémorragie qui ne s'arrête pas ou tout autre signe faisant craindre un danger immédiat, la priorité est d'appeler les services d'urgence, qui peuvent envoyer une ambulance et amorcer une prise en charge pendant le trajet vers un service hospitalier. Un médecin urgentiste à domicile est adapté à des situations différentes : une prise en charge nécessaire rapidement, mais qui ne présente pas ce caractère de danger immédiat.
 
 L'urgentiste est formé à l'évaluation rapide d'une situation clinique et à la prise de décision sous contrainte de temps. À domicile, il peut examiner une personne dont l'état s'est dégradé en quelques heures, évaluer la gravité réelle d'un symptôme qui inquiète, poser les premiers gestes ou traitements nécessaires, et décider sur place s'il faut orienter vers un service hospitalier ou si une prise en charge à domicile suffit.

@@ -357,7 +357,7 @@ const fr: Dict = {
     cityHub: (c) => `Médecin à domicile à ${c}`,
     quartier: (q, c) => `Médecin à domicile ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
-      `Médecin à domicile à ${q} (${c}), ${h} : intervention en ${r} min, consultation dès ${p}, tarif annoncé avant la visite.`,
+      `Un médecin vient vous examiner à ${q} (${c}), ${h}. Arrivée en ${r} min, consultation dès ${p}, tarif confirmé avant la visite.`,
   },
 };
 
@@ -518,7 +518,7 @@ const en: Dict = {
     cityHub: (c) => `Doctor at home in ${c}`,
     quartier: (q, c) => `Doctor at home in ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
-      `Doctor at home in ${q} (${c}), ${h}: arrival in ${r} min, consultation from ${p}, fee quoted before the visit.`,
+      `A doctor comes to examine you in ${q} (${c}), ${h}. Arrival in ${r} min, consultation from ${p}, fee confirmed before the visit.`,
   },
 };
 
@@ -678,7 +678,7 @@ const ar: Dict = {
     cityHub: (c) => `طبيب في المنزل في ${c}`,
     quartier: (q, c) => `طبيب في المنزل في ${q}، ${c}`,
     quartierDescription: (q, c, h, r, p) =>
-      `طبيب في المنزل في ${q} (${c})، ${h}: الوصول خلال ${r} دقيقة، الاستشارة ابتداءً من ${p}، والسعر يُعلن قبل الزيارة.`,
+      `يأتي طبيب لفحصك في ${q} (${c})، ${h}. الوصول خلال ${r} دقيقة، الاستشارة ابتداءً من ${p}، والسعر يُؤكد قبل الزيارة.`,
   },
 };
 

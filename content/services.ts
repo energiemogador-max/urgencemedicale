@@ -33,7 +33,7 @@ const SERVICE_ENTRIES: Service[] = [
     shortDescription: "Service ambulancier et transport sanitaire par la route, vers ou depuis un établissement de santé.",
     geoMultiplied: false,
     intro:
-      "Une ambulance permet de transporter par la route une personne dont l'état ne permet pas de prendre un véhicule ordinaire — vers un hôpital ou une clinique, entre deux établissements, ou pour le retour au domicile. La demande se fait par téléphone.",
+      "Une ambulance transporte par la route une personne dont l'état ne permet pas un véhicule ordinaire. Elle est utilisée vers un hôpital ou une clinique, entre deux établissements, ou pour un retour au domicile ; la demande se fait par téléphone.",
     body: `On cherche un service ambulancier dans deux situations très différentes, et il vaut mieux les distinguer tout de suite.
 
 La première est l'urgence vitale : quelqu'un ne respire plus normalement, a perdu connaissance, saigne abondamment, ou vient d'avoir un accident. Dans ce cas, ce ne sont pas ces pages qu'il faut lire : il faut contacter immédiatement les services d'urgence, qui disposent des moyens de réanimation et de la priorité de circulation nécessaires. Aucun transport programmé ne remplace cela, et perdre cinq minutes à chercher un numéro privé est exactement ce qu'il ne faut pas faire.
@@ -60,7 +60,7 @@ Une fois ces éléments connus, le tarif vous est annoncé avant le départ, pou
     shortDescription: "Infirmier à domicile : injections, pansements, perfusions et suivi infirmier réalisés chez vous.",
     geoMultiplied: true,
     intro:
-      "Un infirmier peut se déplacer à votre domicile pour réaliser les soins prescrits par votre médecin, sans que vous ayez à vous rendre en cabinet ou en clinique. C'est particulièrement utile pour des soins répétés sur plusieurs jours, ou pour une personne dont les déplacements sont difficiles.",
+      "Un infirmier peut se déplacer à votre domicile pour réaliser les soins prescrits par votre médecin, sans vous rendre en cabinet ou en clinique. C'est particulièrement utile pour des soins répétés sur plusieurs jours, ou pour une personne dont les déplacements sont difficiles.",
     body: `Les soins infirmiers à domicile couvrent les actes courants qu'un infirmier réalise sur prescription médicale : injections, pose et surveillance de perfusion, pansements et réfection de pansements, prise de constantes, aide à l'observance d'un traitement. L'infirmier intervient sur la base de l'ordonnance établie par le médecin — il ne prescrit pas lui-même et ne modifie pas un traitement en cours.
 
 Ce mode de prise en charge s'adresse en priorité aux situations où le déplacement est le vrai obstacle : une personne âgée dont la mobilité est réduite, un patient en convalescence après une hospitalisation, une personne immobilisée par une fracture ou une intervention, ou simplement un traitement qui demande un passage quotidien pendant plusieurs jours. Faire venir l'infirmier évite alors un aller-retour répété qui, sur une semaine de soins, représente une contrainte disproportionnée.
@@ -81,7 +81,7 @@ Le tarif dépend des actes prescrits et du nombre de passages ; il vous est comm
     shortDescription: "Mise en place et suivi d'un traitement par oxygène au domicile du patient, matériel fourni.",
     geoMultiplied: false,
     intro:
-      "L'oxygénothérapie à domicile permet à un patient de suivre chez lui un traitement par oxygène prescrit par son médecin, sans rester hospitalisé pour cette seule raison. Nous fournissons le matériel, assurons son installation et le suivi.",
+      "L'oxygénothérapie à domicile permet à un patient de suivre chez lui un traitement par oxygène prescrit par son médecin. Cela évite une hospitalisation pour cette seule raison ; nous fournissons le matériel, assurons son installation et le suivi.",
     body: `L'oxygénothérapie est prescrite lorsqu'un patient a besoin d'un apport en oxygène que l'air ambiant ne suffit pas à couvrir. C'est le médecin qui pose l'indication, fixe le débit et la durée quotidienne, et décide de la poursuite ou de l'arrêt du traitement. Le rôle du service à domicile est de rendre cette prescription applicable chez le patient : apporter le matériel, l'installer, expliquer son usage, et revenir aussi souvent que le suivi l'exige.
 
 Le déroulement commence par l'ordonnance. Elle est indispensable, car c'est elle qui détermine ce qui est installé et à quel réglage. À la première visite, le matériel est mis en place à l'endroit du logement qui convient le mieux : en général près de l'endroit où la personne passe le plus de temps, avec une prise électrique accessible et un dégagement suffisant autour de l'appareil. Le fonctionnement est expliqué au patient et, quand il y en a un, à l'aidant qui vit avec lui : mise en marche, arrêt, ce qu'il faut surveiller, et qui appeler en cas de doute.
@@ -101,7 +101,7 @@ Ce service ne remplace pas une prise en charge d'urgence. Si la respiration de l
       "Prise en charge continue à domicile sur plusieurs jours ou semaines, coordonnée entre médecin et infirmiers.",
     geoMultiplied: false,
     intro:
-      "L'hospitalisation à domicile organise chez le patient une prise en charge continue sur plusieurs jours ou plusieurs semaines : visites médicales, soins infirmiers et surveillance coordonnés dans le temps, plutôt qu'un séjour en établissement.",
+      "L'hospitalisation à domicile organise chez le patient une prise en charge continue sur plusieurs jours ou semaines. Visites médicales, soins infirmiers et surveillance y sont coordonnés dans le temps, plutôt qu'un séjour en établissement.",
     body: `L'hospitalisation à domicile ne se confond ni avec une visite ponctuelle, ni avec un simple suivi. C'est une prise en charge organisée dans la durée, où le passage du médecin, celui de l'infirmier et la surveillance de l'état du patient sont planifiés ensemble et ajustés au fil des jours. Le patient reste chez lui, dans son cadre de vie, entouré des siens, pendant que les soins qui justifieraient autrement un séjour hospitalier lui sont apportés à domicile.
 
 La mise en place part toujours d'une décision médicale. Un médecin évalue si la situation s'y prête : la nature des soins nécessaires, leur fréquence, la stabilité de l'état de la personne, et les conditions du domicile. Toutes les situations ne relèvent pas de ce mode de prise en charge, et c'est précisément le rôle de cette évaluation initiale de le déterminer. Elle définit ensuite le contenu du programme, quels soins et à quelle fréquence, avec quelle surveillance ; ce programme est réévalué régulièrement plutôt que fixé une fois pour toutes.
@@ -120,7 +120,7 @@ Ce mode de prise en charge ne remplace pas les services d'urgence, et il ne conv
     shortDescription: "Transfert d'un patient par la route entre villes ou entre établissements de santé au Maroc.",
     geoMultiplied: false,
     intro:
-      "L'évacuation sanitaire consiste à transférer un patient par la route, d'une ville à une autre ou d'un établissement de santé à un autre, dans des conditions adaptées à son état. Le transfert se réserve par téléphone.",
+      "L'évacuation sanitaire consiste à transférer un patient par la route, d'une ville à une autre ou entre deux établissements de santé. Le transfert, adapté à l'état du patient, se réserve par téléphone.",
     body: `Une évacuation sanitaire répond à un besoin précis : un patient doit être déplacé sur une distance que son état ne lui permet pas de parcourir dans un véhicule ordinaire. Les motifs les plus courants sont le transfert vers un établissement disposant d'un plateau technique ou d'une spécialité absente sur place, le rapprochement d'un patient de sa famille dans une autre ville, et le retour au domicile après une prise en charge loin de chez soi.
 
 Ces transferts se font par la route, à l'intérieur du territoire marocain. C'est une précision utile, car les distances entre les grandes villes marocaines sont réelles : un trajet entre Casablanca et Marrakech, Fès ou Tanger représente plusieurs heures de route, et cette durée fait partie des éléments à prendre en compte pour un patient fragile. Elle influe sur l'heure de départ retenue, sur l'organisation des pauses, et sur ce qu'il faut prévoir pour le confort de la personne pendant le trajet.
@@ -139,7 +139,7 @@ Pour un transfert programmé, réservez à l'avance : cela laisse le temps d'org
     shortDescription: "Transport d'un patient vers ou depuis un établissement de santé.",
     geoMultiplied: false,
     intro:
-      "Le transport médicalisé permet d'acheminer un patient vers un établissement de santé, ou de le ramener à son domicile, dans des conditions adaptées à son état. Il se réserve par téléphone, en précisant l'état de la personne et la destination.",
+      "Le transport médicalisé permet d'acheminer un patient vers un établissement de santé, ou de le ramener à son domicile. Il se réserve par téléphone, en précisant l'état de la personne, la destination, et les conditions adaptées nécessaires.",
     body: `Le transport médicalisé répond à un besoin distinct de la consultation à domicile : il ne s'agit pas de faire venir un médecin, mais de déplacer un patient qui ne peut pas être transporté dans un véhicule ordinaire. Les motifs les plus fréquents sont le trajet vers un examen ou une intervention programmée, le retour au domicile après une hospitalisation, et le transfert entre deux établissements.
 
 Au moment de l'appel, plusieurs éléments sont demandés : l'adresse de départ et la destination, l'état général de la personne à transporter, si elle peut se déplacer seule ou non, et s'il existe des contraintes d'accès au domicile — un étage sans ascenseur, un couloir étroit, un portail à faire ouvrir. Ces informations déterminent la manière dont le transport est organisé, et les donner précisément dès l'appel évite des difficultés à l'arrivée.
