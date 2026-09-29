@@ -4,6 +4,7 @@ import { content, getCityBySlug, getQuartierBySlug, getQuartiersForCity } from "
 import { paths } from "@/lib/urls";
 import { QuartierPage } from "@/components/templates/QuartierPage";
 import { pageMetadata } from "@/lib/seo";
+import { dict } from "@/lib/dictionaries";
 
 export const dynamicParams = false;
 
@@ -39,14 +40,18 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
    * a dry fact list, and split into two sentences so a very long quartier
    * name (e.g. "Centre de Dar Bouazza") degrades to a complete short
    * sentence instead of Google truncating mid-clause — verified against
-   * every quartier's actual name length before shipping. Kept in sync by
-   * hand with the dictionary version; there is no single source for this
-   * one string across fr/en/ar because French still has its own route
-   * tree rather than going through the shared dispatcher.
+   * every quartier's actual name length before shipping.
+   *
+   * It now calls the dictionary builders directly, so fr/en/ar share one
+   * source and the two copies cannot drift apart again.
    */
-  const { business, pricing } = content;
-  const description = `Un médecin vient vous examiner à ${quartier.name} (${city.name}), ${business.hoursOpen}. Arrivée en ${quartier.responseTimeMinutes} min, consultation dès ${pricing.tiers[0]?.amountMad} ${pricing.currency}, tarif confirmé avant la visite.`;
-  return pageMetadata({ title: `Médecin à domicile ${quartier.name}, ${city.name}`, description, path: paths.quartier(city.slug, quartier.slug) });
+  const t = dict("fr");
+  const price = `${content.pricing.tiers[0]?.amountMad} ${t.currency}`;
+  return pageMetadata({
+    title: t.meta.quartier(quartier.name, city.name),
+    description: t.meta.quartierDescription(quartier.name, city.name, t.hours247, t.range(quartier.responseTimeMinutes), price),
+    path: paths.quartier(city.slug, quartier.slug),
+  });
 }
 
 export default async function Page({ params }: { params: Params }) {

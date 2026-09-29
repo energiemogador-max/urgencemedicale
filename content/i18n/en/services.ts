@@ -68,7 +68,7 @@ This service does not replace emergency care. If the person's breathing clearly 
       name: "Hospital-at-home",
       shortDescription: "Continuous care at home over days or weeks, coordinated between doctor and nurses.",
       intro:
-        "Hospital-at-home organises continuous care at the patient's home over several days or weeks: medical visits, nursing care and monitoring coordinated over time, instead of a stay in a facility.",
+        "Hospital-at-home organises continuous care at the patient's home over several days or weeks. Medical visits, nursing care and monitoring are coordinated over time, instead of a stay in a facility.",
       body: `Hospital-at-home is neither a one-off visit nor simple follow-up. It is care organised over time, where the doctor's visits, the nurse's visits and the monitoring of the patient's condition are planned together and adjusted as the days go on. The patient stays at home, in their own surroundings, with their family around them, while care that would otherwise mean a hospital stay is brought to them.
 
 Setting it up always starts with a medical decision. A doctor assesses whether the situation is suitable: the kind of care needed, how often, how stable the person's condition is, and the conditions at home. Not every situation is suitable, and that initial assessment exists precisely to determine it. It then defines what the programme contains — which care, how often, with what monitoring — and the programme is reviewed regularly rather than fixed once and for all.

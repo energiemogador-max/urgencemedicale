@@ -31,6 +31,14 @@ interface FaqText {
   serviceRequest: (name: string, phone: string) => FaqEntry;
   serviceSpecific: (secours: string) => Record<ServiceSlug, FaqEntry>;
   serviceExtra: Partial<Record<ServiceSlug, FaqEntry[]>>;
+  /**
+   * "SOS médecin" is what much of Morocco types when it wants a doctor at
+   * home, and competitors lead their titles with it. Some of those searchers
+   * mean the SOS Médecins organisation itself, so the honest move is to say
+   * plainly that we are not it — which also puts the phrase on the page
+   * without borrowing anyone's name.
+   */
+  sos: (brand: string) => FaqEntry;
 }
 
 const FR: FaqText = {
@@ -128,6 +136,10 @@ const FR: FaqText = {
       },
     ],
   },
+  sos: (brand) => ({
+    question: "Êtes-vous SOS Médecins ?",
+    answer: `Non. Nous sommes ${brand}, un service distinct, avec nos propres médecins, nommés sur la page Nos médecins, et des tarifs publiés à l'avance. Beaucoup de personnes disent « SOS médecin » pour désigner un médecin qui se déplace en urgence à domicile : c'est ce service que nous assurons.`,
+  }),
 };
 
 const EN: FaqText = {
@@ -218,6 +230,10 @@ const EN: FaqText = {
       },
     ],
   },
+  sos: (brand) => ({
+    question: "Are you SOS Médecins?",
+    answer: `No. We are ${brand}, a separate service with our own doctors, named on the Our doctors page, and fees published in advance. Many people say “SOS médecin” for any doctor who comes to the home urgently: that is the service we provide.`,
+  }),
 };
 
 const AR: FaqText = {
@@ -308,6 +324,10 @@ const AR: FaqText = {
       },
     ],
   },
+  sos: (brand) => ({
+    question: "هل أنتم SOS Médecins؟",
+    answer: `لا. نحن ${brand}، خدمة مختلفة، بأطبائنا الخاصين المذكورة أسماؤهم في صفحة أطبائنا، وبأسعار منشورة مسبقًا. ويستعمل كثيرون عبارة «SOS médecin» للإشارة إلى أي طبيب يتنقل إلى المنزل بشكل مستعجل: وهذه هي الخدمة التي نقدمها.`,
+  }),
 };
 
 const TEXTS: Record<Locale, FaqText> = { fr: FR, en: EN, ar: AR };
@@ -324,9 +344,15 @@ export function faqs(locale: Locale = "fr") {
   const common = (): FaqEntry[] =>
     x.common(t.hoursProse, x.secours).map((e) => (e.answer === "" ? { ...e, answer: priceAnswer() } : e));
 
+  const sos = (): FaqEntry => x.sos(content.business.legalName);
+
   return {
-    homeFaqs: (): FaqEntry[] => common(),
-    cityFaqs: (cityName: string): FaqEntry[] => [x.city(cityName, t.hoursProse), ...common()],
+    /** For pages with no topic of their own (/tarifs, /a-propos, /reserver). */
+    generalFaqs: (): FaqEntry[] => common(),
+    /* The SOS answer goes only where people land from "SOS médecin" searches:
+       the homepage and the city hubs, not on every page. */
+    homeFaqs: (): FaqEntry[] => [...common(), sos()],
+    cityFaqs: (cityName: string): FaqEntry[] => [x.city(cityName, t.hoursProse), ...common(), sos()],
     quartierFaqs: (quartierName: string, responseTimeMinutes: string): FaqEntry[] => [
       x.quartier(quartierName, t.range(responseTimeMinutes)),
       ...common(),

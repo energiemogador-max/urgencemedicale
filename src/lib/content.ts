@@ -13,6 +13,15 @@ export function getCityBySlug(slug: string) {
   return content.cities.find((c) => c.slug === slug);
 }
 
+/**
+ * True when every doctor lists this language, as the French content writes it
+ * ("Anglais"). A page may promise a language only then: the caller cannot
+ * choose which doctor comes.
+ */
+export function everyDoctorSpeaks(language: string): boolean {
+  return content.doctors.length > 0 && content.doctors.every((d) => d.languages.includes(language));
+}
+
 export function getQuartiersForCity(citySlug: CitySlug) {
   return content.quartiers.filter((q) => q.citySlug === citySlug);
 }

@@ -7,7 +7,7 @@ import {
   type SituationSlug,
   type SpecialtySlug,
 } from "@content/schema";
-import { content } from "@/lib/content";
+import { content, everyDoctorSpeaks } from "@/lib/content";
 import { api } from "@/lib/locale-content";
 import { paths } from "@/lib/urls";
 import type { Locale } from "@/lib/i18n";
@@ -29,6 +29,33 @@ import { pageMetadata } from "@/lib/seo";
  * default locale; the /en and /ar dispatchers (src/lib/render-page.tsx) pass
  * theirs.
  */
+
+// ---- city hub (/medecin-a-domicile/{city}) ---------------------------------
+
+/**
+ * One builder for the French route and the /en, /ar dispatcher. The quartier
+ * description once lived in two copies and the French one silently stopped
+ * matching the other two; city hubs don't get a second copy.
+ *
+ * The description is no longer the city intro. That is written for a reader
+ * who has already arrived; a searcher choosing between results needs the
+ * delay, the hours and the price, and every competitor in the 2026-09-29
+ * sweep put at least one of them in its snippet.
+ */
+export function cityHubMetadata(citySlug: string, locale: Locale = "fr"): Metadata {
+  const a = api(locale);
+  const t = dict(locale);
+  const city = a.getCityBySlug(citySlug);
+  if (!city) return {};
+  const price = `${a.content.pricing.tiers[0]?.amountMad} ${t.currency}`;
+  const range = t.range(a.content.business.defaultResponseTimeMinutes);
+  return pageMetadata({
+    title: t.meta.cityHub(city.name),
+    description: t.meta.cityDescription(city.name, range, price, everyDoctorSpeaks("Anglais")),
+    path: paths.cityHub(city.slug),
+    locale,
+  });
+}
 
 // ---- specialty hub (/{specialty}-a-domicile) -------------------------------
 
@@ -122,19 +149,32 @@ export function CitySpecialtyRoute({
  * for a local query the city is what makes the result look like the right
  * answer. Only hub pages go through here: city and quartier pages already
  * name their own place.
+ *
+ * Except a hub that has its own page for that city. Scoped, /medecin-de-garde
+ * carried exactly the title of /medecin-de-garde/casablanca, and Search
+ * Console (2026-09-29) shows what that did: the hub took 79 impressions for
+ * "médecin de garde" while the Casablanca page, the one written for that
+ * search, had none at all. /ambulance and /ambulance/casablanca were twins in
+ * the same way. Such a hub keeps its plain title and leaves each city's
+ * search to that city's page.
  */
-function withCityScope(title: string, locale: Locale): string {
-  const city = api(locale).content.business.address.city;
+function withCityScope(title: string, locale: Locale, citySpokes: readonly string[]): string {
+  const a = api(locale);
+  const city = a.content.business.address.city;
+  const mainCitySlug = a.content.cities.find((c) => c.name === city)?.slug;
+  if (mainCitySlug && citySpokes.includes(mainCitySlug)) return title;
   if (title.includes(city)) return title;
   const scoped = dict(locale).inCity(title, city);
   return scoped.length <= 60 ? scoped : title;
 }
 
 export function situationMetadata(situationSlug: SituationSlug, locale: Locale = "fr"): Metadata {
-  const situation = api(locale).getSituationBySlug(situationSlug);
+  const a = api(locale);
+  const situation = a.getSituationBySlug(situationSlug);
   if (!situation) return {};
+  const spokes = situation.geoMultiplied ? a.getCitiesForSituation(situation.slug).map((sc) => sc.citySlug) : [];
   return pageMetadata({
-    title: withCityScope(situation.title, locale),
+    title: withCityScope(situation.title, locale, spokes),
     description: situation.intro,
     path: paths.situation(situation.slug),
     locale,
@@ -173,9 +213,20 @@ export function situationCityMetadata(situationSlug: SituationSlug, citySlug: st
   const city = a.getCityBySlug(citySlug);
   const sc = situation && city ? a.getSituationCity(situation.slug, city.slug) : undefined;
   if (!situation || !city || !sc) return {};
+  const t = dict(locale);
+  const { business, pricing } = a.content;
+  const money = (amount: string | undefined) => `${amount} ${t.currency}`;
+  const snippet = t.meta.situationCityDescription[situation.slug];
   return pageMetadata({
-    title: dict(locale).meta.situationCity(situation.title, city.name),
-    description: sc.intro,
+    title: t.meta.situationCity(situation.title, city.name),
+    description: snippet
+      ? snippet(
+          city.name,
+          t.range(business.defaultResponseTimeMinutes),
+          money(pricing.tiers[0]?.amountMad),
+          money(pricing.tiers[1]?.amountMad)
+        )
+      : sc.intro,
     path: paths.situationCity(situation.slug, city.slug),
     locale,
   });
@@ -210,10 +261,12 @@ export function SituationCityRoute({
 // ---- service standalone (/{service}) ---------------------------------------
 
 export function serviceMetadata(serviceSlug: ServiceSlug, locale: Locale = "fr"): Metadata {
-  const service = api(locale).getServiceBySlug(serviceSlug);
+  const a = api(locale);
+  const service = a.getServiceBySlug(serviceSlug);
   if (!service) return {};
+  const spokes = a.getCitiesForService(service.slug).map((sc) => sc.citySlug);
   return pageMetadata({
-    title: withCityScope(service.name, locale),
+    title: withCityScope(service.name, locale, spokes),
     description: service.intro,
     path: paths.service(service.slug),
     locale,
@@ -252,9 +305,11 @@ export function serviceCityMetadata(serviceSlug: ServiceSlug, citySlug: string, 
   const city = a.getCityBySlug(citySlug);
   const sc = service && city ? a.getServiceCity(service.slug, city.slug) : undefined;
   if (!service || !city || !sc) return {};
+  const t = dict(locale);
+  const snippet = t.meta.serviceCityDescription[service.slug];
   return pageMetadata({
-    title: dict(locale).meta.serviceCity(service.name, city.name),
-    description: sc.intro,
+    title: t.meta.serviceCity(service.name, city.name),
+    description: snippet ? snippet(city.name) : sc.intro,
     path: paths.serviceCity(service.slug, city.slug),
     locale,
   });

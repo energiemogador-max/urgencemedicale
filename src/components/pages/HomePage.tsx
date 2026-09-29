@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { isUnconfirmed } from "@content/schema";
 import { api } from "@/lib/locale-content";
+import { everyDoctorSpeaks } from "@/lib/content";
 import { TrustBlock } from "@/components/TrustBlock";
 import { Reviews } from "@/components/Reviews";
 import { LiveStatus } from "@/components/LiveStatus";
@@ -31,7 +32,8 @@ import { pageMetadata } from "@/lib/seo";
  */
 interface HomeText {
   metaTitle: string;
-  metaDescription: (brand: string, range: string) => string;
+  /** `englishSpoken`: see Dict.meta.cityDescription. */
+  metaDescription: (range: string, price: string, englishSpoken: boolean) => string;
   heroTitle: string;
   heroAccent: string;
   heroLead: (cities: string) => string;
@@ -67,8 +69,15 @@ interface HomeText {
 
 const TEXT: Record<Locale, HomeText> = {
   fr: {
-    metaTitle: "Médecin à domicile Casablanca et Rabat 24/7",
-    metaDescription: (b, r) => `${b} envoie un médecin à domicile en ${r} minutes.`,
+    /*
+     * 43 characters, the most that still leaves room for the phone number
+     * (src/lib/seo.ts). The description carries what searchers compare on —
+     * delay, hours, price — plus the "SOS médecin" wording they type; see
+     * Dict.meta.cityDescription for how that phrase is used.
+     */
+    metaTitle: "Médecin à domicile 24h/24 Casablanca, Rabat",
+    metaDescription: (r, p) =>
+      `Besoin d'un SOS médecin à Casablanca ou Rabat ? Un médecin inscrit à l'Ordre vient chez vous en ${r} min, 24h/24, dès ${p}.`,
     heroTitle: "L'urgence médicale",
     heroAccent: "à domicile,",
     heroLead: (c) =>
@@ -115,7 +124,8 @@ const TEXT: Record<Locale, HomeText> = {
   },
   en: {
     metaTitle: "Doctor at home in Casablanca & Rabat, 24/7",
-    metaDescription: (b, r) => `${b} sends a doctor to your home within ${r} minutes.`,
+    metaDescription: (r, p, english) =>
+      `Need a doctor at home in Casablanca or Rabat? ${english ? "An English-speaking doctor" : "A doctor"} comes to you in ${r} min, 24/7, from ${p}, fee quoted upfront.`,
     heroTitle: "Urgent medical care",
     heroAccent: "at home,",
     heroLead: (c) =>
@@ -162,7 +172,8 @@ const TEXT: Record<Locale, HomeText> = {
   },
   ar: {
     metaTitle: "طبيب في المنزل بالدار البيضاء والرباط 24/7",
-    metaDescription: (b, r) => `${b} ترسل طبيبًا إلى منزلك خلال ${r} دقيقة.`,
+    metaDescription: (r, p) =>
+      `هل تحتاج إلى طبيب في المنزل بالدار البيضاء أو الرباط؟ يأتي إلى منزلك طبيب مسجل في الهيئة خلال ${r} دقيقة، 24/7، ابتداءً من ${p}.`,
     heroTitle: "الرعاية الطبية العاجلة",
     heroAccent: "في منزلك،",
     heroLead: (c) =>
@@ -210,9 +221,10 @@ export function homeMetadata(locale: Locale = "fr"): Metadata {
   const { content } = api(locale);
   const t = dict(locale);
   const x = TEXT[locale];
+  const price = `${content.pricing.tiers[0]?.amountMad} ${t.currency}`;
   return pageMetadata({
     title: x.metaTitle,
-    description: x.metaDescription(content.business.legalName, t.range(content.business.defaultResponseTimeMinutes)),
+    description: x.metaDescription(t.range(content.business.defaultResponseTimeMinutes), price, everyDoctorSpeaks("Anglais")),
     path: paths.home(),
     locale,
   });

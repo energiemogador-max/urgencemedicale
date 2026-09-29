@@ -137,7 +137,7 @@ export function TarifsPage({ locale = "fr" }: { locale?: Locale }) {
         <p className="mt-4 text-sm text-ink-muted">{x.available(t.hoursProse)}</p>
       </Section>
 
-      <FaqBlock locale={locale} entries={faqs(locale).homeFaqs()} />
+      <FaqBlock locale={locale} entries={faqs(locale).generalFaqs()} />
       <CallBanner locale={locale} label={x.banner} />
     </main>
   );
@@ -249,7 +249,7 @@ export function AProposPage({ locale = "fr" }: { locale?: Locale }) {
         <Prose text={aboutPage.body} />
       </div>
 
-      <FaqBlock locale={locale} entries={faqs(locale).homeFaqs()} />
+      <FaqBlock locale={locale} entries={faqs(locale).generalFaqs()} />
       <CallBanner locale={locale} />
     </main>
   );
@@ -419,7 +419,7 @@ export function ReserverPage({ locale = "fr" }: { locale?: Locale }) {
         </ol>
       </Section>
 
-      <FaqBlock locale={locale} entries={faqs(locale).homeFaqs()} />
+      <FaqBlock locale={locale} entries={faqs(locale).generalFaqs()} />
     </main>
   );
 }

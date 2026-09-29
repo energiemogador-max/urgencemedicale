@@ -26,7 +26,7 @@ export function CityHubPage({
   specialties: Specialty[];
   locale?: Locale;
 }) {
-  const { content, getServiceBySlug, getTrustBlockProps } = api(locale);
+  const { content, getServiceBySlug, getSituationCity, getTrustBlockProps } = api(locale);
   const t = dict(locale);
   const L = (p: string) => localizedPath(p, locale);
 
@@ -49,6 +49,21 @@ export function CityHubPage({
       const service = getServiceBySlug(sc.serviceSlug);
       return service ? [{ slug: sc.serviceSlug, service }] : [];
     });
+
+  /*
+   * Situation spokes (/medecin-de-garde/casablanca, …), for the same reason
+   * as the service spokes: until 2026-09-29 the hub did not link them, so
+   * "médecin de garde Casablanca" — one of the highest-intent searches in this
+   * market — had a page whose only inbound link was its national parent.
+   * Situations without city pages link to their national page instead, as
+   * SituationCityPage already does.
+   */
+  const situations = content.situations.flatMap((s) => {
+    if (!s.geoMultiplied) return [{ situation: s, href: paths.situation(s.slug), title: s.title }];
+    return getSituationCity(s.slug, city.slug)
+      ? [{ situation: s, href: paths.situationCity(s.slug, city.slug), title: t.inCity(s.title, city.name) }]
+      : [];
+  });
 
   return (
     <main className="mx-auto max-w-5xl px-4 py-10">
@@ -87,6 +102,16 @@ export function CityHubPage({
       {quartiers.length > 0 && (
         <Section title={t.city.quartiersTitle(city.name)} lead={t.city.quartiersLead}>
           <LinkGrid links={quartiers.map((q) => ({ href: L(paths.quartier(city.slug, q.slug)), label: q.name }))} />
+        </Section>
+      )}
+
+      {situations.length > 0 && (
+        <Section title={t.city.situationsTitle(city.name)}>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {situations.map(({ situation, href, title }) => (
+              <CardLink key={situation.slug} href={L(href)} title={title} description={situation.shortDescription} />
+            ))}
+          </div>
         </Section>
       )}
 

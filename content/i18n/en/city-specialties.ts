@@ -38,7 +38,7 @@ In Casablanca the arrival time depends on the district and the time of day; it i
     },
     "cardiologue/casablanca": {
       intro:
-        "A cardiologist can carry out a home consultation in Casablanca, including an electrocardiogram on the spot, for a patient who would rather avoid a journey or a long wait at a practice. The visit covers the clinical examination and follow-up of a treatment already under way.",
+        "A cardiologist can carry out a home consultation in Casablanca, including an electrocardiogram on the spot. It suits a patient who would rather avoid a journey or a long wait at a practice. The visit covers the clinical examination and follow-up of a treatment already under way.",
       body: `Casablanca has the country's highest concentration of specialist practices and clinics, but getting to them is often constrained by distance and traffic: a patient followed for a heart condition in a district far from the centre can take a long time to reach a cardiologist, especially at peak times. For regular follow-up or a check after a cardiac event, that journey is a burden a home consultation removes.
 
 The cardiologist who travels examines the patient, assesses the symptoms reported — chest pain, breathlessness, palpitations — and can record an electrocardiogram on the spot to guide their assessment. They adjust a treatment already prescribed if needed, or refer for further tests or to a hospital department if the clinical examination calls for it.

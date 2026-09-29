@@ -31,6 +31,7 @@ import {
   SituationCityRoute,
   SituationRoute,
   SpecialtyHubRoute,
+  cityHubMetadata,
   citySpecialtyMetadata,
   serviceCityMetadata,
   serviceMetadata,
@@ -74,11 +75,8 @@ export function localePageMetadata(locale: TranslatedLocale, slug: string[] | un
   switch (ref.kind) {
     case "home":
       return homeMetadata(locale);
-    case "cityHub": {
-      const city = a.getCityBySlug(ref.city);
-      if (!city) return {};
-      return pageMetadata({ title: t.meta.cityHub(city.name), description: city.intro, path: entry.path, locale });
-    }
+    case "cityHub":
+      return cityHubMetadata(ref.city, locale);
     case "quartier": {
       const city = a.getCityBySlug(ref.city);
       const q = a.getQuartierBySlug(ref.city, ref.quartier);

@@ -1,3 +1,4 @@
+import type { ServiceSlug, SituationSlug } from "@content/schema";
 import type { Locale } from "@/lib/i18n";
 
 /**
@@ -158,6 +159,7 @@ export interface Dict {
     quartiersLead: string;
     specialtiesTitle: (city: string) => string;
     servicesTitle: (city: string) => string;
+    situationsTitle: (city: string) => string;
   };
 
   quartier: {
@@ -194,6 +196,23 @@ export interface Dict {
     situationCity: (title: string, city: string) => string;
     serviceCity: (name: string, city: string) => string;
     cityHub: (city: string) => string;
+    /**
+     * `englishSpoken` is true only when every doctor lists English: the caller
+     * cannot choose which doctor comes, so the page may promise it only then.
+     */
+    cityDescription: (city: string, range: string, price: string, englishSpoken: boolean) => string;
+    /**
+     * Snippets for the situation × city and service × city pages. Their intros
+     * open on the city ("Casablanca est la capitale économique du royaume…")
+     * and reach the offer only in the second sentence: good reading, but a
+     * snippet cut at 155 characters never got there, and 18 French pages
+     * ended mid-sentence (2026-09-29). Each says only what its page already
+     * says. A slug with no entry falls back to the page intro.
+     */
+    situationCityDescription: Partial<
+      Record<SituationSlug, (city: string, range: string, dayPrice: string, nightPrice: string) => string>
+    >;
+    serviceCityDescription: Partial<Record<ServiceSlug, (city: string) => string>>;
     quartier: (quartier: string, city: string) => string;
     quartierDescription: (quartier: string, city: string, hours: string, range: string, price: string) => string;
   };
@@ -205,8 +224,13 @@ const fr: Dict = {
   currency: "MAD",
   range: (r) => r,
   minutes: "min",
-  hours247: "24/7",
-  hoursProse: "24/7",
+  /*
+   * "24h/24", not "24/7": it is how French-speaking Morocco writes it, and how
+   * it searches — every competitor title in the 2026-09-29 sweep used
+   * "24h/24", and Google bolds the words a searcher actually typed.
+   */
+  hours247: "24h/24",
+  hoursProse: "24h/24 et 7j/7",
   nav: {
     home: "Accueil",
     specialties: "Spécialités",
@@ -324,6 +348,7 @@ const fr: Dict = {
     quartiersLead: "Chaque quartier a sa propre page, avec ses repères locaux et ses conditions d'accès.",
     specialtiesTitle: (c) => `Spécialités disponibles à ${c}`,
     servicesTitle: (c) => `Services à domicile à ${c}`,
+    situationsTitle: (c) => `Motifs de consultation à ${c}`,
   },
   quartier: {
     heroTitle: (q) => `Médecin à domicile à ${q},`,
@@ -354,7 +379,30 @@ const fr: Dict = {
     citySpecialty: (n, c) => `${n} à domicile à ${c}`,
     situationCity: (t, c) => `${t} à ${c}`,
     serviceCity: (n, c) => `${n} à ${c}`,
-    cityHub: (c) => `Médecin à domicile à ${c}`,
+    cityHub: (c) => `Médecin à domicile ${c} 24h/24`,
+    /*
+     * "SOS médecin" is used here the way the Moroccan public uses it — for any
+     * doctor who comes to the home urgently — and never as a claim to be the
+     * SOS Médecins organisation; the city FAQ says so in as many words.
+     */
+    cityDescription: (c, r, p) =>
+      `Besoin d'un SOS médecin à ${c} ? Un médecin inscrit à l'Ordre vient chez vous en ${r} min, 24h/24, dès ${p}, tarif confirmé avant la visite.`,
+    situationCityDescription: {
+      "medecin-de-garde": (c, r, day, night) =>
+        `Médecin de garde à ${c} : un médecin chez vous en ${r} min, jour et nuit. Consultation ${day} le jour, ${night} la nuit et jours fériés.`,
+      "fievre-enfant-nuit": (c, r, _day, night) =>
+        `Enfant fiévreux la nuit à ${c} ? Un médecin peut venir l'examiner chez vous cette nuit même, en ${r} min. Consultation de nuit : ${night}.`,
+      "prise-de-sang-domicile": (c) =>
+        `Prise de sang à domicile à ${c} : un infirmier ou un technicien de laboratoire peut venir faire le prélèvement chez vous. Tarif annoncé à l'avance.`,
+      "ecg-domicile": (c) =>
+        `ECG à domicile à ${c} : un médecin enregistre l'électrocardiogramme chez vous en quelques minutes, puis interprète le tracé.`,
+    },
+    serviceCityDescription: {
+      ambulance: (c) =>
+        `Ambulance à ${c} : transport sanitaire d'un patient assis ou allongé, vers ou depuis un établissement de santé. Tarif annoncé avant le départ.`,
+      "soins-infirmiers-a-domicile": (c) =>
+        `Infirmier à domicile à ${c} : un infirmier vient chez vous pour les injections, perfusions et pansements prescrits. Tarif annoncé à l'avance.`,
+    },
     quartier: (q, c) => `Médecin à domicile ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
       `Un médecin vient vous examiner à ${q} (${c}), ${h}. Arrivée en ${r} min, consultation dès ${p}, tarif confirmé avant la visite.`,
@@ -485,6 +533,7 @@ const en: Dict = {
     quartiersLead: "Each neighbourhood has its own page, with local landmarks and access notes.",
     specialtiesTitle: (c) => `Specialties available in ${c}`,
     servicesTitle: (c) => `Home services in ${c}`,
+    situationsTitle: (c) => `Common reasons to call a doctor in ${c}`,
   },
   quartier: {
     heroTitle: (q) => `Doctor at home in ${q},`,
@@ -515,7 +564,25 @@ const en: Dict = {
     citySpecialty: (n, c) => `${n} at home in ${c}`,
     situationCity: (t, c) => `${t} in ${c}`,
     serviceCity: (n, c) => `${n} in ${c}`,
-    cityHub: (c) => `Doctor at home in ${c}`,
+    cityHub: (c) => `Doctor at home in ${c}, 24/7`,
+    cityDescription: (c, r, p, english) =>
+      `Need an emergency doctor in ${c}? ${english ? "An English-speaking doctor" : "A doctor"} comes to you in ${r} min, 24/7, from ${p}, fee confirmed before the visit.`,
+    situationCityDescription: {
+      "medecin-de-garde": (c, r, day, night) =>
+        `On-call doctor in ${c}: a doctor at your home in ${r} min, day or night. Consultation ${day} by day, ${night} at night and on public holidays.`,
+      "fievre-enfant-nuit": (c, r, _day, night) =>
+        `Child with a fever at night in ${c}? A doctor can come and examine them at home tonight, within ${r} min. Night consultation: ${night}.`,
+      "prise-de-sang-domicile": (c) =>
+        `Blood test at home in ${c}: a nurse or laboratory technician can come and take the sample at your home. Fee quoted in advance.`,
+      "ecg-domicile": (c) =>
+        `ECG at home in ${c}: a doctor records the electrocardiogram at your home in a few minutes, then interprets the trace.`,
+    },
+    serviceCityDescription: {
+      ambulance: (c) =>
+        `Ambulance in ${c}: medical transport for a patient sitting or lying down, to or from a health facility. Fee quoted before departure.`,
+      "soins-infirmiers-a-domicile": (c) =>
+        `Home nurse in ${c}: a nurse comes to your home for prescribed injections, infusions and dressings. Fee quoted in advance.`,
+    },
     quartier: (q, c) => `Doctor at home in ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
       `A doctor comes to examine you in ${q} (${c}), ${h}. Arrival in ${r} min, consultation from ${p}, fee confirmed before the visit.`,
@@ -645,6 +712,7 @@ const ar: Dict = {
     quartiersLead: "لكل حي صفحته الخاصة، مع معالمه المحلية وظروف الوصول إليه.",
     specialtiesTitle: (c) => `التخصصات المتوفرة في ${c}`,
     servicesTitle: (c) => `الخدمات المنزلية في ${c}`,
+    situationsTitle: (c) => `دواعي طلب الطبيب في ${c}`,
   },
   quartier: {
     heroTitle: (q) => `طبيب في المنزل في ${q}،`,
@@ -675,7 +743,25 @@ const ar: Dict = {
     citySpecialty: (n, c) => `${n} في المنزل في ${c}`,
     situationCity: (t, c) => `${t} في ${c}`,
     serviceCity: (n, c) => `${n} في ${c}`,
-    cityHub: (c) => `طبيب في المنزل في ${c}`,
+    cityHub: (c) => `طبيب في المنزل في ${c} 24/7`,
+    cityDescription: (c, r, p) =>
+      `هل تحتاج إلى طبيب مستعجلات في ${c}؟ يأتي إلى منزلك طبيب مسجل في الهيئة خلال ${r} دقيقة، 24/7، ابتداءً من ${p}، والسعر يُؤكد قبل الزيارة.`,
+    situationCityDescription: {
+      "medecin-de-garde": (c, r, day, night) =>
+        `طبيب المداومة في ${c}: طبيب في منزلك خلال ${r} دقيقة، ليلًا ونهارًا. الاستشارة ${day} نهارًا، و${night} ليلًا وفي أيام العطل.`,
+      "fievre-enfant-nuit": (c, r, _day, night) =>
+        `طفلك مصاب بالحمى ليلًا في ${c}؟ يمكن لطبيب أن يأتي لفحصه في منزلك هذه الليلة، خلال ${r} دقيقة. استشارة الليل: ${night}.`,
+      "prise-de-sang-domicile": (c) =>
+        `تحليل الدم في المنزل في ${c}: يمكن لممرض أو تقني مختبر أن يأتي لأخذ العينة في منزلك. ونعلن السعر مسبقًا.`,
+      "ecg-domicile": (c) =>
+        `تخطيط القلب في المنزل في ${c}: يسجل الطبيب تخطيط القلب الكهربائي في منزلك خلال دقائق، ثم يقرأ النتيجة.`,
+    },
+    serviceCityDescription: {
+      ambulance: (c) =>
+        `سيارة إسعاف في ${c}: نقل صحي لمريض جالس أو ممدد، من مؤسسة صحية أو إليها. ونعلن السعر قبل الانطلاق.`,
+      "soins-infirmiers-a-domicile": (c) =>
+        `ممرض في المنزل في ${c}: يأتي ممرض إلى منزلك للحقن والمحاليل الوريدية والضمادات الموصوفة. ونعلن السعر مسبقًا.`,
+    },
     quartier: (q, c) => `طبيب في المنزل في ${q}، ${c}`,
     quartierDescription: (q, c, h, r, p) =>
       `يأتي طبيب لفحصك في ${q} (${c})، ${h}. الوصول خلال ${r} دقيقة، الاستشارة ابتداءً من ${p}، والسعر يُؤكد قبل الزيارة.`,

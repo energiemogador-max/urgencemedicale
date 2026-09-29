@@ -84,7 +84,7 @@ The service runs 24/7, all year round, weekends and public holidays included, in
       title: "Medical certificate at home",
       shortDescription: "Obtain a medical certificate issued by a doctor during a home visit.",
       intro:
-        "A medical certificate is obtained from a doctor after a clinical examination, and that doctor can come to you to carry it out rather than making you wait for an appointment at a practice. The certificate is written on the spot once the examination is over, or sent in the hours that follow depending on the type of document requested.",
+        "A medical certificate is obtained from a doctor after a clinical examination. That doctor can come to you to carry it out, rather than making you wait for an appointment at a practice. The certificate is written on the spot once the examination is over, or sent in the hours that follow depending on the type of document requested.",
       body: `A medical certificate is never issued lightly: it attests to a state of health observed by a doctor at the time of the examination, and it is that examination which makes it a valid document. Having a doctor come to you means obtaining that record without travelling, which matters particularly when the person concerned is precisely the one who finds travelling hard.
 
 It works the same way as at a practice: the doctor arrives, carries out the necessary clinical examination, asks their questions, then writes the certificate corresponding to what they have observed. Depending on the reason, the document may be handed over at the end of the visit or sent a little later in the day. In every case, the doctor alone decides what the certificate says, based on what they observe during the examination — never beforehand, and never on the basis of a description over the phone.
@@ -175,7 +175,7 @@ The visit can be asked for by the patient on returning home, or by a relative wh
       title: "Blood test at home",
       shortDescription: "A blood sample taken at home by a health professional.",
       intro:
-        "A blood test at home is carried out by a health professional who comes to you with the necessary equipment, then takes the sample to an analysis laboratory. The results then follow the laboratory's usual route, sent by the laboratory itself.",
+        "A blood test at home is carried out by a health professional who comes to you with the necessary equipment. They then take the sample to an analysis laboratory, and the results follow the laboratory's usual route, sent by the laboratory itself.",
       body: `Taking a sample at home follows the same principle as at a laboratory: a qualified health professional — a nurse or a laboratory technician, depending on how it is organised — takes the blood with single-use equipment, in the same hygienic conditions as in a collection room. The sample is then labelled and taken to a partner analysis laboratory, where it is handled like any sample received over the counter.
 
 The reasons for choosing a sample at home rather than a trip to a laboratory are practical: an older person or someone with reduced mobility for whom travelling is hard, a child who is very apprehensive about a laboratory, a person confined to bed while convalescing, or simply a schedule that makes it difficult to fit in a visit during opening hours. The professional who travels can also take the sample at the time that suits best, which matters for tests that must be done fasting, early in the morning.
@@ -192,7 +192,7 @@ The service covers both a routine set of tests prescribed as part of ordinary fo
       title: "ECG at home",
       shortDescription: "An electrocardiogram recorded at home.",
       intro:
-        "An electrocardiogram (ECG) can be recorded at home by a doctor, with a portable device that records the heart's electrical activity in a few minutes, without a trip to a practice or a clinic. The trace is then interpreted by a doctor, not read out or explained in detail on the spot.",
+        "A doctor can record an electrocardiogram (ECG) at home, with a portable device, in a few minutes. The device records the heart's electrical activity without a trip to a practice or a clinic; the trace is then interpreted by a doctor, not read out or explained in detail on the spot.",
       body: `An ECG at home works like any standard electrocardiogram: the doctor places several electrodes on the chest, the wrists and the ankles, connected to a portable device that records the heart's electrical activity for a short time, with no pain and no particular preparation. The test takes a few minutes and requires neither fasting nor any invasive procedure.
 
 It is useful in several situations: regular cardiac follow-up for someone already known to have a heart condition, a check requested by a cardiologist as part of ongoing care, or simply a general assessment for someone for whom travelling to a practice or clinic is a real difficulty — reduced mobility, advanced age, a recent hospital discharge. Having the ECG done at home avoids the wait and the journey, while producing the same trace as a device in a practice.

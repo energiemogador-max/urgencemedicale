@@ -7,7 +7,7 @@ export const specialties: TranslationPart = {
       name: "General practitioner",
       shortDescription: "Home consultation for any everyday condition, by appointment or urgently.",
       intro:
-        "The general practitioner is the doctor most often asked for on a home visit: they handle the great majority of everyday reasons to see a doctor, from a fever in an adult to a small wound that needs cleaning, by way of renewing a prescription. They come to you with the same standard of examination as in a practice, without the wait of a waiting room.",
+        "The general practitioner is the doctor most often asked for on a home visit. They handle the great majority of everyday reasons to see a doctor, from a fever in an adult to a small wound that needs cleaning, by way of renewing a prescription. They come to you with the same standard of examination as in a practice, without the wait of a waiting room.",
       body: `Calling a general practitioner to your home is the usual answer for anyone who feels unwell without the situation calling for an emergency department: an adult with a fever who has no strength to travel, a parent who would rather not take a sick child out, someone laid up after a small injury, or simply someone with no time for an appointment at a practice. It is the first reflex behind the great majority of calls this service receives.
 
 A home consultation follows the same steps as one in a practice: the questions, a full clinical examination (blood pressure, listening to the chest, temperature, palpation depending on the reason), then a diagnosis and, if needed, a prescription. The GP can also carry out simple procedures on the spot, such as cleaning and dressing a small wound, and can refer you for further tests or a specialist opinion when the situation calls for it.
@@ -41,7 +41,7 @@ This service does not replace emergency care for a life-threatening situation: i
       name: "Geriatrician",
       shortDescription: "Home consultation and follow-up suited to the needs of older people.",
       intro:
-        "A geriatrician can travel to an older person's home for a consultation or follow-up suited to them, without imposing a journey or a wait that can be hard going when moving around is difficult. The examination takes place in familiar surroundings and at a suitable pace, and is as complete as one in a practice.",
+        "A geriatrician can travel to an older person's home for a consultation or follow-up suited to them. This avoids a journey or a wait that can be hard going when moving around is difficult. The examination takes place in familiar surroundings and at a suitable pace, and is as complete as one in a practice.",
       body: `A home visit makes particular sense for older people, for whom travelling to a practice can be a real difficulty: arthritis, the after-effects of a stroke, breathlessness on exertion, or simply the tiredness that comes with age. It is as much for someone living alone as for someone supported by family or a carer, and it removes the need to arrange transport and wait in a shared room.
 
 The geriatrician carries out a full clinical examination and takes the time for a thorough conversation, which is often harder to fit into a short consultation at a practice. They assess general condition, independence in everyday tasks, balance and the risk of falls, and can review all current treatments with the person and, if they wish, with those around them.
@@ -77,7 +77,7 @@ This service does not replace emergency care for a life-threatening situation: i
       name: "Emergency physician",
       shortDescription: "Home visit for situations that need to be dealt with quickly.",
       intro:
-        "An emergency physician can come to your home quickly when a situation needs a medical assessment without delay but is not a life-threatening emergency that calls for the emergency services. In a life-threatening emergency — loss of consciousness, difficulty breathing or heavy bleeding, for example — call the emergency services directly rather than this service.",
+        "An emergency physician can come to your home quickly for a medical assessment without delay, when it is not a life-threatening emergency. In a life-threatening emergency — loss of consciousness, difficulty breathing or heavy bleeding, for example — call the emergency services directly rather than this service.",
       body: `This service is in no way a replacement for calling the emergency services when life is at risk. Faced with loss of consciousness, severe breathing difficulty, bleeding that will not stop or any other sign of immediate danger, the priority is to call the emergency services, who can send an ambulance and begin care on the way to a hospital department. An emergency physician at home suits different situations: care that is needed quickly, but without that immediate danger.
 
 An emergency physician is trained in the rapid assessment of a clinical situation and in making decisions under time pressure. At home, they can examine someone whose condition has deteriorated over a few hours, judge how serious a worrying symptom really is, carry out the first necessary treatment, and decide on the spot whether to refer to a hospital department or whether care at home is enough.

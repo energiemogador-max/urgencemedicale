@@ -37,7 +37,7 @@ Ce type de visite est particulièrement adapté après une sortie d'hospitalisat
   },
   "casablanca:cardiologue": {
     intro:
-      "Un cardiologue peut réaliser une consultation à domicile à Casablanca, y compris un électrocardiogramme sur place, pour un patient qui préfère éviter un trajet ou une attente prolongée en cabinet. La visite couvre l'examen clinique et le suivi d'un traitement déjà en cours.",
+      "Un cardiologue peut réaliser une consultation à domicile à Casablanca, y compris un électrocardiogramme sur place. Elle s'adresse au patient qui préfère éviter un trajet ou une attente prolongée en cabinet. La visite couvre l'examen clinique et le suivi d'un traitement déjà en cours.",
     body: `Casablanca abrite la plus forte concentration de cabinets et de cliniques spécialisées du pays, mais leur accès reste souvent contraint par la distance et la circulation : un patient suivi pour une pathologie cardiaque dans un quartier éloigné du centre peut mettre longtemps à rejoindre un cardiologue, surtout aux heures de pointe. Pour un suivi régulier ou un contrôle après un événement cardiaque, ce trajet représente une contrainte que la consultation à domicile permet d'éviter.
 
 Le cardiologue qui se déplace examine le patient, évalue les symptômes rapportés — douleur thoracique, essoufflement, palpitations — et peut réaliser un électrocardiogramme directement sur place pour orienter son diagnostic. Il ajuste si besoin un traitement déjà prescrit, ou oriente vers un examen complémentaire ou un service hospitalier si l'examen clinique le justifie.
