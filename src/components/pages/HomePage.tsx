@@ -34,7 +34,14 @@ interface HomeText {
   metaTitle: string;
   /** `englishSpoken`: see Dict.meta.cityDescription. */
   metaDescription: (range: string, price: string, englishSpoken: boolean) => string;
-  heroTitle: string;
+  /**
+   * Split where the web font wraps the headline, so the fallback font wraps
+   * the same way and nothing moves when the font arrives (see Hero's
+   * HEADLINE_BREAK). Measured per language, fallback against web font, at
+   * 360–1440 px (2026-09-29): English wraps alike in both and needs no split.
+   */
+  heroTitle: string | string[];
+  heroTailOnOwnLine: boolean;
   heroAccent: string;
   heroLead: (cities: string) => string;
   citySeparator: string;
@@ -78,7 +85,8 @@ const TEXT: Record<Locale, HomeText> = {
     metaTitle: "Médecin à domicile 24h/24 Casablanca, Rabat",
     metaDescription: (r, p) =>
       `Besoin d'un SOS médecin à Casablanca ou Rabat ? Un médecin inscrit à l'Ordre vient chez vous en ${r} min, 24h/24, dès ${p}.`,
-    heroTitle: "L'urgence médicale",
+    heroTitle: ["L'urgence", "médicale"],
+    heroTailOnOwnLine: true,
     heroAccent: "à domicile,",
     heroLead: (c) =>
       `Un médecin inscrit à l'Ordre National des Médecins se déplace chez vous à ${c}. Le tarif applicable vous est annoncé au téléphone avant que vous ne confirmiez la visite.`,
@@ -127,6 +135,7 @@ const TEXT: Record<Locale, HomeText> = {
     metaDescription: (r, p, english) =>
       `Need a doctor at home in Casablanca or Rabat? ${english ? "An English-speaking doctor" : "A doctor"} comes to you in ${r} min, 24/7, from ${p}, fee quoted upfront.`,
     heroTitle: "Urgent medical care",
+    heroTailOnOwnLine: false,
     heroAccent: "at home,",
     heroLead: (c) =>
       `A doctor registered with the Ordre National des Médecins comes to you in ${c}. The fee that applies is quoted on the phone before you confirm the visit.`,
@@ -174,7 +183,8 @@ const TEXT: Record<Locale, HomeText> = {
     metaTitle: "طبيب في المنزل بالدار البيضاء والرباط 24/7",
     metaDescription: (r, p) =>
       `هل تحتاج إلى طبيب في المنزل بالدار البيضاء أو الرباط؟ يأتي إلى منزلك طبيب مسجل في الهيئة خلال ${r} دقيقة، 24/7، ابتداءً من ${p}.`,
-    heroTitle: "الرعاية الطبية العاجلة",
+    heroTitle: ["الرعاية الطبية", "العاجلة"],
+    heroTailOnOwnLine: false,
     heroAccent: "في منزلك،",
     heroLead: (c) =>
       `يتنقل إلى منزلك طبيب مسجل في الهيئة الوطنية للطبيبات والأطباء، في ${c}. ونخبرك بالسعر المطبق عبر الهاتف قبل أن تؤكد الزيارة.`,
@@ -267,6 +277,7 @@ export function HomePage({ locale = "fr" }: { locale?: Locale }) {
       <div className="mx-auto max-w-5xl px-4 pt-4 sm:pt-10 lg:max-w-none lg:px-0 lg:pt-0">
         <Hero
           title={x.heroTitle}
+          tailOnOwnLine={x.heroTailOnOwnLine}
           titleAccent={x.heroAccent}
           titleTail={t.hours247}
           lead={x.heroLead(cities.map((c) => c.name).join(x.citySeparator))}

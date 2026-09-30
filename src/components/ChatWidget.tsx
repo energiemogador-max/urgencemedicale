@@ -24,6 +24,15 @@ import { chatWidgetScript } from "@/lib/chat-widget";
  * fetches the sharper source once the badge is displayed larger, rather
  * than upscaling the small one.
  */
+/*
+ * Lazy and low priority. React 19 emits a <link rel="preload"> in <head> for
+ * every eager <img> it renders outside a <picture>, so this mark (twice: the
+ * button, and the header of the closed panel) was being fetched at high
+ * priority ahead of the hero photo, the homepage's LCP image, which sits in a
+ * <picture> and is found later. The button is on screen, so a lazy image
+ * there still loads straight after layout; the panel's copy waits until the
+ * panel opens.
+ */
 function AiMark({ className, sizes }: { className: string; sizes: string }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -34,6 +43,8 @@ function AiMark({ className, sizes }: { className: string; sizes: string }) {
       width={96}
       height={96}
       alt=""
+      loading="lazy"
+      fetchPriority="low"
       decoding="async"
       className={className}
     />

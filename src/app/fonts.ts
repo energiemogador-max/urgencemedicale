@@ -22,11 +22,26 @@ import { Archivo, Cairo } from "next/font/google";
  * Arabic, so the system font draws it either way) and one arrow that neither
  * subset contains.
  */
+/*
+ * `optional`, not `swap`. The CSS is inlined (next.config `inlineCss`), so
+ * the page paints the moment the HTML arrives, before any font can. With
+ * `swap`, a slow connection saw the page laid out in the fallback and then
+ * relaid in Archivo, which is wider: headlines gained a line, the menu wrapped
+ * onto a second row, `ch`-sized boxes changed width, and everything below
+ * moved. Lighthouse measured CLS 0.116 on the homepage; with the fonts held
+ * back 1.5 s, up to 0.78 on the English homepage on desktop (2026-09-29).
+ *
+ * `optional` waits up to ~100 ms for the font, then keeps whichever face it
+ * has for the whole page view. On an ordinary 4G connection the 35 KB file
+ * arrives inside that window and the page is in Archivo; on a slow one it
+ * stays in the metric-matched fallback, and nothing moves. Either way the
+ * font is cached for the next page.
+ */
 export const archivo = Archivo({
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
   variable: "--font-sans",
-  display: "swap",
+  display: "optional",
 });
 
 /**
@@ -41,5 +56,6 @@ export const archivo = Archivo({
 export const cairo = Cairo({
   subsets: ["arabic"],
   variable: "--font-arabic",
-  display: "swap",
+  // `optional` for the same reason as Archivo above.
+  display: "optional",
 });

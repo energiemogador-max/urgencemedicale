@@ -1,5 +1,23 @@
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 import { EcgTrace, LiveryBand } from "@/components/Livery";
+
+/**
+ * A headline line break that holds on phones and desktop, and gives way on
+ * tablets.
+ *
+ * The headline is set in Archivo 900 (Cairo in Arabic), which is wider than
+ * the fallback a slow connection shows first. Left to wrap on its own, it
+ * wrapped differently in the two: "à domicile, 24h/24" fit on one line in the
+ * fallback and needed two in Archivo, so the headline gained a line the moment
+ * the web font arrived and pushed the whole hero down. Lighthouse measured
+ * CLS 0.116 on the French homepage (2026-09-29), past the 0.1 limit.
+ *
+ * Breaking explicitly, exactly where the web font wraps anyway, gives both
+ * fonts the same number of lines. On phones and in the desktop column the
+ * headline is narrow enough that the web font always wraps there; on tablets
+ * it is wide enough that neither font does, so the break is hidden.
+ */
+const HEADLINE_BREAK = "sm:max-lg:hidden";
 
 export interface HeroFeature {
   title: string;
@@ -57,14 +75,18 @@ export function Hero({
   title,
   titleAccent,
   titleTail,
+  tailOnOwnLine = false,
   lead,
   features,
   image,
   badge,
 }: {
-  title: string;
+  /** An array breaks the first line between its parts; see HEADLINE_BREAK. */
+  title: string | string[];
   titleAccent: string;
   titleTail: string;
+  /** Break before the tail; see HEADLINE_BREAK. */
+  tailOnOwnLine?: boolean;
   lead: string;
   features: HeroFeature[];
   /**
@@ -115,9 +137,20 @@ export function Hero({
           {badge && <div className="mb-5 lg:absolute lg:bottom-14 lg:end-4 lg:z-10 lg:mb-0">{badge}</div>}
 
           <h1 className="text-[clamp(2.1rem,5.6vw,3.5rem)] font-black uppercase leading-[1.02] tracking-tight text-white">
-            {title}
+            {(Array.isArray(title) ? title : [title]).map((part, i) => (
+              <Fragment key={i}>
+                {i > 0 && (
+                  <>
+                    {" "}
+                    <br className={HEADLINE_BREAK} />
+                  </>
+                )}
+                {part}
+              </Fragment>
+            ))}
             <br />
-            <span className="text-call-bright">{titleAccent}</span> {titleTail}
+            <span className="text-call-bright">{titleAccent}</span> {tailOnOwnLine && <br className={HEADLINE_BREAK} />}
+            {titleTail}
           </h1>
 
           <EcgTrace className="mt-4 h-6 w-44 text-call-bright sm:mt-5" />

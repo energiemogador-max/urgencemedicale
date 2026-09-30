@@ -51,11 +51,11 @@ export function SiteHeader({
   const L = (p: string) => localizedPath(p, locale);
 
   const summaryClass =
-    "flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-md px-2.5 py-1.5 font-semibold text-primary marker:content-none hover:bg-primary-tint";
+    "flex cursor-pointer list-none items-center gap-1 whitespace-nowrap rounded-md px-2 py-1.5 font-semibold text-primary marker:content-none hover:bg-primary-tint";
   const panelClass =
     "absolute start-0 top-full z-50 mt-1 min-w-[15rem] rounded-xl border border-border bg-surface p-2 shadow-xl";
   const itemClass = "block rounded-md px-3 py-1.5 text-sm text-ink no-underline hover:bg-primary-tint";
-  const linkClass = "whitespace-nowrap rounded-md px-2.5 py-1.5 font-semibold text-primary no-underline hover:bg-primary-tint";
+  const linkClass = "whitespace-nowrap rounded-md px-2 py-1.5 font-semibold text-primary no-underline hover:bg-primary-tint";
   const mobileItemClass = "block rounded-md px-3 py-2.5 font-semibold text-primary no-underline hover:bg-primary-tint";
   const mobileSubItemClass = "block rounded-md px-3 py-3 text-sm text-ink no-underline hover:bg-primary-tint";
 
@@ -148,10 +148,10 @@ export function SiteHeader({
             </div>
 
             {/*
-              Phones: the menu lives in this sticky bar, so it stays reachable
-              while scrolling and costs no row of its own.
+              Phones and tablets: the menu lives in this sticky bar, so it
+              stays reachable while scrolling and costs no row of its own.
             */}
-            <nav aria-label={t.nav.mainNav} className="flex md:hidden">
+            <nav aria-label={t.nav.mainNav} className="flex lg:hidden">
               <details className="group/menu">
                 <summary
                   aria-label={t.nav.menu}
@@ -214,20 +214,25 @@ export function SiteHeader({
       </div>
 
       {/*
-        Desktop (>= md): the horizontal bar with dropdown panels. Neither
+        Desktop (>= lg): the horizontal bar with dropdown panels. Neither
         container may scroll horizontally: an `overflow-x: auto` box whose
         `overflow-y` is `visible` computes overflow-y to `auto` too, which
         silently clipped every dropdown to the height of the nav strip.
+
+        It must fit on ONE row, in every language and in both the web font and
+        the fallback shown before it loads. Once the pharmacy and assistant
+        links were added it did not: French needed 1054 px of a 1000 px row
+        and wrapped, and English (964 px in the fallback, 1004 in Archivo)
+        wrapped only when Archivo arrived, dropping the page 28 px, a layout
+        shift of 0.6 (2026-09-29). "Home" left the bar (the logo is the home
+        link) and the links lost 2 px of padding a side: the widest language,
+        French, now needs about 940 px. On tablets the same bar took two rows
+        and items jumped between them as the font changed, so tablets use the
+        menu button instead.
       */}
-      <nav aria-label={t.nav.mainNav} className="hidden border-b border-border bg-surface md:block">
+      <nav aria-label={t.nav.mainNav} className="hidden border-b border-border bg-surface lg:block">
         <div className="mx-auto max-w-5xl px-3">
           <ul className="flex flex-wrap items-center gap-x-0.5 gap-y-1 py-1.5 text-sm">
-            <li>
-              <Link href={L(paths.home())} prefetch={false} className={linkClass}>
-                {t.nav.home}
-              </Link>
-            </li>
-
             {groups.map((group) => (
               <li key={group.label} className="relative">
                 <details name="mainnav" className="group">
@@ -270,10 +275,6 @@ export function SiteHeader({
               <Link href={L(paths.assistantIa())} prefetch={false} className={linkClass}>
                 {t.nav.assistantIa}
               </Link>
-            </li>
-
-            <li className="ms-auto lg:hidden">
-              <LocaleSwitcher current={locale} />
             </li>
           </ul>
         </div>
