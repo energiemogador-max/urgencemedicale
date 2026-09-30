@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-09-30T11:08:29.368Z",
+    "collectedAt": "2026-09-30T22:59:49.451Z",
     "forDate": "2026-09-30",
     "entries": [
       {
@@ -196,13 +196,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -374,13 +370,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -589,13 +581,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -721,13 +709,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -845,13 +829,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1049,13 +1029,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1115,13 +1091,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1133,20 +1105,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-09-30"
-          }
-        ],
-        "confirmed": false,
-        "stale": false
-      },
-      {
-        "name": "PHARMACIE PRINCIPALE",
-        "address": "ROND POINT MERS SULTAN",
-        "phone": "+212522220174",
-        "kind": "nuit",
-        "sources": [
-          {
-            "name": "sahha.ma",
             "date": "2026-09-30"
           }
         ],
@@ -1235,13 +1193,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1254,13 +1208,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-09-30"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-09-30"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
