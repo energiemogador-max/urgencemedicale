@@ -2,36 +2,39 @@ import { readFileSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 /**
- * Puts the font preload back into every exported page.
+ * Makes every exported page preload exactly the fonts it uses.
  *
  * WHY
  *
- * next/font preloads the files it marks ".p." (Archivo's latin subset,
- * Cairo's arabic one) with a <link rel="preload" as="font"> in <head>. The
- * 2026-08-27 audit found them there, ahead of the stylesheet. They vanished
- * on 2026-09-16, when `experimental.inlineCss` went on to stop the stylesheet
- * blocking render: with the CSS inlined, Next no longer emits them, and nobody
- * noticed. The font was then requested only once layout needed it, after the
- * first paint.
- *
  * The fonts are `font-display: optional` (src/app/fonts.ts): the browser
  * waits up to ~100 ms for a preloaded optional font, then keeps whichever face
- * it has, so nothing moves. Requested from the top of <head>, the 35 KB
- * Archivo file usually lands inside that window on an ordinary 4G
- * connection, and the page paints in the brand font from the first frame.
+ * it has for the page, so nothing moves when the font arrives. That makes the
+ * preload the thing that decides whether a first visit sees Archivo at all,
+ * and two things were wrong with it (2026-09-30):
+ *
+ *  - The deployed site (built on Cloudflare, Linux) preloaded BOTH Archivo
+ *    and Cairo on every page: next/font preloads every font declared in a
+ *    module a layout imports, and both lived in fonts.ts. French and English
+ *    pages spent 31 KB of high-priority bandwidth, next to the LCP image, on
+ *    an Arabic font they never draw. Cairo now has its own module, and this
+ *    step removes any preload for a family the page does not use, whatever
+ *    Next emits.
+ *  - A local Windows build preloads nothing: its next-font-manifest has no
+ *    app entries. This step adds the missing preloads, so what is tested
+ *    locally is what ships.
  *
  * HOW
  *
- * Nothing is hard-coded: the <html> element carries the next/font variable
+ * Nothing is hard-coded. The <html> element carries the next/font variable
  * classes the page uses (`.__variable_x{--font-sans:"Archivo",…}`), and the
- * inlined @font-face rules name each family's ".p." file. So a French page
- * preloads Archivo only, and an Arabic page Archivo and Cairo, exactly as
- * next/font itself would.
+ * inlined @font-face rules name each family's files; next/font marks the ones
+ * worth preloading ".p." (Archivo's latin subset, Cairo's arabic one).
  */
 
 const OUT_DIR = "out";
 const SKIP_DIRS = new Set([join(OUT_DIR, "admin"), join(OUT_DIR, "_next")]);
 const HEAD_ANCHOR = '<meta charSet="utf-8"/>';
+const FONT_PRELOAD = /<link\b(?=[^>]*\brel="preload")(?=[^>]*\bas="font")[^>]*\bhref="([^"]+)"[^>]*\/?>/g;
 
 function fail(message: string): never {
   console.error(`fonts: FAILED — ${message}`);
@@ -62,8 +65,8 @@ function pageFamilies(html: string): string[] {
   return families;
 }
 
-/** The ".p." (preloadable) file of each family, from the inlined @font-face rules. */
-function preloadFiles(html: string, families: string[]): string[] {
+/** The ".p." (preloadable) files of the given families, from the inlined @font-face rules. */
+function preloadFiles(html: string, families: string[]): Set<string> {
   const files = new Set<string>();
   for (const match of html.matchAll(/@font-face\{([^}]*)\}/g)) {
     const body = match[1] ?? "";
@@ -71,30 +74,39 @@ function preloadFiles(html: string, families: string[]): string[] {
     const url = /url\((\/_next\/static\/media\/[^)]+\.p\.woff2)\)/.exec(body)?.[1];
     if (family && url && families.includes(family)) files.add(url);
   }
-  return [...files];
+  return files;
 }
 
 let pages = 0;
-let links = 0;
+let added = 0;
+let removed = 0;
 for (const file of walk(OUT_DIR)) {
   const html = readFileSync(file, "utf8");
   if (!html.includes("@font-face")) continue; // e.g. a page whose CSS is linked, not inlined
   const families = pageFamilies(html);
   if (families.length === 0) continue;
-  const files = preloadFiles(html, families);
-  if (files.length === 0) fail(`${file}: no preloadable font file for ${families.join(", ")}`);
-  if (!html.includes(HEAD_ANCHOR)) fail(`${file}: no ${HEAD_ANCHOR} to anchor the preload after`);
+  const wanted = preloadFiles(html, families);
+  if (wanted.size === 0) fail(`${file}: no preloadable font file for ${families.join(", ")}`);
+  if (!html.includes(HEAD_ANCHOR)) fail(`${file}: no ${HEAD_ANCHOR} to anchor the preloads after`);
 
-  const tags = files
-    .filter((f) => !html.includes(`href="${f}"`))
-    .map((f) => `<link rel="preload" href="${f}" as="font" type="font/woff2" crossorigin=""/>`)
-    .join("");
-  if (tags) {
-    writeFileSync(file, html.replace(HEAD_ANCHOR, HEAD_ANCHOR + tags));
-    links += files.length;
-  }
+  const present = new Set<string>();
+  let out = html.replace(FONT_PRELOAD, (tag, href: string) => {
+    if (wanted.has(href) && !present.has(href)) {
+      present.add(href);
+      return tag;
+    }
+    removed++;
+    return "";
+  });
+  const tags = [...wanted]
+    .filter((href) => !present.has(href))
+    .map((href) => `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin=""/>`);
+  added += tags.length;
+  out = out.replace(HEAD_ANCHOR, HEAD_ANCHOR + tags.join(""));
+
+  if (out !== html) writeFileSync(file, out);
   pages++;
 }
 
 if (pages === 0) fail(`no page with inlined fonts found in ${OUT_DIR}`);
-console.log(`fonts: OK — ${links} font preload(s) restored across ${pages} page(s).`);
+console.log(`fonts: OK — ${pages} page(s) preload only the fonts they use (${added} added, ${removed} removed).`);

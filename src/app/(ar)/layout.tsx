@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { SITE_URL } from "@/lib/site";
 import { business } from "@content/business";
-import { archivo, cairo } from "@/app/fonts";
+import { archivo } from "@/app/fonts";
+import { cairo } from "@/app/fonts-arabic";
 import { SiteChrome } from "@/components/SiteChrome";
 import "@/app/globals.css";
 
