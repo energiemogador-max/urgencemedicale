@@ -302,7 +302,7 @@ export const DATA = {
     }
   ],
   "currency": "MAD",
-  "reviewUrl": "",
+  "reviewUrl": "https://share.google/xHbZvDvvydlneoSPE",
   "businessName": "Urgence Médicale Casablanca",
   "situations": [
     {
