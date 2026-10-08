@@ -7,6 +7,7 @@ import {
 } from "@content/schema";
 import { hasTranslation } from "@content/i18n";
 import { content } from "@/lib/content";
+import { BLOG_POSTS } from "@content/blog";
 import { paths } from "@/lib/urls";
 
 /**
@@ -36,7 +37,9 @@ export type PageRef =
   | { kind: "reserver" }
   | { kind: "numerosUrgence" }
   | { kind: "pharmacieGarde" }
-  | { kind: "assistantIa" };
+  | { kind: "assistantIa" }
+  | { kind: "blogIndex" }
+  | { kind: "blogPost"; slug: string };
 
 export interface PageEntry {
   path: string;
@@ -95,6 +98,10 @@ export function allPages(): PageEntry[] {
   add(paths.pharmacieGarde(), { kind: "pharmacieGarde" }, 0.7, "daily");
   // The AI assistant's own landing page — organic-search entry point.
   add(paths.assistantIa(), { kind: "assistantIa" }, 0.6, "monthly");
+  // Guides (/conseils): French only, written to answer the questions people
+  // search for and hand them over to the service pages.
+  add(paths.blogIndex(), { kind: "blogIndex" }, 0.6, "weekly");
+  for (const post of BLOG_POSTS) add(paths.blogPost(post.slug), { kind: "blogPost", slug: post.slug }, 0.6, "monthly");
   add(paths.tarifs(), { kind: "tarifs" }, 0.5, "yearly");
   add(paths.nosMedecins(), { kind: "nosMedecins" }, 0.5, "yearly");
   add(paths.aPropos(), { kind: "aPropos" }, 0.5, "yearly");
@@ -141,6 +148,10 @@ export function isPageTranslated(ref: PageRef, locale: "en" | "ar"): boolean {
       return shared && has("services", ref.service);
     case "serviceCity":
       return shared && has("services", ref.service) && has("cities", ref.city) && has("serviceCities", ref.service, ref.city);
+    // The guides are written in French only (content/blog/types.ts).
+    case "blogIndex":
+    case "blogPost":
+      return false;
   }
 }
 

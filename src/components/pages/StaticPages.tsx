@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { isUnconfirmed } from "@content/schema";
@@ -136,6 +137,8 @@ export function TarifsPage({ locale = "fr" }: { locale?: Locale }) {
         </ul>
         <p className="mt-4 text-sm text-ink-muted">{x.available(t.hoursProse)}</p>
       </Section>
+
+      <RelatedGuides locale={locale} path={paths.tarifs()} />
 
       <FaqBlock locale={locale} entries={faqs(locale).generalFaqs()} />
       <CallBanner locale={locale} label={x.banner} />
@@ -772,6 +775,8 @@ export function NumerosUrgencePage({ locale = "fr" }: { locale?: Locale }) {
           </Link>
         </p>
       </Section>
+
+      <RelatedGuides locale={locale} path={paths.numerosUrgence()} />
 
       <FaqBlock locale={locale} entries={x.faq} />
 

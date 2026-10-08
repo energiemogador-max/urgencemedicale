@@ -203,6 +203,12 @@ export function SiteHeader({
                   <Link href={L(paths.assistantIa())} prefetch={false} className={mobileItemClass}>
                     {t.nav.assistantIa}
                   </Link>
+                  {/* The guides are French only (content/blog/types.ts). */}
+                  {locale === "fr" && (
+                    <Link href={paths.blogIndex()} prefetch={false} className={mobileItemClass}>
+                      Conseils pratiques
+                    </Link>
+                  )}
                   <div className="mt-2 border-t border-border px-1 pt-3">
                     <LocaleSwitcher current={locale} />
                   </div>

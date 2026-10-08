@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import type { City, Quartier, Situation, SituationCity } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
 import { PageHero } from "@/components/PageHero";
@@ -96,6 +97,8 @@ export function SituationCityPage({
           </div>
         </Section>
       )}
+
+      <RelatedGuides locale={locale} path={paths.situationCity(situation.slug, city.slug)} />
 
       <FaqBlock locale={locale} entries={faqs(locale).situationFaqs()} />
     </main>

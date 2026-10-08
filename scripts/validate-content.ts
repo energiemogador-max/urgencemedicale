@@ -1,5 +1,6 @@
 import { assertContentValid, validateContent } from "../content/index";
 import { missingTranslations } from "../content/i18n";
+import { validateBlog } from "../content/blog";
 
 /**
  * Content gate: schemas, no unfilled placeholders, word thresholds — and, for
@@ -11,7 +12,7 @@ import { missingTranslations } from "../content/i18n";
  * the deploy, which is why it defaults to strict.
  */
 const result = validateContent();
-const errors = [...result.errors];
+const errors = [...result.errors, ...validateBlog()];
 const partial = process.env.I18N_PARTIAL === "1";
 let missing: string[] = [];
 

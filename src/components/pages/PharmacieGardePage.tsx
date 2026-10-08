@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import type { Metadata } from "next";
 import { api } from "@/lib/locale-content";
 import { paths } from "@/lib/urls";
@@ -426,6 +427,8 @@ export function PharmacieGardePage({ locale = "fr" }: { locale?: Locale }) {
           {t.emergency(samu.display, protectionCivile.display)}
         </p>
       </Section>
+
+      <RelatedGuides locale={locale} path={paths.pharmacieGarde()} />
 
       <FaqBlock locale={locale} entries={t.faq.map((f) => ({ question: f.q, answer: f.a }))} />
       <CallBanner locale={locale} label={t.banner} />

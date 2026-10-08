@@ -239,6 +239,14 @@ export function SiteFooter({
             <Link href={L(paths.assistantIa())} prefetch={false} className="text-on-primary underline">
               {t.footer.assistantIa}
             </Link>
+            {locale === "fr" && (
+              <>
+                {" · "}
+                <Link href={paths.blogIndex()} prefetch={false} className="text-on-primary underline">
+                  Conseils pratiques
+                </Link>
+              </>
+            )}
           </p>
           <p className="shrink-0">
             © {new Date().getFullYear()} <span dir="ltr">{legalName}</span>

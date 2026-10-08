@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import type { City, Quartier, Service, ServiceCity } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
 import { toWhatsAppHref } from "@/lib/phone";
@@ -93,6 +94,8 @@ export function ServiceCityPage({
           </div>
         </Section>
       )}
+
+      <RelatedGuides locale={locale} path={paths.serviceCity(service.slug, city.slug)} />
 
       <FaqBlock locale={locale} entries={faqs(locale).serviceFaqs(service)} />
     </main>

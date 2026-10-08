@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import type { City, Quartier } from "@content/schema";
 import { isUnconfirmed } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
@@ -112,6 +113,8 @@ export function QuartierPage({
       )}
 
       <CallBanner locale={locale} />
+
+      <RelatedGuides locale={locale} path={paths.quartier(city.slug, quartier.slug)} />
 
       <FaqBlock locale={locale} entries={faqs(locale).quartierFaqs(quartier.name, quartier.responseTimeMinutes)} />
     </main>

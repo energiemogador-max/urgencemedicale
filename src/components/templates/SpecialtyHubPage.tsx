@@ -1,3 +1,4 @@
+import { RelatedGuides } from "@/components/RelatedGuides";
 import Link from "next/link";
 import type { City, Doctor, Specialty } from "@content/schema";
 import { TrustBlock } from "@/components/TrustBlock";
@@ -127,6 +128,8 @@ export function SpecialtyHubPage({
           </div>
         </Section>
       )}
+
+      <RelatedGuides locale={locale} path={paths.specialtyHub(specialty.slug)} />
 
       <FaqBlock locale={locale} entries={faqs(locale).specialtyFaqs(specialty.name)} />
     </main>

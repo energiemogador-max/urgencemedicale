@@ -403,9 +403,16 @@ const fr: Dict = {
       "soins-infirmiers-a-domicile": (c) =>
         `Infirmier à domicile à ${c} : un infirmier vient chez vous pour les injections, perfusions et pansements prescrits. Tarif annoncé à l'avance.`,
     },
-    quartier: (q, c) => `Médecin à domicile ${q}, ${c}`,
+    /*
+     * "Généraliste", because that is the word people use: Search Console
+     * (3 months to 2026-10-04) shows "generaliste ain chock", "generaliste
+     * maarif", "médecin généraliste belvedere casablanca" and a dozen more
+     * quartier variants at positions 8-12 with almost no clicks, on titles
+     * that never said "généraliste". The H1 still says "médecin à domicile".
+     */
+    quartier: (q, c) => `Généraliste à domicile ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
-      `Un médecin vient vous examiner à ${q} (${c}), ${h}. Arrivée en ${r} min, consultation dès ${p}, tarif confirmé avant la visite.`,
+      `Un généraliste vient vous examiner à ${q} (${c}), ${h}. Arrivée en ${r} min, consultation dès ${p}, tarif confirmé avant la visite.`,
   },
 };
 

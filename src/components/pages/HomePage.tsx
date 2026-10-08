@@ -3,6 +3,7 @@ import Link from "next/link";
 import { isUnconfirmed } from "@content/schema";
 import { api } from "@/lib/locale-content";
 import { everyDoctorSpeaks } from "@/lib/content";
+import { postsByDate } from "@/lib/blog";
 import { TrustBlock } from "@/components/TrustBlock";
 import { Reviews } from "@/components/Reviews";
 import { LiveStatus } from "@/components/LiveStatus";
@@ -489,6 +490,22 @@ export function HomePage({ locale = "fr" }: { locale?: Locale }) {
         </Section>
 
         <Reviews locale={locale} />
+
+        {/* The guides are French only; the four newest, then the index. */}
+        {locale === "fr" && (
+          <Section title="Conseils pratiques" lead="Qui appeler, quoi préparer, combien ça coûte : nos guides pour les questions les plus fréquentes.">
+            <div className="grid gap-3 sm:grid-cols-2">
+              {postsByDate.slice(0, 4).map((p) => (
+                <CardLink key={p.slug} href={paths.blogPost(p.slug)} title={p.title} description={p.description} />
+              ))}
+            </div>
+            <p className="mt-4">
+              <Link href={paths.blogIndex()} prefetch={false} className="font-semibold text-primary">
+                Tous les guides
+              </Link>
+            </p>
+          </Section>
+        )}
 
         <FaqBlock locale={locale} entries={faqs(locale).homeFaqs()} />
         <CallBanner locale={locale} />

@@ -117,6 +117,10 @@ export function localePageMetadata(locale: TranslatedLocale, slug: string[] | un
       return pharmacieGardeMetadata(locale);
     case "assistantIa":
       return assistantIaMetadata(locale);
+    // French only: never in translatedPages, so never reached here.
+    case "blogIndex":
+    case "blogPost":
+      return {};
   }
 }
 
@@ -173,6 +177,10 @@ export function LocalePage({ locale, slug }: { locale: TranslatedLocale; slug: s
       return <PharmacieGardePage locale={locale} />;
     case "assistantIa":
       return <AssistantIaPage locale={locale} />;
+    // French only: never in translatedPages, so never reached here.
+    case "blogIndex":
+    case "blogPost":
+      notFound();
   }
 }
 
