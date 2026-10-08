@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-10-08T12:00:09.997Z",
+    "collectedAt": "2026-10-08T23:44:21.668Z",
     "forDate": "2026-10-08",
     "entries": [
       {
@@ -11,11 +11,11 @@
         "sources": [
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Achraf",
@@ -30,7 +30,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -53,7 +53,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -72,7 +72,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -91,7 +91,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -110,7 +110,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -144,7 +144,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -163,7 +163,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -182,7 +182,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -200,7 +200,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -219,7 +219,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -242,7 +242,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -261,7 +261,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -283,7 +283,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -305,7 +305,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -324,7 +324,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -343,7 +343,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -362,7 +362,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -384,7 +384,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -403,7 +403,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -422,7 +422,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -441,7 +441,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -460,7 +460,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -479,7 +479,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -498,7 +498,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -517,7 +517,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -536,7 +536,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -554,7 +554,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -573,7 +573,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -591,7 +591,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -609,7 +609,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -631,7 +631,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -653,7 +653,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -672,7 +672,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -691,7 +691,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -710,7 +710,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -729,7 +729,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -748,7 +748,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -766,7 +766,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -785,7 +785,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -803,7 +803,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -822,7 +822,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -841,7 +841,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -860,7 +860,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -883,7 +883,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -902,7 +902,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -924,7 +924,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -946,7 +946,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -965,7 +965,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -988,7 +988,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1010,7 +1010,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1028,7 +1028,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1047,7 +1047,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1066,7 +1066,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1085,7 +1085,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1103,7 +1103,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1122,7 +1122,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1141,7 +1141,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1160,7 +1160,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1179,7 +1179,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1198,7 +1198,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1216,7 +1216,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1235,7 +1235,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1254,7 +1254,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1273,7 +1273,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1291,7 +1291,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1309,7 +1309,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1342,7 +1342,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1389,7 +1389,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1408,7 +1408,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1427,7 +1427,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
@@ -1446,7 +1446,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-07"
+            "date": "2026-10-08"
           }
         ],
         "confirmed": true,
