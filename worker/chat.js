@@ -31,14 +31,24 @@
 import { CHAT_PATH } from "./chat-path.js";
 export { CHAT_PATH };
 
-const MODEL = "inclusionai/ling-3.0-flash-sante:free";
+/*
+ * Modèles essayés dans l'ordre. Le premier est celui choisi par l'opérateur,
+ * spécialisé santé. Sa variante ":free" a été retirée d'OpenRouter
+ * (2026-10-12) : l'endpoint répondait 404 et le chat affichait une erreur 502
+ * à chaque message. Il est désormais payant (≈ 0,04 $ / M de tokens en entrée,
+ * 0,12 $ / M en sortie, soit ≈ 0,0002 $ par message) et demande du crédit sur
+ * le compte OpenRouter. Derrière lui, deux modèles gratuits prennent le relais
+ * si le précédent est retiré, à court de crédit, limité ou vide : un modèle
+ * qui disparaît ne doit plus jamais couper l'assistant.
+ */
+const MODELS = ["inclusionai/ling-3.0-flash-sante", "inclusionai/ling-3.1-flash", "google/gemma-4-31b-it:free"];
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 
 /** Bornes : une conversation d'assistance, pas un terrain de jeu gratuit. */
 const MAX_MESSAGES = 12;
 const MAX_CHARS = 1500;
 /**
- * inclusionai/ling-3.0-flash-sante:free est un modele "reasoning" : le
+ * inclusionai/ling-3.0-flash-sante est un modele "reasoning" : le
  * fournisseur (Novita, via OpenRouter) facture au budget une reflexion
  * interne qui n'est jamais montree, AVANT le premier mot de reponse. Verifie
  * en direct : a 300 et 400 tokens, les trois questions medicales testees
@@ -321,55 +331,62 @@ export async function handleChat(request, env) {
     return json({ error: "unconfigured" }, 503);
   }
 
+  const payload = [{ role: "system", content: systemPrompt(locale) }, ...messages];
+  for (const model of MODELS) {
+    const reply = await ask(env.OPENROUTER_API_KEY, model, payload);
+    // `model` is not shown to the visitor; it says which link of the chain answered.
+    if (reply) return json({ reply, urgent: false, model });
+  }
+
+  /*
+   * Aucun modèle n'a répondu. Un message d'erreur affiché à un visiteur qui
+   * vient de décrire un souci de santé serait le pire rendu possible : on rend
+   * plutôt la même invitation à appeler qui accompagne toute réponse, jamais un
+   * échec silencieux. Le détail de chaque échec est dans les logs du Worker.
+   */
+  return json({ reply: FALLBACK_REPLY[locale], urgent: false, fallback: true });
+}
+
+/**
+ * Un essai auprès d'un modèle. Renvoie le texte de la réponse, ou null pour
+ * passer au suivant : modèle retiré (404), crédit épuisé (402), limite (429),
+ * panne amont (5xx), réponse illisible, ou contenu vide (un modèle "reasoning"
+ * peut épuiser MAX_TOKENS avant le premier mot de réponse).
+ */
+async function ask(key, model, messages) {
   let upstream;
   try {
     upstream = await fetch(ENDPOINT, {
       method: "POST",
       headers: {
-        authorization: `Bearer ${env.OPENROUTER_API_KEY}`,
+        authorization: `Bearer ${key}`,
         "content-type": "application/json",
         // OpenRouter attribue les requêtes à ce site ; sans cela elles sont anonymes.
         "http-referer": "https://urgencemedicale.ma",
         "x-title": "Urgence Medicale",
       },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: MAX_TOKENS,
-        temperature: 0.3,
-        messages: [{ role: "system", content: systemPrompt(locale) }, ...messages],
-      }),
+      body: JSON.stringify({ model, max_tokens: MAX_TOKENS, temperature: 0.3, messages }),
     });
   } catch (error) {
-    console.error("chat: appel amont impossible", error instanceof Error ? error.message : String(error));
-    return json({ error: "upstream" }, 502);
+    console.error("chat:", model, "appel impossible", error instanceof Error ? error.message : String(error));
+    return null;
   }
 
   if (!upstream.ok) {
     const detail = await upstream.text().catch(() => "");
-    console.error("chat: amont", upstream.status, detail.slice(0, 300));
-    return json({ error: "upstream", status: upstream.status }, 502);
+    console.error("chat:", model, "amont", upstream.status, detail.slice(0, 300));
+    return null;
   }
 
   let data;
   try {
     data = await upstream.json();
   } catch {
-    return json({ error: "parse" }, 502);
+    console.error("chat:", model, "réponse illisible");
+    return null;
   }
 
   const reply = data?.choices?.[0]?.message?.content?.trim();
-  if (!reply) {
-    /*
-     * Un budget de reflexion mal dimensionne peut encore, dans de rares cas,
-     * epuiser MAX_TOKENS avant le premier mot de reponse (constate en test a
-     * des budgets plus bas). Un message vide affiche a un visiteur qui vient
-     * de decrire un souci de sante serait le pire rendu possible : on rend
-     * plutot la meme invitation a appeler qui accompagne toute reponse,
-     * jamais un echec silencieux.
-     */
-    console.error("chat: reponse vide", JSON.stringify(data).slice(0, 300));
-    return json({ reply: FALLBACK_REPLY[locale], urgent: false, fallback: true });
-  }
-
-  return json({ reply, urgent: false });
+  if (!reply) console.error("chat:", model, "réponse vide", JSON.stringify(data).slice(0, 300));
+  return reply || null;
 }
