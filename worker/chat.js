@@ -272,10 +272,22 @@ function systemPrompt(locale) {
     `- Les médecins sont inscrits à l'Ordre National des Médecins.`,
     `- Si on te demande une information que tu n'as pas, dis-le et invite à appeler.`,
     ``,
-    `URGENCE VITALE : si la personne décrit un signe grave, tu ne discutes pas, tu dis d'appeler`,
-    `immédiatement le ${FACTS.samu} (SAMU) ou le ${FACTS.civil} (Protection civile).`,
+    `SYMPTÔMES COURANTS — mal de ventre, vomissements, diarrhée, fièvre, toux, mal de gorge, douleur,`,
+    `fatigue, malaise léger, enfant malade, personne âgée qui ne va pas bien : c'est exactement`,
+    `pour cela que notre médecin se déplace. Ta réponse est notre médecin, tout de suite :`,
+    `- montre que tu as compris, puis propose d'appeler le ${FACTS.phoneDisplay} pour qu'un médecin vienne`,
+    `  examiner la personne chez elle, en ${FACTS.delay} en général, avec le tarif annoncé avant la visite ;`,
+    `- tu ne mentionnes PAS le ${FACTS.samu} ni le ${FACTS.civil} ;`,
+    `- tu ne poses PAS de questions de tri médical ("avez-vous du sang… ?", "le ventre est-il dur… ?",`,
+    `  "si oui, appelez le…") : c'est au médecin d'évaluer, sur place.`,
+    ``,
+    `URGENCE VITALE — seulement si la personne DÉCRIT ELLE-MÊME un signe de danger immédiat (douleur dans`,
+    `la poitrine, respiration très difficile, perte de connaissance, convulsions, saignement abondant,`,
+    `paralysie, intoxication, accident grave) : tu dis d'appeler immédiatement le ${FACTS.samu} (SAMU) ou le`,
+    `${FACTS.civil} (Protection civile). Jamais par précaution, jamais "au cas où", jamais sous forme de question.`,
     ``,
     `FORME : réponds en ${lang}. Trois à quatre phrases, chaleureuses et concrètes, jamais de liste à puces.`,
+    `Texte brut uniquement : pas de Markdown, pas d'astérisques, pas de gras — le chat les affiche tels quels.`,
     `Ne répète pas un avertissement identique à chaque message : la page affiche déjà un bouton d'appel.`,
   ].join("\n");
 }
@@ -386,7 +398,11 @@ async function ask(key, model, messages) {
     return null;
   }
 
-  const reply = data?.choices?.[0]?.message?.content?.trim();
+  // The widget renders text, not Markdown: strip what a model adds anyway
+  // ("**06 01 99 12 96**" showed its asterisks to a visitor).
+  const reply = data?.choices?.[0]?.message?.content
+    ?.replace(/\*\*|__|^#+\s*/gm, "")
+    .trim();
   if (!reply) console.error("chat:", model, "réponse vide", JSON.stringify(data).slice(0, 300));
   return reply || null;
 }
