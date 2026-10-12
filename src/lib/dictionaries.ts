@@ -134,6 +134,9 @@ export interface Dict {
     rating: (n: number) => string;
     googleListing: string;
     leaveReview: string;
+    /** Shown, with the two links, while no review has been transcribed yet. */
+    inviteTitle: string;
+    inviteLead: string;
     dateLocale: string;
   };
 
@@ -325,6 +328,9 @@ const fr: Dict = {
     rating: (n) => `Note : ${n} sur 5`,
     googleListing: "Consulter la fiche Google",
     leaveReview: "Laisser un avis",
+    inviteTitle: "Retrouvez-nous sur Google",
+    inviteLead:
+      "Vous avez fait appel à nos médecins ? Votre avis sur notre fiche Google aide d'autres familles à nous trouver, et nous aide à nous améliorer.",
     dateLocale: "fr-MA",
   },
   facts: {
@@ -517,6 +523,9 @@ const en: Dict = {
     rating: (n) => `Rating: ${n} out of 5`,
     googleListing: "See our Google listing",
     leaveReview: "Leave a review",
+    inviteTitle: "Find us on Google",
+    inviteLead:
+      "Have our doctors visited you? A review on our Google listing helps other families find us, and helps us improve.",
     dateLocale: "en-GB",
   },
   facts: {
@@ -696,6 +705,9 @@ const ar: Dict = {
     rating: (n) => `التقييم: ${n} من 5`,
     googleListing: "صفحتنا على Google",
     leaveReview: "اترك تقييمًا",
+    inviteTitle: "تجدوننا على Google",
+    inviteLead:
+      "هل زاركم أحد أطبائنا؟ تقييمكم على صفحتنا في Google يساعد عائلات أخرى على إيجادنا، ويساعدنا على التحسن.",
     dateLocale: "ar-MA",
   },
   facts: {

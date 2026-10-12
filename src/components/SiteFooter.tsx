@@ -7,6 +7,7 @@ import { toWhatsAppHref } from "@/lib/phone";
 import { paths } from "@/lib/urls";
 import { localizedPath, type Locale } from "@/lib/i18n";
 import { dict } from "@/lib/dictionaries";
+import { business } from "@content/business";
 
 /**
  * Navy footer, bookending the hero so the page closes deliberately.
@@ -191,6 +192,22 @@ export function SiteFooter({
               <br />
               {address.region}
             </address>
+            {/* The Google listing, next to the address it describes: visible on
+                every page, and the same name, address and phone as the profile. */}
+            {(business.profiles[0] || business.reviewUrl) && (
+              <p className="mt-3 flex flex-wrap gap-x-3 gap-y-1 text-sm">
+                {business.profiles[0] && (
+                  <a href={business.profiles[0]} target="_blank" rel="noopener noreferrer" className="font-semibold text-on-primary underline">
+                    {t.reviews.googleListing}
+                  </a>
+                )}
+                {business.reviewUrl && (
+                  <a href={business.reviewUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-on-primary underline">
+                    {t.reviews.leaveReview}
+                  </a>
+                )}
+              </p>
+            )}
             <ul className="mt-4 space-y-2 text-sm">
               {[
                 { href: paths.aPropos(), label: t.nav.about },
