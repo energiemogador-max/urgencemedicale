@@ -106,27 +106,37 @@ const RED_FLAGS = [
   "n arrive pas a respirer", "n'arrive pas à respirer", "peine a respirer", "peine à respirer",
   "difficulte a respirer", "difficulté à respirer", "etouffe", "étouffe", "suffoque",
   "manque d air", "manque d'air", "a du mal a respirer", "a du mal à respirer",
+  // Arrêt respiratoire — absent de la liste jusqu'au 2026-10-12 ("ma mère ne
+  // respire plus" ne déclenchait rien), alors que c'est le cas le plus grave.
+  "ne respire plus", "respire plus", "ne respire pas", "respire pas", "arret cardiaque", "arrêt cardiaque",
+  "pas de pouls", "plus de pouls",
   "perte de connaissance", "inconscient", "inconsciente", "evanoui", "évanoui", "ne repond plus",
   "ne répond plus", "coma", "convulsion", "crise d epilepsie", "crise d'épilepsie",
   "hemorragie", "hémorragie", "saigne beaucoup", "saignement abondant", "sang partout",
   "avc", "paralysie", "paralyse", "bouche de travers", "ne peut plus parler",
-  "intoxication", "empoisonnement", "a avale", "a avalé", "overdose",
+  // Pas "intoxication" ni "a avalé" seuls : une intoxication alimentaire
+  // (vomissements, diarrhée) est précisément ce qu'un médecin à domicile prend
+  // en charge, et l'opérateur a constaté que le chat renvoyait au 141 pour des
+  // symptômes ordinaires (2026-10-12). Restent les poisons et surdoses.
+  "empoisonnement", "overdose", "surdose", "eau de javel", "javel", "produit menager", "produit ménager",
   "suicide", "se tuer", "mettre fin a mes jours", "mettre fin à mes jours",
   "noyade", "electrocution", "électrocution", "brulure grave", "brûlure grave",
   "accouche", "perd les eaux",
   // anglais
   "chest pain", "heart attack", "cannot breathe", "can t breathe", "can't breathe",
   "struggling to breathe", "choking", "gasping for air",
+  "not breathing", "stopped breathing", "isn't breathing", "isnt breathing", "no pulse", "cardiac arrest",
   "unconscious", "passed out", "not responding",
   "seizure", "convulsing", "heavy bleeding", "bleeding a lot", "haemorrhage", "hemorrhage",
-  "stroke", "paralysed", "paralyzed", "slurred speech", "overdose", "poisoning",
+  "stroke", "paralysed", "paralyzed", "slurred speech", "overdose", "drank bleach",
   "swallowed bleach", "suicide", "kill myself", "drowning", "severe burn",
   // arabe
   "ألم في الصدر", "ألم بالصدر", "نوبة قلبية", "جلطة", "سكتة",
   "لا يستطيع التنفس", "صعوبة في التنفس", "اختناق", "ضيق تنفس",
+  "لا يتنفس", "لا تتنفس", "توقف عن التنفس", "توقفت عن التنفس", "ما كيتنفسش", "ما كتتنفسش", "سكتة قلبية",
   "فقدان الوعي", "فاقد الوعي", "إغماء", "غيبوبة", "لا يستجيب",
   "تشنج", "نزيف", "ينزف", "دم كثير", "شلل",
-  "تسمم", "ابتلع", "انتحار", "أقتل نفسي", "غرق", "حروق خطيرة",
+  "جرعة زائدة", "ماء جافيل", "انتحار", "أقتل نفسي", "غرق", "حروق خطيرة",
 ];
 
 /** Réponse fixe aux signes graves, dans les trois langues. */
