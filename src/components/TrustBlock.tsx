@@ -2,6 +2,7 @@ import Link from "next/link";
 import { paths } from "@/lib/urls";
 import { localizedPath, type Locale } from "@/lib/i18n";
 import { dict } from "@/lib/dictionaries";
+import { business } from "@content/business";
 
 /**
  * Doctor credentials, address, response-time commitment — the signals the
@@ -39,6 +40,8 @@ export function TrustBlock({
 }) {
   const t = dict(locale);
   const L = (p: string) => localizedPath(p, locale);
+  const rating = business.googleRating;
+  const listing = business.profiles[0];
   const item = "flex items-center gap-2.5 px-3 py-1.5";
   const icon = (d: string) => (
     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-tint text-primary">
@@ -81,6 +84,21 @@ export function TrustBlock({
           {icon("M12 6v6l4 2m6-2a10 10 0 1 1-20 0 10 10 0 0 1 20 0Z")}
           <span className="font-bold text-primary">{t.trust.intervention(t.range(responseTimeMinutes))}</span>
         </span>
+      )}
+      {/* The Google rating, as read on the listing (content/business.ts).
+          Hidden until a real rating has been entered. */}
+      {rating && listing && (
+        <a href={listing} target="_blank" rel="noopener noreferrer" className={`${item} no-underline hover:underline`}>
+          <span aria-hidden="true" className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-tint text-lg leading-none text-star">
+            ★
+          </span>
+          <span className="font-bold text-ink">
+            {t.trust.googleRating(
+              new Intl.NumberFormat(t.htmlLang === "fr" ? "fr-MA" : "en-GB", { maximumFractionDigits: 1 }).format(rating.value),
+              rating.count
+            )}
+          </span>
+        </a>
       )}
     </div>
   );

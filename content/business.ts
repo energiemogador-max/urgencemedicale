@@ -45,4 +45,7 @@ export const business: Business = {
   // (Business Profile → Demander des avis), which opens the review form
   // directly; the share.google link used before reviewed the other listing.
   reviewUrl: "https://www.google.com/maps?cid=2217991563743483780",
+  // The listing's rating and review count, read by the operator, e.g.
+  // { value: 4.8, count: 23, checkedOn: "2026-10-13" }. null hides the badge.
+  googleRating: null,
 };

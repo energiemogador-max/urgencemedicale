@@ -354,6 +354,20 @@ export const BusinessSchema = z.object({
    * sending staff to a dead link.
    */
   reviewUrl: z.string(),
+  /**
+   * The Google rating and review count, copied by hand from the listing in
+   * `profiles`, with the date they were read. Shown as a badge in the trust
+   * block on every page; null hides it. Never estimated, never rounded up:
+   * update it when the listing changes. Deliberately not emitted as
+   * AggregateRating JSON-LD (see ReviewSchema below for why).
+   */
+  googleRating: z
+    .object({
+      value: z.number().min(1).max(5),
+      count: z.number().int().min(1),
+      checkedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "checkedOn must be YYYY-MM-DD"),
+    })
+    .nullable(),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 

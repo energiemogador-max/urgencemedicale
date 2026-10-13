@@ -69,6 +69,8 @@ export interface Dict {
     registered: string;
     ordreNumber: (n: string) => string;
     intervention: (range: string) => string;
+    /** "4,8/5 · 23 avis Google": value already formatted for the locale. */
+    googleRating: (value: string, count: number) => string;
   };
 
   liveStatus: {
@@ -267,6 +269,7 @@ const fr: Dict = {
     registered: "inscrits à l'Ordre National des Médecins",
     ordreNumber: (n) => `Ordre National des Médecins n° ${n}`,
     intervention: (r) => `Intervention en ${r} min`,
+    googleRating: (v, n) => `${v}/5 · ${n} avis Google`,
   },
   liveStatus: {
     open: "Service ouvert",
@@ -463,6 +466,7 @@ const en: Dict = {
     registered: "registered with the Ordre National des Médecins",
     ordreNumber: (n) => `Ordre National des Médecins No. ${n}`,
     intervention: (r) => `Arrival in ${r} min`,
+    googleRating: (v, n) => `${v}/5 · ${n} Google review${n > 1 ? "s" : ""}`,
   },
   liveStatus: {
     open: "Service open",
@@ -646,6 +650,7 @@ const ar: Dict = {
     registered: "مسجلون في الهيئة الوطنية للطبيبات والأطباء",
     ordreNumber: (n) => `رقم التسجيل في الهيئة الوطنية للطبيبات والأطباء: ${n}`,
     intervention: (r) => `الوصول خلال ${r} دقيقة`,
+    googleRating: (v, n) => `${v}/5 · ${n} تقييم على Google`,
   },
   liveStatus: {
     open: "الخدمة متاحة الآن",
