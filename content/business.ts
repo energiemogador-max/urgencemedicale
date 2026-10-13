@@ -22,19 +22,27 @@ export const business: Business = {
     postalCode: "20260",
     region: "Casablanca-Settat",
   },
-  // Confirmed by the operator (2026-08-28) — keep as is.
+  // The pin of the operator's Google listing (2026-10-13, see `profiles`), in
+  // Hay Essalam / Oulfa where the street address is. The previous point
+  // (33.596, -7.546) sat about 12 km east, in a different district: name,
+  // address and map pin must agree between the site and the listing.
   geo: {
-    lat: "33.596",
-    lng: "-7.546",
+    lat: "33.5548",
+    lng: "-7.6777",
   },
   defaultResponseTimeMinutes: "10 à 15",
   hoursOpen: "24/7",
-  // Google Business Profile (Knowledge Graph id /g/11zfhwtr46), supplied by
-  // the operator 2026-09-02. Add Facebook/Instagram here as they are created.
-  profiles: ["https://share.google/2mBNIVD81eAsxysgi"],
-  // Review link supplied by the operator 2026-10-08; it resolves to the same
-  // listing (kgmid /g/11zfhwtr46). It turns on the dashboard's "Demander un
-  // avis" WhatsApp button after each finished visit, and the "leave a review"
-  // link under the reviews on the homepage.
-  reviewUrl: "https://share.google/xHbZvDvvydlneoSPE",
+  // The Google listing the operator manages (2026-10-13): Maps place
+  // "urgence medicale", Knowledge Graph id /g/11p1vxs9c3, CID
+  // 2217991563743483780. The ?cid= form is Google's stable link to a place.
+  // The links used before (share.google/2mBN…, /g/11zfhwtr46) pointed to a
+  // different listing of the same name. Add Facebook/Instagram here as they
+  // are created.
+  profiles: ["https://www.google.com/maps?cid=2217991563743483780"],
+  // Turns on the dashboard's "Demander un avis" WhatsApp button after each
+  // finished visit, and the "leave a review" link on the site. Points to the
+  // same listing until the operator supplies its "Demander des avis" link
+  // (Business Profile → Demander des avis), which opens the review form
+  // directly; the share.google link used before reviewed the other listing.
+  reviewUrl: "https://www.google.com/maps?cid=2217991563743483780",
 };
