@@ -81,6 +81,24 @@
   .bars .bar i{display:block;height:100%;background:var(--navy)}
   .num{font-variant-numeric:tabular-nums;text-align:end}
   .due{color:var(--red);font-weight:800}
+  .delta{display:block;font-style:normal;font-size:12px;font-weight:700;margin-top:2px;color:var(--muted)}
+  .delta.up{color:var(--ok)}.delta.down{color:var(--red)}
+  .verdict{margin:0 0 10px;font-weight:700}
+  .verdict b{font-size:18px}.verdict .up{color:var(--ok)}.verdict .down{color:var(--red)}.verdict .flat{color:var(--navy)}
+  .chart svg{display:block;width:100%;height:auto}
+  .funnel{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+  .funnel div{background:var(--bg);border-radius:12px;padding:12px}
+  .funnel b{display:block;font-size:22px;color:var(--navy);font-variant-numeric:tabular-nums}
+  .funnel span{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .funnel i{display:block;font-style:normal;font-size:12px;color:var(--muted)}
+  .mini-t{width:100%;border-collapse:collapse;font-size:13px}
+  .mini-t th{background:none;color:var(--muted);font-size:11px;padding:4px 6px;border-bottom:1px solid var(--line)}
+  .mini-t td{padding:5px 6px;border-bottom:1px solid #edf2f6}
+  .mini-t td.lab{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hours{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:90px}
+  .hours div{background:var(--navy);border-radius:3px 3px 0 0;min-height:2px;position:relative}
+  .hours div span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted)}
+  .hours{margin-bottom:18px}
   [hidden]{display:none!important}
 </style>
 </head>
@@ -130,7 +148,26 @@
 
   <!-- ── TAB 1: visitors ───────────────────────────────────────────────── -->
   <section id="t-dash" hidden>
-    <div class="live"><span class="dot"></span><b id="s-live">0</b> visiteur(s) en ligne maintenant</div>
+    <div class="live"><span class="dot"></span><b id="s-live">0</b> visiteur(s) en ligne maintenant
+      <span id="s-bots" class="muted" style="margin-inline-start:auto">Robots exclus</span></div>
+
+    <!-- Long-run trend: is the site going up, flat or down? -->
+    <div class="card">
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
+        <h3 style="margin:0">Visiteurs par jour</h3>
+        <div class="range" id="hrange" style="margin:0 0 0 auto">
+          <button data-h="30" class="on">30 jours</button>
+          <button data-h="90">3 mois</button>
+          <button data-h="180">6 mois</button>
+          <button data-h="365">1 an</button>
+        </div>
+      </div>
+      <p id="h-verdict" class="verdict">Chargement…</p>
+      <div id="h-chart" class="chart" aria-label="Visiteurs par jour"></div>
+      <p class="muted" style="margin:8px 0 0">Barres : visiteurs réels par jour · ligne : moyenne sur 7 jours ·
+        rouge : appels et WhatsApp depuis le site. <span id="h-since"></span></p>
+    </div>
+
     <div class="range" id="range">
       <button data-r="24h" class="on">24 heures</button>
       <button data-r="today">Aujourd'hui</button>
@@ -138,11 +175,28 @@
       <button data-r="30d">30 jours</button>
     </div>
     <div class="stats">
-      <div class="stat"><span>Visiteurs</span><b id="s-vis">–</b></div>
-      <div class="stat"><span>Visites</span><b id="s-ses">–</b></div>
-      <div class="stat"><span>Appels site</span><b id="s-call">–</b></div>
-      <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b></div>
-      <div class="stat"><span>Taux d'appel</span><b id="s-rate">–</b></div>
+      <div class="stat"><span>Visiteurs</span><b id="s-vis">–</b><em id="d-vis" class="delta"></em></div>
+      <div class="stat"><span>Visites</span><b id="s-ses">–</b><em id="d-ses" class="delta"></em></div>
+      <div class="stat"><span>Pages vues</span><b id="s-pv">–</b><em id="d-pv" class="delta"></em></div>
+      <div class="stat"><span>Appels site</span><b id="s-call">–</b><em id="d-call" class="delta"></em></div>
+      <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b><em id="d-wa" class="delta"></em></div>
+      <div class="stat"><span>Taux d'appel</span><b id="s-rate">–</b><em id="d-rate" class="delta"></em></div>
+    </div>
+    <p class="muted" style="margin:-6px 0 14px">Flèches : comparaison avec la période précédente de même durée.</p>
+
+    <div class="card">
+      <h3>Du visiteur à l'intervention</h3>
+      <div class="funnel" id="funnel"></div>
+    </div>
+
+    <div class="cols">
+      <section class="card"><h3>Pages d'arrivée qui font appeler</h3><div id="t-landing"></div></section>
+      <section class="card"><h3>Provenance et appels</h3><div id="t-source"></div></section>
+    </div>
+    <div class="card">
+      <h3>Heures des appels</h3>
+      <div id="hours" class="hours"></div>
+      <p class="muted" style="margin:8px 0 0">Appels et WhatsApp depuis le site, par heure (heure du Maroc), sur la période choisie : utile pour organiser les gardes.</p>
     </div>
     <div class="card">
       <h3>Réconciliation appels ↔ interventions</h3>
@@ -157,11 +211,15 @@
     </div>
     <div class="cols">
       <section class="card"><h3>Pages les plus vues</h3><ol id="b-pages" class="bars"></ol></section>
-      <section class="card"><h3>Provenance</h3><ol id="b-src" class="bars"></ol></section>
       <section class="card"><h3>Villes</h3><ol id="b-city" class="bars"></ol></section>
       <section class="card"><h3>Appareils</h3><ol id="b-dev" class="bars"></ol></section>
+      <section class="card"><h3>Langue du site</h3><ol id="b-lang" class="bars"></ol></section>
+      <section class="card"><h3>Nouveaux / revenus</h3><ol id="b-ret" class="bars"></ol></section>
       <section class="card"><h3>D'où vient l'appui</h3><ol id="b-cta" class="bars"></ol>
-        <p class="muted" style="margin:8px 0 0">entete · hero · banniere · pied · barre-mobile</p></section>
+        <p class="muted" style="margin:8px 0 0">entete · hero · banniere · pied · barre-mobile · chat</p></section>
+      <section class="card"><h3>Assistant IA</h3><ol id="b-chat" class="bars"></ol></section>
+      <section class="card"><h3>Campagnes (publicité)</h3><ol id="b-utm" class="bars"></ol>
+        <p class="muted" style="margin:8px 0 0">Visites arrivées par un lien de campagne (utm, Google Ads).</p></section>
     </div>
     <h3 style="margin:22px 0 8px">Appels déclenchés depuis le site</h3>
     <div class="wrap"><table>
@@ -315,6 +373,28 @@ const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": 
 const mad = (n) => (Number(n) || 0).toLocaleString("fr-FR") + " MAD";
 const fmt = (t) => { try { return new Date(t).toLocaleString("fr-FR"); } catch (e) { return String(t); } };
 const DAY = 86400000;
+/* Days of visits kept live; older days come from the cached history. */
+const LIVE_DAYS = 61;
+const HIST_KEY = "um_hist_v2";
+/* Day keys are UTC dates, exactly as the tracker writes sessions/{day}. */
+const dayKey = (t) => new Date(t).toISOString().slice(0, 10);
+
+/* A visit counts when a person was behind it.
+   Since 2026-10-14 the tracker writes a visit only after a human action
+   (touch, tap, scroll, key, real mouse movement) and never from a cloud
+   network: those rows carry v = 2. Older rows have no such guarantee, so
+   one of them counts only if it shows life: 10 seconds or more on the site,
+   or more than one page. Renderers and prerenders show neither. */
+const isHuman = (s) => !!s && (s.v >= 2 || Number(s.duration) >= 10 || Number(s.pageviews) > 1);
+const aggDay = (list) => {
+  const h = list.filter(isHuman);
+  return { v: new Set(h.map((s) => s.visitorId).filter(Boolean)).size, s: h.length };
+};
+/* Language of the visit: recorded since v2, otherwise read from the URL. */
+const langOf = (s) => s.lang || ((s.landing || s.page || "").startsWith("/ar") ? "ar"
+  : (s.landing || s.page || "").startsWith("/en") ? "en" : "fr");
+let hist = {};     // older days: { "YYYY-MM-DD": { v: visitors, s: visits } }
+let hDays = 30;    // span of the "Visiteurs par jour" chart
 
 /* Staff, with a light PIN, managed from the Utilisateurs tab and stored in
    Firebase at staff_members/ — the same shape as the Nova Style admin.
@@ -438,6 +518,12 @@ else {
     range = b.dataset.r;
     [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
     renderDash();
+  });
+  $("hrange").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-h]"); if (!b) return;
+    hDays = Number(b.dataset.h);
+    [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
+    renderTrend();
   });
 
   // ── form options ───────────────────────────────────────────────────────
@@ -616,11 +702,63 @@ else {
     renderAll();
   }
 
+  /* Every live listener, started once per sign-in and stopped at sign-out.
+   *
+   * They used to be attached AFTER the PIN check, in the same callback that
+   * returned early when no PIN had been entered yet in this browser session.
+   * So on a fresh open (new tab, new day) the dashboard asked for the PIN,
+   * then rendered with nothing listening to the database: every table stayed
+   * empty until a reload, when the PIN was already in sessionStorage and the
+   * listeners did attach. The staff list for the PIN screen itself was behind
+   * the same return, so the PIN menu showed only the default entry. Data
+   * loading no longer depends on the PIN at all; the PIN only gates the UI. */
+  let unsubs = [];
+  function subscribe() {
+    if (unsubs.length) return;
+    const on = (q, fn, err) => unsubs.push(onValue(q, fn, err || (() => {})));
+    on(query(ref(db, "taps"), limitToLast(5000)), (s) => { taps = Object.values(s.val() || {}); renderAll(); },
+      () => { $("err").textContent = "Lecture refusée — vérifiez les règles."; $("err").hidden = false; });
+    on(ref(db, "online_visitors"), (s) => { live = s.val() || {}; renderDash(); });
+    on(query(ref(db, "interventions"), limitToLast(2000)), (s) => {
+      interventions = Object.entries(s.val() || {}).map(([id, v]) => ({ id, ...v })); renderAll();
+    });
+    on(query(ref(db, "payments"), limitToLast(1000)), (s) => {
+      payments = Object.entries(s.val() || {}).map(([id, v]) => ({ id, ...v })); renderCash();
+    });
+    on(ref(db, "doctors"), (s) => {
+      extraDoctors = Object.values(s.val() || {}).filter((d) => d && d.active !== false);
+      refreshDoctorOptions(); renderCash();
+    });
+    on(ref(db, "users"), (s) => {
+      users = Object.entries(s.val() || {}).map(([uid, v]) => ({ uid, ...v })); renderUsers();
+    });
+    on(ref(db, "staff_members"), (s) => {
+      const active = Object.values(s.val() || {}).filter((m) => m && m.active !== false);
+      STAFF = active.length ? active : SEED_STAFF;
+      refreshStaffOptions();
+    });
+    /* 61 days of visits, live: the 30-day view and the 30 days before it,
+       which the comparison arrows need. Older days come from loadHistory(). */
+    const byDay = {};
+    for (let i = 0; i < LIVE_DAYS; i++) {
+      const d = dayKey(Date.now() - i * DAY);
+      on(ref(db, "sessions/" + d), (s) => {
+        byDay[d] = Object.values(s.val() || {}); sessions = Object.values(byDay).flat(); renderDash();
+      });
+    }
+    loadHistory();
+  }
+  function unsubscribe() {
+    unsubs.forEach((u) => { try { u(); } catch (e) {} });
+    unsubs = [];
+  }
+
   onAuthStateChanged(auth, (user) => {
     $("login").hidden = !!user;
     $("out").hidden = !user;
     $("who").textContent = user ? user.email : "";
     if (!user) {
+      unsubscribe();
       $("nav").hidden = true; $("pin").hidden = true;
       TABS.forEach((t) => { $("t-" + t).hidden = true; });
       return;
@@ -643,87 +781,171 @@ else {
       applyRole();
     }).catch(() => { applyRole(); });
 
+    subscribe();
     staff = sessionStorage.getItem("um_staff");
     if (!staff) { $("pin").hidden = false; return; }
     showApp();
-
-    onValue(query(ref(db, "taps"), limitToLast(1000)), (s) => { taps = Object.values(s.val() || {}); renderAll(); },
-      () => { $("err").textContent = "Lecture refusée — vérifiez les règles."; $("err").hidden = false; });
-    onValue(ref(db, "online_visitors"), (s) => { live = s.val() || {}; renderDash(); }, () => {});
-    onValue(query(ref(db, "interventions"), limitToLast(500)), (s) => {
-      interventions = Object.entries(s.val() || {}).map(([id, v]) => ({ id, ...v })); renderAll();
-    }, () => {});
-    onValue(query(ref(db, "payments"), limitToLast(500)), (s) => {
-      payments = Object.entries(s.val() || {}).map(([id, v]) => ({ id, ...v })); renderCash();
-    }, () => {});
-    onValue(ref(db, "doctors"), (s) => {
-      extraDoctors = Object.values(s.val() || {}).filter((d) => d && d.active !== false);
-      refreshDoctorOptions(); renderCash();
-    }, () => {});
-    onValue(ref(db, "users"), (s) => {
-      users = Object.entries(s.val() || {}).map(([uid, v]) => ({ uid, ...v })); renderUsers();
-    }, () => {});
-    onValue(ref(db, "staff_members"), (s) => {
-      const live = Object.values(s.val() || {}).filter((m) => m && m.active !== false);
-      STAFF = live.length ? live : SEED_STAFF;
-      refreshStaffOptions();
-    }, () => {});
-
-    const days = [];
-    for (let i = 0; i < 31; i++) days.push(new Date(Date.now() - i * DAY).toISOString().slice(0, 10));
-    const byDay = {};
-    days.forEach((d) => onValue(ref(db, "sessions/" + d), (s) => {
-      byDay[d] = Object.values(s.val() || {}); sessions = Object.values(byDay).flat(); renderDash();
-    }, () => {}));
   });
+
+  /* Long-run history for the "Visiteurs par jour" chart, beyond the 61 live
+     days: one read per older day, aggregated to two numbers and cached in
+     this browser. A past day never changes, so each one is read once per
+     device. Cache key versioned with the human filter (isHuman). */
+  async function loadHistory() {
+    let cache = {};
+    try { cache = JSON.parse(localStorage.getItem(HIST_KEY) || "{}"); } catch (e) {}
+    hist = cache;
+    const need = [];
+    for (let i = LIVE_DAYS; i < 366; i++) {
+      const d = dayKey(Date.now() - i * DAY);
+      if (!cache[d]) need.push(d);
+    }
+    for (let i = 0; i < need.length; i += 12) {
+      await Promise.all(need.slice(i, i + 12).map(async (d) => {
+        try { cache[d] = aggDay(Object.values((await get(ref(db, "sessions/" + d))).val() || {})); } catch (e) {}
+      }));
+      renderTrend();
+    }
+    try { localStorage.setItem(HIST_KEY, JSON.stringify(cache)); } catch (e) {}
+    renderTrend();
+  }
 }
 
 // ── rendering ────────────────────────────────────────────────────────────
-function windowStart() {
-  if (range === "today") { const d = new Date(); d.setHours(0,0,0,0); return d.getTime(); }
-  if (range === "7d") return Date.now() - 7 * DAY;
-  if (range === "30d") return Date.now() - 30 * DAY;
-  return Date.now() - DAY;
+/* The selected period, and the period of the same length just before it
+   (for "Aujourd'hui": yesterday up to the same hour). */
+function windowRange() {
+  const now = Date.now();
+  let from;
+  if (range === "today") { const d = new Date(); d.setHours(0,0,0,0); from = d.getTime(); }
+  else if (range === "7d") from = now - 7 * DAY;
+  else if (range === "30d") from = now - 30 * DAY;
+  else from = now - DAY;
+  const today = range === "today";
+  return { from, to: now, pFrom: today ? from - DAY : from - (now - from), pTo: today ? now - DAY : from };
 }
 function bars(el, items) {
   const top = Object.entries(items).sort((a,b) => b[1]-a[1]).slice(0,6);
-  const max = top.length ? top[0][1] : 1;
+  const max = top.length ? Math.max(1, top[0][1]) : 1;
   $(el).innerHTML = top.length
     ? top.map(([k,n]) => `<li><span class="lab" title="${esc(k)}">${esc(k)}</span><b>${n}</b>` +
         `<span class="bar"><i style="width:${Math.round(n/max*100)}%"></i></span></li>`).join("")
     : '<li class="lab" style="color:var(--muted)">Aucune donnée</li>';
 }
-const tally = (list, key) => list.reduce((a,r) => { const v = r[key] || "—"; a[v] = (a[v]||0)+1; return a; }, {});
+const tally = (list, key) => list.reduce((a,r) => { const v = (typeof key === "function" ? key(r) : r[key]) || "—"; a[v] = (a[v]||0)+1; return a; }, {});
+const tapTime = (r) => new Date(r.at).getTime();
+const pct = (a, b) => b ? Math.round(a / b * 100) + " %" : "–";
 
-function renderDash() {
-  const from = windowStart();
-  const ses = sessions.filter((r) => (r.startedAt||0) >= from);
-  const tp = taps.filter((r) => new Date(r.at).getTime() >= from);
-  const ints = interventions.filter((r) => (r.createdAt||0) >= from);
-  const visitors = new Set(ses.map((r) => r.visitorId).filter(Boolean)).size;
+/* Everything the period cards need, for any window. */
+function periodStats(from, to) {
+  const all = sessions.filter((r) => (r.startedAt||0) >= from && (r.startedAt||0) < to);
+  const ses = all.filter(isHuman);
+  const tp = taps.filter((r) => { const t = tapTime(r); return t >= from && t < to; });
   const calls = tp.filter((r) => r.event === "call").length;
   const wa = tp.filter((r) => r.event === "whatsapp").length;
+  const visitors = new Set(ses.map((r) => r.visitorId).filter(Boolean)).size;
+  return {
+    ses, tp, calls, wa, visitors, dropped: all.length - ses.length,
+    visits: ses.length,
+    pageviews: ses.reduce((n, s) => n + (Number(s.pageviews) || 1), 0),
+    rate: visitors ? (calls + wa) / visitors * 100 : 0,
+  };
+}
+function delta(id, cur, prev, points) {
+  const el = $(id);
+  if (!prev && !cur) { el.textContent = ""; el.className = "delta"; return; }
+  if (!prev) { el.textContent = "nouveau"; el.className = "delta up"; return; }
+  const d = points ? Math.round((cur - prev) * 10) / 10 : Math.round((cur - prev) / prev * 100);
+  const unit = points ? " pt" : " %";
+  el.textContent = (d > 0 ? "▲ +" : d < 0 ? "▼ " : "= ") + (d === 0 ? "" : d + unit) + " (préc. " +
+    (points ? Math.round(prev) + " %" : prev) + ")";
+  el.className = "delta " + (d > 0 ? "up" : d < 0 ? "down" : "");
+}
+/* A small two-column breakdown: visits and site calls per key, with the rate. */
+function convTable(el, ses, tp, sKey, tKey) {
+  const rows = {};
+  ses.forEach((s) => { const k = sKey(s) || "—"; (rows[k] = rows[k] || { v: 0, c: 0 }).v++; });
+  tp.forEach((t) => { const k = tKey(t) || "—"; (rows[k] = rows[k] || { v: 0, c: 0 }).c++; });
+  const list = Object.entries(rows).sort((a, b) => b[1].c - a[1].c || b[1].v - a[1].v).slice(0, 8);
+  $(el).innerHTML = list.length
+    ? `<table class="mini-t"><thead><tr><th>Page / source</th><th class="num">Visites</th><th class="num">Appels</th><th class="num">Taux</th></tr></thead><tbody>` +
+      list.map(([k, r]) => `<tr><td class="lab" title="${esc(k)}">${esc(k)}</td><td class="num">${r.v}</td>` +
+        `<td class="num">${r.c}</td><td class="num">${r.v ? pct(r.c, r.v) : "–"}</td></tr>`).join("") + "</tbody></table>"
+    : '<p class="muted" style="margin:0">Aucune donnée</p>';
+}
 
-  $("s-vis").textContent = visitors; $("s-ses").textContent = ses.length;
+function renderDash() {
+  const w = windowRange();
+  const cur = periodStats(w.from, w.to);
+  const prev = periodStats(w.pFrom, w.pTo);
+  const { ses, tp, calls, wa, visitors } = cur;
+  const ints = interventions.filter((r) => (r.createdAt||0) >= w.from);
+
+  $("s-vis").textContent = visitors; $("s-ses").textContent = cur.visits; $("s-pv").textContent = cur.pageviews;
   $("s-call").textContent = calls; $("s-wa").textContent = wa;
-  $("s-rate").textContent = visitors ? Math.round((calls+wa)/visitors*100) + "%" : "–";
+  $("s-rate").textContent = visitors ? Math.round(cur.rate) + " %" : "–";
+  delta("d-vis", visitors, prev.visitors); delta("d-ses", cur.visits, prev.visits);
+  delta("d-pv", cur.pageviews, prev.pageviews); delta("d-call", calls, prev.calls);
+  delta("d-wa", wa, prev.wa);
+  if (visitors || prev.visitors) delta("d-rate", cur.rate, prev.rate, true); else $("d-rate").textContent = "";
+
+  /* From a visit to money: each step with its share of the step before. */
+  const engaged = ses.filter((s) => Number(s.duration) >= 30 || Number(s.pageviews) > 1 || Number(s.scroll) >= 50).length;
+  const done = ints.filter((r) => r.status === "termine").length;
+  const steps = [
+    ["Visites", cur.visits, ""],
+    ["Visites engagées", engaged, "30 s, 2 pages ou mi-page"],
+    ["Appels + WhatsApp", calls + wa, "depuis le site"],
+    ["Interventions saisies", ints.length, "tous canaux"],
+    ["Terminées", done, "visite effectuée"],
+  ];
+  $("funnel").innerHTML = steps.map(([lab, n, hint], i) =>
+    `<div><span>${lab}</span><b>${n}</b><i>${i ? pct(n, steps[i - 1][1]) + " de l'étape précédente" : hint}` +
+    `${i && hint ? " · " + hint : ""}</i></div>`).join("");
 
   /* Reconciliation: a tap counts as answered if an intervention was created
      within 15 minutes of it. Taps are anonymous, so time is the only link. */
   const WINDOW = 15 * 60 * 1000;
   const times = ints.map((i) => i.createdAt || 0);
   const unmatched = tp.filter((t) => t.event === "call")
-    .filter((t) => { const ts = new Date(t.at).getTime(); return !times.some((c) => c >= ts && c - ts <= WINDOW); });
+    .filter((t) => { const ts = tapTime(t); return !times.some((c) => c >= ts && c - ts <= WINDOW); });
   $("r-taps").textContent = calls;
   $("r-int").textContent = ints.length;
   $("r-gap").textContent = unmatched.length;
   $("r-gap").style.color = unmatched.length ? "var(--red)" : "";
 
-  bars("b-pages", tally(ses,"page")); bars("b-src", tally(ses,"source"));
-  bars("b-city", tally(ses,"city")); bars("b-dev", tally(ses,"device"));
+  convTable("t-landing", ses, tp, (s) => s.landing || s.page, (t) => t.landingPage || t.page);
+  convTable("t-source", ses, tp, (s) => s.source, (t) => t.source);
+
+  /* Calls by hour of the day, Morocco time: when the phone needs answering. */
+  const hourOf = (t) => Number(new Date(t).toLocaleString("en-GB", { hour: "2-digit", hour12: false, timeZone: "Africa/Casablanca" })) % 24;
+  const byHour = Array(24).fill(0);
+  tp.forEach((t) => { byHour[hourOf(tapTime(t))]++; });
+  const hmax = Math.max(1, ...byHour);
+  $("hours").innerHTML = byHour.map((n, h) =>
+    `<div style="height:${Math.max(2, Math.round(n / hmax * 100))}%" title="${h} h : ${n} appel(s)">` +
+    `${h % 3 === 0 ? `<span>${h}h</span>` : ""}</div>`).join("");
+
+  bars("b-pages", tally(ses, (s) => s.lastPage || s.page));
+  bars("b-city", tally(ses, "city")); bars("b-dev", tally(ses, "device"));
+  bars("b-lang", tally(ses, (s) => ({ fr: "Français", en: "English", ar: "العربية" })[langOf(s)] || langOf(s)));
+  bars("b-ret", tally(ses.filter((s) => s.v >= 2), (s) => s.returning ? "Revenus" : "Nouveaux"));
   /* Which call surface people actually use. Rows written before the
      data-tap attributes shipped have no cta and fall into "—". */
   bars("b-cta", tally(tp, "cta"));
+  const chat = ses.filter((s) => s.chat && s.chat.open);
+  bars("b-chat", {
+    "Conversations ouvertes": chat.length,
+    "Messages envoyés": chat.reduce((n, s) => n + (Number(s.chat.messages) || 0), 0),
+    "Urgences détectées": chat.reduce((n, s) => n + (Number(s.chat.urgent) || 0), 0),
+    "Appels depuis le chat": tp.filter((t) => t.cta === "chat").length,
+  });
+  bars("b-utm", tally(ses.filter((s) => s.utm), (s) =>
+    [s.utm.source, s.utm.medium].filter(Boolean).join(" / ") + (s.utm.campaign ? " · " + s.utm.campaign : "")));
+
+  $("s-bots").textContent = cur.dropped
+    ? `Robots exclus · ${cur.dropped} visite(s) sans activité humaine écartée(s) sur la période`
+    : "Robots exclus";
 
   tp.sort((a,b) => a.at < b.at ? 1 : -1);
   $("rows").innerHTML = tp.map((r) => {
@@ -734,6 +956,89 @@ function renderDash() {
 
   const cutoff = Date.now() - 10 * 60 * 1000;
   $("s-live").textContent = Object.values(live).filter((v) => (v.lastSeen||0) > cutoff).length;
+  renderTrend();
+}
+
+/* "Visiteurs par jour": is the site going up, flat or down?
+   Bars are real visitors per day, the line is their 7-day average (one bad
+   Sunday says nothing), and the red strip is site calls per day. The verdict
+   compares the average of the second half of the data with the first half,
+   over the days that have data, so a period before tracking existed does
+   not read as growth. */
+let trendResize = null;
+window.addEventListener("resize", () => { clearTimeout(trendResize); trendResize = setTimeout(renderTrend, 200); });
+function renderTrend() {
+  if (!$("h-chart")) return;
+  const liveDay = {};
+  for (const s of sessions) {
+    if (!isHuman(s)) continue;
+    const d = dayKey(s.startedAt || 0);
+    (liveDay[d] = liveDay[d] || new Set()).add(s.visitorId);
+  }
+  const callDay = {};
+  for (const t of taps) { const d = dayKey(tapTime(t)); callDay[d] = (callDay[d] || 0) + 1; }
+
+  const days = [];
+  for (let i = hDays - 1; i >= 0; i--) {
+    const d = dayKey(Date.now() - i * DAY);
+    const v = i < LIVE_DAYS ? (liveDay[d] ? liveDay[d].size : 0) : (hist[d] ? hist[d].v : 0);
+    days.push({ d, v, c: callDay[d] || 0 });
+  }
+  const first = days.findIndex((x) => x.v > 0);
+  const data = first < 0 ? [] : days.slice(first);
+  const avg = (a) => a.length ? a.reduce((n, x) => n + x.v, 0) / a.length : 0;
+  const fmtD = (d) => d.slice(8, 10) + "/" + d.slice(5, 7);
+
+  /* Verdict */
+  const total = days.reduce((n, x) => n + x.v, 0);
+  const calls = days.reduce((n, x) => n + x.c, 0);
+  let verdict;
+  if (data.length < 14) {
+    verdict = `<span class="flat">Pas encore assez de recul</span> — ${data.length} jour(s) de données sur cette période. ` +
+      `${total} visiteur(s), ${calls} appel(s).`;
+  } else {
+    const half = Math.floor(data.length / 2);
+    const a = avg(data.slice(0, half)), b = avg(data.slice(data.length - half));
+    const ch = a ? Math.round((b - a) / a * 100) : 100;
+    const cls = ch >= 10 ? "up" : ch <= -10 ? "down" : "flat";
+    const word = ch >= 10 ? "▲ En hausse" : ch <= -10 ? "▼ En baisse" : "■ Stable";
+    verdict = `<span class="${cls}"><b>${word}</b> ${ch > 0 ? "+" : ""}${ch} %</span> — ` +
+      `${b.toFixed(1)} visiteurs/jour sur la période récente, contre ${a.toFixed(1)} au début. ` +
+      `${total} visiteurs et ${calls} appel(s) sur ${hDays} jours.`;
+  }
+  $("h-verdict").innerHTML = verdict;
+  $("h-since").textContent = first > 0 ? `Premières données le ${fmtD(days[first].d)}.` : "";
+
+  /* Chart (inline SVG, no library) */
+  /* Drawn at the chart's real width, so its text stays legible on a phone. */
+  const W = Math.max(300, $("h-chart").clientWidth || 720), H = W < 500 ? 150 : 190, CH = 34, pad = 24, n = days.length;
+  const bw = (W - pad) / n;
+  const vmax = Math.max(1, ...days.map((x) => x.v));
+  const cmax = Math.max(1, ...days.map((x) => x.c));
+  const y = (v) => H - 14 - (v / vmax) * (H - 30);
+  const ma = days.map((x, i) => { const w7 = days.slice(Math.max(first < 0 ? 0 : first, i - 6), i + 1); return w7.length ? w7.reduce((s, z) => s + z.v, 0) / w7.length : 0; });
+  const gap = n > 120 ? 0 : 1;
+  let svg = `<svg viewBox="0 0 ${W} ${H + CH + 18}" role="img">`;
+  [0.5, 1].forEach((f) => {
+    const yy = y(vmax * f);
+    svg += `<line x1="${pad}" x2="${W}" y1="${yy}" y2="${yy}" stroke="#dfe9f0"/>` +
+      `<text x="0" y="${yy + 4}" font-size="10" fill="#47586e">${Math.round(vmax * f)}</text>`;
+  });
+  days.forEach((x, i) => {
+    const bx = pad + i * bw;
+    const today = i === n - 1;
+    svg += `<rect x="${bx}" y="${y(x.v)}" width="${Math.max(0.6, bw - gap)}" height="${H - 14 - y(x.v)}" fill="${today ? "#9fb6c9" : "#002454"}" opacity="0.85"><title>${fmtD(x.d)} : ${x.v} visiteur(s), ${x.c} appel(s)${today ? " (journée en cours)" : ""}</title></rect>`;
+    if (x.c) svg += `<rect x="${bx}" y="${H + CH - (x.c / cmax) * (CH - 4)}" width="${Math.max(0.6, bw - gap)}" height="${(x.c / cmax) * (CH - 4)}" fill="#e20102"><title>${fmtD(x.d)} : ${x.c} appel(s)</title></rect>`;
+  });
+  /* The average starts on the first day with data: before that there was
+     no tracking, not zero visitors. */
+  if (first >= 0) svg += `<polyline fill="none" stroke="#e20102" stroke-width="2" points="${ma.slice(first).map((v, j) => { const i = first + j; return `${pad + i * bw + bw / 2},${y(v)}`; }).join(" ")}"/>`;
+  svg += `<line x1="${pad}" x2="${W}" y1="${H + CH}" y2="${H + CH}" stroke="#c9d9e6"/>`;
+  [0, Math.floor(n / 2), n - 1].forEach((i) => {
+    const anchor = i === 0 ? "start" : i === n - 1 ? "end" : "middle";
+    svg += `<text x="${pad + i * bw + bw / 2}" y="${H + CH + 14}" font-size="11" fill="#47586e" text-anchor="${anchor}">${fmtD(days[i].d)}</text>`;
+  });
+  $("h-chart").innerHTML = svg + "</svg>";
 }
 
 function renderOps() {

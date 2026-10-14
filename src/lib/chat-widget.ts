@@ -111,7 +111,14 @@ try{
     sendBtn.disabled = v;
   }
 
+  /* Tells the visitor tracker (src/lib/analytics.ts) what happened in the
+     chat: opened, message sent, emergency detected. Never the message text. */
+  function report(type) {
+    try { window.dispatchEvent(new CustomEvent('um:chat', { detail: { type: type } })); } catch (e) {}
+  }
+
   function open() {
+    report('open');
     panel.hidden = false;
     toggle.setAttribute('aria-expanded', 'true');
     if (!greeted) {
@@ -189,6 +196,7 @@ try{
     if (!text) return;
     input.value = '';
     bubble('user', text);
+    report('message');
     messages.push({ role: 'user', content: text });
     setBusy(true);
     thinkingBubble();
@@ -205,6 +213,7 @@ try{
           bubble('assistant', t.errorReply);
           return;
         }
+        if (r.data.urgent) report('urgent');
         bubble('assistant', r.data.reply, { urgent: !!r.data.urgent });
         messages.push({ role: 'assistant', content: r.data.reply });
       })

@@ -64,8 +64,37 @@ function geoOf(request) {
     region: cf.region ?? null,
     timezone: cf.timezone ?? null,
     isp: cf.asOrganization ?? null,
+    dc: DATACENTER_ASNS.has(Number(cf.asn)),
   };
 }
+
+/**
+ * Networks of cloud and hosting providers. A browser on one of these is a
+ * server — a scraper, an SEO crawler, a headless renderer — not a family in
+ * Casablanca: people in Morocco browse from Maroc Telecom (36903), Orange
+ * (36925) or inwi (36884). The tracker reads `dc` from /api/geo and records
+ * nothing for these. Cloudflare's own network (13335) is NOT listed: real
+ * people browse through its WARP / 1.1.1.1 app.
+ */
+const DATACENTER_ASNS = new Set([
+  16509, 14618, 8987, // Amazon / AWS
+  15169, 396982, 19527, // Google, Google Cloud
+  8075, 8068, // Microsoft / Azure
+  14061, // DigitalOcean
+  16276, // OVH
+  24940, 213230, // Hetzner
+  63949, // Linode / Akamai cloud
+  20473, // Vultr / Choopa
+  51167, // Contabo
+  31898, // Oracle Cloud
+  45102, 37963, // Alibaba
+  132203, // Tencent
+  12876, // Scaleway
+  60781, 28753, // Leaseweb
+  9009, // M247
+  32934, // Meta (crawlers)
+  212238, // Datacamp
+]);
 
 /** Rough device class, so "mobile at 2am" is distinguishable from a desktop browse. */
 function deviceOf(request) {

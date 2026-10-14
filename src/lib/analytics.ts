@@ -77,230 +77,325 @@ export const FIREBASE_DB_URL =
  *    before hydration. Someone who lands and taps the number immediately is
  *    the most valuable visitor on the site; a deferred module would miss them.
  *
- * BOTS AND PRERENDERS ARE NOT VISITORS
+ * ONLY PEOPLE ARE VISITORS (rebuilt 2026-10-14)
  *
- * The first version counted them. The dashboard showed 123 visitors in a day
- * while Search Console showed about one click: search-engine renderers execute
- * this script, the Realtime Database's robots.txt allows `.json` writes, and
- * every render starts with empty storage — so each one became a brand-new
- * "unique visitor". isBot() stops that before a single write, and Chrome's
- * speculative prerender (a page rendered for a click that may never happen) is
- * held until the page is actually shown.
+ * The first version counted crawlers: 123 "visitors" in a day while Search
+ * Console showed one click, because search-engine renderers run this script
+ * and each render starts with empty storage. A user-agent list then removed
+ * the ones that say who they are. Three filters now stand in front of every
+ * write, and a visit is recorded only once all three have passed:
+ *
+ *  1. The user agent and the browser itself: crawlers, SEO tools, uptime
+ *     monitors and headless browsers (navigator.webdriver, no languages, a
+ *     zero-sized window), including those that pretend to be Chrome.
+ *  2. The network: /api/geo returns `dc: true` for cloud and hosting networks
+ *     (worker/index.js, DATACENTER_ASNS). A browser on AWS or OVH is a
+ *     server, not a family in Casablanca.
+ *  3. A human action: nothing is written until the page receives a touch, a
+ *     tap, a scroll, a key press or a real mouse movement. Renderers and
+ *     prerenders load the page and leave without doing any of these. A
+ *     person who opens the page and taps the number at once is counted: the
+ *     tap is the action.
+ *
+ * Chrome's speculative prerender (a page rendered for a click that may never
+ * come) needs no special case any more: a prerendered page cannot receive a
+ * human action until it is actually shown.
  *
  * isBot() deliberately contains no regex escapes. This script lives inside a
  * template literal, where a lone backslash is silently dropped: `\+http` would
  * ship as `+http`, an invalid regex, which throws inside the try below and
  * turns off all tracking without an error anywhere. Plain indexOf checks
- * cannot break that way.
+ * cannot break that way. It also avoids a bare "bot" substring match: Cubot
+ * is an Android phone brand sold in Morocco.
  *
- * It also avoids a bare "bot" substring match: Cubot is an Android phone brand
- * sold in Morocco, and "CUBOT" in a real user's UA must not be dropped.
+ * ONE RECORD PER VISIT
  *
- * Node shapes match what public/admin/index.html already reads, so the
- * dashboard needed no changes:
+ * Each page view used to PUT the whole session record, so a three-page visit
+ * kept only its last page, and its start time and duration restarted on each
+ * page. The record is now written once, on the first page of the visit, and
+ * later pages only update it (pages viewed, last page, duration, deepest
+ * scroll). The day key is the visit's start day, so a visit that crosses
+ * midnight stays one row.
+ *
+ * Node shapes (public/admin/index.html reads these):
  *   online_visitors/{vid}         PUT, refreshed by a 30s heartbeat
- *   sessions/{YYYY-MM-DD}/{sid}   PUT on arrival, PATCH on leave
+ *   sessions/{YYYY-MM-DD}/{sid}   PUT on the visit's first page, PATCH after
  *   taps                          POST per tap-to-call / WhatsApp click
+ * Session fields added 2026-10-14: v (2), landing, lastPage, pageviews,
+ * scroll, returning, lang, utm {source, medium, campaign}, chat {open,
+ * messages, urgent}. A row with v = 2 passed the three filters above.
  */
 export const TAP_TRACKING_SCRIPT = `
 (function(){
-  function isBot(ua, webdriver){
-    if (webdriver) return true;
-    var u = String(ua || "").toLowerCase();
+  function isBot(){
+    var nav = navigator;
+    if (nav.webdriver === true) return true;
+    var u = String(nav.userAgent || "").toLowerCase();
     if (!u) return true;
     /* Crawlers publish a contact URL in their UA; browsers never do. */
     if (u.indexOf("+http") > -1) return true;
     if (u.indexOf("compatible;") > -1 &&
         (u.indexOf("bot") > -1 || u.indexOf("crawl") > -1 || u.indexOf("spider") > -1)) return true;
-    var names = ["googlebot","google-inspectiontool","adsbot","mediapartners-google","storebot-google",
-      "feedfetcher","bingbot","bingpreview","yandexbot","baiduspider","duckduckbot","slurp","applebot",
-      "facebookexternalhit","facebot","twitterbot","linkedinbot","telegrambot","discordbot","slackbot",
-      "ahrefsbot","semrushbot","mj12bot","dotbot","petalbot","bytespider","gptbot","oai-searchbot",
-      "chatgpt-user","claudebot","claude-user","perplexitybot","amazonbot","ccbot","diffbot",
-      "headlesschrome","chrome-lighthouse","lighthouse","pagespeed","gtmetrix","pingdom","uptimerobot",
-      "statuscake","prerender","phantomjs","puppeteer","playwright","selenium"];
+    var names = ["googlebot","google-inspectiontool","googleother","google-read-aloud","google-safety",
+      "adsbot","mediapartners-google","storebot-google","feedfetcher","bingbot","bingpreview","msnbot",
+      "yandex","baiduspider","duckduckbot","slurp","applebot","seznambot","sogou","exabot","qwantify",
+      "mojeek","yisouspider","facebookexternalhit","facebot","twitterbot","linkedinbot","telegrambot",
+      "discordbot","slackbot","skypeuripreview","vkshare","embedly","iframely","pinterestbot","redditbot",
+      "ahrefs","semrush","mj12bot","dotbot","petalbot","bytespider","siteaudit","screaming frog",
+      "gptbot","oai-searchbot","chatgpt-user","claudebot","claude-user","perplexitybot","amazonbot",
+      "ccbot","diffbot","headless","chrome-lighthouse","lighthouse","pagespeed","gtmetrix","pingdom",
+      "uptimerobot","statuscake","prerender","phantomjs","puppeteer","playwright","selenium",
+      "python","curl/","wget","go-http-client","axios","node-fetch","okhttp","java/","scrapy"];
     for (var i = 0; i < names.length; i++) if (u.indexOf(names[i]) > -1) return true;
+    /* Headless browsers that hide their name still give themselves away. */
+    try {
+      if (nav.languages && nav.languages.length === 0) return true;
+      if (window.outerWidth === 0 && window.outerHeight === 0) return true;
+    } catch (e) {}
     return false;
   }
 
-  function start(){
   try {
-    var DB = ${JSON.stringify(FIREBASE_DB_URL)};
-
     /* The operator's own visits would otherwise dominate a small site's
        numbers. Set localStorage.um_is_admin = "1" in your own browser. */
     try { if (localStorage.getItem("um_is_admin") === "1") return; } catch (e) {}
+    if (isBot()) return;
+  } catch (e) { return; }
 
-    /* Crawlers and headless tools: no visitor row, no session, no tap. */
-    if (isBot(navigator.userAgent, navigator.webdriver === true)) return;
+  var DB = ${JSON.stringify(FIREBASE_DB_URL)};
+  var blocked = false;
 
-    /* keepalive so a write started as the dialler opens still completes. */
-    function send(path, method, value){
-      try {
-        return fetch(DB + "/" + path + ".json", {
-          method: method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(value),
-          keepalive: true
-        }).catch(function(){});
-      } catch (e) {}
-    }
-    var put = function(p, v){ return send(p, "PUT", v); };
-    var patch = function(p, v){ return send(p, "PATCH", v); };
-    var push = function(p, v){ return send(p, "POST", v); };
-
-    /* Visitor id in localStorage: the same person across tabs and days is one
-       visitor. Session id in sessionStorage: each visit counted separately. */
-    var vid, sid;
+  /* keepalive so a write started as the dialler opens still completes. */
+  function send(path, method, value){
+    if (blocked && value !== null) return;
     try {
-      vid = localStorage.getItem("um_v");
-      if (!vid) { vid = "v_" + Math.random().toString(36).slice(2, 11); localStorage.setItem("um_v", vid); }
-      sid = sessionStorage.getItem("um_s");
-      if (!sid) { sid = "s_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); sessionStorage.setItem("um_s", sid); }
-    } catch (e) { vid = "v_nostore"; sid = "s_" + Date.now().toString(36); }
-
-    var ua = navigator.userAgent;
-    var dev = /iPad/.test(ua) ? "tablette" : /Mobi|Android/.test(ua) ? "mobile" : "ordinateur";
-    var br = ua.indexOf("Edg") > -1 ? "Edge"
-           : ua.indexOf("Chrome") > -1 ? "Chrome"
-           : ua.indexOf("Firefox") > -1 ? "Firefox"
-           : ua.indexOf("Safari") > -1 ? "Safari" : "Autre";
-
-    var arrival = Date.now();
-    var day = new Date().toISOString().slice(0, 10);
-    var visPath = "online_visitors/" + vid;
-    var sessPath = "sessions/" + day + "/" + sid;
-
-    /* Acquisition channel, captured on the first page and locked for the whole
-       visit — otherwise an internal click rewrites the source and every visit
-       ends up looking Direct. */
-    function classify(r){
-      if (!r) return "Direct";
-      if (r.indexOf("urgencemedicale.ma") > -1 || r.indexOf("workers.dev") > -1) return "__self__";
-      if (r.indexOf("google") > -1) return "Google";
-      if (r.indexOf("bing") > -1) return "Bing";
-      if (r.indexOf("facebook") > -1 || r.indexOf("fb.") > -1) return "Facebook";
-      if (r.indexOf("instagram") > -1) return "Instagram";
-      if (r.indexOf("whatsapp") > -1 || r.indexOf("wa.me") > -1) return "WhatsApp";
-      if (r.indexOf("tiktok") > -1) return "TikTok";
-      if (r.indexOf("chatgpt") > -1 || r.indexOf("openai") > -1) return "ChatGPT";
-      try { return new URL(r).hostname.replace("www.", ""); } catch (e) { return "Autre"; }
-    }
-    function source(){
-      try { var v = sessionStorage.getItem("um_src"); if (v) return v; } catch (e) {}
-      var c = classify(document.referrer);
-      if (c === "__self__") c = "Direct";
-      try { sessionStorage.setItem("um_src", c); } catch (e) {}
-      return c;
-    }
-    var landing = location.pathname;
-    try {
-      var st = sessionStorage.getItem("um_landing");
-      if (st) landing = st; else sessionStorage.setItem("um_landing", landing);
-    } catch (e) {}
-
-    /* City/country from our own edge, cached a day. Never awaited: a visitor
-       who leaves before it resolves must still be counted. */
-    var geo = null;
-    try {
-      var cg = JSON.parse(localStorage.getItem("um_geo") || "null");
-      if (cg && Date.now() - cg.ts < 86400000) geo = cg.data;
-    } catch (e) {}
-    if (!geo) {
-      fetch("/api/geo").then(function(r){ return r.json(); }).then(function(g){
-        if (!g) return;
-        geo = g;
-        try { localStorage.setItem("um_geo", JSON.stringify({ ts: Date.now(), data: g })); } catch (e) {}
-        beat();
-        patch(sessPath, { city: g.city, region: g.region, country: g.country });
+      return fetch(DB + "/" + path + ".json", {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(value),
+        keepalive: true
       }).catch(function(){});
-    }
+    } catch (e) {}
+  }
+  var put = function(p, v){ return send(p, "PUT", v); };
+  var patch = function(p, v){ return send(p, "PATCH", v); };
+  var push = function(p, v){ return send(p, "POST", v); };
 
-    var lastActive = Date.now();
-    var IDLE = 5 * 60 * 1000, MAX_OPEN = 2 * 60 * 60 * 1000, hb = null;
+  function ss(k, v){ try { if (v === undefined) return sessionStorage.getItem(k); sessionStorage.setItem(k, String(v)); } catch (e) { return null; } }
+  function ls(k, v){ try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, String(v)); } catch (e) { return null; } }
 
-    /* One row per visitor, overwritten by the heartbeat. A hidden, idle or
-       long-abandoned tab stops writing, so it ages out of "en ligne
-       maintenant" instead of haunting it. */
-    function beat(){
-      if (document.visibilityState === "hidden") return;
-      if (Date.now() - lastActive > IDLE) return;
-      if (Date.now() - arrival > MAX_OPEN) { put(visPath, null); if (hb) clearInterval(hb); return; }
-      var p = {
-        visitorId: vid, sessionId: sid, page: location.pathname,
-        device: dev, browser: br, source: source(),
-        arrivalAt: arrival, lastSeen: Date.now(),
-        duration: Math.round((Date.now() - arrival) / 1000),
-        screenW: screen.width || 0
-      };
-      if (geo) { p.city = geo.city; p.region = geo.region; p.country = geo.country; }
-      put(visPath, p);
-    }
+  var arrival = Date.now();
+  var ua = navigator.userAgent;
+  var dev = /iPad/.test(ua) ? "tablette" : /Mobi|Android/.test(ua) ? "mobile" : "ordinateur";
+  var br = ua.indexOf("Edg") > -1 ? "Edge"
+         : ua.indexOf("Chrome") > -1 ? "Chrome"
+         : ua.indexOf("Firefox") > -1 ? "Firefox"
+         : ua.indexOf("Safari") > -1 ? "Safari" : "Autre";
+  var lang = (document.documentElement.getAttribute("lang") || "fr").slice(0, 2);
 
-    var srec = {
-      visitorId: vid, startedAt: arrival, lastSeen: arrival, page: location.pathname,
-      device: dev, browser: br, source: source(), screenW: screen.width || 0
-    };
-    if (geo) { srec.city = geo.city; srec.region = geo.region; srec.country = geo.country; }
-    put(sessPath, srec);
+  /* Visitor id in localStorage: the same person across tabs and days is one
+     visitor, and its presence before this visit makes the visit "returning". */
+  var vid = ls("um_v"), returning = !!vid;
+  if (!vid) { vid = "v_" + Math.random().toString(36).slice(2, 11); ls("um_v", vid); }
 
-    beat();
-    hb = setInterval(beat, 30000);
-    ["mousemove","scroll","keydown","touchstart","click"].forEach(function(ev){
-      window.addEventListener(ev, function(){ lastActive = Date.now(); }, { passive: true });
-    });
-    document.addEventListener("visibilitychange", function(){
-      if (document.visibilityState === "visible") { lastActive = Date.now(); beat(); }
-      else patch(sessPath, { duration: Math.round((Date.now() - arrival) / 1000), endedAt: Date.now(), lastSeen: Date.now() });
-    });
+  /* The visit: id, start, first page and source, fixed on its first page. */
+  var sid = ss("um_s");
+  if (!sid) {
+    sid = "s_" + arrival.toString(36) + Math.random().toString(36).slice(2, 6);
+    ss("um_s", sid); ss("um_s_t0", arrival); ss("um_landing", location.pathname);
+    ss("um_ret", returning ? "1" : "0");
+  }
+  var t0 = Number(ss("um_s_t0")) || arrival;
+  var landing = ss("um_landing") || location.pathname;
+  var day = new Date(t0).toISOString().slice(0, 10);
+  var visPath = "online_visitors/" + vid;
+  var sessPath = "sessions/" + day + "/" + sid;
 
-    /* Deepest scroll on this page, so a tap can be read against engagement. */
-    var maxScroll = 0;
-    window.addEventListener("scroll", function(){
-      var d = document.documentElement;
-      var denom = (d.scrollHeight || document.body.scrollHeight) - d.clientHeight;
-      if (denom > 0) {
-        var pct = Math.round(((d.scrollTop || document.body.scrollTop) / denom) * 100);
-        if (pct > maxScroll) maxScroll = pct > 100 ? 100 : pct;
-      }
-    }, { passive: true });
-
-    /* The conversion. Capturing listener on document so it fires whichever
-       component rendered the link; data-tap names the surface. */
-    document.addEventListener("click", function(ev){
-      try {
-        var a = ev.target && ev.target.closest && ev.target.closest("a[href]");
-        if (!a) return;
-        var href = a.getAttribute("href") || "";
-        var event = href.indexOf("tel:") === 0 ? "call" : href.indexOf("wa.me") > -1 ? "whatsapp" : null;
-        if (!event) return;
-        /* Numbers we point people to INSTEAD of calling us: the emergency
-           services (141, 15) and the on-call pharmacies of Casablanca.
-           Counting either would inflate "Appels site" with calls that are,
-           by design, not for us. */
-        var tap = a.getAttribute("data-tap");
-        if (tap === "secours" || tap === "pharmacie") return;
-        var row = {
-          at: new Date().toISOString(), event: event, page: location.pathname,
-          visitor: vid, session: sid, device: dev, browser: br, screenW: screen.width || 0,
-          cta: a.getAttribute("data-tap") || "autre",
-          source: source(), landingPage: landing,
-          secondsOnPage: Math.round((Date.now() - arrival) / 1000),
-          scrollPct: maxScroll,
-          referer: (document.referrer || "").slice(0, 200) || null
-        };
-        if (geo) { row.city = geo.city; row.region = geo.region; row.country = geo.country; }
-        push("taps", row);
-      } catch (e) {}
-    }, true);
+  /* Acquisition channel and ad campaign, captured on the first page and kept
+     for the whole visit — otherwise an internal click rewrites the source and
+     every visit ends up looking Direct. A gclid is a Google Ads click. */
+  function classify(r){
+    if (!r) return "Direct";
+    if (r.indexOf("urgencemedicale.ma") > -1 || r.indexOf("workers.dev") > -1) return "__self__";
+    if (r.indexOf("google") > -1) return "Google";
+    if (r.indexOf("bing") > -1) return "Bing";
+    if (r.indexOf("facebook") > -1 || r.indexOf("fb.") > -1) return "Facebook";
+    if (r.indexOf("instagram") > -1) return "Instagram";
+    if (r.indexOf("whatsapp") > -1 || r.indexOf("wa.me") > -1) return "WhatsApp";
+    if (r.indexOf("tiktok") > -1) return "TikTok";
+    if (r.indexOf("chatgpt") > -1 || r.indexOf("openai") > -1) return "ChatGPT";
+    try { return new URL(r).hostname.replace("www.", ""); } catch (e) { return "Autre"; }
+  }
+  var utm = null;
+  try {
+    var q = new URLSearchParams(location.search);
+    if (q.get("gclid")) utm = { source: "google", medium: "cpc", campaign: q.get("utm_campaign") || "" };
+    else if (q.get("utm_source")) utm = { source: q.get("utm_source"), medium: q.get("utm_medium") || "", campaign: q.get("utm_campaign") || "" };
   } catch (e) {}
+  function source(){
+    var v = ss("um_src"); if (v) return v;
+    var c;
+    if (utm && utm.medium === "cpc" && utm.source === "google") c = "Google Ads";
+    else if (utm) c = utm.source;
+    else { c = classify(document.referrer); if (c === "__self__") c = "Direct"; }
+    ss("um_src", c);
+    if (utm) ss("um_utm", JSON.stringify(utm));
+    return c;
+  }
+  function utmOf(){ try { return JSON.parse(ss("um_utm") || "null"); } catch (e) { return null; } }
+
+  /* City and network from our own edge, cached a day. Started at once, never
+     awaited; a cloud network blocks every write, and erases what was written
+     before the answer came back. */
+  var geo = null;
+  try {
+    var cg = JSON.parse(ls("um_geo") || "null");
+    if (cg && Date.now() - cg.ts < 86400000) geo = cg.data;
+  } catch (e) {}
+  function onGeo(g){
+    geo = g;
+    if (g && g.dc) {
+      if (started) { put(sessPath, null); put(visPath, null); }
+      blocked = true;
+      return;
+    }
+    if (started) { beat(); patch(sessPath, { city: g.city, region: g.region, country: g.country }); }
+  }
+  if (geo && geo.dc) blocked = true;
+  if (!geo) {
+    fetch("/api/geo").then(function(r){ return r.json(); }).then(function(g){
+      if (!g) return;
+      ls("um_geo", JSON.stringify({ ts: Date.now(), data: g }));
+      onGeo(g);
+    }).catch(function(){});
   }
 
-  /* Chrome can render a page speculatively for a click that never comes. Wait
-     until it is actually shown, or every prerender becomes a phantom visit. */
-  try {
-    if (document.prerendering) document.addEventListener("prerenderingchange", start, { once: true });
-    else start();
-  } catch (e) { start(); }
+  var started = false, hb = null, lastActive = Date.now();
+  var IDLE = 5 * 60 * 1000, MAX_OPEN = 2 * 60 * 60 * 1000;
+  var maxScroll = Number(ss("um_s_sc")) || 0;
+
+  /* One row per visitor, overwritten by the heartbeat. A hidden, idle or
+     long-abandoned tab stops writing, so it ages out of "en ligne
+     maintenant" instead of haunting it. */
+  function beat(){
+    if (blocked || !started) return;
+    if (document.visibilityState === "hidden") return;
+    if (Date.now() - lastActive > IDLE) return;
+    if (Date.now() - arrival > MAX_OPEN) { put(visPath, null); if (hb) clearInterval(hb); return; }
+    var p = {
+      visitorId: vid, sessionId: sid, page: location.pathname,
+      device: dev, browser: br, source: source(), lang: lang,
+      arrivalAt: t0, lastSeen: Date.now(),
+      duration: Math.round((Date.now() - t0) / 1000),
+      screenW: screen.width || 0
+    };
+    if (geo) { p.city = geo.city; p.region = geo.region; p.country = geo.country; }
+    put(visPath, p);
+  }
+
+  function closeVisit(){
+    if (!started || blocked) return;
+    patch(sessPath, { duration: Math.round((Date.now() - t0) / 1000), endedAt: Date.now(),
+                      lastSeen: Date.now(), scroll: maxScroll });
+  }
+
+  /* The first human action opens the visit: first page writes the record,
+     later pages of the same visit update it. */
+  function start(){
+    if (started || blocked) return;
+    started = true;
+    var pv = (Number(ss("um_s_pv")) || 0) + 1;
+    ss("um_s_pv", pv);
+    if (ss("um_s_w") !== "1") {
+      var rec = {
+        v: 2, visitorId: vid, startedAt: t0, lastSeen: Date.now(),
+        page: landing, landing: landing, lastPage: location.pathname, pageviews: pv,
+        device: dev, browser: br, source: source(), lang: lang,
+        returning: ss("um_ret") === "1", screenW: screen.width || 0, scroll: maxScroll
+      };
+      var u = utmOf(); if (u) rec.utm = u;
+      if (geo) { rec.city = geo.city; rec.region = geo.region; rec.country = geo.country; }
+      put(sessPath, rec);
+      ss("um_s_w", "1");
+    } else {
+      patch(sessPath, { lastPage: location.pathname, pageviews: pv, lastSeen: Date.now(),
+                        duration: Math.round((Date.now() - t0) / 1000) });
+    }
+    beat();
+    hb = setInterval(beat, 30000);
+  }
+
+  function human(){ lastActive = Date.now(); start(); }
+  ["pointerdown","touchstart","keydown","wheel","scroll"].forEach(function(ev){
+    window.addEventListener(ev, human, { passive: true, capture: true });
+  });
+  /* A mouse that actually travels: synthetic pointers land and stay put. */
+  var mx = null, my = null;
+  window.addEventListener("mousemove", function(e){
+    if (mx === null) { mx = e.clientX; my = e.clientY; return; }
+    if (Math.abs(e.clientX - mx) + Math.abs(e.clientY - my) > 40) human();
+    else lastActive = Date.now();
+  }, { passive: true });
+
+  document.addEventListener("visibilitychange", function(){
+    if (document.visibilityState === "visible") { lastActive = Date.now(); beat(); }
+    else closeVisit();
+  });
+  window.addEventListener("pagehide", closeVisit);
+
+  /* Deepest scroll across the visit, so a tap can be read against engagement. */
+  window.addEventListener("scroll", function(){
+    var d = document.documentElement;
+    var denom = (d.scrollHeight || document.body.scrollHeight) - d.clientHeight;
+    if (denom > 0) {
+      var pct = Math.round(((d.scrollTop || document.body.scrollTop) / denom) * 100);
+      if (pct > 100) pct = 100;
+      if (pct > maxScroll) { maxScroll = pct; ss("um_s_sc", pct); }
+    }
+  }, { passive: true });
+
+  /* The AI assistant: opened, messages sent, emergency detected. Counts only,
+     never the text (events from src/lib/chat-widget.ts). */
+  window.addEventListener("um:chat", function(e){
+    try {
+      human();
+      var type = e.detail && e.detail.type;
+      var k = type === "message" ? "um_c_msg" : type === "urgent" ? "um_c_urg" : "um_c_open";
+      var n = (Number(ss(k)) || 0) + 1; ss(k, n);
+      patch(sessPath + "/chat", { open: Number(ss("um_c_open")) || 0, messages: Number(ss("um_c_msg")) || 0,
+                                  urgent: Number(ss("um_c_urg")) || 0 });
+    } catch (x) {}
+  });
+
+  /* The conversion. Capturing listener on document so it fires whichever
+     component rendered the link; data-tap names the surface. */
+  document.addEventListener("click", function(ev){
+    try {
+      var a = ev.target && ev.target.closest && ev.target.closest("a[href]");
+      if (!a) return;
+      var href = a.getAttribute("href") || "";
+      var event = href.indexOf("tel:") === 0 ? "call" : href.indexOf("wa.me") > -1 ? "whatsapp" : null;
+      if (!event) return;
+      /* Numbers we point people to INSTEAD of calling us: the emergency
+         services (141, 15) and the on-call pharmacies of Casablanca.
+         Counting either would inflate "Appels site" with calls that are,
+         by design, not for us. */
+      var tap = a.getAttribute("data-tap");
+      if (tap === "secours" || tap === "pharmacie") return;
+      human();
+      if (blocked) return;
+      var row = {
+        at: new Date().toISOString(), event: event, page: location.pathname,
+        visitor: vid, session: sid, device: dev, browser: br, screenW: screen.width || 0,
+        cta: tap || "autre", lang: lang,
+        source: source(), landingPage: landing,
+        secondsOnPage: Math.round((Date.now() - arrival) / 1000),
+        scrollPct: maxScroll, pageviews: Number(ss("um_s_pv")) || 1,
+        referer: (document.referrer || "").slice(0, 200) || null
+      };
+      if (geo) { row.city = geo.city; row.region = geo.region; row.country = geo.country; }
+      push("taps", row);
+    } catch (e) {}
+  }, true);
 })();
 `.trim();
