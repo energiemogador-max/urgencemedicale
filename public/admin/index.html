@@ -149,7 +149,8 @@
   <!-- ── TAB 1: visitors ───────────────────────────────────────────────── -->
   <section id="t-dash" hidden>
     <div class="live"><span class="dot"></span><b id="s-live">0</b> visiteur(s) en ligne maintenant
-      <span id="s-bots" class="muted" style="margin-inline-start:auto">Robots exclus</span></div>
+      <span id="s-bots" class="muted" style="margin-inline-start:auto">Robots exclus</span>
+      <button id="selfex" class="mini" type="button"></button></div>
 
     <!-- Long-run trend: is the site going up, flat or down? -->
     <div class="card">
@@ -519,6 +520,24 @@ else {
     [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
     renderDash();
   });
+  /* The team's own visits to the site inflate a small site's numbers. The
+     dashboard shares the site's origin, so it can set the flag the tracker
+     reads (localStorage um_is_admin) for this browser. */
+  function refreshSelfEx() {
+    let on = false;
+    try { on = localStorage.getItem("um_is_admin") === "1"; } catch (e) {}
+    $("selfex").textContent = on ? "Mes visites : non comptées ✓" : "Ne pas compter mes visites";
+    $("selfex").style.background = on ? "var(--ok)" : "";
+    $("selfex").title = "Sur cet appareil et ce navigateur uniquement. À faire sur chaque téléphone et ordinateur de l'équipe.";
+  }
+  $("selfex").onclick = () => {
+    try {
+      if (localStorage.getItem("um_is_admin") === "1") localStorage.removeItem("um_is_admin");
+      else localStorage.setItem("um_is_admin", "1");
+    } catch (e) {}
+    refreshSelfEx();
+  };
+  refreshSelfEx();
   $("hrange").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-h]"); if (!b) return;
     hDays = Number(b.dataset.h);
