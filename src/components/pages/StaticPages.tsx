@@ -331,7 +331,21 @@ export function ContactPage({ locale = "fr" }: { locale?: Locale }) {
             <br />
             {address.region}
           </span>
+          {business.profiles[0] && (
+            <a href={business.profiles[0]} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block font-semibold">
+              {t.reviews.googleListing}
+            </a>
+          )}
         </address>
+        {business.otherLocations.map((l) => (
+          <address key={l.id} className="mt-3 rounded-lg border border-border bg-surface p-5 not-italic">
+            <span className="block font-bold text-ink">{t.footer.otherLocation}</span>
+            <span className="mt-1 block text-ink-muted">{l.area[locale]}</span>
+            <a href={l.profileUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block font-semibold">
+              {t.reviews.googleListing}
+            </a>
+          </address>
+        ))}
       </Section>
     </main>
   );

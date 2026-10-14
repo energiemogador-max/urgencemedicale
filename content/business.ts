@@ -39,13 +39,32 @@ export const business: Business = {
   // different listing of the same name. Add Facebook/Instagram here as they
   // are created.
   profiles: ["https://www.google.com/maps?cid=2217991563743483780"],
-  // Turns on the dashboard's "Demander un avis" WhatsApp button after each
-  // finished visit, and the "leave a review" link on the site. Points to the
-  // same listing until the operator supplies its "Demander des avis" link
-  // (Business Profile → Demander des avis), which opens the review form
-  // directly; the share.google link used before reviewed the other listing.
-  reviewUrl: "https://www.google.com/maps?cid=2217991563743483780",
-  // The listing's rating and review count, read by the operator, e.g.
-  // { value: 4.8, count: 23, checkedOn: "2026-10-13" }. null hides the badge.
-  googleRating: null,
+  // Opens Google's "write a review" form for the listing above (its Place ID,
+  // ChIJiwP9VGgtpg0RhFe-Z5Pjxx4, read from the listing on 2026-10-14). Turns
+  // on the dashboard's "Demander un avis" WhatsApp button after each finished
+  // visit, and the "leave a review" links on the site.
+  reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJiwP9VGgtpg0RhFe-Z5Pjxx4",
+  // Read on the listing by the operator (Maps result pasted 2026-10-14):
+  // 5.0 stars, 3 reviews. Update by hand when it changes; null hides the badge.
+  googleRating: { value: 5, count: 3, checkedOn: "2026-10-14" },
+  // Second establishment, confirmed by the operator 2026-10-14: Google
+  // listing "Urgence medicale", Knowledge Graph id /g/11zfhwtr46, Place ID
+  // ChIJx2vrIuXCJSoRduFlh24EZpk, pin 33.06533, -7.9076696. The area is where
+  // that pin falls (OpenStreetMap reverse geocoding); no street address has
+  // been supplied, so none is shown.
+  otherLocations: [
+    {
+      id: "berrechid",
+      area: {
+        fr: "Zaouiat Sidi Ben Hamdoun, province de Berrechid",
+        en: "Zaouiat Sidi Ben Hamdoun, Berrechid Province",
+        ar: "زاوية سيدي بن حمدون، إقليم برشيد",
+      },
+      locality: "Zaouiat Sidi Ben Hamdoun",
+      region: "Casablanca-Settat",
+      geo: { lat: "33.0653", lng: "-7.9077" },
+      profileUrl: "https://www.google.com/maps?cid=11053527208191975798",
+      reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJx2vrIuXCJSoRduFlh24EZpk",
+    },
+  ],
 };

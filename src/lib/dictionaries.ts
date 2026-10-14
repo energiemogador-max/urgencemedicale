@@ -121,6 +121,8 @@ export interface Dict {
   footer: {
     tagline: (hours: string) => string;
     office: string;
+    /** Heading for the business's other establishment(s). */
+    otherLocation: string;
     disclaimerStart: string;
     or: string;
     allNumbers: string;
@@ -317,6 +319,7 @@ const fr: Dict = {
   footer: {
     tagline: (h) => `Un médecin à votre domicile, ${h}. Le tarif vous est annoncé avant que vous ne confirmiez la visite.`,
     office: "Le cabinet",
+    otherLocation: "Autre établissement",
     disclaimerStart: "Ce service ne remplace pas les services d'urgence. En cas d'urgence vitale, appelez immédiatement le",
     or: "ou le",
     allNumbers: "Tous les numéros d'urgence",
@@ -513,6 +516,7 @@ const en: Dict = {
   footer: {
     tagline: (h) => `A doctor at your home, ${h}. The fee is quoted before you confirm the visit.`,
     office: "Our office",
+    otherLocation: "Other location",
     disclaimerStart: "This service does not replace the emergency services. If a life may be at risk, call",
     or: "or",
     allNumbers: "All emergency numbers",
@@ -696,6 +700,7 @@ const ar: Dict = {
   footer: {
     tagline: (h) => `طبيب في منزلك، ${h}. نخبرك بالسعر قبل أن تؤكد الزيارة.`,
     office: "العنوان",
+    otherLocation: "مقر آخر",
     disclaimerStart: "هذه الخدمة لا تعوض مصالح الإسعاف. إذا كانت الحياة في خطر، اتصل فورًا بالرقم",
     or: "أو",
     allNumbers: "جميع أرقام الطوارئ",

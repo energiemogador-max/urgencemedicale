@@ -208,6 +208,22 @@ export function SiteFooter({
                 )}
               </p>
             )}
+            {business.otherLocations.map((l) => (
+              <div key={l.id} className="mt-5 text-sm">
+                <p className="font-bold text-on-primary">{t.footer.otherLocation}</p>
+                <p className="mt-1 text-on-primary-muted">{l.area[locale]}</p>
+                <p className="mt-1 flex flex-wrap gap-x-3 gap-y-1">
+                  <a href={l.profileUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-on-primary underline">
+                    {t.reviews.googleListing}
+                  </a>
+                  {l.reviewUrl && (
+                    <a href={l.reviewUrl} target="_blank" rel="noopener noreferrer" className="font-semibold text-on-primary underline">
+                      {t.reviews.leaveReview}
+                    </a>
+                  )}
+                </p>
+              </div>
+            ))}
             <ul className="mt-4 space-y-2 text-sm">
               {[
                 { href: paths.aPropos(), label: t.nav.about },

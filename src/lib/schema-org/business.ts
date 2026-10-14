@@ -96,6 +96,26 @@ export function buildMedicalBusiness(): WithContext<MedicalBusinessNode> {
     // Ties this site's business entity to its Google Business Profile, so the
     // two are understood as one business rather than two similar ones.
     ...(business.profiles.length ? { sameAs: business.profiles } : {}),
+    // The other establishments, each tied to its own Google listing, as
+    // branches of this business rather than separate businesses.
+    ...(business.otherLocations.length
+      ? {
+          department: business.otherLocations.map((l) => ({
+            "@type": "MedicalBusiness" as const,
+            "@id": `${SITE_URL}/#location-${l.id}`,
+            name: "Urgence Médicale",
+            telephone: business.phoneHref,
+            address: {
+              "@type": "PostalAddress" as const,
+              addressLocality: l.locality,
+              addressRegion: l.region,
+              addressCountry: "MA",
+            },
+            geo: { "@type": "GeoCoordinates" as const, latitude: Number(l.geo.lat), longitude: Number(l.geo.lng) },
+            sameAs: [l.profileUrl],
+          })),
+        }
+      : {}),
     contactPoint: buildContactPoint(
       Array.from(new Set(content.doctors.flatMap((d) => d.languages)))
     ),

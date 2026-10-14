@@ -368,6 +368,23 @@ export const BusinessSchema = z.object({
       checkedOn: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "checkedOn must be YYYY-MM-DD"),
     })
     .nullable(),
+  /**
+   * The business's other establishments, each with its own Google listing.
+   * `area` is the locality as the listing's pin places it, per locale: no
+   * street address is shown unless the operator supplies one. Emitted as
+   * `department` branches of the MedicalBusiness node.
+   */
+  otherLocations: z.array(
+    z.object({
+      id: z.string().regex(/^[a-z0-9-]+$/),
+      area: z.object({ fr: z.string().min(1), en: z.string().min(1), ar: z.string().min(1) }),
+      locality: z.string().min(1),
+      region: z.string().min(1),
+      geo: z.object({ lat: z.string(), lng: z.string() }),
+      profileUrl: z.string().url(),
+      reviewUrl: z.string(),
+    })
+  ),
 });
 export type Business = z.infer<typeof BusinessSchema>;
 
