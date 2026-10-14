@@ -155,8 +155,11 @@
     <!-- Long-run trend: is the site going up, flat or down? -->
     <div class="card">
       <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
-        <h3 style="margin:0">Visiteurs par jour</h3>
+        <h3 id="h-title" style="margin:0">Visiteurs par jour</h3>
         <div class="range" id="hrange" style="margin:0 0 0 auto">
+          <button data-h="today">Aujourd'hui</button>
+          <button data-h="24h">24 h</button>
+          <button data-h="7">7 jours</button>
           <button data-h="30" class="on">30 jours</button>
           <button data-h="90">3 mois</button>
           <button data-h="180">6 mois</button>
@@ -165,8 +168,7 @@
       </div>
       <p id="h-verdict" class="verdict">Chargement…</p>
       <div id="h-chart" class="chart" aria-label="Visiteurs par jour"></div>
-      <p class="muted" style="margin:8px 0 0">Barres : visiteurs réels par jour · ligne : moyenne sur 7 jours ·
-        rouge : appels et WhatsApp depuis le site. <span id="h-since"></span></p>
+      <p class="muted" style="margin:8px 0 0"><span id="h-legend"></span> <span id="h-since"></span></p>
     </div>
 
     <div class="range" id="range">
@@ -183,7 +185,8 @@
       <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b><em id="d-wa" class="delta"></em></div>
       <div class="stat"><span>Taux d'appel</span><b id="s-rate">–</b><em id="d-rate" class="delta"></em></div>
     </div>
-    <p class="muted" style="margin:-6px 0 14px">Flèches : comparaison avec la période précédente de même durée.</p>
+    <p class="muted" style="margin:-6px 0 8px">Flèches : comparaison avec la période précédente de même durée.</p>
+    <p id="taps-all" style="margin:0 0 14px;line-height:1.5"></p>
 
     <div class="card">
       <h3>Du visiteur à l'intervention</h3>
@@ -395,7 +398,7 @@ const aggDay = (list) => {
 const langOf = (s) => s.lang || ((s.landing || s.page || "").startsWith("/ar") ? "ar"
   : (s.landing || s.page || "").startsWith("/en") ? "en" : "fr");
 let hist = {};     // older days: { "YYYY-MM-DD": { v: visitors, s: visits } }
-let hDays = 30;    // span of the "Visiteurs par jour" chart
+let hMode = "30";  // span of the trend chart: "today", "24h", or a number of days
 
 /* Staff, with a light PIN, managed from the Utilisateurs tab and stored in
    Firebase at staff_members/ — the same shape as the Nova Style admin.
@@ -536,11 +539,12 @@ else {
       else localStorage.setItem("um_is_admin", "1");
     } catch (e) {}
     refreshSelfEx();
+    renderDash();
   };
   refreshSelfEx();
   $("hrange").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-h]"); if (!b) return;
-    hDays = Number(b.dataset.h);
+    hMode = b.dataset.h;
     [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
     renderTrend();
   });
@@ -967,27 +971,66 @@ function renderDash() {
     : "Robots exclus";
 
   tp.sort((a,b) => a.at < b.at ? 1 : -1);
-  $("rows").innerHTML = tp.map((r) => {
+  $("rows").innerHTML = tp.length ? tp.map((r) => {
     const loc = [r.city, r.region, r.country].filter(Boolean).join(", ");
     return `<tr><td>${esc(fmt(r.at))}</td><td><span class="tag ${r.event === "call" ? "call" : "whatsapp"}">${esc(r.event)}</span></td>` +
       `<td>${esc(r.page)}</td><td>${esc(loc)}</td><td>${esc(r.device)}</td><td>${esc(r.source)}</td><td>${esc(r.visitor)}</td></tr>`;
-  }).join("");
+  }).join("") : `<tr><td colspan="7" class="muted">Aucun appui sur Appeler ou WhatsApp pendant la période choisie.</td></tr>`;
+
+  /* "0 appel" on a short period is easy to misread as "tracking is broken".
+     Every tap ever loaded, with the last one, settles it either way. */
+  const allCalls = taps.filter((t) => t.event === "call").length;
+  const lastTap = taps.reduce((m, t) => (tapTime(t) || 0) > (m ? tapTime(m) : 0) ? t : m, null);
+  let selfEx = false;
+  try { selfEx = localStorage.getItem("um_is_admin") === "1"; } catch (e) {}
+  $("taps-all").innerHTML = (taps.length
+    ? `<b>Depuis le début : ${taps.length} appui(s)</b> sur les boutons du site — ${allCalls} appel(s), ${taps.length - allCalls} WhatsApp. ` +
+      `Dernier : <b>${esc(fmt(lastTap.at))}</b>${lastTap.page ? " (" + esc(lastTap.page) + ")" : ""}.`
+    : `<b>Aucun appui enregistré depuis le début</b> sur les boutons Appeler ou WhatsApp du site.`) +
+    `<br><span class="muted">Les appels venant de la fiche Google, de Google Maps ou d'un numéro composé à la main ne passent pas par le site et ne peuvent pas apparaître ici.` +
+    (selfEx ? ` Cet appareil est exclu (« Mes visites : non comptées ») : vos appuis de test depuis ce navigateur ne sont pas enregistrés.` : "") + `</span>`;
 
   const cutoff = Date.now() - 10 * 60 * 1000;
   $("s-live").textContent = Object.values(live).filter((v) => (v.lastSeen||0) > cutoff).length;
   renderTrend();
 }
 
-/* "Visiteurs par jour": is the site going up, flat or down?
-   Bars are real visitors per day, the line is their 7-day average (one bad
-   Sunday says nothing), and the red strip is site calls per day. The verdict
-   compares the average of the second half of the data with the first half,
-   over the days that have data, so a period before tracking existed does
-   not read as growth. */
 let trendResize = null;
 window.addEventListener("resize", () => { clearTimeout(trendResize); trendResize = setTimeout(renderTrend, 200); });
-function renderTrend() {
-  if (!$("h-chart")) return;
+
+const HOUR = 3600000;
+/* Morocco wall-clock parts of a timestamp (the site's visitors live there). */
+const maParts = (t) => {
+  const o = {};
+  new Intl.DateTimeFormat("en-GB", { timeZone: "Africa/Casablanca", year: "numeric", month: "2-digit", day: "2-digit",
+    hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })
+    .formatToParts(new Date(t)).forEach((p) => { o[p.type] = p.value; });
+  return o;
+};
+const maMidnight = (t) => { const p = maParts(t); return t - ((Number(p.hour) % 24) * 3600 + Number(p.minute) * 60 + Number(p.second)) * 1000 - (t % 1000); };
+const uniq = (list) => new Set(list.map((s) => s.visitorId).filter(Boolean)).size;
+const humanBetween = (a, b) => sessions.filter((s) => isHuman(s) && (s.startedAt || 0) >= a && (s.startedAt || 0) < b);
+const tapsBetween = (a, b) => taps.filter((t) => { const x = tapTime(t); return x >= a && x < b; });
+
+/* The buckets of the chart for the chosen span:
+   - "today" and "24h": one bar per hour, compared with the same hours a day earlier;
+   - "7": one bar per day, compared with the 7 days before;
+   - 30 days and more: one bar per day, with a 7-day average line. */
+function trendSeries() {
+  const now = Date.now();
+  if (hMode === "today" || hMode === "24h") {
+    /* "Today" always spans the whole day: the hours to come stay empty under
+       yesterday's grey line, the curve to beat. */
+    const start = hMode === "today" ? maMidnight(now) : Math.floor(now / HOUR) * HOUR - 23 * HOUR;
+    const items = [];
+    for (let i = 0; i < 24; i++) {
+      const a = start + i * HOUR, b = a + HOUR, future = a > now;
+      items.push({ label: maParts(a).hour + "h", v: future ? 0 : uniq(humanBetween(a, b)), c: future ? 0 : tapsBetween(a, b).length,
+        p: uniq(humanBetween(a - DAY, b - DAY)), current: a <= now && now < b, future });
+    }
+    return { unit: "hour", items, from: start, to: now, pFrom: start - DAY, pTo: now - DAY };
+  }
+  const days = Number(hMode);
   const liveDay = {};
   for (const s of sessions) {
     if (!isHuman(s)) continue;
@@ -996,66 +1039,106 @@ function renderTrend() {
   }
   const callDay = {};
   for (const t of taps) { const d = dayKey(tapTime(t)); callDay[d] = (callDay[d] || 0) + 1; }
-
-  const days = [];
-  for (let i = hDays - 1; i >= 0; i--) {
-    const d = dayKey(Date.now() - i * DAY);
-    const v = i < LIVE_DAYS ? (liveDay[d] ? liveDay[d].size : 0) : (hist[d] ? hist[d].v : 0);
-    days.push({ d, v, c: callDay[d] || 0 });
+  const vOf = (i) => { const d = dayKey(now - i * DAY); return i < LIVE_DAYS ? (liveDay[d] ? liveDay[d].size : 0) : (hist[d] ? hist[d].v : 0); };
+  const items = [];
+  for (let i = days - 1; i >= 0; i--) {
+    const d = dayKey(now - i * DAY);
+    items.push({ d, label: d.slice(8, 10) + "/" + d.slice(5, 7), v: vOf(i), c: callDay[d] || 0,
+      p: days === 7 ? vOf(i + 7) : null, current: i === 0 });
   }
-  const first = days.findIndex((x) => x.v > 0);
-  const data = first < 0 ? [] : days.slice(first);
-  const avg = (a) => a.length ? a.reduce((n, x) => n + x.v, 0) / a.length : 0;
-  const fmtD = (d) => d.slice(8, 10) + "/" + d.slice(5, 7);
+  return { unit: "day", items, from: now - days * DAY, to: now, pFrom: now - 2 * days * DAY, pTo: now - days * DAY };
+}
 
-  /* Verdict */
-  const total = days.reduce((n, x) => n + x.v, 0);
-  const calls = days.reduce((n, x) => n + x.c, 0);
+/* "Visiteurs par jour": is the site going up, flat or down?
+   Short spans are compared with the period just before (today with
+   yesterday at the same hour). Long spans compare the average of the second
+   half of the data with the first half, over the days that have data, so a
+   period before tracking existed does not read as growth. */
+function renderTrend() {
+  if (!$("h-chart")) return;
+  const S = trendSeries();
+  const items = S.items;
+  const first = items.findIndex((x) => x.v > 0);
+  const longSpan = S.unit === "day" && items.length > 7;
+  const word = (ch) => ch >= 10 ? ["up", "▲ En hausse"] : ch <= -10 ? ["down", "▼ En baisse"] : ["flat", "■ Stable"];
+
   let verdict;
-  if (data.length < 14) {
-    verdict = `<span class="flat">Pas encore assez de recul</span> — ${data.length} jour(s) de données sur cette période. ` +
-      `${total} visiteur(s), ${calls} appel(s).`;
+  if (!longSpan) {
+    const cur = humanBetween(S.from, S.to), prev = humanBetween(S.pFrom, S.pTo);
+    const cv = uniq(cur), pv = uniq(prev);
+    const cc = tapsBetween(S.from, S.to).length, pc = tapsBetween(S.pFrom, S.pTo).length;
+    const what = hMode === "today" ? ["Aujourd'hui", "hier à la même heure"] : hMode === "24h"
+      ? ["Dernières 24 h", "les 24 h précédentes"] : ["7 derniers jours", "les 7 jours précédents"];
+    const ch = pv ? Math.round((cv - pv) / pv * 100) : (cv ? 100 : 0);
+    /* 0 against 1 is "-100 %" and means nothing: below a handful of
+       visitors, show the counts without a verdict. */
+    const [cls, w] = cv + pv < 6 ? ["flat", "Trop peu de visites pour conclure"] : word(ch);
+    verdict = `<span class="${cls}"><b>${w}</b> ${pv && cv + pv >= 6 ? (ch > 0 ? "+" : "") + ch + " %" : ""}</span> — ` +
+      `${what[0]} : <b>${cv}</b> visiteur(s) et ${cc} appel(s), contre ${pv} visiteur(s) et ${pc} appel(s) ${what[1]}.`;
   } else {
-    const half = Math.floor(data.length / 2);
-    const a = avg(data.slice(0, half)), b = avg(data.slice(data.length - half));
-    const ch = a ? Math.round((b - a) / a * 100) : 100;
-    const cls = ch >= 10 ? "up" : ch <= -10 ? "down" : "flat";
-    const word = ch >= 10 ? "▲ En hausse" : ch <= -10 ? "▼ En baisse" : "■ Stable";
-    verdict = `<span class="${cls}"><b>${word}</b> ${ch > 0 ? "+" : ""}${ch} %</span> — ` +
-      `${b.toFixed(1)} visiteurs/jour sur la période récente, contre ${a.toFixed(1)} au début. ` +
-      `${total} visiteurs et ${calls} appel(s) sur ${hDays} jours.`;
+    const data = first < 0 ? [] : items.slice(first);
+    const avg = (a) => a.length ? a.reduce((n, x) => n + x.v, 0) / a.length : 0;
+    const total = items.reduce((n, x) => n + x.v, 0), calls = items.reduce((n, x) => n + x.c, 0);
+    if (data.length < 14) {
+      verdict = `<span class="flat">Pas encore assez de recul</span> — ${data.length} jour(s) de données sur cette période. ` +
+        `${total} visiteur(s), ${calls} appel(s).`;
+    } else {
+      const half = Math.floor(data.length / 2);
+      const a = avg(data.slice(0, half)), b = avg(data.slice(data.length - half));
+      const ch = a ? Math.round((b - a) / a * 100) : 100;
+      const [cls, w] = word(ch);
+      verdict = `<span class="${cls}"><b>${w}</b> ${ch > 0 ? "+" : ""}${ch} %</span> — ` +
+        `${b.toFixed(1)} visiteurs/jour sur la période récente, contre ${a.toFixed(1)} au début. ` +
+        `${total} visiteurs et ${calls} appel(s) sur ${items.length} jours.`;
+    }
   }
   $("h-verdict").innerHTML = verdict;
-  $("h-since").textContent = first > 0 ? `Premières données le ${fmtD(days[first].d)}.` : "";
+  $("h-title").textContent = S.unit === "hour" ? "Visiteurs par heure" : "Visiteurs par jour";
+  $("h-legend").textContent = longSpan
+    ? "Barres : visiteurs réels par jour · ligne rouge : moyenne sur 7 jours · rouge en bas : appels et WhatsApp depuis le site."
+    : `Barres : visiteurs réels par ${S.unit === "hour" ? "heure" : "jour"} · ligne grise : ${hMode === "7" ? "les 7 jours précédents" : "la veille aux mêmes heures"} · rouge en bas : appels et WhatsApp depuis le site.`;
+  $("h-since").textContent = longSpan && first > 0 ? `Premières données le ${items[first].label}.` : "";
 
-  /* Chart (inline SVG, no library) */
-  /* Drawn at the chart's real width, so its text stays legible on a phone. */
-  const W = Math.max(300, $("h-chart").clientWidth || 720), H = W < 500 ? 150 : 190, CH = 34, pad = 24, n = days.length;
+  /* Chart (inline SVG, drawn at its real width so the text stays legible). */
+  const W = Math.max(300, $("h-chart").clientWidth || 720), H = W < 500 ? 150 : 190, CH = 34, pad = 24, n = items.length;
   const bw = (W - pad) / n;
-  const vmax = Math.max(1, ...days.map((x) => x.v));
-  const cmax = Math.max(1, ...days.map((x) => x.c));
+  const vmax = Math.max(1, ...items.map((x) => Math.max(x.v, x.p || 0)));
+  const cmax = Math.max(1, ...items.map((x) => x.c));
   const y = (v) => H - 14 - (v / vmax) * (H - 30);
-  const ma = days.map((x, i) => { const w7 = days.slice(Math.max(first < 0 ? 0 : first, i - 6), i + 1); return w7.length ? w7.reduce((s, z) => s + z.v, 0) / w7.length : 0; });
   const gap = n > 120 ? 0 : 1;
+  const xc = (i) => pad + i * bw + bw / 2;
   let svg = `<svg viewBox="0 0 ${W} ${H + CH + 18}" role="img">`;
-  [0.5, 1].forEach((f) => {
-    const yy = y(vmax * f);
+  /* Gridlines on whole visitor counts, drawn where their label says. */
+  [...new Set([Math.round(vmax / 2), vmax])].filter((g) => g > 0).forEach((g) => {
+    const yy = y(g);
     svg += `<line x1="${pad}" x2="${W}" y1="${yy}" y2="${yy}" stroke="#dfe9f0"/>` +
-      `<text x="0" y="${yy + 4}" font-size="10" fill="#47586e">${Math.round(vmax * f)}</text>`;
+      `<text x="0" y="${yy + 4}" font-size="10" fill="#47586e">${g}</text>`;
   });
-  days.forEach((x, i) => {
-    const bx = pad + i * bw;
-    const today = i === n - 1;
-    svg += `<rect x="${bx}" y="${y(x.v)}" width="${Math.max(0.6, bw - gap)}" height="${H - 14 - y(x.v)}" fill="${today ? "#9fb6c9" : "#002454"}" opacity="0.85"><title>${fmtD(x.d)} : ${x.v} visiteur(s), ${x.c} appel(s)${today ? " (journée en cours)" : ""}</title></rect>`;
-    if (x.c) svg += `<rect x="${bx}" y="${H + CH - (x.c / cmax) * (CH - 4)}" width="${Math.max(0.6, bw - gap)}" height="${(x.c / cmax) * (CH - 4)}" fill="#e20102"><title>${fmtD(x.d)} : ${x.c} appel(s)</title></rect>`;
+  items.forEach((x, i) => {
+    if (x.future) return;
+    const bx = pad + i * bw, bwid = Math.max(0.6, bw - gap);
+    svg += `<rect x="${bx}" y="${y(x.v)}" width="${bwid}" height="${H - 14 - y(x.v)}" fill="${x.current ? "#9fb6c9" : "#002454"}" opacity="0.85"><title>${x.label} : ${x.v} visiteur(s), ${x.c} appel(s)${x.p !== null && x.p !== undefined ? " — période précédente : " + x.p : ""}${x.current ? " (en cours)" : ""}</title></rect>`;
+    if (x.c) svg += `<rect x="${bx}" y="${H + CH - (x.c / cmax) * (CH - 4)}" width="${bwid}" height="${(x.c / cmax) * (CH - 4)}" fill="#e20102"><title>${x.label} : ${x.c} appel(s)</title></rect>`;
   });
-  /* The average starts on the first day with data: before that there was
-     no tracking, not zero visitors. */
-  if (first >= 0) svg += `<polyline fill="none" stroke="#e20102" stroke-width="2" points="${ma.slice(first).map((v, j) => { const i = first + j; return `${pad + i * bw + bw / 2},${y(v)}`; }).join(" ")}"/>`;
+  if (longSpan) {
+    /* 7-day average, starting on the first day with data: before that there
+       was no tracking, not zero visitors. */
+    const ma = items.map((x, i) => { const w7 = items.slice(Math.max(first < 0 ? 0 : first, i - 6), i + 1); return w7.length ? w7.reduce((s, z) => s + z.v, 0) / w7.length : 0; });
+    if (first >= 0) svg += `<polyline fill="none" stroke="#e20102" stroke-width="2" points="${ma.slice(first).map((v, j) => `${xc(first + j)},${y(v)}`).join(" ")}"/>`;
+  } else {
+    /* The previous period, same buckets, as a grey line to beat. */
+    svg += `<polyline fill="none" stroke="#8a99ab" stroke-width="2" stroke-dasharray="4 3" points="${items.map((x, i) => `${xc(i)},${y(x.p || 0)}`).join(" ")}"/>`;
+  }
   svg += `<line x1="${pad}" x2="${W}" y1="${H + CH}" y2="${H + CH}" stroke="#c9d9e6"/>`;
-  [0, Math.floor(n / 2), n - 1].forEach((i) => {
-    const anchor = i === 0 ? "start" : i === n - 1 ? "end" : "middle";
-    svg += `<text x="${pad + i * bw + bw / 2}" y="${H + CH + 14}" font-size="11" fill="#47586e" text-anchor="${anchor}">${fmtD(days[i].d)}</text>`;
+  const ticks = S.unit === "hour" ? items.map((_, i) => i).filter((i) => i % 3 === 0)
+    : n <= 7 ? items.map((_, i) => i) : [0, Math.floor(n / 2), n - 1];
+  ticks.forEach((i) => {
+    /* Hours and days of a week sit centred under their own bar (kept inside
+       the frame); a long span's three dates hug the edges. */
+    const centred = n <= 7 || S.unit === "hour";
+    const anchor = centred ? "middle" : i === 0 ? "start" : i === n - 1 ? "end" : "middle";
+    const tx = centred ? Math.min(W - 12, Math.max(pad + 4, xc(i))) : xc(i);
+    svg += `<text x="${tx}" y="${H + CH + 14}" font-size="11" fill="#47586e" text-anchor="${anchor}">${items[i].label}</text>`;
   });
   $("h-chart").innerHTML = svg + "</svg>";
 }
