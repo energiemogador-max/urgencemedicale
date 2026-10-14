@@ -1,22 +1,8 @@
 {
   "casablanca": {
-    "collectedAt": "2026-10-14T10:07:53.963Z",
+    "collectedAt": "2026-10-14T22:16:31.566Z",
     "forDate": "2026-10-14",
     "entries": [
-      {
-        "name": "Pharmacie Achraf",
-        "address": "bd Anoual -ex Felix Faure, résid. Annajd, imm.20. Derb Ghellaf",
-        "phone": "+212522989763",
-        "kind": "jour",
-        "sources": [
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
-          }
-        ],
-        "confirmed": false,
-        "stale": true
-      },
       {
         "name": "Pharmacie Addoha",
         "address": "Pharmacie Addoha, Avenue Stendhal. Quartier Val-fleuri. (mosquée Addoha). Derb Ghellaf",
@@ -31,10 +17,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
         "confirmed": true,
@@ -56,7 +38,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -78,7 +60,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -93,13 +75,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -114,7 +92,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -134,10 +112,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
         "confirmed": true,
@@ -173,7 +147,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -196,7 +170,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -215,7 +189,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -247,7 +221,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -261,11 +235,11 @@
         "sources": [
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Assia",
@@ -276,13 +250,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -299,10 +269,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
         "confirmed": true,
@@ -321,10 +287,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
         "confirmed": true,
@@ -339,13 +301,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -357,13 +315,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -375,13 +329,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -401,7 +351,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -416,18 +366,14 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
         "name": "Pharmacie De L'Esperance",
-        "address": "bd Chefchaouni résid. Palmier imm. A mag. 5 El Gantour",
+        "address": "bd Chefchaouni résid. Palmier imm. A mag. 5 El Gantourرقم 4، بوليفارد شفشوني، إقامة النخيل - عين السبع",
         "phone": "+212522666199",
         "kind": "24h",
         "sources": [
@@ -437,7 +383,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -445,7 +391,7 @@
       },
       {
         "name": "Pharmacie De L'Industrie",
-        "address": "K115 bd Chefchaouni km 11 5",
+        "address": "K115 bd Chefchaouni km 11 5رقم 84، الشارع شفشاون، كيلومتر 11500، طريق 110، الحي الصناعي - سيدي برنوصي",
         "phone": "+212522352225",
         "kind": "24h",
         "sources": [
@@ -455,7 +401,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -478,7 +424,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -500,7 +446,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -515,13 +461,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -533,13 +475,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -558,7 +496,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -573,13 +511,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -591,13 +525,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -612,7 +542,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -627,13 +557,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -645,13 +571,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -663,13 +585,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -681,13 +599,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -702,7 +616,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -717,13 +631,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -738,7 +648,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -753,13 +663,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -771,13 +677,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -792,7 +694,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -807,13 +709,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -828,7 +726,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -847,7 +745,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -862,13 +760,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -880,13 +774,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -899,13 +789,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -917,13 +803,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -935,13 +817,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -953,13 +831,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -975,7 +849,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -994,7 +868,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1009,13 +883,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1027,13 +897,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1049,7 +915,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1064,13 +930,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1082,13 +944,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1100,13 +958,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1121,7 +975,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1139,7 +993,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1157,7 +1011,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1175,7 +1029,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1189,11 +1043,11 @@
         "sources": [
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Oued Zem",
@@ -1204,13 +1058,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1222,13 +1072,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1243,7 +1089,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1258,13 +1104,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1280,7 +1122,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1295,13 +1137,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1313,13 +1151,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1345,13 +1179,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1377,13 +1207,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1395,13 +1221,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1416,7 +1238,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1435,7 +1257,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -1451,13 +1273,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-10-14"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-13"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       }
     ]
