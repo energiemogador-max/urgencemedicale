@@ -1,7 +1,7 @@
 {
   "casablanca": {
-    "collectedAt": "2026-10-13T23:16:20.489Z",
-    "forDate": "2026-10-13",
+    "collectedAt": "2026-10-14T10:07:53.963Z",
+    "forDate": "2026-10-14",
     "entries": [
       {
         "name": "Pharmacie Achraf",
@@ -15,7 +15,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Addoha",
@@ -26,11 +26,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -48,11 +48,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -70,11 +70,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -92,7 +92,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -110,7 +110,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -129,11 +129,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -151,11 +151,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -169,7 +169,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -188,11 +188,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -211,7 +211,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -229,7 +229,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
@@ -243,7 +243,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -265,7 +265,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Assia",
@@ -275,7 +275,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -294,11 +294,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -316,11 +316,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -338,7 +338,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -356,7 +356,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -374,7 +374,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -393,11 +393,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -415,7 +415,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -433,7 +433,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -451,7 +451,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -470,11 +470,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -492,11 +492,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -514,7 +514,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -532,7 +532,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -550,11 +550,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "pharmacieenpermanence.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -572,7 +572,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -590,7 +590,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -608,7 +608,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -626,7 +626,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -644,7 +644,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -662,7 +662,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -680,7 +680,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -698,7 +698,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -716,7 +716,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -734,7 +734,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -752,7 +752,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -770,7 +770,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -788,7 +788,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -806,7 +806,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -824,7 +824,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -843,7 +843,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -861,7 +861,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -879,7 +879,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -898,7 +898,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -916,7 +916,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -934,7 +934,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -952,7 +952,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -971,7 +971,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -990,7 +990,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1008,7 +1008,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1026,7 +1026,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1045,7 +1045,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1063,7 +1063,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1081,7 +1081,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1099,7 +1099,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1117,7 +1117,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1135,7 +1135,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1153,7 +1153,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1171,7 +1171,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1193,7 +1193,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Oued Zem",
@@ -1203,7 +1203,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1221,7 +1221,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1239,7 +1239,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1257,7 +1257,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1276,7 +1276,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1294,7 +1294,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1312,7 +1312,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1330,7 +1330,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
@@ -1344,7 +1344,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1362,7 +1362,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
@@ -1376,7 +1376,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1394,7 +1394,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1412,7 +1412,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1431,7 +1431,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
@@ -1450,7 +1450,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-10-13"
+            "date": "2026-10-14"
           },
           {
             "name": "sahha.ma",
