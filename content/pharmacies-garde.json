@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-10-15T09:50:24.377Z",
+    "collectedAt": "2026-10-15T22:13:20.476Z",
     "forDate": "2026-10-15",
     "entries": [
       {
@@ -26,7 +26,7 @@
         "name": "Pharmacie Al Amana",
         "address": "quartier Ahl Loghlam lotiss. Al Amana n°419",
         "phone": "+212522758145",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -35,10 +35,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -46,9 +42,9 @@
       },
       {
         "name": "Pharmacie Al Fatiha",
-        "address": "Pharmacie Al Fatiha",
+        "address": "",
         "phone": "+212522630723",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -57,10 +53,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -92,7 +84,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -147,7 +139,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -157,7 +149,7 @@
         "name": "Pharmacie AlImam Malek",
         "address": "Pharmacie Alimam Malek, Derb Lakrimate I, Rue 28 N°64",
         "phone": "+212522213313",
-        "kind": "24h",
+        "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
@@ -167,10 +159,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -189,7 +177,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -213,33 +201,15 @@
         "name": "Pharmacie AlMiza",
         "address": "quartier Lissasfa (route d'El Jadida), lotiss. Alkhalil, imm. A3",
         "phone": "+212522931929",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
-          }
-        ],
-        "confirmed": true,
-        "stale": false
-      },
-      {
-        "name": "PHARMACIE ANOUARI",
-        "address": "MASSIRA III - RUE 58 N° 5 - (PROJET) SIDI OHTMANE MOULAY RACHID [+]",
-        "phone": "+212522717679",
-        "kind": "24h",
-        "sources": [
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Assia",
@@ -338,7 +308,7 @@
         "name": "Pharmacie Casa Imane",
         "address": "Pharmacie Casa Imane, 44 Lotiss. Agdal Projet Essalam Ii Sidi Moumen",
         "phone": "+212522110025",
-        "kind": "24h",
+        "kind": "jour",
         "district": "Anassi",
         "sources": [
           {
@@ -348,10 +318,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -383,7 +349,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -401,7 +367,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -411,7 +377,7 @@
         "name": "Pharmacie de la Bourse",
         "address": "Pharmacie De La Bourse, N°117, Boulevard Mohammed V",
         "phone": "+212522310681",
-        "kind": "24h",
+        "kind": "jour",
         "district": "Ville et Bourgogne et Maarif",
         "sources": [
           {
@@ -421,10 +387,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -434,7 +396,7 @@
         "name": "Pharmacie de la Gironde",
         "address": "bd de la Gironde ang. rue Ifni",
         "phone": "+212522300619",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -443,10 +405,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -484,7 +442,7 @@
         "name": "Pharmacie des Troenes",
         "address": "38 allée des Troènes Lajiri III",
         "phone": "+212522665471",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -493,10 +451,6 @@
           {
             "name": "pharmacieenpermanence.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": true,
@@ -542,7 +496,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -606,20 +560,16 @@
       },
       {
         "name": "Pharmacie Essaada",
-        "address": "Pharmacie Essaada",
+        "address": "",
         "phone": "+212522620353",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -638,20 +588,16 @@
       },
       {
         "name": "Pharmacie Ghizlane",
-        "address": "Pharmacie Ghizlane",
+        "address": "",
         "phone": "+212522620050",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -684,20 +630,16 @@
       },
       {
         "name": "Pharmacie Ibn Tachfine",
-        "address": "Pharmacie Ibn Tachfine",
+        "address": "",
         "phone": "+212522620650",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -716,39 +658,31 @@
       },
       {
         "name": "Pharmacie Jihane",
-        "address": "Pharmacie Jihane",
+        "address": "",
         "phone": "+212522605515",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
         "name": "Pharmacie Khayriat Aïn Chok",
         "address": "bd de Baghdad - ex F (Aïn Chok) résid. Koutoubia Aïn Chok",
         "phone": "+212522504259",
-        "kind": "24h",
+        "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -849,7 +783,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -868,7 +802,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -915,7 +849,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -975,7 +909,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -983,71 +917,45 @@
       },
       {
         "name": "Pharmacie Moulay Idriss 1er",
-        "address": "Pharmacie Moulay Idriss 1er",
+        "address": "",
         "phone": "+212522280465",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
         "name": "Pharmacie Nagjir",
-        "address": "Pharmacie Nagjir",
+        "address": "",
         "phone": "+212522663643",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
         "name": "Pharmacie Okba Ibn Nafii",
-        "address": "Pharmacie Okba Ibn Nafii",
+        "address": "",
         "phone": "+212522636895",
-        "kind": "24h",
+        "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-10-15"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
-          }
-        ],
-        "confirmed": true,
-        "stale": false
-      },
-      {
-        "name": "PHARMACIE OTMANI",
-        "address": "114, RUE 20 - MASSIRA II - EX. HMARA [+]حي المسيرة زنقة 20رقم114 حي مولاي رشيد",
-        "phone": "+212522703473",
-        "kind": "24h",
-        "sources": [
-          {
-            "name": "sahha.ma",
-            "date": "2026-10-14"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Oued Zem",
@@ -1089,7 +997,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -1122,7 +1030,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -1238,7 +1146,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
@@ -1257,7 +1165,7 @@
           },
           {
             "name": "sahha.ma",
-            "date": "2026-10-14"
+            "date": "2026-10-15"
           }
         ],
         "confirmed": true,
