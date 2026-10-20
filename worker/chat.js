@@ -80,8 +80,8 @@ const ALLOWED_HOSTS = new Set([
  * prix.
  */
 const FACTS = {
-  phoneDisplay: "06 01 99 12 96",
-  phoneHref: "+212601991296",
+  phoneDisplay: "06 04 22 77 30",
+  phoneHref: "+212604227730",
   cities: "Casablanca, Rabat, Mohammedia, Bouskoura, Dar Bouazza",
   dayPrice: "500 MAD",
   dayWindow: "07h00-20h00",
@@ -409,7 +409,7 @@ async function ask(key, model, messages) {
   }
 
   // The widget renders text, not Markdown: strip what a model adds anyway
-  // ("**06 01 99 12 96**" showed its asterisks to a visitor).
+  // ("**06 04 22 77 30**" showed its asterisks to a visitor).
   const reply = data?.choices?.[0]?.message?.content
     ?.replace(/\*\*|__|^#+\s*/gm, "")
     .trim();
