@@ -12,11 +12,11 @@ import type { Business } from "./schema";
  */
 export const business: Business = {
   legalName: "Urgence Médicale Casablanca",
-  phoneDisplay: "06 01 99 12 36",
-  phoneHref: "+212601991236",
+  phoneDisplay: "06 01 99 12 96",
+  phoneHref: "+212601991296",
   // Not separately provided — defaulting to the same number as the call line
-  // (changed to 06 01 99 12 36 by the operator on 2026-10-23).
-  whatsappNumber: "+212601991236",
+  // (changed to 06 01 99 12 96 by the operator on 2026-10-24).
+  whatsappNumber: "+212601991296",
   address: {
     street: "Hay Essalam, GH 2, Imm 4",
     city: "Casablanca",
