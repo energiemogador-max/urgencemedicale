@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-03T12:45:00.087Z",
+    "collectedAt": "2026-11-03T23:58:13.050Z",
     "forDate": "2026-11-03",
     "entries": [
       {
@@ -424,7 +424,8 @@
         "name": "Pharmacie Dawdia",
         "address": "hay El Wifak 1 rue 13 n°85 Oulfa Casablanca",
         "phone": "+212522901424",
-        "kind": "jour",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -439,6 +440,7 @@
         "address": "hay Sidi Moumen Dyar Essaâda mag. n°1 et 3 Sidi Moumen Casablanca",
         "phone": "+212522709079",
         "kind": "jour",
+        "district": "Sidi Moumen",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -741,7 +743,7 @@
         "address": "238, boulevard Ba Hmad, Quartier Belvédère",
         "phone": "+212522248814",
         "kind": "24h",
-        "district": "Belvedere Roches Noires",
+        "district": "Belvédère et Roches Noires",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -760,6 +762,7 @@
         "address": "152 Bis, route de l' Oasis Casablanca",
         "phone": "+212522990284",
         "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -856,20 +859,6 @@
         "stale": false
       },
       {
-        "name": "Pharmacie hay Makam",
-        "address": "quartier Aïn Borja hay makam n°117., Casablanca",
-        "phone": "+212522638787",
-        "kind": "jour",
-        "sources": [
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-03"
-          }
-        ],
-        "confirmed": false,
-        "stale": false
-      },
-      {
         "name": "Pharmacie Hayfa",
         "address": "EDDIAR EL JADIDA RUE 25 N° 122 AIN CHOCK CASABLANCA",
         "phone": "+212522521922",
@@ -956,7 +945,7 @@
       },
       {
         "name": "Pharmacie Koutoubia",
-        "address": "Hay Messaoudia (cité Jemâa) rue 24 n°104 derb My Bouchaïb, Casablanca",
+        "address": "HAY MESSAOUDIA RUE 24 N°14 - DERB MOULAY BOUCHAIB CITE DJEMAA",
         "phone": "+212522373107",
         "kind": "jour",
         "district": "Ben Msick",
@@ -964,13 +953,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-03"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-03"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -989,7 +974,7 @@
       },
       {
         "name": "Pharmacie La Durance",
-        "address": "15 rue de la Durance, Casablanca",
+        "address": "15, RUE LA DURANCE POLO",
         "phone": "+212522856672",
         "kind": "jour",
         "district": "Polo",
@@ -997,13 +982,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-03"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-03"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1262,7 +1243,7 @@
         "address": "PROGRAMME NEJMAT SIDI MOUMEN GH1 BIS IMM N 3 SIDI MOUMEN",
         "phone": "+212522748014",
         "kind": "jour",
-        "district": "Annasi",
+        "district": "Anassi",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1421,9 +1402,10 @@
       },
       {
         "name": "Pharmacie Tamaarouft",
-        "address": "4 rue Tamaarouft -ex Alma Hassan Casablanca",
+        "address": "4, Rue Tamaarouft (anciennement rue Alma), quartier Bourgogne",
         "phone": "+212522265616",
         "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1501,9 +1483,10 @@
       },
       {
         "name": "Pharmacie Youness",
-        "address": "18 avenue Ali Yata -ex Foum Lahsan résid. Alhadika Beausite Casablanca",
+        "address": "18 avenue Ali Yata -ex Foum Lahsan résid. Alhadika El Gantour, Casablanca",
         "phone": "+212522357527",
         "kind": "jour",
+        "district": "Ain Sebaa",
         "sources": [
           {
             "name": "aidoctor.ma",
