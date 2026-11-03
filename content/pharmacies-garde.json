@@ -1,7 +1,7 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-02T13:26:45.605Z",
-    "forDate": "2026-11-02",
+    "collectedAt": "2026-11-03T12:45:00.087Z",
+    "forDate": "2026-11-03",
     "entries": [
       {
         "name": "Aswak Al Joumla",
@@ -12,7 +12,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -27,7 +27,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -42,7 +42,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -53,13 +53,18 @@
         "address": "quartier Beausite 06 n°1 EQ8 Addoha I El Gantour, Casablanca",
         "phone": "+212522673667",
         "kind": "jour",
+        "district": "Ain Sebaa",
         "sources": [
           {
+            "name": "aidoctor.ma",
+            "date": "2026-11-03"
+          },
+          {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -70,7 +75,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -84,7 +89,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -99,11 +104,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -118,11 +123,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -136,7 +141,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -151,11 +156,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -163,18 +168,18 @@
       },
       {
         "name": "Pharmacie Alaoui Jabri",
-        "address": "hay Sidi Moumen lot El Falah tranche 1 lot 223 local n°2, Casablanca",
+        "address": "Hay Sidi Moumen, lotissement El Falah, tranche 1, lot 223, local n 2",
         "phone": "+212522022006",
         "kind": "24h",
         "district": "Sidi Moumen",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -188,7 +193,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -202,7 +207,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -216,7 +221,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -224,18 +229,18 @@
       },
       {
         "name": "Pharmacie Alouati",
-        "address": "BOULEVARD FOUARAT, LOT CAPELUTO - LOT 16 - HAY MOHAMMADI",
+        "address": "bd du fouarat lot.16 capeluto rue 1 hay mohammadi Casablanca",
         "phone": "+212522601675",
         "kind": "jour",
         "district": "Hay Mohammadi",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -249,7 +254,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -264,11 +269,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -283,11 +288,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -302,11 +307,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -321,11 +326,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -339,7 +344,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -353,7 +358,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -367,7 +372,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -381,7 +386,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -395,7 +400,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -409,7 +414,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -423,7 +428,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -437,7 +442,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -451,7 +456,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -459,14 +464,14 @@
       },
       {
         "name": "Pharmacie des Acacias",
-        "address": "76, BD. DE GERGOVIE (MOHAMED BEN MEKKI)",
+        "address": "76 bd Batli Med Ben Mekki-ex Gergovie Roches noires Casablanca",
         "phone": "+212522248181",
         "kind": "jour",
         "district": "Belvedere Roches Noires",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -481,11 +486,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -499,7 +504,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -513,7 +518,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -528,11 +533,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -547,7 +552,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -561,7 +566,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -576,26 +581,26 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
         "stale": false
       },
       {
-        "name": "Pharmacie ElHarti",
-        "address": "775 avenue du Cdt Driss Lharti - ex A, Casablanca",
+        "name": "Pharmacie El Harti",
+        "address": "775, avenue du Cdt Driss Lharti - ex A Casablanca",
         "phone": "+212522371737",
         "kind": "jour",
         "district": "Sbata",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -606,15 +611,15 @@
         "address": "313, BOULEVARD OUED TENSIFT - EL OULFA (CENTRE COMMERCIAL EL OULFA)",
         "phone": "+212522910023",
         "kind": "jour",
-        "district": "Oulfa",
+        "district": "Hay Hassani el Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -629,11 +634,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -644,15 +649,15 @@
         "address": "34, RUE AHMED AL AKRAD - OASIS (FACE ECOLE ERNEST RENAN - PRES ECOLE EL JABR)",
         "phone": "+212522994975",
         "kind": "jour",
-        "district": "Maarif",
+        "district": "Ville Bourgogne Maarif",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -660,14 +665,14 @@
       },
       {
         "name": "Pharmacie Faris El Baida",
-        "address": "928 route de Médiouna, Casablanca",
+        "address": "928 route de Médiouna Nouvelle Médina Casablanca",
         "phone": "+212522289090",
         "kind": "jour",
         "district": "el Fida et Mers Sultan",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -675,14 +680,14 @@
       },
       {
         "name": "Pharmacie Fleming",
-        "address": "275, Route de la Mecque, Quartier Californie",
+        "address": "275 route de la Mecque (Californie), Casablanca",
         "phone": "+212522522989",
         "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -697,7 +702,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -711,7 +716,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -725,7 +730,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -733,18 +738,18 @@
       },
       {
         "name": "Pharmacie Gare Casa Voyageurs",
-        "address": "ANGLE BD BA HMAD RUE CONCY",
+        "address": "238, boulevard Ba Hmad, Quartier Belvédère",
         "phone": "+212522248814",
         "kind": "24h",
-        "district": "Belvédère",
+        "district": "Belvedere Roches Noires",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -758,7 +763,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -766,14 +771,14 @@
       },
       {
         "name": "Pharmacie Hajar",
-        "address": "Magasin N 1, Immeuble N 56,Résidence Riad Bernoussi 2,- Sidi Bernoussi",
+        "address": "2 cité Sidi Bernoussi - Casablanca imm. 56 Riad Bernoussi Sidi Bernoussi",
         "phone": "+212522768592",
         "kind": "jour",
         "district": "Sidi Bernoussi",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -788,11 +793,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -807,11 +812,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -826,11 +831,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -844,7 +849,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -858,7 +863,7 @@
         "sources": [
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -873,11 +878,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -892,11 +897,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -911,11 +916,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -929,7 +934,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -943,7 +948,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -958,11 +963,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -976,7 +981,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -991,11 +996,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1009,7 +1014,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1023,7 +1028,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1038,11 +1043,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1053,15 +1058,15 @@
         "address": "AV. DU PHARE-RESIDENCE TAGHZOUT RACINE EXTENTION - BOURGOGNE",
         "phone": "+212522293564",
         "kind": "24h",
-        "district": "Bourgogne",
+        "district": "Ville Bourgogne Maarif",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1076,11 +1081,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1094,7 +1099,7 @@
         "sources": [
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1109,11 +1114,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1127,7 +1132,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1138,15 +1143,15 @@
         "address": "48, RUE DES HOPITAUX - EX DOCTEUR BRAUN (LES URGENCES DE C.H.U. IBN ROCHD)",
         "phone": "+212522202065",
         "kind": "24h",
-        "district": "Maarif",
+        "district": "Ville Bourgogne Maarif",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1160,7 +1165,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1175,7 +1180,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1189,7 +1194,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1203,7 +1208,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1217,7 +1222,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1231,7 +1236,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1246,7 +1251,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1261,7 +1266,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1275,7 +1280,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1290,11 +1295,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1308,7 +1313,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1323,11 +1328,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1338,15 +1343,15 @@
         "address": "RESIDENCE GHANDI, RUE d'ANGERS N° 17 - BD. GHANDI - (ECOLE EL MANAL) HAY ESSALAM - C.I.L.",
         "phone": "+212522392629",
         "kind": "24h",
-        "district": "Oulfa",
+        "district": "Hay Hassani el Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1361,11 +1366,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1379,7 +1384,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1387,14 +1392,14 @@
       },
       {
         "name": "Pharmacie Sabrya",
-        "address": "LISSASSFA 1 N367 (MOSQUEE LISSASSFA)",
+        "address": "367, quartier Lissasfa (route d'El Jadida), bd Jabal Al Atlas Casablanca",
         "phone": "+212522650084",
         "kind": "jour",
         "district": "Lissasfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1408,21 +1413,21 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
         "stale": false
       },
       {
-        "name": "Pharmacie Tamarooft",
+        "name": "Pharmacie Tamaarouft",
         "address": "4 rue Tamaarouft -ex Alma Hassan Casablanca",
         "phone": "+212522265616",
         "kind": "jour",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1437,11 +1442,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1456,11 +1461,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           },
           {
             "name": "sahha.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": true,
@@ -1474,7 +1479,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1488,7 +1493,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1502,7 +1507,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1531,7 +1536,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
@@ -1546,7 +1551,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-02"
+            "date": "2026-11-03"
           }
         ],
         "confirmed": false,
