@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-06T12:54:44.020Z",
+    "collectedAt": "2026-11-06T23:43:40.570Z",
     "forDate": "2026-11-06",
     "entries": [
       {
@@ -60,10 +60,6 @@
             "date": "2026-11-06"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-06"
           }
@@ -101,17 +97,13 @@
       },
       {
         "name": "Pharmacie Ahmed Rayan",
-        "address": "Pharmacie Ahmed Rayan, Hay El Oulfa, Résid. Cité Essalam Gh9, Imm. 77 N°1",
+        "address": "hay El Oulfa résid. cité Essalam Gh9 imm. 77 n°1, Casablanca",
         "phone": "+212522898334",
         "kind": "24h",
         "district": "Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
@@ -247,10 +239,6 @@
             "date": "2026-11-06"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-06"
           }
@@ -274,17 +262,13 @@
       },
       {
         "name": "Pharmacie Annahda",
-        "address": "Pharmacie Annahda, Hay Sidi Moumen, Lotiss. Annahda1, Gh 6, Imm. 34 N°1",
+        "address": "LOTISSEMENT ANNAHDA GH6, IMM 34 N° 1 - B.P.99 535 SIDI MOUMEN",
         "phone": "+212522751234",
         "kind": "jour",
         "district": "Annasi",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
@@ -297,17 +281,13 @@
       },
       {
         "name": "Pharmacie Annajat",
-        "address": "Pharmacie Annajat, Bd De Meknès, Imm. J, N°21 Hay Inara I",
+        "address": "BOULEVARD TICHKA, QUARTIER INARA I - IMMEUBLE \"J\" N° 21",
         "phone": "+212522527399",
         "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
@@ -847,10 +827,6 @@
             "date": "2026-11-06"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-06"
           }
@@ -920,13 +896,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-06"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-06"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -957,10 +929,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
@@ -1020,7 +988,7 @@
       },
       {
         "name": "Pharmacie Koutoubia",
-        "address": "Hay Messaoudia (cité Jemâa) rue 24 n°104 derb My Bouchaïb, Casablanca",
+        "address": "HAY MESSAOUDIA RUE 24 N°14 - DERB MOULAY BOUCHAIB CITE DJEMAA",
         "phone": "+212522373107",
         "kind": "jour",
         "district": "Ben Msick",
@@ -1028,17 +996,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-06"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1058,7 +1018,7 @@
       },
       {
         "name": "Pharmacie La Durance",
-        "address": "Pharmacie La Durance, 15, Rue De La Durance",
+        "address": "15, RUE LA DURANCE POLO",
         "phone": "+212522856672",
         "kind": "jour",
         "district": "Polo",
@@ -1066,17 +1026,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-06"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1119,10 +1071,6 @@
             "date": "2026-11-06"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-06"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-06"
           }
@@ -1158,10 +1106,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
@@ -1409,10 +1353,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-06"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-06"
           },
           {
