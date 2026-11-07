@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-07T11:42:00.663Z",
+    "collectedAt": "2026-11-07T22:42:00.005Z",
     "forDate": "2026-11-07",
     "entries": [
       {
@@ -105,10 +105,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -146,17 +142,13 @@
       },
       {
         "name": "Pharmacie Ahmed Rayan",
-        "address": "Pharmacie Ahmed Rayan, Hay El Oulfa, Résid. Cité Essalam Gh9, Imm. 77 N°1",
+        "address": "hay El Oulfa résid. cité Essalam Gh9 imm. 77 n°1 Oulfa Casablanca",
         "phone": "+212522898334",
         "kind": "24h",
         "district": "Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -176,10 +168,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -254,10 +242,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -319,10 +303,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -356,10 +336,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -369,17 +345,13 @@
       },
       {
         "name": "Pharmacie Annajat",
-        "address": "Pharmacie Annajat, Bd De Meknès, Imm. J, N°21 Hay Inara I",
+        "address": "BOULEVARD TICHKA, QUARTIER INARA I - IMMEUBLE \"J\" N° 21",
         "phone": "+212522527399",
         "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -399,10 +371,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -624,17 +592,13 @@
       },
       {
         "name": "Pharmacie des Universites",
-        "address": "Pharmacie Des Universites, Quartier Lissasfa (route d'el Jadida), N°3.résidence. Bayt Almaarifa",
+        "address": "K070 quartier Lissasfa (route d'El Jadida) résid. Bayt AlMaarifa, Casablanca",
         "phone": "+212522995194",
         "kind": "24h",
         "district": "Lissasfa",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -753,10 +717,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -863,10 +823,6 @@
             "date": "2026-11-07"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-07"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-07"
           }
@@ -913,10 +869,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-07"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-07"
           },
           {
@@ -989,13 +941,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-07"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-07"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1093,13 +1041,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-07"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-07"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1119,7 +1063,7 @@
       },
       {
         "name": "Pharmacie La Durance",
-        "address": "15 rue de la Durance, Casablanca",
+        "address": "15, RUE LA DURANCE POLO",
         "phone": "+212522856672",
         "kind": "jour",
         "district": "Polo",
@@ -1127,13 +1071,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-07"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-07"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1419,9 +1359,10 @@
       },
       {
         "name": "Pharmacie Nice",
-        "address": "1 avenue de Nice Quartier bourgogne",
+        "address": "1, avenue de Nice . près marché lehjajma",
         "phone": "+212522949339",
         "kind": "jour",
+        "district": "Bourgogne",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1523,9 +1464,10 @@
       },
       {
         "name": "Pharmacie Route de Rabat",
-        "address": "route de Rabat (r.p. 1), résid. Al Manare n°4 Casablanca",
+        "address": "Route de Rabat (rond-point1), Résidence. Al Manare N°4. Bloc B. Bernoussi.",
         "phone": "+212522663278",
         "kind": "jour",
+        "district": "Ain Sebaa",
         "sources": [
           {
             "name": "aidoctor.ma",
