@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-08T11:54:31.908Z",
+    "collectedAt": "2026-11-08T22:51:56.582Z",
     "forDate": "2026-11-08",
     "entries": [
       {
@@ -235,6 +235,10 @@
             "date": "2026-11-08"
           },
           {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-08"
+          },
+          {
             "name": "sahha.ma",
             "date": "2026-11-08"
           }
@@ -415,13 +419,17 @@
       },
       {
         "name": "Pharmacie Bd Alhoussine Essoussi",
-        "address": "6 rue Lhoussine Assoussi (Sidi Moumen) résid. des jardins de Mimosas, Casablanca",
+        "address": "Pharmacie Bd Alhoussine Essoussi, 6, Avenue Lhoussine Assoussi, Résid. Des Jardins De Mimosas",
         "phone": "+212522725959",
         "kind": "24h",
         "district": "Sidi Moumen",
         "sources": [
           {
             "name": "aidoctor.ma",
+            "date": "2026-11-08"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-08"
           },
           {
@@ -584,6 +592,10 @@
         "sources": [
           {
             "name": "aidoctor.ma",
+            "date": "2026-11-08"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-08"
           },
           {
@@ -753,10 +765,6 @@
             "date": "2026-11-08"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-08"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-08"
           }
@@ -863,10 +871,6 @@
             "date": "2026-11-08"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-08"
-          },
-          {
             "name": "sahha.ma",
             "date": "2026-11-08"
           }
@@ -913,10 +917,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-08"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-08"
           },
           {
@@ -989,13 +989,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-08"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-08"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1093,13 +1089,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-08"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-08"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1119,7 +1111,7 @@
       },
       {
         "name": "Pharmacie La Durance",
-        "address": "15 rue de la Durance, Casablanca",
+        "address": "15, RUE LA DURANCE POLO",
         "phone": "+212522856672",
         "kind": "jour",
         "district": "Polo",
@@ -1127,13 +1119,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-08"
-          },
-          {
-            "name": "sahha.ma",
-            "date": "2026-11-08"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
