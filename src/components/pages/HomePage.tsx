@@ -132,9 +132,12 @@ const TEXT: Record<Locale, HomeText> = {
     about: (b) => `À propos de ${b}`,
   },
   en: {
-    metaTitle: "Doctor at home in Casablanca & Rabat, 24/7",
+    /* "Urgent care", the words English searchers use: Search Console
+       (3 months to 2026-11-10) shows "urgent care near me" at 446
+       impressions, position 5.5, and not one click on "Doctor at home". */
+    metaTitle: "Urgent care at home in Casablanca & Rabat, 24/7",
     metaDescription: (r, p, english) =>
-      `Need a doctor at home in Casablanca or Rabat? ${english ? "An English-speaking doctor" : "A doctor"} comes to you in ${r} min, 24/7, from ${p}, fee quoted upfront.`,
+      `Need urgent care in Casablanca or Rabat? ${english ? "An English-speaking doctor" : "A doctor"} comes to your home in ${r} min, 24/7, from ${p}, fee quoted upfront.`,
     heroTitle: "Urgent medical care",
     heroTailOnOwnLine: false,
     heroAccent: "at home,",

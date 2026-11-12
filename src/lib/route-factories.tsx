@@ -173,9 +173,14 @@ export function situationMetadata(situationSlug: SituationSlug, locale: Locale =
   const situation = a.getSituationBySlug(situationSlug);
   if (!situation) return {};
   const spokes = situation.geoMultiplied ? a.getCitiesForSituation(situation.slug).map((sc) => sc.citySlug) : [];
+  const t = dict(locale);
+  const snippet = t.meta.situationDescription[situation.slug];
+  const { business, pricing } = a.content;
   return pageMetadata({
     title: withCityScope(situation.title, locale, spokes),
-    description: situation.intro,
+    description: snippet
+      ? snippet(t.range(business.defaultResponseTimeMinutes), `${pricing.tiers[0]?.amountMad} ${t.currency}`)
+      : situation.intro,
     path: paths.situation(situation.slug),
     locale,
   });

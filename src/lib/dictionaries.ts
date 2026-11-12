@@ -220,6 +220,15 @@ export interface Dict {
       Record<SituationSlug, (city: string, range: string, dayPrice: string, nightPrice: string) => string>
     >;
     serviceCityDescription: Partial<Record<ServiceSlug, (city: string) => string>>;
+    /**
+     * Snippets for the national situation pages whose intro makes a poor one.
+     * "Certificat médical" is the site's first page for clicks, and its intro
+     * opens on a definition ("Un certificat médical s'obtient auprès d'un
+     * médecin après un examen clinique.") — the only sentence that fit, so it
+     * was the whole snippet (2026-11-12). A slug with no entry falls back to
+     * the intro. Each says only what its page already says.
+     */
+    situationDescription: Partial<Record<SituationSlug, (range: string, dayPrice: string) => string>>;
     quartier: (quartier: string, city: string) => string;
     quartierDescription: (quartier: string, city: string, hours: string, range: string, price: string) => string;
   };
@@ -421,10 +430,21 @@ const fr: Dict = {
      * maarif", "médecin généraliste belvedere casablanca" and a dozen more
      * quartier variants at positions 8-12 with almost no clicks, on titles
      * that never said "généraliste". The H1 still says "médecin à domicile".
+     *
+     * "Médecin généraliste", in full (2026-11-12): the next three months of
+     * Search Console showed the "médecin généraliste <quartier>" form ahead
+     * of the bare one ("médecin généraliste ain chock" 53 impressions,
+     * "… ain sebaa" 51, "… belvedere" 32+29, "… maarif" 28+17, all around
+     * position 10 with no click). The title now carries both forms. The city
+     * is dropped when the quartier already names it ("Mohammedia Centre").
      */
-    quartier: (q, c) => `Généraliste à domicile ${q}, ${c}`,
+    situationDescription: {
+      "certificat-medical": (r, p) =>
+        `Certificat médical à domicile à Casablanca (travail, sport, école, assurance) : un médecin vient vous examiner en ${r} min, 24h/24, dès ${p}.`,
+    },
+    quartier: (q, c) => `Médecin généraliste à domicile ${q}${q.includes(c) ? "" : `, ${c}`}`,
     quartierDescription: (q, c, h, r, p) =>
-      `Un généraliste vient vous examiner à ${q} (${c}), ${h}. Arrivée en ${r} min, consultation dès ${p}, tarif confirmé avant la visite.`,
+      `Médecin généraliste à ${q}${q.includes(c) ? "" : ` (${c})`} : il vient chez vous, ${h}. Arrivée en ${r} min, dès ${p}, tarif confirmé avant la visite.`,
   },
 };
 
@@ -606,6 +626,10 @@ const en: Dict = {
         `Ambulance in ${c}: medical transport for a patient sitting or lying down, to or from a health facility. Fee quoted before departure.`,
       "soins-infirmiers-a-domicile": (c) =>
         `Home nurse in ${c}: a nurse comes to your home for prescribed injections, infusions and dressings. Fee quoted in advance.`,
+    },
+    situationDescription: {
+      "certificat-medical": (r, p) =>
+        `Medical certificate at home in Casablanca (work, sport, school, insurance): a doctor comes to examine you within ${r} min, 24/7, from ${p}.`,
     },
     quartier: (q, c) => `Doctor at home in ${q}, ${c}`,
     quartierDescription: (q, c, h, r, p) =>
@@ -790,6 +814,10 @@ const ar: Dict = {
         `سيارة إسعاف في ${c}: نقل صحي لمريض جالس أو ممدد، من مؤسسة صحية أو إليها. ونعلن السعر قبل الانطلاق.`,
       "soins-infirmiers-a-domicile": (c) =>
         `ممرض في المنزل في ${c}: يأتي ممرض إلى منزلك للحقن والمحاليل الوريدية والضمادات الموصوفة. ونعلن السعر مسبقًا.`,
+    },
+    situationDescription: {
+      "certificat-medical": (r, p) =>
+        `شهادة طبية في المنزل بالدار البيضاء (العمل، الرياضة، المدرسة، التأمين): يأتي طبيب لفحصك خلال ${r} دقيقة، 24/7، ابتداءً من ${p}.`,
     },
     quartier: (q, c) => `طبيب في المنزل في ${q}، ${c}`,
     quartierDescription: (q, c, h, r, p) =>

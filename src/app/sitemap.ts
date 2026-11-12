@@ -1,7 +1,30 @@
 import type { MetadataRoute } from "next";
-import { SITE_URL } from "@/lib/site";
-import { allPages, isPageTranslated } from "@/lib/page-registry";
+import { CONTENT_UPDATED, SITE_URL } from "@/lib/site";
+import { allPages, isPageTranslated, type PageRef } from "@/lib/page-registry";
 import { HREFLANG, localizedPath } from "@/lib/i18n";
+import { getPost, posts } from "@/lib/blog";
+import { garde } from "@/lib/pharmacies";
+
+/**
+ * The real date a page last changed, never the build time (see
+ * CONTENT_UPDATED): the pharmacy list is dated by its own survey, a guide by
+ * its publication or revision, the guide index by its newest guide.
+ */
+function lastModifiedOf(ref: PageRef): string {
+  const postDate = (p: { published: string; updated?: string }) => p.updated ?? p.published;
+  switch (ref.kind) {
+    case "pharmacieGarde":
+      return garde().forDate;
+    case "blogPost": {
+      const post = getPost(ref.slug);
+      return post ? postDate(post) : CONTENT_UPDATED;
+    }
+    case "blogIndex":
+      return posts.map(postDate).sort().at(-1) ?? CONTENT_UPDATED;
+    default:
+      return CONTENT_UPDATED;
+  }
+}
 
 export const dynamic = "force-static";
 
@@ -22,7 +45,6 @@ export const dynamic = "force-static";
  * At ~350 URLs a single sitemap is far inside the 50k spec limit.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const lastModified = new Date();
   const url = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
   const entries: MetadataRoute.Sitemap = [];
 
@@ -31,6 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const languages: Record<string, string> = { [HREFLANG.fr]: url(page.path) };
     for (const l of locales) languages[HREFLANG[l]] = url(localizedPath(page.path, l));
     const alternates = locales.length > 0 ? { languages } : undefined;
+    const lastModified = lastModifiedOf(page.ref);
 
     entries.push({
       url: url(page.path),

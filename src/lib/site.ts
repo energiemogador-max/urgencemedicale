@@ -27,3 +27,15 @@ export const SITE_DOMAIN = new URL(SITE_URL).hostname.replace(/^www\./, "");
  * remains the authoritative legal name for schema.org and the footer.
  */
 export const SITE_NAME = "Urgence Médicale";
+
+/**
+ * The last day the text of the pages changed, for the sitemap's <lastmod>.
+ *
+ * It used to be the build time. The site rebuilds every day for the
+ * pharmacies de garde, so all 372 URLs claimed to have changed every day,
+ * and Google stops trusting a sitemap whose dates are always "today" — the
+ * very signal that should send it back to a page that did change. Bump this
+ * by hand when an edit changes what the pages say; the pharmacy page and the
+ * guides carry their own dates (see app/sitemap.ts).
+ */
+export const CONTENT_UPDATED = "2026-11-12";
