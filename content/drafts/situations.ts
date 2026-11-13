@@ -103,13 +103,13 @@ Ce que la demande recouvre presque toujours, en revanche, c'est autre chose : ne
 
 **Certificat d'hospitalisation et documents de suite**
 
-Un certificat d'hospitalisation atteste d'un séjour dans un établissement de santé : dates, service, parfois motif selon ce que le patient autorise à mentionner. Il est demandé par un employeur, un organisme de prévoyance, une compagnie d'assurance ou une administration.
+Un [certificat d'hospitalisation](/conseils/certificat-d-hospitalisation) atteste d'un séjour dans un établissement de santé : dates, service, parfois motif selon ce que le patient autorise à mentionner. Il est demandé par un employeur, un organisme de prévoyance, une compagnie d'assurance ou une administration.
 
 Ce document est établi par l'établissement où le séjour a eu lieu, et par lui seul : c'est lui qui détient le dossier et qui peut attester des dates. Un médecin qui se déplace à votre domicile ne peut pas certifier une hospitalisation à laquelle il n'a pas participé. Si c'est ce document précis qu'il vous faut, la démarche à faire est auprès du service des admissions ou du bureau des entrées de l'établissement concerné.
 
-Ce qu'une visite à domicile peut établir, en revanche, c'est ce que le médecin constate chez vous après ce séjour : un certificat de suivi, une prolongation d'arrêt si l'état le justifie, une attestation de convalescence, un certificat de reprise. Ce sont des documents distincts du certificat d'hospitalisation, et ils demandent un examen, pas un dossier.
+Ce qu'une visite à domicile peut établir, en revanche, c'est ce que le médecin constate chez vous après ce séjour : un certificat de suivi, une prolongation d'arrêt si l'état le justifie, une [attestation de convalescence](/conseils/certificat-de-convalescence), un certificat de reprise. Ce sont des documents distincts du certificat d'hospitalisation, et ils demandent un examen, pas un dossier.
 
-Si vous n'êtes pas certain de quel document on vous demande, le plus efficace est de lire à voix haute, au téléphone, la phrase exacte figurant sur le courrier ou le formulaire que vous avez reçu. La formulation employée par l'organisme suffit presque toujours à identifier le document attendu, et évite une visite pour un papier qui ne conviendra pas.
+Si vous n'êtes pas certain de quel document on vous demande, le plus efficace est de lire à voix haute, au téléphone, la phrase exacte figurant sur le courrier ou le formulaire que vous avez reçu. La formulation employée par l'organisme suffit presque toujours à identifier le document attendu, et évite une visite pour un papier qui ne conviendra pas. Notre guide des [différents certificats médicaux](/conseils/types-de-certificats-medicaux) les passe en revue un par un.
 
 **Combien coûte un certificat médical à domicile ?**
 

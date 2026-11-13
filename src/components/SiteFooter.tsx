@@ -51,6 +51,7 @@ export function SiteFooter({
   specialties,
   situations,
   services,
+  cityLinks,
 }: {
   locale?: Locale;
   legalName: string;
@@ -63,6 +64,8 @@ export function SiteFooter({
   specialties: Specialty[];
   situations: Situation[];
   services: Service[];
+  /** The main city's service pages (see SiteChrome), already localized. */
+  cityLinks?: { title: string; links: { href: string; label: string }[] };
 }) {
   const t = dict(locale);
   const L = (p: string) => localizedPath(p, locale);
@@ -124,6 +127,20 @@ export function SiteFooter({
         </div>
 
         {/* --- Link graph --------------------------------------------------- */}
+        {cityLinks && (
+          <section className="mt-12">
+            <h2 className={headingClass}>{cityLinks.title}</h2>
+            <ul className="mt-4 grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-3">
+              {cityLinks.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} prefetch={false} className={linkClass}>
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
         <div className="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
           {/*
             Specialties and services share a column rather than the footer

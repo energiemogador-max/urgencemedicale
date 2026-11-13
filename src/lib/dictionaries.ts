@@ -123,6 +123,8 @@ export interface Dict {
     office: string;
     /** Heading for the business's other establishment(s). */
     otherLocation: string;
+    /** Heading for the main city's service pages, listed in every footer. */
+    mainCityServices: (city: string) => string;
     disclaimerStart: string;
     or: string;
     allNumbers: string;
@@ -329,6 +331,7 @@ const fr: Dict = {
     tagline: (h) => `Un médecin à votre domicile, ${h}. Le tarif vous est annoncé avant que vous ne confirmiez la visite.`,
     office: "Le cabinet",
     otherLocation: "Autre établissement",
+    mainCityServices: (c) => `Nos services à ${c}`,
     disclaimerStart: "Ce service ne remplace pas les services d'urgence. En cas d'urgence vitale, appelez immédiatement le",
     or: "ou le",
     allNumbers: "Tous les numéros d'urgence",
@@ -537,6 +540,7 @@ const en: Dict = {
     tagline: (h) => `A doctor at your home, ${h}. The fee is quoted before you confirm the visit.`,
     office: "Our office",
     otherLocation: "Other location",
+    mainCityServices: (c) => `Our services in ${c}`,
     disclaimerStart: "This service does not replace the emergency services. If a life may be at risk, call",
     or: "or",
     allNumbers: "All emergency numbers",
@@ -725,6 +729,7 @@ const ar: Dict = {
     tagline: (h) => `طبيب في منزلك، ${h}. نخبرك بالسعر قبل أن تؤكد الزيارة.`,
     office: "العنوان",
     otherLocation: "مقر آخر",
+    mainCityServices: (c) => `خدماتنا في ${c}`,
     disclaimerStart: "هذه الخدمة لا تعوض مصالح الإسعاف. إذا كانت الحياة في خطر، اتصل فورًا بالرقم",
     or: "أو",
     allNumbers: "جميع أرقام الطوارئ",
