@@ -333,5 +333,10 @@ export const DATA = {
       "slug": "ecg-domicile",
       "title": "ECG à domicile"
     }
-  ]
+  ],
+  "phone": {
+    "call": "06 04 22 77 30",
+    "whatsapp": "06 04 22 77 30",
+    "request": null
+  }
 };

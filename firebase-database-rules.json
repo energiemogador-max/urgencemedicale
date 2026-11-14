@@ -35,6 +35,26 @@
           ".validate": "newData.val() === 'declare' || root.child('users').child(auth.uid).child('role').val() === 'admin'"
         }
       }
+    },
+
+    "site_config": {
+      ".read": true,
+      "phone": {
+        ".write": "root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['call', 'whatsapp', 'at'])",
+        "call":     { ".validate": "newData.isString() && newData.val().matches(/^0[5-8][0-9]{8}$/)" },
+        "whatsapp": { ".validate": "newData.isString() && newData.val().matches(/^0[5-8][0-9]{8}$/)" },
+        "at":       { ".validate": "newData.val() === now" },
+        "$other":   { ".validate": false }
+      }
+    },
+
+    "site_config_log": {
+      ".read": "auth != null",
+      "$id": {
+        ".write": "!data.exists() && root.child('users').child(auth.uid).child('role').val() === 'admin'",
+        ".validate": "newData.hasChildren(['call', 'whatsapp', 'at'])"
+      }
     }
   }
 }

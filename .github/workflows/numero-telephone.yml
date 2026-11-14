@@ -1,0 +1,55 @@
+# Numéro de téléphone choisi dans le tableau de bord.
+#
+# Le bouton « Modifier le numéro » enregistre la demande dans la base
+# (site_config/phone). Cette tâche la lit toutes les 5 minutes et, si elle est
+# nouvelle, écrit content/phone.json et pousse sur main : le build Cloudflare
+# republie alors toutes les pages avec le nouveau numéro (boutons, titres,
+# données structurées, image de partage, assistant).
+#
+# Rien à configurer : le jeton fourni à chaque exécution suffit pour pousser,
+# comme pour les pharmacies de garde. Les exécutions sans demande nouvelle
+# s'arrêtent en quelques secondes sans rien écrire.
+name: Numéro de téléphone
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: numero-telephone
+  cancel-in-progress: false
+
+jobs:
+  appliquer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            content/phone.json
+            scripts/apply-phone-request.mjs
+          sparse-checkout-cone-mode: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Lire la demande du tableau de bord
+        id: demande
+        run: node scripts/apply-phone-request.mjs
+
+      - name: Pousser le nouveau numéro
+        if: steps.demande.outputs.changed == 'true'
+        env:
+          NUMERO: ${{ steps.demande.outputs.display }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add content/phone.json
+          git commit -m "Numéro de téléphone : $NUMERO (modifié depuis le tableau de bord)"
+          git pull --rebase --quiet origin main
+          git push

@@ -29,6 +29,7 @@
  */
 
 import { CHAT_PATH } from "./chat-path.js";
+import phone from "../content/phone.json";
 export { CHAT_PATH };
 
 /*
@@ -73,15 +74,19 @@ const ALLOWED_HOSTS = new Set([
 /**
  * Les faits que l'assistant a le droit d'énoncer.
  *
- * Source de vérité : content/business.ts et content/pricing.ts. Ils sont
- * recopiés ici parce que le Worker est du JavaScript simple et ne peut pas
- * importer la couche de contenu en TypeScript. S'ils changent là-bas, ils
- * doivent changer ici — c'est le prix d'un assistant qui n'invente pas de
- * prix.
+ * Source de vérité : content/business.ts et content/pricing.ts. Les prix et
+ * les villes sont recopiés ici parce que le Worker est du JavaScript simple et
+ * ne peut pas importer la couche de contenu en TypeScript. S'ils changent
+ * là-bas, ils doivent changer ici — c'est le prix d'un assistant qui n'invente
+ * pas de prix.
+ *
+ * Le numéro, lui, est lu dans content/phone.json, le fichier que le bouton
+ * « Modifier le numéro » du tableau de bord met à jour : l'assistant ne peut
+ * pas annoncer un autre numéro que celui des pages.
  */
 const FACTS = {
-  phoneDisplay: "06 01 99 12 96",
-  phoneHref: "+212601991296",
+  phoneDisplay: phone.call.replace(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5"),
+  phoneHref: `+212${phone.call.slice(1)}`,
   cities: "Casablanca, Rabat, Mohammedia, Bouskoura, Dar Bouazza",
   dayPrice: "500 MAD",
   dayWindow: "07h00-20h00",

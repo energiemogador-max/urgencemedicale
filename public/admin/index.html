@@ -14,101 +14,230 @@
 <meta name="apple-mobile-web-app-title" content="UM Admin">
 <link rel="apple-touch-icon" href="/admin/icon-192.png">
 <!--
-  Staff dashboard. Same pattern as the Nova Style admin: Firebase Auth
-  (accounts created by the operator, no public sign-up) over Realtime Database,
-  with a light per-person PIN on top so each record carries a name.
+  Staff dashboard. Firebase Auth (accounts created by the operator, no public
+  sign-up) over Realtime Database. Every intervention, payment and change
+  carries the name of the signed-in account (users/{uid}.name, set in the
+  Utilisateurs tab, or the e-mail when no name is set).
+
+  The per-person PIN screen that used to follow the login ("Qui êtes-vous ?",
+  default code 1011) was removed on 2026-11-14 at the operator's request: it
+  added a second step to every opening for attribution only, never security.
+  One account per person gives the same attribution without it.
 
   DELIBERATELY a standalone HTML file, not a Next page. The Firebase SDK is
   ~100KB and must never reach the public site, which has a 1.8s LCP budget for
   someone in an emergency. Nothing here is bundled into the public pages.
 
-  Three jobs:
+  Jobs:
     1. Visiteurs   — who is on the site, and did they press the number.
     2. Interventions — dispatch: every answered call becomes a record with a
        status flow, so an open call cannot be silently forgotten.
     3. Médecins & caisse — the cash ledger. Doctors collect 500/700 MAD at the
        door and remit later; this tracks acts, collected, remitted, and the
        balance still in each doctor's pocket.
+    4. The site's phone number, shown in the header, with a "Modifier" button
+       for administrators (see the "Numéro du site" section of the script).
 -->
 <style>
-  :root{--navy:#002454;--navy2:#00142e;--red:#e20102;--bg:#eef3f7;--line:#c9d9e6;
-        --ink:#0b1c33;--muted:#47586e;--ok:#12683a;--warn:#8a5a00}
+  :root{
+    --navy:#002454;--navy-deep:#001a3d;--red:#e20102;
+    --bg:#f2f5f9;--surface:#fff;--sunk:#f6f8fb;--line:#dbe3ec;--line-soft:#edf1f6;--field:#cfd9e4;
+    --ink:#0b1c33;--muted:#56677c;
+    --ok:#12683a;--ok-bg:#e3f4e9;--warn:#8a5a00;--warn-bg:#fcf0d6;--bad:#b00001;--bad-bg:#fde7e7;
+    --r:12px;--focus:#3b82f6;
+  }
   *{box-sizing:border-box}
-  body{margin:0;font:15px/1.5 system-ui,sans-serif;background:var(--bg);color:var(--ink)}
-  header{background:var(--navy);color:#fff;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  header h1{font-size:16px;margin:0;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
-  header .sp{margin-inline-start:auto}
-  nav.tabs{background:var(--navy2);display:flex;gap:2px;padding:0 8px;overflow-x:auto}
-  nav.tabs button{background:transparent;color:#a9bdd4;border:0;padding:12px 16px;font:inherit;font-weight:700;
-                  cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent}
-  nav.tabs button.on{color:#fff;border-bottom-color:var(--red)}
-  button{font:inherit;font-weight:700;border:0;border-radius:10px;padding:9px 14px;cursor:pointer}
-  .primary{background:var(--red);color:#fff}.ghost{background:rgba(255,255,255,.15);color:#fff}
-  .mini{background:var(--navy);color:#fff;padding:5px 10px;border-radius:8px;font-size:12px}
-  main{padding:16px;max-width:1150px;margin:0 auto}
-  .card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:16px}
-  .card h3{margin:0 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
-  label{display:block;font-weight:700;font-size:13px;margin-bottom:4px}
-  input,select,textarea{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;font:inherit;margin-bottom:12px;background:#fff}
-  .grid2{display:grid;gap:0 12px;grid-template-columns:repeat(auto-fit,minmax(180px,1fr))}
-  .stats{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));margin-bottom:16px}
-  .stat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px}
-  .stat b{display:block;font-size:26px;color:var(--navy);font-variant-numeric:tabular-nums}
-  .stat span{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
-  table{width:100%;border-collapse:collapse;font-size:14px;background:#fff}
-  th,td{border-bottom:1px solid var(--line);padding:9px 8px;text-align:start;vertical-align:top}
-  th{background:var(--navy);color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.05em}
-  .wrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-bottom:16px}
-  .tag{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:800;white-space:nowrap}
-  .call{background:#fde7e7;color:#a10000}.whatsapp{background:#e3f7ea;color:#12683a}
-  .st-recu{background:#fdf0d5;color:#8a5a00}.st-assigne{background:#dce6f2;color:#002454}
-  .st-route{background:#d5e8fd;color:#004a8a}.st-termine{background:#e3f7ea;color:#12683a}
-  .st-annule{background:#eceff2;color:#47586e}
-  .msg{padding:10px 12px;border-radius:10px;background:#fde7e7;color:#a10000;font-weight:600;margin-bottom:12px}
-  .okmsg{background:#e3f7ea;color:#12683a}
-  .muted{color:var(--muted);font-size:13px}
-  .live{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 14px;margin-bottom:14px;font-weight:600}
-  .live b{font-size:20px;color:var(--navy);font-variant-numeric:tabular-nums}
-  .dot{width:10px;height:10px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(18,104,58,.15)}
-  .range{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
-  .range button{background:#fff;border:1px solid var(--line);color:var(--muted)}
-  .range button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
-  .cols{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin-bottom:8px}
-  .bars{list-style:none;margin:0;padding:0;display:grid;gap:7px}
-  .bars li{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:13px}
-  .bars .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .bars .bar{grid-column:1/-1;height:6px;border-radius:4px;background:#dfe9f0;overflow:hidden}
-  .bars .bar i{display:block;height:100%;background:var(--navy)}
-  .num{font-variant-numeric:tabular-nums;text-align:end}
-  .due{color:var(--red);font-weight:800}
-  .delta{display:block;font-style:normal;font-size:12px;font-weight:700;margin-top:2px;color:var(--muted)}
-  .delta.up{color:var(--ok)}.delta.down{color:var(--red)}
-  .verdict{margin:0 0 10px;font-weight:700}
-  .verdict b{font-size:18px}.verdict .up{color:var(--ok)}.verdict .down{color:var(--red)}.verdict .flat{color:var(--navy)}
+  body{margin:0;font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+       background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  [hidden]{display:none!important}
+  button{font:inherit;cursor:pointer}
+  :focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  h1,h2,h3{margin:0;line-height:1.25;text-wrap:balance}
+  h2{font-size:15px;font-weight:700}
+  h3{font-size:13px;font-weight:700}
+
+  /* ── header ── */
+  .top{background:var(--navy);color:#fff;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:10px 16px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{width:32px;height:32px;border-radius:8px;display:block}
+  .brand b{display:block;font-size:15px;font-weight:800;letter-spacing:.01em}
+  .brand small{display:block;font-size:12px;color:#9fb4cc;line-height:1.2}
+  .phone{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-inline-start:auto;
+         background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:6px 6px 6px 12px}
+  .phone small{display:block;font-size:11px;color:#9fb4cc;line-height:1.2}
+  .phone a{color:#fff;font-weight:800;font-size:17px;letter-spacing:.03em;text-decoration:none;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pill{display:inline-block;border-radius:999px;padding:3px 10px;font-size:12px;font-weight:700}
+  .pill.ok{background:rgba(70,200,120,.18);color:#bdf0cf}
+  .pill.warn{background:rgba(255,190,60,.2);color:#ffe2a6}
+  .pill.bad{background:rgba(255,90,90,.24);color:#ffd4d4}
+  .user{display:flex;align-items:center;gap:10px}
+  #who{font-size:13px;color:#c5d3e3;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .btn-top{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:9px;padding:6px 12px;font-size:13px;font-weight:700}
+  .btn-top:hover{background:rgba(255,255,255,.2)}
+  .phone .btn-top{background:#fff;color:var(--navy);border-color:#fff}
+  .phone .btn-top:hover{background:#e7eef6}
+  @media (max-width:760px){.phone{order:3;flex:1 1 100%;margin:0}.user{margin-inline-start:auto}}
+  @media (max-width:480px){#who{display:none}}
+
+  .tabs{background:var(--navy-deep);display:flex;gap:2px;padding:0 10px;overflow-x:auto;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tabs button{background:none;border:0;border-bottom:3px solid transparent;color:#9fb4cc;font-weight:700;font-size:14px;padding:11px 12px 9px;white-space:nowrap}
+  .tabs button:hover{color:#fff}
+  .tabs button.on{color:#fff;border-bottom-color:var(--red)}
+
+  /* ── layout ── */
+  main{max-width:1180px;margin:0 auto;padding:16px 16px 40px}
+  .stack{display:grid;gap:16px}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+  .card > h2,.card > h3{margin-bottom:12px}
+  .card.flush{padding:0;overflow:hidden}
+  .card-h{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:12px}
+  .card-h > :first-child{margin-inline-end:auto}
+  .flush .card-h{padding:14px 16px 0}
+  .pad{padding:0 16px 12px}
+  .note{margin:0;color:var(--muted);font-size:13px}
+  .card > .note:not(:first-child),.card > .form + .note{margin-top:10px}
+  .narrow{max-width:400px;margin:40px auto 0}
+  .grid2{display:grid;gap:16px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid4{display:grid;gap:16px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media (max-width:1000px){.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (max-width:760px){.grid2{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:420px){.grid4{gap:10px}.grid4 .card{padding:12px}}
+
+  /* ── controls ── */
+  .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px}
+  .live{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--muted);margin-inline-start:auto}
+  .live b{color:var(--ink);font-size:16px;font-variant-numeric:tabular-nums}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(18,104,58,.14)}
+  .seg{display:inline-flex;flex-wrap:wrap;gap:2px;background:#e4ebf2;border-radius:10px;padding:3px}
+  .seg button{background:none;border:0;border-radius:8px;color:var(--muted);font-size:14px;font-weight:600;padding:6px 12px}
+  .seg button:hover{color:var(--ink)}
+  .seg button.on{background:#fff;color:var(--navy);box-shadow:0 1px 2px rgba(11,28,51,.14)}
+  .seg.sm button{font-size:13px;padding:4px 9px}
+  .btn{border:1px solid var(--field);background:#fff;color:var(--ink);border-radius:10px;padding:9px 16px;font-weight:700;font-size:14px}
+  .btn:hover{background:var(--sunk)}
+  .btn.primary{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.primary:hover{background:#c80001}
+  .btn.navy{background:var(--navy);border-color:var(--navy);color:#fff}
+  .btn.sm{padding:6px 12px;font-size:13px}
+  .btn.block{width:100%}
+  .btn:disabled{opacity:.6;cursor:progress}
+  .mini{display:inline-block;border:0;border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;background:var(--navy);color:#fff;text-decoration:none;white-space:nowrap}
+  .mini.ok{background:var(--ok)}.mini.warn{background:var(--warn)}
+  .mini.ghost{background:var(--sunk);color:var(--navy);box-shadow:inset 0 0 0 1px var(--line)}
+  .row-actions{display:flex;flex-wrap:wrap;gap:6px}
+  .linkbtn{background:none;border:0;padding:0;color:var(--navy);font-weight:700;font-size:13px;text-decoration:underline;text-underline-offset:2px}
+
+  /* ── figures ── */
+  .kpis{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  @media (max-width:860px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .kpi{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;display:flex;flex-direction:column;gap:2px;min-width:0}
+  .kpi .k{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:6px}
+  .kpi b{font-size:30px;line-height:1.15;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums}
+  .kpi small{font-size:12px;color:var(--muted)}
+  .sw{width:8px;height:8px;border-radius:2px;display:inline-block;flex:none}
+  .sw.call{background:var(--red)}.sw.wa{background:#25a35a}
+  .delta{font-style:normal;font-size:12px;font-weight:700;color:var(--muted);min-height:18px}
+  .delta.up{color:var(--ok)}.delta.down{color:var(--bad)}
+  .cap{margin-top:8px}
+  .verdict{margin:0 0 10px;font-size:14px}
+  .verdict b{font-size:16px}
+  .verdict .up{color:var(--ok)}.verdict .down{color:var(--bad)}.verdict .flat{color:var(--navy)}
   .chart svg{display:block;width:100%;height:auto}
-  .funnel{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
-  .funnel div{background:var(--bg);border-radius:12px;padding:12px}
-  .funnel b{display:block;font-size:22px;color:var(--navy);font-variant-numeric:tabular-nums}
-  .funnel span{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.05em}
+  .funnel{display:grid;gap:8px;grid-template-columns:repeat(5,minmax(0,1fr))}
+  @media (max-width:860px){.funnel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .funnel div{background:var(--sunk);border:1px solid var(--line-soft);border-radius:10px;padding:10px 12px}
+  .funnel span{display:block;font-size:12px;font-weight:700;color:var(--muted)}
+  .funnel b{display:block;font-size:22px;color:var(--navy);font-variant-numeric:tabular-nums;line-height:1.25}
   .funnel i{display:block;font-style:normal;font-size:12px;color:var(--muted)}
-  .mini-t{width:100%;border-collapse:collapse;font-size:13px}
-  .mini-t th{background:none;color:var(--muted);font-size:11px;padding:4px 6px;border-bottom:1px solid var(--line)}
-  .mini-t td{padding:5px 6px;border-bottom:1px solid #edf2f6}
-  .mini-t td.lab{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .hours{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:90px}
+  .minis{display:grid;gap:8px;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .minis div{background:var(--sunk);border-radius:10px;padding:10px 12px}
+  .minis b{display:block;font-size:22px;color:var(--navy);font-variant-numeric:tabular-nums}
+  .minis span{font-size:12px;color:var(--muted)}
+  .hours{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;align-items:end;height:96px;margin-bottom:22px}
   .hours div{background:var(--navy);border-radius:3px 3px 0 0;min-height:2px;position:relative}
   .hours div span{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font-size:10px;color:var(--muted)}
-  .hours{margin-bottom:18px}
-  [hidden]{display:none!important}
+  .bars{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+  .bars li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;align-items:center;font-size:13px}
+  .bars .lab{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .bars b{font-variant-numeric:tabular-nums}
+  .bars .bar{grid-column:1/-1;height:5px;border-radius:3px;background:#e6edf3;overflow:hidden}
+  .bars .bar i{display:block;height:100%;background:var(--navy);border-radius:3px}
+  .bars .none{color:var(--muted)}
+
+  /* ── tables ── */
+  .wrap{overflow-x:auto}
+  .t{width:100%;border-collapse:collapse;font-size:14px}
+  .t th{background:var(--sunk);color:var(--muted);font-size:12px;font-weight:700;text-align:start;padding:8px 12px;border-block:1px solid var(--line);white-space:nowrap}
+  .t td{padding:10px 12px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  .t tbody tr:last-child td{border-bottom:0}
+  .t tbody tr:hover td{background:#fafbfd}
+  .t .num{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .t td.empty{color:var(--muted);text-align:center;padding:22px 12px}
+  .sub{display:block;color:var(--muted);font-size:12px}
+  .more{padding:10px 16px;border-top:1px solid var(--line-soft)}
+  .mini-t{width:100%;border-collapse:collapse;font-size:13px}
+  .mini-t th{color:var(--muted);font-size:11px;font-weight:700;text-align:start;padding:4px 6px;border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.04em}
+  .mini-t td{padding:6px;border-bottom:1px solid var(--line-soft)}
+  .mini-t tr:last-child td{border-bottom:0}
+  .mini-t td.lab{max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mini-t .num{text-align:end;font-variant-numeric:tabular-nums}
+  .tag{display:inline-block;border-radius:999px;padding:2px 9px;font-size:12px;font-weight:700;white-space:nowrap}
+  .call{background:var(--bad-bg);color:var(--bad)}.whatsapp{background:var(--ok-bg);color:var(--ok)}
+  .st-recu{background:var(--warn-bg);color:var(--warn)}.st-assigne{background:#dfe8f3;color:var(--navy)}
+  .st-route{background:#d8e9fc;color:#004a8a}.st-termine{background:var(--ok-bg);color:var(--ok)}
+  .st-annule{background:#eceff3;color:var(--muted)}
+  .due{color:var(--bad);font-weight:800}
+
+  /* ── forms ── */
+  label{display:block;font-weight:600;font-size:13px;margin-bottom:4px}
+  input,select,textarea{width:100%;padding:9px 11px;border:1px solid var(--field);border-radius:9px;font:inherit;font-size:15px;background:#fff;color:var(--ink)}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(0,36,84,.15)}
+  textarea{resize:vertical}
+  .fields{display:grid;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
+  .fields .wide{grid-column:span 2}
+  .fields .rest{grid-column:span 3}
+  @media (max-width:900px){.fields{grid-template-columns:repeat(2,minmax(0,1fr))}.fields .rest{grid-column:1/-1}}
+  @media (max-width:520px){.fields{grid-template-columns:minmax(0,1fr)}.fields .wide{grid-column:auto}}
+  .form{display:grid;gap:12px}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .actions.end{justify-content:flex-end}
+  .check{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14px;margin:0;cursor:pointer}
+  .check input{width:18px;height:18px;margin:0}
+  .search{flex:1 1 200px;max-width:320px;width:auto}
+  .msg{padding:10px 12px;border-radius:10px;background:var(--bad-bg);color:var(--bad);font-weight:600;font-size:14px;margin-bottom:12px}
+  .msg.okmsg{background:var(--ok-bg);color:var(--ok)}
+  .foot{margin:0;color:var(--muted);font-size:13px;display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center}
+  .login h1{font-size:20px;margin-bottom:14px}
+  .login .f{margin-bottom:12px}
+  .login .note{margin-top:12px}
+
+  /* ── phone dialog, toast ── */
+  dialog{border:0;border-radius:16px;padding:0;width:min(440px,calc(100% - 32px));color:var(--ink);box-shadow:0 24px 60px rgba(0,20,46,.35)}
+  dialog::backdrop{background:rgba(0,20,46,.55)}
+  .dlg{padding:20px}
+  .dlg h2{font-size:18px}
+  .dlg .msg{margin:0}
+  .bignum{margin:0;font-size:32px;font-weight:800;color:var(--navy);letter-spacing:.03em;font-variant-numeric:tabular-nums}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;
+         font-size:14px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);z-index:20;width:max-content;max-width:calc(100% - 32px)}
 </style>
 </head>
 <body>
-<header>
-  <h1>Urgence Médicale</h1>
-  <span class="sp"></span>
-  <span id="staff" class="muted" style="color:#a9bdd4"></span>
-  <span id="who" class="muted" style="color:#a9bdd4"></span>
-  <button id="out" class="ghost" hidden>Déconnexion</button>
+<header class="top">
+  <div class="brand">
+    <img src="/admin/icon-192.png" alt="" width="32" height="32">
+    <div><b>Urgence Médicale</b><small>Tableau de bord</small></div>
+  </div>
+  <div id="phonebar" class="phone" hidden>
+    <div><small>Numéro sur le site</small><a id="ph-num" href="#">—</a></div>
+    <span id="ph-state" class="pill" hidden></span>
+    <button id="ph-edit" class="btn-top" type="button" hidden>Modifier</button>
+  </div>
+  <div id="userbox" class="user" hidden>
+    <span id="who"></span>
+    <button id="out" class="btn-top" type="button">Déconnexion</button>
+  </div>
 </header>
 
 <nav class="tabs" id="nav" hidden>
@@ -120,248 +249,262 @@
 </nav>
 
 <main>
-  <div id="setup" class="card" hidden>
-    <h3>Configuration requise</h3>
-    <p class="muted">Renseignez <code>public/admin/firebase-config.js</code>, puis redéployez.</p>
+  <div id="dberr" class="msg" hidden></div>
+
+  <div id="setup" class="card narrow" hidden>
+    <h2>Configuration requise</h2>
+    <p class="note">Renseignez <code>public/admin/firebase-config.js</code>, puis redéployez.</p>
   </div>
 
-  <div id="login" class="card" hidden style="max-width:380px">
-    <h3>Connexion</h3>
+  <form id="login" class="card narrow login" hidden>
+    <h1>Connexion</h1>
     <div id="err" class="msg" hidden></div>
-    <label for="em">E-mail</label><input id="em" type="email" autocomplete="username">
-    <label for="pw">Mot de passe</label><input id="pw" type="password" autocomplete="current-password">
-    <button id="in" class="primary" style="width:100%">Se connecter</button>
-    <p class="muted" style="margin-bottom:0">Comptes créés par l'administrateur. Pas d'inscription publique.</p>
-  </div>
+    <div class="f"><label for="em">E-mail</label><input id="em" type="email" autocomplete="username" required></div>
+    <div class="f"><label for="pw">Mot de passe</label><input id="pw" type="password" autocomplete="current-password" required></div>
+    <button id="in" class="btn primary block" type="submit">Se connecter</button>
+    <p class="note">Comptes créés par l'administrateur. Pas d'inscription publique.</p>
+  </form>
 
-  <!-- ── PIN: who is at the keyboard ───────────────────────────────────── -->
-  <div id="pin" class="card" hidden style="max-width:420px">
-    <h3>Qui êtes-vous ?</h3>
-    <p class="muted">Chaque intervention enregistre qui l'a prise. Ceci n'est pas une sécurité — la
-      connexion Firebase l'est — mais une attribution.</p>
-    <div id="pinerr" class="msg" hidden></div>
-    <label for="pinsel">Membre de l'équipe</label>
-    <select id="pinsel"></select>
-    <label for="pinval">Code</label><input id="pinval" type="password" inputmode="numeric">
-    <button id="pinok" class="primary" style="width:100%">Continuer</button>
-  </div>
+  <!-- ── Visiteurs ─────────────────────────────────────────────────────── -->
+  <section id="t-dash" class="stack" hidden>
+    <div class="toolbar">
+      <div class="seg" id="range" role="group" aria-label="Période">
+        <button data-r="today" type="button">Aujourd'hui</button>
+        <button data-r="24h" type="button" class="on">24 h</button>
+        <button data-r="7d" type="button">7 jours</button>
+        <button data-r="30d" type="button">30 jours</button>
+      </div>
+      <div class="live"><span class="dot"></span><b id="s-live">0</b> en ligne maintenant</div>
+    </div>
 
-  <!-- ── TAB 1: visitors ───────────────────────────────────────────────── -->
-  <section id="t-dash" hidden>
-    <div class="live"><span class="dot"></span><b id="s-live">0</b> visiteur(s) en ligne maintenant
-      <span id="s-bots" class="muted" style="margin-inline-start:auto">Robots exclus</span>
-      <button id="selfex" class="mini" type="button"></button></div>
+    <div>
+      <div class="kpis">
+        <div class="kpi"><span class="k">Visiteurs</span><b id="s-vis">–</b><em id="d-vis" class="delta"></em>
+          <small><span id="s-ses">–</span> visites · <span id="s-pv">–</span> pages vues</small></div>
+        <div class="kpi"><span class="k"><i class="sw call"></i>Appels</span><b id="s-call">–</b><em id="d-call" class="delta"></em>
+          <small>appuis sur « Appeler »</small></div>
+        <div class="kpi"><span class="k"><i class="sw wa"></i>WhatsApp</span><b id="s-wa">–</b><em id="d-wa" class="delta"></em>
+          <small>appuis sur WhatsApp</small></div>
+        <div class="kpi"><span class="k">Taux d'appel</span><b id="s-rate">–</b><em id="d-rate" class="delta"></em>
+          <small>appels et WhatsApp par visiteur</small></div>
+      </div>
+      <p id="cmp" class="note cap"></p>
+    </div>
 
-    <!-- Long-run trend: is the site going up, flat or down? -->
     <div class="card">
-      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:10px">
-        <h3 id="h-title" style="margin:0">Visiteurs par jour</h3>
-        <div class="range" id="hrange" style="margin:0 0 0 auto">
-          <button data-h="today">Aujourd'hui</button>
-          <button data-h="24h">24 h</button>
-          <button data-h="7">7 jours</button>
-          <button data-h="30" class="on">30 jours</button>
-          <button data-h="90">3 mois</button>
-          <button data-h="180">6 mois</button>
-          <button data-h="365">1 an</button>
+      <div class="card-h">
+        <h2 id="h-title">Visiteurs par jour</h2>
+        <div class="seg sm" id="hrange" role="group" aria-label="Durée du graphique">
+          <button data-h="today" type="button">Aujourd'hui</button>
+          <button data-h="24h" type="button">24 h</button>
+          <button data-h="7" type="button">7 j</button>
+          <button data-h="30" type="button" class="on">30 j</button>
+          <button data-h="90" type="button">3 mois</button>
+          <button data-h="180" type="button">6 mois</button>
+          <button data-h="365" type="button">1 an</button>
         </div>
       </div>
       <p id="h-verdict" class="verdict">Chargement…</p>
       <div id="h-chart" class="chart" aria-label="Visiteurs par jour"></div>
-      <p class="muted" style="margin:8px 0 0"><span id="h-legend"></span> <span id="h-since"></span></p>
+      <p class="note"><span id="h-legend"></span> <span id="h-since"></span></p>
     </div>
 
-    <div class="range" id="range">
-      <button data-r="24h" class="on">24 heures</button>
-      <button data-r="today">Aujourd'hui</button>
-      <button data-r="7d">7 jours</button>
-      <button data-r="30d">30 jours</button>
+    <div class="card flush">
+      <div class="card-h"><h2>Appuis sur Appeler et WhatsApp</h2></div>
+      <p id="taps-all" class="note pad"></p>
+      <div class="wrap"><table class="t">
+        <thead><tr><th>Date</th><th>Type</th><th>Page</th><th>Localisation</th><th>Appareil</th><th>Source</th></tr></thead>
+        <tbody id="rows"></tbody></table></div>
+      <div class="more" id="rows-more-box" hidden><button id="rows-more" class="linkbtn" type="button"></button></div>
     </div>
-    <div class="stats">
-      <div class="stat"><span>Visiteurs</span><b id="s-vis">–</b><em id="d-vis" class="delta"></em></div>
-      <div class="stat"><span>Visites</span><b id="s-ses">–</b><em id="d-ses" class="delta"></em></div>
-      <div class="stat"><span>Pages vues</span><b id="s-pv">–</b><em id="d-pv" class="delta"></em></div>
-      <div class="stat"><span>Appels site</span><b id="s-call">–</b><em id="d-call" class="delta"></em></div>
-      <div class="stat"><span>WhatsApp</span><b id="s-wa">–</b><em id="d-wa" class="delta"></em></div>
-      <div class="stat"><span>Taux d'appel</span><b id="s-rate">–</b><em id="d-rate" class="delta"></em></div>
-    </div>
-    <p class="muted" style="margin:-6px 0 8px">Flèches : comparaison avec la période précédente de même durée.</p>
-    <p id="taps-all" style="margin:0 0 14px;line-height:1.5"></p>
 
     <div class="card">
-      <h3>Du visiteur à l'intervention</h3>
+      <h2>Du visiteur à l'intervention</h2>
       <div class="funnel" id="funnel"></div>
     </div>
 
-    <div class="cols">
-      <section class="card"><h3>Pages d'arrivée qui font appeler</h3><div id="t-landing"></div></section>
-      <section class="card"><h3>Provenance et appels</h3><div id="t-source"></div></section>
+    <div class="grid2">
+      <section class="card"><h2>Pages d'arrivée qui font appeler</h2><div id="t-landing"></div></section>
+      <section class="card"><h2>Provenance et appels</h2><div id="t-source"></div></section>
+      <section class="card"><h2>Heures des appels</h2><div id="hours" class="hours"></div>
+        <p class="note">Appels et WhatsApp par heure, heure du Maroc : utile pour organiser les gardes.</p></section>
+      <section class="card"><h2>Appels et interventions</h2>
+        <div class="minis">
+          <div><b id="r-taps">–</b><span>appels depuis le site</span></div>
+          <div><b id="r-int">–</b><span>interventions saisies</span></div>
+          <div><b id="r-gap">–</b><span>non réconciliés</span></div>
+        </div>
+        <p class="note">« Non réconciliés » : appuis sur le numéro sans intervention saisie dans les 15 minutes. C'est un
+          <b>maximum</b> d'appels manqués (on peut appuyer sans composer) ; un écart régulier est un signal.</p></section>
     </div>
-    <div class="card">
-      <h3>Heures des appels</h3>
-      <div id="hours" class="hours"></div>
-      <p class="muted" style="margin:8px 0 0">Appels et WhatsApp depuis le site, par heure (heure du Maroc), sur la période choisie : utile pour organiser les gardes.</p>
-    </div>
-    <div class="card">
-      <h3>Réconciliation appels ↔ interventions</h3>
-      <div class="stats" style="margin:0">
-        <div class="stat"><span>Appels depuis le site</span><b id="r-taps">–</b></div>
-        <div class="stat"><span>Interventions saisies</span><b id="r-int">–</b></div>
-        <div class="stat"><span>Non réconciliés</span><b id="r-gap">–</b></div>
-      </div>
-      <p class="muted" style="margin:10px 0 0">Un appui sur le numéro ne prouve pas qu'un appel a abouti :
-        on peut appuyer sans composer, ou raccrocher. « Non réconciliés » est donc un <b>maximum</b>
-        d'appels manqués, pas une preuve. Un écart isolé n'est rien ; un écart régulier est un signal.</p>
-    </div>
-    <div class="cols">
+
+    <div class="grid4">
       <section class="card"><h3>Pages les plus vues</h3><ol id="b-pages" class="bars"></ol></section>
       <section class="card"><h3>Villes</h3><ol id="b-city" class="bars"></ol></section>
       <section class="card"><h3>Appareils</h3><ol id="b-dev" class="bars"></ol></section>
       <section class="card"><h3>Langue du site</h3><ol id="b-lang" class="bars"></ol></section>
-      <section class="card"><h3>Nouveaux / revenus</h3><ol id="b-ret" class="bars"></ol></section>
-      <section class="card"><h3>D'où vient l'appui</h3><ol id="b-cta" class="bars"></ol>
-        <p class="muted" style="margin:8px 0 0">entete · hero · banniere · pied · barre-mobile · chat</p></section>
-      <section class="card"><h3>Assistant IA</h3><ol id="b-chat" class="bars"></ol></section>
-      <section class="card"><h3>Campagnes (publicité)</h3><ol id="b-utm" class="bars"></ol>
-        <p class="muted" style="margin:8px 0 0">Visites arrivées par un lien de campagne (utm, Google Ads).</p></section>
+      <section class="card"><h3>Nouveaux et revenus</h3><ol id="b-ret" class="bars"></ol></section>
+      <section class="card"><h3>Bouton utilisé</h3><ol id="b-cta" class="bars"></ol></section>
+      <section class="card"><h3>Assistant</h3><ol id="b-chat" class="bars"></ol></section>
+      <section class="card"><h3>Campagnes publicitaires</h3><ol id="b-utm" class="bars"></ol></section>
     </div>
-    <h3 style="margin:22px 0 8px">Appels déclenchés depuis le site</h3>
-    <div class="wrap"><table>
-      <thead><tr><th>Date</th><th>Type</th><th>Page</th><th>Localisation</th><th>Appareil</th><th>Source</th><th>Visiteur</th></tr></thead>
-      <tbody id="rows"></tbody></table></div>
+
+    <p class="foot"><span id="s-bots">Robots exclus</span><button id="selfex" class="linkbtn" type="button"></button></p>
   </section>
 
-  <!-- ── TAB 2: dispatch ───────────────────────────────────────────────── -->
-  <section id="t-ops" hidden>
+  <!-- ── Interventions ─────────────────────────────────────────────────── -->
+  <section id="t-ops" class="stack" hidden>
     <div class="card">
-      <h3>Nouvel appel</h3>
+      <h2>Nouvel appel</h2>
       <div id="opsmsg" class="msg okmsg" hidden></div>
-      <div class="grid2">
-        <div><label for="f-nom">Malade</label><input id="f-nom"></div>
-        <div><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel"></div>
-        <div><label for="f-ville">Ville</label><select id="f-ville"></select></div>
-        <div><label for="f-quartier">Quartier</label><select id="f-quartier"></select></div>
-        <div><label for="f-adresse">Adresse</label><input id="f-adresse" placeholder="Rue, immeuble, étage, code"></div>
-        <div><label for="f-motif">Motif</label><select id="f-motif"></select></div>
-        <div><label for="f-medecin">Médecin intervenant</label><select id="f-medecin"></select></div>
-        <div><label for="f-montant">Montant (MAD)</label><input id="f-montant" type="number" inputmode="numeric"></div>
+      <div class="fields">
+        <div class="f"><label for="f-nom">Malade</label><input id="f-nom" autocomplete="off"></div>
+        <div class="f"><label for="f-tel">Téléphone</label><input id="f-tel" type="tel" inputmode="tel" autocomplete="off"></div>
+        <div class="f"><label for="f-ville">Ville</label><select id="f-ville"></select></div>
+        <div class="f"><label for="f-quartier">Quartier</label><select id="f-quartier"></select></div>
+        <div class="f wide"><label for="f-adresse">Adresse</label><input id="f-adresse" placeholder="Rue, immeuble, étage, code" autocomplete="off"></div>
+        <div class="f"><label for="f-motif">Motif</label><select id="f-motif"></select></div>
+        <div class="f"><label for="f-medecin">Médecin</label><select id="f-medecin"></select></div>
+        <div class="f"><label for="f-montant">Montant (MAD)</label><input id="f-montant" type="number" inputmode="numeric"></div>
+        <div class="f rest"><label for="f-notes">Notes</label><textarea id="f-notes" rows="1"></textarea></div>
       </div>
-      <label for="f-notes">Notes</label><textarea id="f-notes" rows="2"></textarea>
-      <button id="f-save" class="primary">Enregistrer l'intervention</button>
+      <div class="actions"><button id="f-save" class="btn primary" type="button">Enregistrer l'intervention</button></div>
     </div>
-    <div class="wrap"><table>
-      <thead><tr><th>Réf</th><th>Heure</th><th>Malade</th><th>Lieu</th><th>Médecin</th>
-      <th class="num">Montant</th><th>Statut</th><th>Prise par</th><th>Action</th></tr></thead>
-      <tbody id="ops-rows"></tbody></table></div>
+    <div class="card flush">
+      <div class="card-h"><h2>Interventions</h2><span id="ops-count" class="note"></span></div>
+      <div class="wrap"><table class="t">
+        <thead><tr><th>Réf</th><th>Heure</th><th>Malade</th><th>Lieu</th><th>Médecin</th>
+        <th class="num">Montant</th><th>Statut</th><th>Prise par</th><th>Action</th></tr></thead>
+        <tbody id="ops-rows"></tbody></table></div>
+    </div>
   </section>
 
-  <!-- ── TAB 3: cash ledger ────────────────────────────────────────────── -->
-  <section id="t-patients" hidden>
-    <div class="stats">
-      <div class="stat"><span>Patients uniques</span><b id="pt-total">–</b></div>
-      <div class="stat"><span>Patients revenus</span><b id="pt-repeat">–</b></div>
-      <div class="stat"><span>Visites par patient</span><b id="pt-avg">–</b></div>
-      <div class="stat"><span>Chiffre d'affaires</span><b id="pt-ca">–</b></div>
+  <!-- ── Patients ──────────────────────────────────────────────────────── -->
+  <section id="t-patients" class="stack" hidden>
+    <div class="kpis">
+      <div class="kpi"><span class="k">Patients</span><b id="pt-total">–</b></div>
+      <div class="kpi"><span class="k">Patients revenus</span><b id="pt-repeat">–</b></div>
+      <div class="kpi"><span class="k">Visites par patient</span><b id="pt-avg">–</b></div>
+      <div class="kpi"><span class="k">Chiffre d'affaires</span><b id="pt-ca">–</b></div>
     </div>
-
-    <div class="card">
-      <h3>Fichier patients</h3>
-      <p class="muted" style="margin:0 0 12px">Construit à partir des interventions, regroupées par numéro de
-        téléphone : il n'y a rien à saisir deux fois. Un patient qui rappelle est reconnu même si son nom a été
-        orthographié autrement.</p>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
-        <input id="pt-search" placeholder="Nom, téléphone, ville, quartier…" style="flex:1;min-width:190px">
-        <button id="pt-csv" class="mini">Télécharger en CSV</button>
-      </div>
-      <div class="wrap"><table>
-        <thead><tr><th>Patient</th><th>Ville / quartier</th><th>Visites</th><th>Total</th>
+    <div class="card flush">
+      <div class="card-h"><h2>Fichier patients</h2>
+        <input id="pt-search" class="search" type="search" placeholder="Nom, téléphone, ville, quartier…" aria-label="Rechercher un patient">
+        <button id="pt-csv" class="btn sm" type="button">Télécharger (CSV)</button></div>
+      <p class="note pad">Construit à partir des interventions, regroupées par numéro de téléphone : rien à saisir deux fois,
+        et un patient qui rappelle est reconnu même si son nom a été écrit autrement.</p>
+      <div class="wrap"><table class="t">
+        <thead><tr><th>Patient</th><th>Ville / quartier</th><th class="num">Visites</th><th class="num">Total</th>
           <th>Dernière visite</th><th>Médecin habituel</th><th></th></tr></thead>
-        <tbody id="pt-rows"></tbody>
-      </table></div>
+        <tbody id="pt-rows"></tbody></table></div>
     </div>
   </section>
 
-  <section id="t-cash" hidden>
-    <div class="card">
-      <h3>Encaissements par médecin</h3>
-      <p class="muted" style="margin-top:0">Le médecin encaisse la totalité chez le patient, garde sa part
-        (300 sur 500, 400 sur 700) et reverse le reste. <b>« Solde dû »</b> = ce qu'il doit encore à la
-        société : part société moins versements déjà effectués.</p>
-      <div class="wrap" style="margin:0"><table>
+  <!-- ── Médecins & caisse ─────────────────────────────────────────────── -->
+  <section id="t-cash" class="stack" hidden>
+    <div class="card flush">
+      <div class="card-h"><h2>Encaissements par médecin</h2></div>
+      <p class="note pad">Le médecin encaisse chez le patient, garde sa part (300 sur 500, 400 sur 700) et reverse le reste.
+        <b>Solde dû</b> : ce qu'il doit encore à la société, une fois déduits les versements confirmés.</p>
+      <div class="wrap"><table class="t">
         <thead><tr><th>Médecin</th><th class="num">Actes</th><th class="num">Encaissé</th>
         <th class="num">Part médecin</th><th class="num">Dû société</th><th class="num">Reversé</th>
         <th class="num">Solde dû</th><th>Dernier versement</th></tr></thead>
         <tbody id="cash-rows"></tbody></table></div>
     </div>
-    <div class="card" style="max-width:460px">
-      <h3>Enregistrer un versement</h3>
-      <div id="paymsg" class="msg okmsg" hidden></div>
-      <label for="p-medecin">Médecin</label><select id="p-medecin"></select>
-      <label for="p-montant">Montant reversé (MAD)</label><input id="p-montant" type="number" inputmode="numeric">
-      <label for="p-note">Note</label><input id="p-note" placeholder="Espèces, virement…">
-      <p class="muted">Un versement est d'abord <b>déclaré</b>, puis <b>confirmé</b> par un
-        administrateur une fois l'argent reçu. Tant qu'il n'est pas confirmé il ne réduit pas le
-        solde dû — sinon une déclaration suffirait à effacer une dette.</p>
-      <button id="p-save" class="primary">Déclarer le versement</button>
+    <div class="grid2">
+      <div class="card">
+        <h2>Déclarer un versement</h2>
+        <div id="paymsg" class="msg okmsg" hidden></div>
+        <div class="form">
+          <div class="f"><label for="p-medecin">Médecin</label><select id="p-medecin"></select></div>
+          <div class="f"><label for="p-montant">Montant reversé (MAD)</label><input id="p-montant" type="number" inputmode="numeric"></div>
+          <div class="f"><label for="p-note">Note</label><input id="p-note" placeholder="Espèces, virement…"></div>
+        </div>
+        <p class="note">Il ne réduit le solde dû qu'une fois <b>confirmé</b> par un administrateur, à réception de l'argent.</p>
+        <div class="actions"><button id="p-save" class="btn primary" type="button">Déclarer le versement</button></div>
+      </div>
+      <div class="card" id="doc-admin" hidden>
+        <h2>Ajouter un médecin</h2>
+        <div id="docmsg" class="msg okmsg" hidden></div>
+        <div class="form">
+          <div class="f"><label for="d-nom">Nom</label><input id="d-nom" placeholder="Docteur Prénom Nom"></div>
+          <div class="f"><label for="d-spec">Spécialité</label><input id="d-spec" placeholder="Médecin urgentiste"></div>
+          <div class="f"><label for="d-tel">Téléphone</label><input id="d-tel" type="tel"></div>
+        </div>
+        <p class="note">Il peut recevoir des interventions tout de suite, mais n'apparaît sur le site public qu'une fois ajouté
+          à <code>content/doctors.ts</code> avec son numéro d'Ordre.</p>
+        <div class="actions"><button id="d-save" class="btn primary" type="button">Ajouter</button></div>
+      </div>
     </div>
-    <div class="card" id="doc-admin" hidden style="max-width:460px">
-      <h3>Ajouter un médecin</h3>
-      <div id="docmsg" class="msg okmsg" hidden></div>
-      <p class="muted" style="margin-top:0">Un médecin ajouté ici peut recevoir des interventions
-        immédiatement. Il n'apparaît <b>pas</b> sur le site public tant qu'il n'est pas ajouté à
-        <code>content/doctors.ts</code> avec son numéro d'Ordre — publier un médecin sans numéro
-        vérifiable est exactement ce que le site refuse de faire.</p>
-      <label for="d-nom">Nom</label><input id="d-nom" placeholder="Docteur Prénom Nom">
-      <label for="d-spec">Spécialité</label><input id="d-spec" placeholder="Médecin urgentiste">
-      <label for="d-tel">Téléphone</label><input id="d-tel" type="tel">
-      <button id="d-save" class="primary">Ajouter</button>
+    <div class="card flush">
+      <div class="card-h"><h2>Historique des versements</h2></div>
+      <div class="wrap"><table class="t">
+        <thead><tr><th>Date</th><th>Médecin</th><th class="num">Montant</th><th>Statut</th><th>Note</th><th>Déclaré par</th><th>Confirmé par</th><th>Action</th></tr></thead>
+        <tbody id="pay-rows"></tbody></table></div>
     </div>
-
-    <h3 style="margin:22px 0 8px">Historique des versements</h3>
-    <div class="wrap"><table>
-      <thead><tr><th>Date</th><th>Médecin</th><th class="num">Montant</th><th>Statut</th><th>Note</th><th>Déclaré par</th><th>Confirmé par</th><th>Action</th></tr></thead>
-      <tbody id="pay-rows"></tbody></table></div>
   </section>
-  <!-- ── TAB 4: users & roles (admins only) ────────────────────────────── -->
-  <section id="t-admin" hidden>
-    <div class="card" style="max-width:520px">
-      <h3>Ajouter un utilisateur</h3>
-      <div id="usrmsg" class="msg okmsg" hidden></div>
-      <p class="muted" style="margin-top:0">Créez d'abord le compte dans
-        <b>Firebase → Authentication → Users</b>, puis collez son UID ici pour lui donner un rôle.
-        Les rôles sont appliqués par les règles de la base, pas seulement par cet écran.</p>
-      <label for="u-uid">UID Firebase</label><input id="u-uid" placeholder="ex. 3kf9...">
-      <label for="u-nom">Nom</label><input id="u-nom">
-      <label for="u-email">E-mail</label><input id="u-email" type="email">
-      <label for="u-role">Rôle</label>
-      <select id="u-role">
-        <option value="standard">Standard — prend les appels, crée les interventions</option>
-        <option value="medecin">Médecin — voit ses interventions, déclare ses versements</option>
-        <option value="admin">Administrateur — gère les médecins, les utilisateurs, confirme les versements</option>
-      </select>
-      <label for="u-doc">Médecin associé (si rôle « médecin »)</label>
-      <select id="u-doc"><option value="">—</option></select>
-      <button id="u-save" class="primary">Enregistrer</button>
-    </div>
-    <div class="wrap"><table>
-      <thead><tr><th>Nom</th><th>E-mail</th><th>Rôle</th><th>Médecin</th><th>UID</th></tr></thead>
-      <tbody id="usr-rows"></tbody></table></div>
 
-    <div class="card" style="max-width:460px">
-      <h3>Équipe au standard (codes)</h3>
-      <div id="stmsg" class="msg okmsg" hidden></div>
-      <p class="muted" style="margin-top:0">Ces codes identifient qui prend l'appel. Ce n'est pas une
-        sécurité — la connexion Firebase l'est — et le code est lisible par toute l'équipe connectée.
-        Il sépare les collègues, il ne protège pas contre eux.</p>
-      <label for="st-nom">Nom</label><input id="st-nom" placeholder="Prénom Nom">
-      <label for="st-pin">Code</label><input id="st-pin" inputmode="numeric" placeholder="4 chiffres">
-      <button id="st-save" class="primary">Ajouter au standard</button>
+  <!-- ── Utilisateurs (administrateurs) ───────────────────────────────── -->
+  <section id="t-admin" class="stack" hidden>
+    <div class="grid2">
+      <div class="card">
+        <h2>Ajouter ou modifier un compte</h2>
+        <div id="usrmsg" class="msg okmsg" hidden></div>
+        <p class="note" style="margin-bottom:12px">Créez d'abord le compte dans <b>Firebase → Authentication → Users</b>,
+          puis collez son UID ici. Le nom est celui qui apparaît dans « Prise par » des interventions.</p>
+        <div class="form">
+          <div class="f"><label for="u-uid">UID Firebase</label><input id="u-uid" placeholder="ex. 3kf9..." autocomplete="off"></div>
+          <div class="f"><label for="u-nom">Nom</label><input id="u-nom" autocomplete="off"></div>
+          <div class="f"><label for="u-email">E-mail</label><input id="u-email" type="email" autocomplete="off"></div>
+          <div class="f"><label for="u-role">Rôle</label>
+            <select id="u-role">
+              <option value="standard">Standard — prend les appels, crée les interventions</option>
+              <option value="medecin">Médecin — voit ses interventions, déclare ses versements</option>
+              <option value="admin">Administrateur — médecins, comptes, versements, numéro du site</option>
+            </select></div>
+          <div class="f"><label for="u-doc">Médecin associé (rôle « médecin »)</label><select id="u-doc"><option value="">—</option></select></div>
+        </div>
+        <div class="actions"><button id="u-save" class="btn primary" type="button">Enregistrer</button></div>
+      </div>
+      <div class="card flush">
+        <div class="card-h"><h2>Comptes</h2></div>
+        <div class="wrap"><table class="t">
+          <thead><tr><th>Nom</th><th>Rôle</th><th>Médecin</th><th></th></tr></thead>
+          <tbody id="usr-rows"></tbody></table></div>
+      </div>
     </div>
-    <div class="wrap"><table>
-      <thead><tr><th>Nom</th><th>Identifiant</th><th>Action</th></tr></thead>
-      <tbody id="staff-rows"></tbody></table></div>
   </section>
 </main>
+
+<!-- ── Numéro du site : modification ────────────────────────────────────── -->
+<dialog id="ph-dialog" aria-labelledby="ph-title">
+  <form id="ph-form" class="dlg" novalidate>
+    <div id="ph-step1" class="form">
+      <h2 id="ph-title">Changer le numéro du site</h2>
+      <p class="note">Le numéro des boutons Appeler et WhatsApp, sur toutes les pages et dans les trois langues.</p>
+      <div class="f"><label for="ph-call">Numéro pour les appels</label>
+        <input id="ph-call" type="tel" inputmode="tel" autocomplete="off" placeholder="06 00 00 00 00"></div>
+      <label class="check"><input type="checkbox" id="ph-same" checked> WhatsApp sur ce même numéro</label>
+      <div class="f" id="ph-wa-box" hidden><label for="ph-wa">Numéro WhatsApp</label>
+        <input id="ph-wa" type="tel" inputmode="tel" autocomplete="off" placeholder="06 00 00 00 00"></div>
+      <div id="ph-err" class="msg" hidden></div>
+      <div class="actions end"><button type="button" class="btn" id="ph-cancel">Annuler</button>
+        <button type="submit" class="btn navy" id="ph-next">Continuer</button></div>
+    </div>
+    <div id="ph-step2" class="form" hidden>
+      <h2>Vérifiez avant de publier</h2>
+      <p class="note">Les patients appelleront :</p>
+      <p class="bignum" id="ph-confirm-call"></p>
+      <p class="note" id="ph-confirm-wa"></p>
+      <p class="note">Le site se met à jour tout seul, en 5 à 15 minutes environ. Changez aussi le numéro sur vos fiches
+        Google : le même numéro partout aide le classement.</p>
+      <div id="ph-err2" class="msg" hidden></div>
+      <div class="actions end"><button type="button" class="btn" id="ph-back">Corriger</button>
+        <button type="button" class="btn primary" id="ph-publish">Publier ce numéro</button></div>
+    </div>
+  </form>
+</dialog>
 
 <script type="module">
 import { firebaseConfig, isConfigured } from "./firebase-config.js";
@@ -369,13 +512,13 @@ import { DATA } from "./data.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, setPersistence, browserLocalPersistence }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { getDatabase, ref, query, limitToLast, onValue, push, update, runTransaction, get }
+import { getDatabase, ref, query, limitToLast, onValue, push, set, update, runTransaction, get, serverTimestamp }
   from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
 const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v == null ? "" : v).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const mad = (n) => (Number(n) || 0).toLocaleString("fr-FR") + " MAD";
-const fmt = (t) => { try { return new Date(t).toLocaleString("fr-FR"); } catch (e) { return String(t); } };
+const fmt = (t) => { try { return new Date(t).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" }); } catch (e) { return String(t); } };
 const DAY = 86400000;
 /* Days of visits kept live; older days come from the cached history. */
 const LIVE_DAYS = 61;
@@ -400,22 +543,6 @@ const langOf = (s) => s.lang || ((s.landing || s.page || "").startsWith("/ar") ?
 let hist = {};     // older days: { "YYYY-MM-DD": { v: visitors, s: visits } }
 let hMode = "30";  // span of the trend chart: "today", "24h", or a number of days
 
-/* Staff, with a light PIN, managed from the Utilisateurs tab and stored in
-   Firebase at staff_members/ — the same shape as the Nova Style admin.
-   Hardcoding them meant nobody could change a name or a code without a
-   redeploy, which is not how a rota works.
-
-   NOT security: the Firebase login is. This is attribution, so every
-   intervention and every payment carries the name of whoever took it. The PIN
-   is readable by any signed-in staff member, which is the accepted trade in
-   the Nova Style admin too — it separates colleagues, it does not defend
-   against them.
-
-   SEED_STAFF only applies while staff_members/ is empty, so a fresh install
-   is usable before anyone has been added. */
-const SEED_STAFF = [{ id: "s_1", name: "Standard 1", pin: "1011" }];
-let STAFF = SEED_STAFF;
-
 const STATUS = [
   ["recu", "Reçu", "st-recu"],
   ["assigne", "Assigné", "st-assigne"],
@@ -425,6 +552,11 @@ const STATUS = [
 ];
 const stLabel = (k) => (STATUS.find((s) => s[0] === k) || ["", k, ""])[1];
 const stClass = (k) => (STATUS.find((s) => s[0] === k) || ["", "", "st-recu"])[2];
+const ROLE = { admin: "Administrateur", standard: "Standard", medecin: "Médecin" };
+/* The call surfaces, as the tracker names them (data-tap on the buttons). */
+const CTA = { entete: "En-tête", hero: "Haut de page", banniere: "Bannière d'appel", pied: "Pied de page",
+  "barre-mobile": "Barre du bas (mobile)", chat: "Assistant" };
+const DEVICE = { mobile: "Mobile", desktop: "Ordinateur", tablet: "Tablette" };
 
 /* The tariff whose amount matches, so the split follows the price the operator
    actually charged rather than a number typed twice. An off-tariff amount
@@ -446,13 +578,23 @@ function suggestedAmount() {
   return t ? t.amount : "";
 }
 
+/* `staff` is the name every record carries: the account's name from users/,
+   or its e-mail until one is set. */
 let staff = null, taps = [], sessions = [], live = {}, interventions = [], payments = [], range = "24h", db = null;
 let me = null;            // users/{uid} — role, name, doctor link
 let extraDoctors = [];    // doctors added from this dashboard, on top of the site's list
 let users = [];
+let rowsAll = false;      // "Afficher tous les appuis"
+/* The site's number: the request from this dashboard (site_config/phone),
+   what this build of the site shows, and the form in progress. See
+   "Numéro du site" below. */
+let phoneReq = null;
+let deployed = DATA.phone || null;
+let phonePoll = null;
+let phoneDraft = null;
 
 /* Roles.
- *   admin    — manage doctors and users, confirm payments
+ *   admin    — manage doctors and users, confirm payments, change the site's number
  *   standard — take calls, create and advance interventions
  *   medecin  — see own interventions, declare a payment sent
  *
@@ -466,6 +608,11 @@ let users = [];
    list that will disagree with itself. */
 const TABS = ["dash", "ops", "patients", "cash", "admin"];
 const showTab = (name) => TABS.forEach((t) => { $("t-" + t).hidden = t !== name; });
+function openTab(name) {
+  [...$("nav").children].forEach((c) => c.classList.toggle("on", c.dataset.t === name));
+  showTab(name);
+  if (name === "dash") renderTrend();   // the chart is drawn at its real width
+}
 
 const isAdmin = () => me?.role === "admin";
 const isDoctor = () => me?.role === "medecin";
@@ -475,62 +622,75 @@ const isDoctor = () => me?.role === "medecin";
    calls before they appear publicly. */
 const allDoctors = () => [...DATA.doctors, ...extraDoctors];
 
+/* A form's confirmation or error line. Success fades after 4 s; an error
+   stays until the next attempt, so it cannot be missed. */
+function flash(id, text, ok = true) {
+  const el = $(id);
+  el.className = ok ? "msg okmsg" : "msg";
+  el.textContent = text;
+  el.hidden = false;
+  clearTimeout(el._t);
+  if (ok) el._t = setTimeout(() => { el.hidden = true; }, 4000);
+}
+function toast(text) {
+  const t = document.createElement("div");
+  t.className = "toast"; t.setAttribute("role", "status"); t.textContent = text;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 6000);
+}
+const denied = (e) => /permission/i.test(String(e?.code || "") + " " + String(e?.message || ""));
+
 if (!isConfigured()) { $("setup").hidden = false; }
 else {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   db = getDatabase(app);
 
-  $("in").onclick = async () => {
+  $("login").addEventListener("submit", async (ev) => {
+    ev.preventDefault();
     $("err").hidden = true;
     try {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, $("em").value.trim(), $("pw").value);
       $("pw").value = "";
-    } catch (e) { $("err").textContent = "Connexion refusée."; $("err").hidden = false; }
-  };
-  $("out").onclick = () => { sessionStorage.removeItem("um_staff"); signOut(auth); };
+    } catch (e) { $("err").textContent = "Connexion refusée : vérifiez l'e-mail et le mot de passe."; $("err").hidden = false; }
+  });
+  $("out").onclick = () => signOut(auth);
 
-  // ── PIN ────────────────────────────────────────────────────────────────
-  function refreshStaffOptions() {
-    $("pinsel").innerHTML = STAFF.map((m) => `<option value="${m.id}">${esc(m.name)}</option>`).join("");
-    $("staff-rows").innerHTML = STAFF.map((m) =>
-      `<tr><td>${esc(m.name)}</td><td class="muted">${esc(m.id)}</td>` +
-      `<td>${isAdmin() ? `<button class="mini" style="background:#8a5a00" data-staff="${esc(m.id)}">Retirer</button>` : ""}</td></tr>`
-    ).join("");
-  }
-  refreshStaffOptions();
-  $("pinok").onclick = () => {
-    const m = STAFF.find((s) => s.id === $("pinsel").value);
-    if (!m || $("pinval").value !== m.pin) {
-      $("pinerr").textContent = "Code incorrect."; $("pinerr").hidden = false; return;
-    }
-    staff = m.name;
-    sessionStorage.setItem("um_staff", staff);
-    $("pinval").value = "";
-    showApp();
-  };
-
-  // ── tabs ───────────────────────────────────────────────────────────────
+  // ── tabs and periods ───────────────────────────────────────────────────
   $("nav").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-t]"); if (!b) return;
-    [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
-    showTab(b.dataset.t);
+    openTab(b.dataset.t);
+    try { history.replaceState(null, "", "#" + b.dataset.t); } catch (e) {}
   });
+  /* One period for the page: choosing it also sets the chart to the same
+     span. The chart keeps its own longer spans (3 mois, 6 mois, 1 an) for
+     the long-run trend, which the cards cannot show from live data. */
+  const CHART_OF = { today: "today", "24h": "24h", "7d": "7", "30d": "30" };
   $("range").addEventListener("click", (ev) => {
     const b = ev.target.closest("button[data-r]"); if (!b) return;
     range = b.dataset.r;
     [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
+    hMode = CHART_OF[range];
+    [...$("hrange").children].forEach((c) => c.classList.toggle("on", c.dataset.h === hMode));
+    rowsAll = false;
     renderDash();
   });
+  $("hrange").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-h]"); if (!b) return;
+    hMode = b.dataset.h;
+    [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
+    renderTrend();
+  });
+  $("rows-more").onclick = () => { rowsAll = !rowsAll; renderDash(); };
+
   /* The team's own visits to the site inflate a small site's numbers. The
      dashboard shares the site's origin, so it can set the flag the tracker
      reads (localStorage um_is_admin) for this browser. */
   function refreshSelfEx() {
     let on = false;
     try { on = localStorage.getItem("um_is_admin") === "1"; } catch (e) {}
-    $("selfex").textContent = on ? "Mes visites : non comptées ✓" : "Ne pas compter mes visites";
-    $("selfex").style.background = on ? "var(--ok)" : "";
+    $("selfex").textContent = on ? "Vos visites ne sont pas comptées sur cet appareil (annuler)" : "Ne pas compter mes visites sur cet appareil";
     $("selfex").title = "Sur cet appareil et ce navigateur uniquement. À faire sur chaque téléphone et ordinateur de l'équipe.";
   }
   $("selfex").onclick = () => {
@@ -542,12 +702,6 @@ else {
     renderDash();
   };
   refreshSelfEx();
-  $("hrange").addEventListener("click", (ev) => {
-    const b = ev.target.closest("button[data-h]"); if (!b) return;
-    hMode = b.dataset.h;
-    [...ev.currentTarget.children].forEach((c) => c.classList.toggle("on", c === b));
-    renderTrend();
-  });
 
   // ── form options ───────────────────────────────────────────────────────
   $("f-ville").innerHTML = DATA.cities.map((c) => `<option value="${c.slug}">${esc(c.name)}</option>`).join("");
@@ -607,18 +761,16 @@ else {
       await push(ref(db, "interventions"), rec);
       ["f-nom","f-tel","f-adresse","f-notes"].forEach((i) => { $(i).value = ""; });
       $("f-montant").value = suggestedAmount();
-      $("opsmsg").textContent = `Intervention ${ref_ ?? ""} enregistrée.`;
-      $("opsmsg").hidden = false;
-      setTimeout(() => { $("opsmsg").hidden = true; }, 4000);
+      flash("opsmsg", `Intervention ${ref_ ?? ""} enregistrée.`);
     } catch (e) {
-      $("opsmsg").className = "msg"; $("opsmsg").textContent = "Échec de l'enregistrement."; $("opsmsg").hidden = false;
+      flash("opsmsg", "Échec de l'enregistrement : vérifiez la connexion et réessayez.", false);
     }
   };
 
   // ── record a payment ───────────────────────────────────────────────────
   $("p-save").onclick = async () => {
     const amount = Number($("p-montant").value) || 0;
-    if (amount <= 0) return;
+    if (amount <= 0) { flash("paymsg", "Indiquez le montant reversé.", false); return; }
     try {
       await push(ref(db, "payments"), {
         at: Date.now(), doctor: $("p-medecin").value,
@@ -630,9 +782,10 @@ else {
         status: "declare",
       });
       $("p-montant").value = ""; $("p-note").value = "";
-      $("paymsg").textContent = "Versement enregistré."; $("paymsg").hidden = false;
-      setTimeout(() => { $("paymsg").hidden = true; }, 4000);
-    } catch (e) {}
+      flash("paymsg", "Versement déclaré. Il sera déduit une fois confirmé.");
+    } catch (e) {
+      flash("paymsg", "Échec de l'enregistrement : vérifiez la connexion et réessayez.", false);
+    }
   };
 
   // ── status advance ─────────────────────────────────────────────────────
@@ -647,8 +800,8 @@ else {
   // ── add a doctor (admin) ───────────────────────────────────────────────
   $("d-save").onclick = async () => {
     const name = $("d-nom").value.trim();
-    if (!name) return;
-    const slug = "x_" + name.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    if (!name) { flash("docmsg", "Indiquez le nom du médecin.", false); return; }
+    const slug = "x_" + name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
       .replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "").slice(0, 40);
     try {
       await update(ref(db, "doctors/" + slug), {
@@ -656,42 +809,16 @@ else {
         active: true, createdAt: Date.now(), createdBy: staff,
       });
       ["d-nom","d-spec","d-tel"].forEach((i) => { $(i).value = ""; });
-      $("docmsg").textContent = "Médecin ajouté."; $("docmsg").hidden = false;
-      setTimeout(() => { $("docmsg").hidden = true; }, 4000);
+      flash("docmsg", "Médecin ajouté.");
     } catch (e) {
-      $("docmsg").className = "msg"; $("docmsg").textContent = "Refusé — réservé aux administrateurs.";
-      $("docmsg").hidden = false;
+      flash("docmsg", "Refusé : réservé aux administrateurs.", false);
     }
   };
-
-  // ── add / remove a staff member (admin) ────────────────────────────────
-  $("st-save").onclick = async () => {
-    const name = $("st-nom").value.trim();
-    const pin = $("st-pin").value.trim();
-    if (!name || pin.length < 3) {
-      $("stmsg").className = "msg"; $("stmsg").textContent = "Nom requis et code d'au moins 3 chiffres.";
-      $("stmsg").hidden = false; return;
-    }
-    const id = "s_" + Date.now().toString(36);
-    try {
-      await update(ref(db, "staff_members/" + id), { id, name, pin, active: true, createdAt: Date.now() });
-      $("st-nom").value = ""; $("st-pin").value = "";
-      $("stmsg").className = "msg okmsg"; $("stmsg").textContent = "Membre ajouté.";
-      $("stmsg").hidden = false; setTimeout(() => { $("stmsg").hidden = true; }, 4000);
-    } catch (e) {
-      $("stmsg").className = "msg"; $("stmsg").textContent = "Refusé — réservé aux administrateurs.";
-      $("stmsg").hidden = false;
-    }
-  };
-  $("staff-rows").addEventListener("click", async (ev) => {
-    const b = ev.target.closest("button[data-staff]"); if (!b) return;
-    try { await update(ref(db, "staff_members/" + b.dataset.staff), { active: false }); } catch (e) {}
-  });
 
   // ── add / update a user role (admin) ───────────────────────────────────
   $("u-save").onclick = async () => {
     const uid = $("u-uid").value.trim();
-    if (!uid) return;
+    if (!uid) { flash("usrmsg", "Collez l'UID du compte (Firebase → Authentication → Users).", false); return; }
     try {
       await update(ref(db, "users/" + uid), {
         name: $("u-nom").value.trim(), email: $("u-email").value.trim(),
@@ -699,13 +826,19 @@ else {
         updatedAt: Date.now(), updatedBy: staff,
       });
       ["u-uid","u-nom","u-email"].forEach((i) => { $(i).value = ""; });
-      $("usrmsg").className = "msg okmsg"; $("usrmsg").textContent = "Utilisateur enregistré.";
-      $("usrmsg").hidden = false; setTimeout(() => { $("usrmsg").hidden = true; }, 4000);
+      flash("usrmsg", "Compte enregistré.");
     } catch (e) {
-      $("usrmsg").className = "msg"; $("usrmsg").textContent = "Refusé — réservé aux administrateurs.";
-      $("usrmsg").hidden = false;
+      flash("usrmsg", "Refusé : réservé aux administrateurs.", false);
     }
   };
+  /* "Modifier" on a row fills the form with that account. */
+  $("usr-rows").addEventListener("click", (ev) => {
+    const b = ev.target.closest("button[data-uid]"); if (!b) return;
+    const u = users.find((x) => x.uid === b.dataset.uid); if (!u) return;
+    $("u-uid").value = u.uid; $("u-nom").value = u.name || ""; $("u-email").value = u.email || "";
+    $("u-role").value = u.role || "standard"; $("u-doc").value = u.doctor || "";
+    $("u-nom").focus();
+  });
 
   // ── confirm / reject a declared payment (admin) ────────────────────────
   $("pay-rows").addEventListener("click", async (ev) => {
@@ -717,30 +850,31 @@ else {
     } catch (e) {}
   });
 
+  // ── the site's phone number (admin) ────────────────────────────────────
+  $("ph-edit").onclick = openPhoneDialog;
+  $("ph-cancel").onclick = () => $("ph-dialog").close();
+  $("ph-back").onclick = () => { $("ph-step2").hidden = true; $("ph-step1").hidden = false; $("ph-call").focus(); };
+  $("ph-same").onchange = () => { $("ph-wa-box").hidden = $("ph-same").checked; };
+  $("ph-form").addEventListener("submit", (ev) => { ev.preventDefault(); if ($("ph-step2").hidden) reviewPhone(); });
+  $("ph-publish").onclick = publishPhone;
+
   // ── auth ───────────────────────────────────────────────────────────────
   function showApp() {
-    $("pin").hidden = true; $("nav").hidden = false;
-    showTab("dash");
-    $("staff").textContent = staff ? "· " + staff : "";
+    $("nav").hidden = false;
+    $("phonebar").hidden = false;
+    const want = location.hash.slice(1);
+    openTab(TABS.includes(want) && want !== "admin" ? want : "dash");
     renderAll();
+    renderPhone();
   }
 
-  /* Every live listener, started once per sign-in and stopped at sign-out.
-   *
-   * They used to be attached AFTER the PIN check, in the same callback that
-   * returned early when no PIN had been entered yet in this browser session.
-   * So on a fresh open (new tab, new day) the dashboard asked for the PIN,
-   * then rendered with nothing listening to the database: every table stayed
-   * empty until a reload, when the PIN was already in sessionStorage and the
-   * listeners did attach. The staff list for the PIN screen itself was behind
-   * the same return, so the PIN menu showed only the default entry. Data
-   * loading no longer depends on the PIN at all; the PIN only gates the UI. */
+  /* Every live listener, started once per sign-in and stopped at sign-out. */
   let unsubs = [];
   function subscribe() {
     if (unsubs.length) return;
     const on = (q, fn, err) => unsubs.push(onValue(q, fn, err || (() => {})));
     on(query(ref(db, "taps"), limitToLast(5000)), (s) => { taps = Object.values(s.val() || {}); renderAll(); },
-      () => { $("err").textContent = "Lecture refusée — vérifiez les règles."; $("err").hidden = false; });
+      () => { $("dberr").textContent = "Lecture refusée par la base : vérifiez les règles Firebase."; $("dberr").hidden = false; });
     on(ref(db, "online_visitors"), (s) => { live = s.val() || {}; renderDash(); });
     on(query(ref(db, "interventions"), limitToLast(2000)), (s) => {
       interventions = Object.entries(s.val() || {}).map(([id, v]) => ({ id, ...v })); renderAll();
@@ -755,11 +889,9 @@ else {
     on(ref(db, "users"), (s) => {
       users = Object.entries(s.val() || {}).map(([uid, v]) => ({ uid, ...v })); renderUsers();
     });
-    on(ref(db, "staff_members"), (s) => {
-      const active = Object.values(s.val() || {}).filter((m) => m && m.active !== false);
-      STAFF = active.length ? active : SEED_STAFF;
-      refreshStaffOptions();
-    });
+    /* The number requested from this dashboard. Unreadable until the rules
+       that add site_config are published: then there is simply no request. */
+    on(ref(db, "site_config/phone"), (s) => { phoneReq = s.val(); renderPhone(); }, () => { phoneReq = null; renderPhone(); });
     /* 61 days of visits, live: the 30-day view and the 30 days before it,
        which the comparison arrows need. Older days come from loadHistory(). */
     const byDay = {};
@@ -778,16 +910,20 @@ else {
 
   onAuthStateChanged(auth, (user) => {
     $("login").hidden = !!user;
-    $("out").hidden = !user;
-    $("who").textContent = user ? user.email : "";
+    $("userbox").hidden = !user;
     if (!user) {
       unsubscribe();
-      $("nav").hidden = true; $("pin").hidden = true;
+      me = null; staff = null; stopPhonePoll();
+      $("nav").hidden = true; $("phonebar").hidden = true;
       TABS.forEach((t) => { $("t-" + t).hidden = true; });
       return;
     }
+    me = { uid: user.uid };
+    staff = user.email;
+    $("who").title = user.email || "";
     get(ref(db, "users/" + user.uid)).then((snap) => {
       me = { uid: user.uid, ...(snap.val() || {}) };
+      staff = me.name || user.email;
       /* First ever sign-in: with no users node at all, the first account to
          log in becomes admin. Otherwise nobody could ever grant the first
          role and the dashboard would be permanently read-only. */
@@ -805,8 +941,7 @@ else {
     }).catch(() => { applyRole(); });
 
     subscribe();
-    staff = sessionStorage.getItem("um_staff");
-    if (!staff) { $("pin").hidden = false; return; }
+    applyRole();
     showApp();
   });
 
@@ -834,6 +969,126 @@ else {
   }
 }
 
+/* ── Numéro du site ─────────────────────────────────────────────────────────
+ *
+ * The number is baked into every page at build time (titles, buttons,
+ * structured data, share image, assistant), which is what search engines and
+ * the Google listing read. So "Modifier" does not patch pages: it records the
+ * request in the database (site_config/phone, writable by admins only, see
+ * firebase-database-rules.json), and the GitHub workflow "Numéro de
+ * téléphone" picks it up within 5 minutes, writes content/phone.json and
+ * pushes, which rebuilds and republishes the site.
+ *
+ * `deployed` is the number this build of the site carries (data.js, generated
+ * from content/phone.json) with the request it came from. A request whose
+ * timestamp differs from deployed.request is still on its way; while one is,
+ * data.js is re-read every 30 s to see the new build arrive.
+ */
+const PHONE_RE = /^0[5-8]\d{8}$/;
+/** Any way a Moroccan number gets typed, down to its 10 national digits. */
+function digitsOf(v) {
+  let d = String(v || "").replace(/\D/g, "");
+  if (d.startsWith("00212")) d = "0" + d.slice(5);
+  else if (d.startsWith("212")) d = "0" + d.slice(3);
+  return d;
+}
+const showNum = (d) => digitsOf(d).replace(/^(\d{2})(\d{2})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4 $5");
+const pendingPhone = () => (phoneReq && deployed && Number(phoneReq.at) !== Number(deployed.request)) ? phoneReq : null;
+
+function renderPhone() {
+  if (!$("phonebar")) return;
+  $("ph-edit").hidden = !isAdmin();
+  const st = $("ph-state");
+  if (!deployed) { $("ph-num").textContent = "—"; st.hidden = true; return; }
+  $("ph-num").textContent = deployed.call;
+  $("ph-num").href = "tel:+212" + digitsOf(deployed.call).slice(1);
+  st.hidden = false;
+  const pend = pendingPhone();
+  if (!pend) {
+    stopPhonePoll();
+    st.className = "pill ok";
+    st.textContent = deployed.whatsapp && deployed.whatsapp !== deployed.call ? "En ligne · WhatsApp " + deployed.whatsapp : "En ligne";
+    st.title = "Le numéro affiché sur toutes les pages du site.";
+    return;
+  }
+  const mins = Math.max(0, Math.round((Date.now() - Number(pend.at)) / 60000));
+  const late = mins >= 45;
+  const ago = mins < 1 ? "à l'instant" : mins < 60 ? "il y a " + mins + " min"
+    : mins < 48 * 60 ? "il y a " + Math.round(mins / 60) + " h" : "depuis le " + fmt(Number(pend.at));
+  st.className = "pill " + (late ? "bad" : "warn");
+  st.textContent = (late ? "Pas encore en ligne : " : "Mise en ligne en cours : ") + showNum(pend.call) + " · " + ago;
+  st.title = late
+    ? "La mise à jour automatique n'a pas abouti. Vérifiez l'onglet Actions du dépôt GitHub (tâche « Numéro de téléphone »)."
+    : "Le site se met à jour tout seul, en 5 à 15 minutes environ. Le numéro ci-contre reste affiché jusque-là.";
+  startPhonePoll();
+}
+function startPhonePoll() { if (!phonePoll) phonePoll = setInterval(checkDeployed, 30000); }
+function stopPhonePoll() { clearInterval(phonePoll); phonePoll = null; }
+/* The data.js of the build now online. Read as text, not re-imported, so the
+   app's service worker keeps one cached copy instead of one per check. */
+async function checkDeployed() {
+  try {
+    const txt = await (await fetch("/admin/data.js", { cache: "no-store" })).text();
+    const start = txt.indexOf("{", txt.indexOf("DATA"));
+    const fresh = JSON.parse(txt.slice(start, txt.lastIndexOf("}") + 1));
+    const was = pendingPhone();
+    if (fresh.phone) deployed = fresh.phone;
+    if (was && !pendingPhone()) toast("Le site affiche maintenant le " + deployed.call + ".");
+  } catch (e) {}
+  renderPhone();
+}
+
+function openPhoneDialog() {
+  const base = pendingPhone() || (deployed && { call: deployed.call, whatsapp: deployed.whatsapp });
+  $("ph-call").value = base ? showNum(base.call) : "";
+  const same = !base || digitsOf(base.whatsapp || base.call) === digitsOf(base.call);
+  $("ph-same").checked = same;
+  $("ph-wa").value = base && !same ? showNum(base.whatsapp) : "";
+  $("ph-wa-box").hidden = same;
+  $("ph-err").hidden = true; $("ph-err2").hidden = true;
+  $("ph-step1").hidden = false; $("ph-step2").hidden = true;
+  $("ph-dialog").showModal();
+  $("ph-call").select();
+}
+function reviewPhone() {
+  const err = (t) => { $("ph-err").textContent = t; $("ph-err").hidden = false; };
+  const call = digitsOf($("ph-call").value);
+  const whatsapp = $("ph-same").checked ? call : digitsOf($("ph-wa").value);
+  if (!PHONE_RE.test(call)) return err("Numéro d'appel incomplet ou invalide : 10 chiffres, par exemple 06 04 22 77 30.");
+  if (!PHONE_RE.test(whatsapp)) return err("Numéro WhatsApp incomplet ou invalide : 10 chiffres, par exemple 06 04 22 77 30.");
+  const pend = pendingPhone();
+  const now = pend || deployed;
+  if (now && digitsOf(now.call) === call && digitsOf(now.whatsapp || now.call) === whatsapp) {
+    return err(pend ? "Ce numéro est déjà en cours de mise en ligne." : "C'est déjà le numéro affiché sur le site.");
+  }
+  $("ph-err").hidden = true;
+  phoneDraft = { call, whatsapp };
+  $("ph-confirm-call").textContent = showNum(call);
+  $("ph-confirm-wa").textContent = whatsapp === call ? "WhatsApp : ce même numéro." : "WhatsApp : " + showNum(whatsapp);
+  $("ph-err2").hidden = true;
+  $("ph-step1").hidden = true; $("ph-step2").hidden = false;
+  $("ph-publish").focus();
+}
+async function publishPhone() {
+  if (!phoneDraft) return;
+  const b = $("ph-publish");
+  b.disabled = true;
+  try {
+    await set(ref(db, "site_config/phone"), { ...phoneDraft, at: serverTimestamp() });
+    /* Who changed the number, and when: kept where only the team can read it. */
+    push(ref(db, "site_config_log"), { ...phoneDraft, at: serverTimestamp(), by: me?.uid || null, byName: staff || null }).catch(() => {});
+    $("ph-dialog").close();
+    toast("Numéro enregistré. Le site sera à jour dans 5 à 15 minutes environ.");
+  } catch (e) {
+    $("ph-err2").textContent = denied(e)
+      ? "La base a refusé l'enregistrement. Si votre compte est bien administrateur, les règles Firebase du dépôt ne sont pas encore publiées (à faire une fois : Firebase → Realtime Database → Règles)."
+      : "Échec de l'enregistrement : vérifiez la connexion et réessayez.";
+    $("ph-err2").hidden = false;
+  } finally {
+    b.disabled = false;
+  }
+}
+
 // ── rendering ────────────────────────────────────────────────────────────
 /* The selected period, and the period of the same length just before it
    (for "Aujourd'hui": yesterday up to the same hour). */
@@ -847,13 +1102,14 @@ function windowRange() {
   const today = range === "today";
   return { from, to: now, pFrom: today ? from - DAY : from - (now - from), pTo: today ? now - DAY : from };
 }
-function bars(el, items) {
-  const top = Object.entries(items).sort((a,b) => b[1]-a[1]).slice(0,6);
+const CMP = { "24h": "aux 24 h précédentes", today: "à hier, à la même heure", "7d": "aux 7 jours précédents", "30d": "aux 30 jours précédents" };
+function bars(el, items, empty = "Aucune donnée") {
+  const top = Object.entries(items).filter(([, n]) => n > 0).sort((a,b) => b[1]-a[1]).slice(0,6);
   const max = top.length ? Math.max(1, top[0][1]) : 1;
   $(el).innerHTML = top.length
     ? top.map(([k,n]) => `<li><span class="lab" title="${esc(k)}">${esc(k)}</span><b>${n}</b>` +
         `<span class="bar"><i style="width:${Math.round(n/max*100)}%"></i></span></li>`).join("")
-    : '<li class="lab" style="color:var(--muted)">Aucune donnée</li>';
+    : `<li class="none">${esc(empty)}</li>`;
 }
 const tally = (list, key) => list.reduce((a,r) => { const v = (typeof key === "function" ? key(r) : r[key]) || "—"; a[v] = (a[v]||0)+1; return a; }, {});
 const tapTime = (r) => new Date(r.at).getTime();
@@ -876,28 +1132,28 @@ function periodStats(from, to) {
 }
 function delta(id, cur, prev, points) {
   const el = $(id);
-  if (!prev && !cur) { el.textContent = ""; el.className = "delta"; return; }
-  if (!prev) { el.textContent = "nouveau"; el.className = "delta up"; return; }
+  if (!prev && !cur) { el.textContent = ""; el.className = "delta"; el.title = ""; return; }
+  if (!prev) { el.textContent = "nouveau"; el.className = "delta up"; el.title = "Rien sur la période précédente."; return; }
   const d = points ? Math.round((cur - prev) * 10) / 10 : Math.round((cur - prev) / prev * 100);
-  const unit = points ? " pt" : " %";
-  el.textContent = (d > 0 ? "▲ +" : d < 0 ? "▼ " : "= ") + (d === 0 ? "" : d + unit) + " (préc. " +
-    (points ? Math.round(prev) + " %" : prev) + ")";
+  el.textContent = d === 0 ? "= stable" : (d > 0 ? "▲ +" : "▼ ") + d + (points ? " pt" : " %");
   el.className = "delta " + (d > 0 ? "up" : d < 0 ? "down" : "");
+  el.title = "Période précédente : " + (points ? Math.round(prev) + " %" : prev);
 }
-/* A small two-column breakdown: visits and site calls per key, with the rate. */
-function convTable(el, ses, tp, sKey, tKey) {
+/* A small breakdown: visits and site calls per key, with the rate. */
+function convTable(el, ses, tp, sKey, tKey, head) {
   const rows = {};
   ses.forEach((s) => { const k = sKey(s) || "—"; (rows[k] = rows[k] || { v: 0, c: 0 }).v++; });
   tp.forEach((t) => { const k = tKey(t) || "—"; (rows[k] = rows[k] || { v: 0, c: 0 }).c++; });
   const list = Object.entries(rows).sort((a, b) => b[1].c - a[1].c || b[1].v - a[1].v).slice(0, 8);
   $(el).innerHTML = list.length
-    ? `<table class="mini-t"><thead><tr><th>Page / source</th><th class="num">Visites</th><th class="num">Appels</th><th class="num">Taux</th></tr></thead><tbody>` +
+    ? `<table class="mini-t"><thead><tr><th>${head}</th><th class="num">Visites</th><th class="num">Appels</th><th class="num">Taux</th></tr></thead><tbody>` +
       list.map(([k, r]) => `<tr><td class="lab" title="${esc(k)}">${esc(k)}</td><td class="num">${r.v}</td>` +
         `<td class="num">${r.c}</td><td class="num">${r.v ? pct(r.c, r.v) : "–"}</td></tr>`).join("") + "</tbody></table>"
-    : '<p class="muted" style="margin:0">Aucune donnée</p>';
+    : '<p class="note">Aucune donnée sur cette période.</p>';
 }
 
 function renderDash() {
+  if (!$("s-vis")) return;
   const w = windowRange();
   const cur = periodStats(w.from, w.to);
   const prev = periodStats(w.pFrom, w.pTo);
@@ -907,24 +1163,22 @@ function renderDash() {
   $("s-vis").textContent = visitors; $("s-ses").textContent = cur.visits; $("s-pv").textContent = cur.pageviews;
   $("s-call").textContent = calls; $("s-wa").textContent = wa;
   $("s-rate").textContent = visitors ? Math.round(cur.rate) + " %" : "–";
-  delta("d-vis", visitors, prev.visitors); delta("d-ses", cur.visits, prev.visits);
-  delta("d-pv", cur.pageviews, prev.pageviews); delta("d-call", calls, prev.calls);
-  delta("d-wa", wa, prev.wa);
-  if (visitors || prev.visitors) delta("d-rate", cur.rate, prev.rate, true); else $("d-rate").textContent = "";
+  delta("d-vis", visitors, prev.visitors); delta("d-call", calls, prev.calls); delta("d-wa", wa, prev.wa);
+  if (visitors || prev.visitors) delta("d-rate", cur.rate, prev.rate, true); else { $("d-rate").textContent = ""; $("d-rate").title = ""; }
+  $("cmp").textContent = "Évolution par rapport " + CMP[range] + ".";
 
   /* From a visit to money: each step with its share of the step before. */
   const engaged = ses.filter((s) => Number(s.duration) >= 30 || Number(s.pageviews) > 1 || Number(s.scroll) >= 50).length;
   const done = ints.filter((r) => r.status === "termine").length;
   const steps = [
-    ["Visites", cur.visits, ""],
-    ["Visites engagées", engaged, "30 s, 2 pages ou mi-page"],
-    ["Appels + WhatsApp", calls + wa, "depuis le site"],
-    ["Interventions saisies", ints.length, "tous canaux"],
-    ["Terminées", done, "visite effectuée"],
+    ["Visites", cur.visits, "Visites de personnes réelles (robots exclus)"],
+    ["Visites engagées", engaged, "30 secondes, 2 pages ou la moitié de la page"],
+    ["Appels + WhatsApp", calls + wa, "Appuis sur les boutons du site"],
+    ["Interventions saisies", ints.length, "Tous canaux : site, Google, bouche-à-oreille"],
+    ["Terminées", done, "Visite du médecin effectuée"],
   ];
   $("funnel").innerHTML = steps.map(([lab, n, hint], i) =>
-    `<div><span>${lab}</span><b>${n}</b><i>${i ? pct(n, steps[i - 1][1]) + " de l'étape précédente" : hint}` +
-    `${i && hint ? " · " + hint : ""}</i></div>`).join("");
+    `<div title="${esc(hint)}"><span>${lab}</span><b>${n}</b><i>${i ? pct(n, steps[i - 1][1]) + " de l'étape précédente" : "sur la période"}</i></div>`).join("");
 
   /* Reconciliation: a tap counts as answered if an intervention was created
      within 15 minutes of it. Taps are anonymous, so time is the only link. */
@@ -935,10 +1189,10 @@ function renderDash() {
   $("r-taps").textContent = calls;
   $("r-int").textContent = ints.length;
   $("r-gap").textContent = unmatched.length;
-  $("r-gap").style.color = unmatched.length ? "var(--red)" : "";
+  $("r-gap").style.color = unmatched.length ? "var(--bad)" : "";
 
-  convTable("t-landing", ses, tp, (s) => s.landing || s.page, (t) => t.landingPage || t.page);
-  convTable("t-source", ses, tp, (s) => s.source, (t) => t.source);
+  convTable("t-landing", ses, tp, (s) => s.landing || s.page, (t) => t.landingPage || t.page, "Page");
+  convTable("t-source", ses, tp, (s) => s.source, (t) => t.source, "Source");
 
   /* Calls by hour of the day, Morocco time: when the phone needs answering. */
   const hourOf = (t) => Number(new Date(t).toLocaleString("en-GB", { hour: "2-digit", hour12: false, timeZone: "Africa/Casablanca" })) % 24;
@@ -950,32 +1204,37 @@ function renderDash() {
     `${h % 3 === 0 ? `<span>${h}h</span>` : ""}</div>`).join("");
 
   bars("b-pages", tally(ses, (s) => s.lastPage || s.page));
-  bars("b-city", tally(ses, "city")); bars("b-dev", tally(ses, "device"));
+  bars("b-city", tally(ses, "city")); bars("b-dev", tally(ses, (s) => DEVICE[s.device] || s.device));
   bars("b-lang", tally(ses, (s) => ({ fr: "Français", en: "English", ar: "العربية" })[langOf(s)] || langOf(s)));
   bars("b-ret", tally(ses.filter((s) => s.v >= 2), (s) => s.returning ? "Revenus" : "Nouveaux"));
   /* Which call surface people actually use. Rows written before the
-     data-tap attributes shipped have no cta and fall into "—". */
-  bars("b-cta", tally(tp, "cta"));
+     data-tap attributes shipped have no cta. */
+  bars("b-cta", tally(tp, (t) => CTA[t.cta] || t.cta || "Non renseigné"), "Aucun appui sur la période");
   const chat = ses.filter((s) => s.chat && s.chat.open);
   bars("b-chat", {
     "Conversations ouvertes": chat.length,
     "Messages envoyés": chat.reduce((n, s) => n + (Number(s.chat.messages) || 0), 0),
     "Urgences détectées": chat.reduce((n, s) => n + (Number(s.chat.urgent) || 0), 0),
-    "Appels depuis le chat": tp.filter((t) => t.cta === "chat").length,
-  });
+    "Appels depuis l'assistant": tp.filter((t) => t.cta === "chat").length,
+  }, "Assistant non utilisé sur la période");
   bars("b-utm", tally(ses.filter((s) => s.utm), (s) =>
-    [s.utm.source, s.utm.medium].filter(Boolean).join(" / ") + (s.utm.campaign ? " · " + s.utm.campaign : "")));
+    [s.utm.source, s.utm.medium].filter(Boolean).join(" / ") + (s.utm.campaign ? " · " + s.utm.campaign : "")),
+    "Aucune visite par lien de campagne (Google Ads, utm)");
 
   $("s-bots").textContent = cur.dropped
-    ? `Robots exclus · ${cur.dropped} visite(s) sans activité humaine écartée(s) sur la période`
-    : "Robots exclus";
+    ? `Robots exclus : ${cur.dropped} visite(s) sans activité humaine écartée(s) sur la période.`
+    : "Robots exclus.";
 
   tp.sort((a,b) => a.at < b.at ? 1 : -1);
-  $("rows").innerHTML = tp.length ? tp.map((r) => {
+  const shown = rowsAll ? tp : tp.slice(0, 10);
+  $("rows").innerHTML = shown.length ? shown.map((r) => {
     const loc = [r.city, r.region, r.country].filter(Boolean).join(", ");
-    return `<tr><td>${esc(fmt(r.at))}</td><td><span class="tag ${r.event === "call" ? "call" : "whatsapp"}">${esc(r.event)}</span></td>` +
-      `<td>${esc(r.page)}</td><td>${esc(loc)}</td><td>${esc(r.device)}</td><td>${esc(r.source)}</td><td>${esc(r.visitor)}</td></tr>`;
-  }).join("") : `<tr><td colspan="7" class="muted">Aucun appui sur Appeler ou WhatsApp pendant la période choisie.</td></tr>`;
+    return `<tr title="${esc(r.visitor ? "Visiteur " + r.visitor : "")}"><td>${esc(fmt(r.at))}</td>` +
+      `<td><span class="tag ${r.event === "call" ? "call" : "whatsapp"}">${r.event === "call" ? "Appel" : "WhatsApp"}</span></td>` +
+      `<td>${esc(r.page)}</td><td>${esc(loc)}</td><td>${esc(DEVICE[r.device] || r.device)}</td><td>${esc(r.source)}</td></tr>`;
+  }).join("") : `<tr><td colspan="6" class="empty">Aucun appui sur Appeler ou WhatsApp pendant cette période.</td></tr>`;
+  $("rows-more-box").hidden = tp.length <= 10;
+  $("rows-more").textContent = rowsAll ? "Afficher les 10 derniers" : `Afficher les ${tp.length} appuis de la période`;
 
   /* "0 appel" on a short period is easy to misread as "tracking is broken".
      Every tap ever loaded, with the last one, settles it either way. */
@@ -984,11 +1243,11 @@ function renderDash() {
   let selfEx = false;
   try { selfEx = localStorage.getItem("um_is_admin") === "1"; } catch (e) {}
   $("taps-all").innerHTML = (taps.length
-    ? `<b>Depuis le début : ${taps.length} appui(s)</b> sur les boutons du site — ${allCalls} appel(s), ${taps.length - allCalls} WhatsApp. ` +
-      `Dernier : <b>${esc(fmt(lastTap.at))}</b>${lastTap.page ? " (" + esc(lastTap.page) + ")" : ""}.`
-    : `<b>Aucun appui enregistré depuis le début</b> sur les boutons Appeler ou WhatsApp du site.`) +
-    `<br><span class="muted">Les appels venant de la fiche Google, de Google Maps ou d'un numéro composé à la main ne passent pas par le site et ne peuvent pas apparaître ici.` +
-    (selfEx ? ` Cet appareil est exclu (« Mes visites : non comptées ») : vos appuis de test depuis ce navigateur ne sont pas enregistrés.` : "") + `</span>`;
+    ? `Depuis le début : <b>${taps.length} appuis</b> (${allCalls} appels, ${taps.length - allCalls} WhatsApp). ` +
+      `Dernier : <b>${esc(fmt(lastTap.at))}</b>${lastTap.page ? " sur " + esc(lastTap.page) : ""}.`
+    : `<b>Aucun appui enregistré depuis le début.</b>`) +
+    ` Les appels depuis Google Maps, la fiche Google ou un numéro composé à la main ne passent pas par le site.` +
+    (selfEx ? ` Cet appareil est exclu du comptage : vos appuis de test ici ne sont pas enregistrés.` : "");
 
   const cutoff = Date.now() - 10 * 60 * 1000;
   $("s-live").textContent = Object.values(live).filter((v) => (v.lastSeen||0) > cutoff).length;
@@ -1055,7 +1314,7 @@ function trendSeries() {
    half of the data with the first half, over the days that have data, so a
    period before tracking existed does not read as growth. */
 function renderTrend() {
-  if (!$("h-chart")) return;
+  if (!$("h-chart") || $("t-dash").hidden) return;
   const S = trendSeries();
   const items = S.items;
   const first = items.findIndex((x) => x.v > 0);
@@ -1111,13 +1370,13 @@ function renderTrend() {
   /* Gridlines on whole visitor counts, drawn where their label says. */
   [...new Set([Math.round(vmax / 2), vmax])].filter((g) => g > 0).forEach((g) => {
     const yy = y(g);
-    svg += `<line x1="${pad}" x2="${W}" y1="${yy}" y2="${yy}" stroke="#dfe9f0"/>` +
-      `<text x="0" y="${yy + 4}" font-size="10" fill="#47586e">${g}</text>`;
+    svg += `<line x1="${pad}" x2="${W}" y1="${yy}" y2="${yy}" stroke="#e3eaf1"/>` +
+      `<text x="0" y="${yy + 4}" font-size="10" fill="#56677c">${g}</text>`;
   });
   items.forEach((x, i) => {
     if (x.future) return;
     const bx = pad + i * bw, bwid = Math.max(0.6, bw - gap);
-    svg += `<rect x="${bx}" y="${y(x.v)}" width="${bwid}" height="${H - 14 - y(x.v)}" fill="${x.current ? "#9fb6c9" : "#002454"}" opacity="0.85"><title>${x.label} : ${x.v} visiteur(s), ${x.c} appel(s)${x.p !== null && x.p !== undefined ? " — période précédente : " + x.p : ""}${x.current ? " (en cours)" : ""}</title></rect>`;
+    svg += `<rect x="${bx}" y="${y(x.v)}" width="${bwid}" height="${H - 14 - y(x.v)}" rx="${bwid > 6 ? 2 : 0}" fill="${x.current ? "#9fb6c9" : "#002454"}" opacity="0.88"><title>${x.label} : ${x.v} visiteur(s), ${x.c} appel(s)${x.p !== null && x.p !== undefined ? " — période précédente : " + x.p : ""}${x.current ? " (en cours)" : ""}</title></rect>`;
     if (x.c) svg += `<rect x="${bx}" y="${H + CH - (x.c / cmax) * (CH - 4)}" width="${bwid}" height="${(x.c / cmax) * (CH - 4)}" fill="#e20102"><title>${x.label} : ${x.c} appel(s)</title></rect>`;
   });
   if (longSpan) {
@@ -1129,7 +1388,7 @@ function renderTrend() {
     /* The previous period, same buckets, as a grey line to beat. */
     svg += `<polyline fill="none" stroke="#8a99ab" stroke-width="2" stroke-dasharray="4 3" points="${items.map((x, i) => `${xc(i)},${y(x.p || 0)}`).join(" ")}"/>`;
   }
-  svg += `<line x1="${pad}" x2="${W}" y1="${H + CH}" y2="${H + CH}" stroke="#c9d9e6"/>`;
+  svg += `<line x1="${pad}" x2="${W}" y1="${H + CH}" y2="${H + CH}" stroke="#dbe3ec"/>`;
   const ticks = S.unit === "hour" ? items.map((_, i) => i).filter((i) => i % 3 === 0)
     : n <= 7 ? items.map((_, i) => i) : [0, Math.floor(n / 2), n - 1];
   ticks.forEach((i) => {
@@ -1138,17 +1397,19 @@ function renderTrend() {
     const centred = n <= 7 || S.unit === "hour";
     const anchor = centred ? "middle" : i === 0 ? "start" : i === n - 1 ? "end" : "middle";
     const tx = centred ? Math.min(W - 12, Math.max(pad + 4, xc(i))) : xc(i);
-    svg += `<text x="${tx}" y="${H + CH + 14}" font-size="11" fill="#47586e" text-anchor="${anchor}">${items[i].label}</text>`;
+    svg += `<text x="${tx}" y="${H + CH + 14}" font-size="11" fill="#56677c" text-anchor="${anchor}">${items[i].label}</text>`;
   });
   $("h-chart").innerHTML = svg + "</svg>";
 }
 
 function renderOps() {
   const list = [...interventions].sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
-  $("ops-rows").innerHTML = list.map((r) => {
+  const open = list.filter((r) => r.status !== "termine" && r.status !== "annule").length;
+  $("ops-count").textContent = list.length ? `${list.length} au total · ${open} en cours` : "";
+  $("ops-rows").innerHTML = list.length ? list.map((r) => {
     const i = STATUS.findIndex((s) => s[0] === r.status);
     const next = (r.status === "termine" || r.status === "annule") ? null : STATUS[i+1];
-    const btn = next ? `<button class="mini" data-id="${r.id}" data-next="${next[0]}">${esc(next[1])}</button>` : "";
+    const btn = next ? `<button class="mini" type="button" data-id="${r.id}" data-next="${next[0]}">${esc(next[1])}</button>` : "";
 
     /* Ask for the review at the only moment it works: right after the visit,
        while the relief is fresh. The patient's number is already on the
@@ -1156,21 +1417,21 @@ function renderOps() {
        remembers. Hidden entirely when no review link is configured — sending
        staff to a dead link is worse than not offering the button. */
     const review = (r.status === "termine" && DATA.reviewUrl && r.patient_phone)
-      ? ` <a class="mini" style="background:#12683a;text-decoration:none;display:inline-block" target="_blank" rel="noopener"
+      ? `<a class="mini ok" target="_blank" rel="noopener"
            href="https://wa.me/${esc(phoneKey(r.patient_phone))}?text=${
              encodeURIComponent(
                `Bonjour, merci de votre confiance. Si la visite du médecin vous a été utile, votre avis aiderait beaucoup d'autres familles à nous trouver : ${DATA.reviewUrl}`
              )}">Demander un avis</a>`
       : "";
     const cancel = (r.status === "termine" || r.status === "annule") ? "" :
-      ` <button class="mini" style="background:#8a5a00" data-id="${r.id}" data-next="annule">Annuler</button>`;
+      `<button class="mini warn" type="button" data-id="${r.id}" data-next="annule">Annuler</button>`;
     return `<tr><td><b>${esc(r.ref ?? "")}</b></td><td>${esc(fmt(r.createdAt))}</td>` +
-      `<td>${esc(r.patient_name)}<br><span class="muted">${esc(r.patient_phone)}</span></td>` +
-      `<td>${esc([r.quartier, r.city].filter(Boolean).join(", "))}<br><span class="muted">${esc(r.address)}</span></td>` +
+      `<td>${esc(r.patient_name)}<span class="sub">${esc(r.patient_phone)}</span></td>` +
+      `<td>${esc([r.quartier, r.city].filter(Boolean).join(", "))}<span class="sub">${esc(r.address)}</span></td>` +
       `<td>${esc(r.doctorName)}</td><td class="num">${esc(mad(r.amount))}</td>` +
       `<td><span class="tag ${stClass(r.status)}">${esc(stLabel(r.status))}</span></td>` +
-      `<td>${esc(r.createdBy)}</td><td>${btn}${cancel}${review}</td></tr>`;
-  }).join("");
+      `<td>${esc(r.createdBy)}</td><td><div class="row-actions">${btn}${cancel}${review}</div></td></tr>`;
+  }).join("") : `<tr><td colspan="9" class="empty">Aucune intervention pour l'instant.</td></tr>`;
 }
 
 function renderCash() {
@@ -1194,34 +1455,38 @@ function renderCash() {
     `<td class="num">${esc(mad(r.share))}</td><td class="num">${esc(mad(r.owed))}</td>` +
     `<td class="num">${esc(mad(r.remitted))}</td>` +
     `<td class="num ${r.balance > 0 ? "due" : ""}">${esc(mad(r.balance))}</td>` +
-    `<td>${r.last ? esc(fmt(r.last.at)) : "<span class=\"muted\">—</span>"}</td></tr>`).join("");
+    `<td>${r.last ? esc(fmt(r.last.at)) : '<span class="sub">—</span>'}</td></tr>`).join("");
 
   const stTag = { declare: ["st-recu","Déclaré"], confirme: ["st-termine","Confirmé"], rejete: ["st-annule","Rejeté"] };
-  $("pay-rows").innerHTML = [...payments].sort((a,b) => (b.at||0)-(a.at||0)).map((p) => {
+  const list = [...payments].sort((a,b) => (b.at||0)-(a.at||0));
+  $("pay-rows").innerHTML = list.length ? list.map((p) => {
     const [cls, lab] = stTag[p.status || "declare"] || ["st-recu","Déclaré"];
     const act = (isAdmin() && (p.status || "declare") === "declare")
-      ? `<button class="mini" data-pay="${p.id}" data-act="confirme">Confirmer</button> ` +
-        `<button class="mini" style="background:#8a5a00" data-pay="${p.id}" data-act="rejete">Rejeter</button>`
+      ? `<div class="row-actions"><button class="mini" type="button" data-pay="${p.id}" data-act="confirme">Confirmer</button>` +
+        `<button class="mini warn" type="button" data-pay="${p.id}" data-act="rejete">Rejeter</button></div>`
       : "";
     return `<tr><td>${esc(fmt(p.at))}</td><td>${esc(p.doctorName)}</td><td class="num">${esc(mad(p.amount))}</td>` +
       `<td><span class="tag ${cls}">${lab}</span></td><td>${esc(p.note)}</td>` +
       `<td>${esc(p.declaredBy || p.recordedBy)}</td><td>${esc(p.confirmedBy || "")}</td><td>${act}</td></tr>`;
-  }).join("");
+  }).join("") : `<tr><td colspan="8" class="empty">Aucun versement enregistré.</td></tr>`;
 }
 
 function applyRole() {
   const admin = isAdmin();
   $("tab-admin").hidden = !admin;
   $("doc-admin").hidden = !admin;
-  $("staff").textContent = (staff ? "· " + staff : "") + (me?.role ? " (" + me.role + ")" : "");
+  $("who").textContent = (staff || "") + (me?.role ? " · " + (ROLE[me.role] || me.role) : "");
   renderAll();
+  renderPhone();
 }
 
 function renderUsers() {
-  $("usr-rows").innerHTML = users.map((u) =>
-    `<tr><td>${esc(u.name)}</td><td>${esc(u.email)}</td><td><span class="tag st-assigne">${esc(u.role)}</span></td>` +
+  $("usr-rows").innerHTML = users.length ? users.map((u) =>
+    `<tr><td>${esc(u.name)}<span class="sub">${esc(u.email)}</span></td>` +
+    `<td><span class="tag st-assigne">${esc(ROLE[u.role] || u.role)}</span></td>` +
     `<td>${esc(allDoctors().find((d) => d.slug === u.doctor)?.name || "")}</td>` +
-    `<td class="muted">${esc(u.uid)}</td></tr>`).join("");
+    `<td><button class="mini ghost" type="button" data-uid="${esc(u.uid)}" title="UID ${esc(u.uid)}">Modifier</button></td></tr>`).join("")
+    : `<tr><td colspan="4" class="empty">Aucun compte.</td></tr>`;
 }
 
 
@@ -1233,8 +1498,8 @@ function renderUsers() {
  *
  * Grouped by PHONE NUMBER, not name: the same person is spelled three
  * different ways across three calls at 2am, but the number they call from is
- * stable. Digits only, and a leading 0 normalised to 212, so "0601991296" and
- * "+212601991296" are one patient rather than two.
+ * stable. Digits only, and a leading 0 normalised to 212, so "0612345678" and
+ * "+212612345678" are one patient rather than two.
  *
  * The number that matters here is "patients revenus". A home-visit service
  * lives on the family that calls again — for a second child, for a
@@ -1245,8 +1510,8 @@ const phoneKey = (p) => {
   const d = String(p || "").replace(/[^0-9]/g, "");
   if (!d) return "";
   /* Order matters, and getting it wrong is silent. Chaining
-     .replace(/^0/,"212").replace(/^00/,"") turns "00212601991296" into
-     "2120212601991296", because ^0 matches the first zero before ^00 is ever
+     .replace(/^0/,"212").replace(/^00/,"") turns "00212612345678" into
+     "2120212612345678", because ^0 matches the first zero before ^00 is ever
      tried — and the patient then appears twice in the file under two keys.
      Test each prefix explicitly instead. */
   if (d.startsWith("00")) return d.slice(2);      // 00212… international
@@ -1290,7 +1555,7 @@ function renderPatients() {
   const ca = all.reduce((s, p) => s + p.total, 0);
 
   $("pt-total").textContent = all.length;
-  $("pt-repeat").textContent = all.length ? repeat.length + " (" + Math.round(repeat.length / all.length * 100) + "%)" : "0";
+  $("pt-repeat").textContent = all.length ? repeat.length + " (" + Math.round(repeat.length / all.length * 100) + " %)" : "0";
   $("pt-avg").textContent = all.length ? (visits / all.length).toFixed(1) : "–";
   $("pt-ca").textContent = ca.toLocaleString("fr-MA") + " " + DATA.currency;
 
@@ -1305,17 +1570,16 @@ function renderPatients() {
         const wa = phoneKey(p.phone);
         return `<tr>
           <td>${esc(p.name)}${p.visits > 1 ? ' <span class="tag call">fidèle</span>' : ""}
-              <br><span class="muted">${esc(p.phone)}</span></td>
+              <span class="sub">${esc(p.phone)}</span></td>
           <td>${esc([p.city, p.quartier].filter(Boolean).join(" · ") || "—")}</td>
-          <td>${p.visits}</td>
-          <td>${p.total.toLocaleString("fr-MA")} ${esc(DATA.currency)}</td>
-          <td>${p.lastAt ? esc(fmt(new Date(p.lastAt).toISOString())) : "—"}</td>
+          <td class="num">${p.visits}</td>
+          <td class="num">${p.total.toLocaleString("fr-MA")} ${esc(DATA.currency)}</td>
+          <td>${p.lastAt ? esc(fmt(p.lastAt)) : "—"}</td>
           <td>${esc(usual ? usual[0] : "—")}</td>
-          <td>${wa ? `<a class="mini" style="background:#12683a;text-decoration:none;display:inline-block"
-                 target="_blank" rel="noopener" href="https://wa.me/${wa}">WhatsApp</a>` : ""}</td>
+          <td>${wa ? `<a class="mini ok" target="_blank" rel="noopener" href="https://wa.me/${wa}">WhatsApp</a>` : ""}</td>
         </tr>`;
       }).join("")
-    : `<tr><td colspan="7" class="muted">Aucun patient${q ? " pour cette recherche" : " — le fichier se remplit à mesure que les interventions sont saisies"}.</td></tr>`;
+    : `<tr><td colspan="7" class="empty">Aucun patient${q ? " pour cette recherche" : " : le fichier se remplit à mesure que les interventions sont saisies"}.</td></tr>`;
 }
 
 /* Export so the file is usable outside this dashboard — that is the whole
@@ -1330,14 +1594,10 @@ function patientsCsv() {
     lines.push([p.name, p.phone, p.city, p.quartier, p.visits, p.total,
       p.lastAt ? new Date(p.lastAt).toISOString().slice(0, 10) : "", usual ? usual[0] : ""].map(esc2).join(","));
   }
-  return "\uFEFF" + lines.join("\r\n");
+  return "﻿" + lines.join("\r\n");
 }
 
 function renderAll() { renderDash(); renderOps(); renderPatients(); renderCash(); renderUsers(); }
-
-/* Installable, like the Nova Style admin. Scope is /admin/ so the worker can
-   never serve a stale page of the public site — a cached wrong phone number
-   on an emergency service is the one cache bug that actually matters. */
 
 $("pt-search").addEventListener("input", renderPatients);
 $("pt-csv").addEventListener("click", () => {
@@ -1349,6 +1609,9 @@ $("pt-csv").addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
+/* Installable, like the Nova Style admin. Scope is /admin/ so the worker can
+   never serve a stale page of the public site — a cached wrong phone number
+   on an emergency service is the one cache bug that actually matters. */
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("/admin/sw.js", { scope: "/admin/" }).catch(() => {});
@@ -1392,7 +1655,8 @@ function setupInstall() {
 
   const b = document.createElement("button");
   b.id = "install";
-  b.className = "ghost";
+  b.type = "button";
+  b.className = "btn-top";
   b.textContent = "Installer";
   b.onclick = async () => {
     if (deferredPrompt) {
@@ -1407,16 +1671,16 @@ function setupInstall() {
     const p = document.createElement("div");
     p.id = "installtip";
     p.className = "card";
-    p.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:9;max-width:520px;margin:0 auto";
+    p.style.cssText = "position:fixed;left:12px;right:12px;bottom:12px;z-index:9;max-width:520px;margin:0 auto;box-shadow:0 12px 40px rgba(0,20,46,.25)";
     // No inline onclick: the admin CSP sets script-src-attr 'none', so a
     // handler attribute here would be silently dead. Listener instead.
-    p.innerHTML = '<h3 style="margin-top:0">Installer le tableau de bord</h3>' +
-      '<p class="muted" style="margin:0 0 10px">' + installHint() + '</p>' +
-      '<button class="primary" id="installclose">Compris</button>';
+    p.innerHTML = '<h2>Installer le tableau de bord</h2>' +
+      '<p class="note" style="margin:6px 0 12px">' + installHint() + '</p>' +
+      '<button class="btn navy" type="button" id="installclose">Compris</button>';
     document.body.appendChild(p);
     p.querySelector("#installclose").onclick = () => p.remove();
   };
-  document.querySelector("header .sp").after(b);
+  $("out").before(b);
 }
 setupInstall();
 

@@ -1,7 +1,14 @@
 import type { Business } from "./schema";
+import { phone, phoneDisplayOf, phoneE164Of } from "./phone";
 
 /**
  * Site-wide business facts, all operator-supplied.
+ *
+ * The phone numbers live in content/phone.json, which the dashboard's
+ * "Modifier le numéro" button updates (see content/phone.ts). History, all
+ * at the operator's request: 06 01 99 12 96 at launch, 06 04 22 77 30 from
+ * 2026-10-20, 06 01 99 12 96 again from 2026-10-24, 06 04 22 77 30 from
+ * 2026-11-14.
  *
  * `geo.lat/lng` was reviewed and kept by the operator (2026-08-28).
  *
@@ -12,11 +19,11 @@ import type { Business } from "./schema";
  */
 export const business: Business = {
   legalName: "Urgence Médicale Casablanca",
-  phoneDisplay: "06 01 99 12 96",
-  phoneHref: "+212601991296",
-  // Not separately provided — defaulting to the same number as the call line
-  // (changed to 06 01 99 12 96 by the operator on 2026-10-24).
-  whatsappNumber: "+212601991296",
+  phoneDisplay: phoneDisplayOf(phone.call),
+  phoneHref: phoneE164Of(phone.call),
+  // The same line as the call number unless the operator sets another one
+  // from the dashboard.
+  whatsappNumber: phoneE164Of(phone.whatsapp),
   address: {
     street: "Hay Essalam, GH 2, Imm 4",
     city: "Casablanca",

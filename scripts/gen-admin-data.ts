@@ -1,5 +1,6 @@
 import { writeFileSync } from "node:fs";
 import { assertContentValid } from "../content/index";
+import { phone, phoneDisplayOf } from "../content/phone";
 
 /**
  * Generates public/admin/data.js from the content layer.
@@ -35,6 +36,14 @@ const data = {
   reviewUrl: content.business.reviewUrl,
   businessName: content.business.legalName,
   situations: content.situations.map((s) => ({ slug: s.slug, title: s.title })),
+  /* The numbers this build publishes, and the dashboard request they come
+     from (null when set by hand). The "Modifier le numéro" panel compares
+     the request with this to tell "en ligne" from "en cours". */
+  phone: {
+    call: phoneDisplayOf(phone.call),
+    whatsapp: phoneDisplayOf(phone.whatsapp),
+    request: phone.request,
+  },
 };
 
 writeFileSync(

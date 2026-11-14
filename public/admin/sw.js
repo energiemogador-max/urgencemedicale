@@ -9,7 +9,7 @@
  * Firebase traffic is deliberately never cached: the dashboard is live data
  * and a cached balance is a wrong balance.
  */
-const CACHE = "um-admin-v2";
+const CACHE = "um-admin-v3";
 const SHELL = [
   "/admin/",
   "/admin/index.html",

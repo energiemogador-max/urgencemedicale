@@ -318,12 +318,21 @@ export const PricingSchema = z.object({
 });
 export type Pricing = z.infer<typeof PricingSchema>;
 
+/**
+ * A Moroccan number in one exact format. The numbers come from
+ * content/phone.json, which the dashboard can now change, so a malformed
+ * value must fail the build rather than ship a dead "Appeler" button.
+ */
+function phoneText(label: string, pattern: RegExp, example: string) {
+  return filledText(label).refine((v) => pattern.test(v), `${label}: expected the format ${example}`);
+}
+
 export const BusinessSchema = z.object({
   legalName: filledText("business legal name"),
-  phoneDisplay: filledText("phone number (display format, e.g. 05 22 00 00 00)"),
-  phoneHref: filledText("phone number (tel: href format, e.g. +212522000000)"),
+  phoneDisplay: phoneText("phone number (display format)", /^0[5-8](?: \d{2}){4}$/, "06 00 00 00 00"),
+  phoneHref: phoneText("phone number (tel: href format)", /^\+212[5-8]\d{8}$/, "+212600000000"),
   /** Separate from phoneHref — the operator may route WhatsApp to a different line than the call number. */
-  whatsappNumber: filledText("WhatsApp number (e.g. +212600000000) — can be the same as phoneHref or a different line"),
+  whatsappNumber: phoneText("WhatsApp number", /^\+212[5-8]\d{8}$/, "+212600000000"),
   address: z.object({
     street: filledText("street address"),
     city: filledText("city"),
