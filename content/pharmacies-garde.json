@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-14T13:38:30.218Z",
+    "collectedAt": "2026-11-14T13:44:40.527Z",
     "forDate": "2026-11-14",
     "entries": [
       {
@@ -114,6 +114,8 @@
         "phone": "+212522767686",
         "kind": "jour",
         "district": "al Azhar Panorama",
+        "lat": 33.603943,
+        "lon": -7.489822,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -121,6 +123,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -147,6 +153,9 @@
         "address": "196 bd Mohamed Zerktouni, Casablanca",
         "phone": "+212522263253",
         "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
+        "lat": 33.595456,
+        "lon": -7.637984,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -154,6 +163,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -181,6 +194,8 @@
         "phone": "+212522274083",
         "kind": "24h",
         "district": "Ville Bourgogne Maarif",
+        "lat": 33.593966,
+        "lon": -7.627561,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -188,6 +203,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -213,13 +232,20 @@
         "address": "43 bd de la Grande Ceinture (h.Mohammadi), Casablanca",
         "phone": "+212522601246",
         "kind": "jour",
+        "district": "Hay Mohammadi",
+        "lat": 33.581153,
+        "lon": -7.563813,
         "sources": [
           {
             "name": "sahha.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -316,7 +342,9 @@
         "address": "derb Sidi Maarouf V (El Fida) rue 50 ang. rue ElFarouki Errahali n°12, Casablanca",
         "phone": "+212522281424",
         "kind": "24h",
-        "district": "Elfida Mers Sultan",
+        "district": "el Fida Mers Sultan",
+        "lat": 33.559496,
+        "lon": -7.601124,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -324,6 +352,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -336,6 +368,8 @@
         "phone": "+212522728091",
         "kind": "24h",
         "district": "Sidi Moumen",
+        "lat": 33.581988,
+        "lon": -7.530468,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -343,6 +377,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -355,6 +393,8 @@
         "phone": "+212522355290",
         "kind": "24h",
         "district": "Sidi Bernoussi",
+        "lat": 33.619067,
+        "lon": -7.525414,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -362,6 +402,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -373,13 +417,20 @@
         "address": "hay El Osra lot. Sanaa rue 2 n°74, Casablanca",
         "phone": "+212522523561",
         "kind": "jour",
+        "district": "Ain Chock",
+        "lat": 33.532377,
+        "lon": -7.58361,
         "sources": [
           {
             "name": "sahha.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -403,6 +454,8 @@
         "phone": "+212522213423",
         "kind": "24h",
         "district": "Ain Chock",
+        "lat": 33.55022,
+        "lon": -7.592048,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -410,6 +463,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -479,6 +536,8 @@
         "phone": "+212522355939",
         "kind": "jour",
         "district": "Aïn Sebaâ",
+        "lat": 33.600052,
+        "lon": -7.544398,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -486,6 +545,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -513,6 +576,8 @@
         "phone": "+212522931029",
         "kind": "24h",
         "district": "Hay Hassani el Oulfa",
+        "lat": 33.553905,
+        "lon": -7.674676,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -520,6 +585,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -546,13 +615,20 @@
         "address": "193 bd du Fouarat hay Adil, Casablanca",
         "phone": "+212522601483",
         "kind": "jour",
+        "district": "Hay Mohammadi",
+        "lat": 33.577063,
+        "lon": -7.566927,
         "sources": [
           {
             "name": "sahha.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -604,6 +680,8 @@
         "phone": "+212522766161",
         "kind": "jour",
         "district": "Anassi",
+        "lat": 33.587208,
+        "lon": -7.481346,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -611,6 +689,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -623,6 +705,8 @@
         "phone": "+212522897926",
         "kind": "24h",
         "district": "Lissasfa",
+        "lat": 33.576358,
+        "lon": -7.682419,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -630,6 +714,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -699,6 +787,8 @@
         "phone": "+212522624648",
         "kind": "24h",
         "district": "Hay Mohammadi",
+        "lat": 33.58336,
+        "lon": -7.573518,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -706,6 +796,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -763,6 +857,8 @@
         "phone": "+212522601724",
         "kind": "jour",
         "district": "Hay Mohammadi",
+        "lat": 33.576781,
+        "lon": -7.567604,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -770,6 +866,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -827,6 +927,8 @@
         "phone": "+212522372107",
         "kind": "jour",
         "district": "Benmsik",
+        "lat": 33.546023,
+        "lon": -7.576505,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -834,6 +936,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -846,6 +952,8 @@
         "phone": "+212522616956",
         "kind": "jour",
         "district": "Hay Mohammadi",
+        "lat": 33.587701,
+        "lon": -7.574124,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -853,6 +961,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -865,6 +977,8 @@
         "phone": "+212522975451",
         "kind": "24h",
         "district": "Sidi Maarouf",
+        "lat": 33.511888,
+        "lon": -7.658758,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -872,6 +986,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -883,13 +1001,20 @@
         "address": "avenue C imm. 5 n°4, Casablanca",
         "phone": "+212522638621",
         "kind": "jour",
+        "district": "Hay Mohammadi",
+        "lat": 33.5637,
+        "lon": -7.67348,
         "sources": [
           {
             "name": "sahha.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -971,6 +1096,8 @@
         "phone": "+212522246921",
         "kind": "24h",
         "district": "Belvedere et Roches Noires",
+        "lat": 33.602709,
+        "lon": -7.582229,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -978,6 +1105,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1034,6 +1165,9 @@
         "address": "9 X bd de Libye Val d'Anfa, Casablanca",
         "phone": "+212522398222",
         "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
+        "lat": 33.589,
+        "lon": -7.65185,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1041,6 +1175,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1053,6 +1191,8 @@
         "phone": "+212522604884",
         "kind": "jour",
         "district": "Hay Mohammadi",
+        "lat": 33.5778,
+        "lon": -7.569221,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1060,6 +1200,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1086,6 +1230,9 @@
         "address": "18 lotiss. Anna Ouled Haddou Sidi Maârouf, Casablanca",
         "phone": "+212522973912",
         "kind": "jour",
+        "district": "Sidi Maarouf",
+        "lat": 33.513904,
+        "lon": -7.646817,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1093,6 +1240,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1104,6 +1255,9 @@
         "address": "311 bd Abdelmoumen Hermitage - Hôpitaux Casablanca",
         "phone": "+212522860570",
         "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
+        "lat": 33.5681,
+        "lon": -7.62598,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1111,6 +1265,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1137,6 +1295,8 @@
         "phone": "+212522373735",
         "kind": "24h",
         "district": "Benmsik",
+        "lat": 33.539376,
+        "lon": -7.569887,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1144,6 +1304,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1155,7 +1319,9 @@
         "address": "64 rue Bachir El Ibrahimi-ex Quinconces, Casablanca",
         "phone": "+212522313261",
         "kind": "jour",
-        "district": "Elfida Mers Sultan",
+        "district": "el Fida Mers Sultan",
+        "lat": 33.584072,
+        "lon": -7.602523,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1163,6 +1329,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1175,13 +1345,19 @@
         "phone": "+212522620226",
         "kind": "jour",
         "district": "Hay Mohammadi",
+        "lat": 33.593711,
+        "lon": -7.566208,
         "sources": [
           {
             "name": "aidoctor.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -1190,6 +1366,8 @@
         "phone": "+212522256064",
         "kind": "jour",
         "district": "Ville Bourgogne Maarif",
+        "lat": 33.5787,
+        "lon": -7.6346,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1197,6 +1375,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1208,6 +1390,9 @@
         "address": "396 bd El Fida - ex Suez Nouvelle Médina Casablanca",
         "phone": "+212522281296",
         "kind": "jour",
+        "district": "el Fida Mers Sultan",
+        "lat": 33.570733,
+        "lon": -7.600641,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1215,6 +1400,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1287,6 +1476,8 @@
         "phone": "+212522890404",
         "kind": "jour",
         "district": "Hay Hassani el Oulfa",
+        "lat": 33.548502,
+        "lon": -7.698788,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1294,6 +1485,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1306,6 +1501,8 @@
         "phone": "+212522909500",
         "kind": "24h",
         "district": "Lissasfa",
+        "lat": 33.519023,
+        "lon": -7.673881,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1313,6 +1510,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1325,6 +1526,8 @@
         "phone": "+212522741812",
         "kind": "24h",
         "district": "Sidi Bernoussi",
+        "lat": 33.607106,
+        "lon": -7.512417,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1332,6 +1535,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1343,13 +1550,20 @@
         "address": "154 bd du Fouarat, Casablanca",
         "phone": "+212522626245",
         "kind": "jour",
+        "district": "Hay Mohammadi",
+        "lat": 33.5754,
+        "lon": -7.57029,
         "sources": [
           {
             "name": "sahha.ma",
             "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-14"
           }
         ],
-        "confirmed": false,
+        "confirmed": true,
         "stale": false
       },
       {
@@ -1358,6 +1572,8 @@
         "phone": "+212522360164",
         "kind": "jour",
         "district": "Hay Hassani el Oulfa",
+        "lat": 33.57342,
+        "lon": -7.665839,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1365,6 +1581,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1377,6 +1597,8 @@
         "phone": "+212522219894",
         "kind": "jour",
         "district": "Californie",
+        "lat": 33.541968,
+        "lon": -7.63427,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1384,6 +1606,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1424,7 +1650,9 @@
         "address": "12 hay El Oulfa - Casablanca ang. rue 13 et 04, Casablanca",
         "phone": "+212520649019",
         "kind": "24h",
-        "district": "Oulfa",
+        "district": "Hay Hassani el Oulfa",
+        "lat": 33.56206,
+        "lon": -7.67821,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1432,6 +1660,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
@@ -1443,6 +1675,9 @@
         "address": "Hay Walâa n°5 imm. 9 Tranche 17 sect. II Sidi Moumen Casablanca",
         "phone": "+212522712306",
         "kind": "jour",
+        "district": "Sidi Moumen",
+        "lat": 33.573241,
+        "lon": -7.519433,
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1450,6 +1685,10 @@
           },
           {
             "name": "sahha.ma",
+            "date": "2026-11-14"
+          },
+          {
+            "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],

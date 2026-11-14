@@ -349,9 +349,62 @@ export function parsePermanence(html: string, city: City): RawEntry[] {
   return out;
 }
 
+/**
+ * telecontact.ma — l'annuaire des Pages Jaunes du Maroc. La page de la ville
+ * ne donne que les quartiers de garde du jour ; chaque quartier a sa page,
+ * avec une carte par officine : nom, badge (« Jour », « Nuit », « 24h/24 »),
+ * adresse, téléphone et coordonnées. La date est affichée (« Gardes du
+ * samedi 14 novembre 2026 »). robots.txt n'interdit pas ces pages.
+ *
+ * Ajoutée le 2026-11-14 comme troisième source : pharmacieenpermanence.ma ne
+ * rend plus sa liste dans la page, et la confirmation exige deux sources ;
+ * avec deux sources seulement, la perte d'une seule bloquait toute la
+ * collecte. Ce jour-là, ses fiches du quartier Maârif portaient les mêmes
+ * téléphones que celles d'aidoctor.ma et sahha.ma.
+ */
+export function telecontactZones(html: string, city: City): string[] {
+  const urls = new Set<string>();
+  const re = new RegExp(`(?:https://www\\.telecontact\\.ma)?/pharmacie-de-garde-zone/${city}/[a-z0-9-]+\\.html`, "g");
+  for (const m of html.matchAll(re)) urls.add(new URL(m[0], "https://www.telecontact.ma").href);
+  return [...urls];
+}
+
+export function parseTelecontact(html: string, city: City): RawEntry[] {
+  const out: RawEntry[] = [];
+  const zone = decode(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/)?.[1] ?? "")
+    .replace(/^pharmacies? de garde\s*/i, "")
+    .replace(/\s*casablanca$/i, "")
+    .trim();
+  for (const card of html.split(/<article class="pharma-carte"/).slice(1)) {
+    const body = card.split("</article>")[0] ?? "";
+    const name = body.match(/<h3[^>]*>([\s\S]*?)<\/h3>/)?.[1];
+    const tel = body.match(/href="tel:([^"]+)"/)?.[1];
+    if (!name || !tel) continue;
+    const badges = [...body.matchAll(/class="pharma-badge\b[^"]*"[^>]*>([\s\S]*?)<\/span>/g)]
+      .map((m) => decode(m[1] ?? ""))
+      .join(" ");
+    const address = body.match(/class="pharma-adresse"[^>]*>([\s\S]*?)<\/p>/)?.[1];
+    const geo = body.match(/destination=(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/);
+    out.push({
+      source: "telecontact.ma",
+      city,
+      name: decode(name),
+      address: address ? decode(address).replace(/,\s*casablanca$/i, "") : "",
+      phone: normalizePhone(tel),
+      kind: kindFrom(badges),
+      district: zone || undefined,
+      lat: geo ? Number(geo[1]) : undefined,
+      lon: geo ? Number(geo[2]) : undefined,
+    });
+  }
+  return out;
+}
+
 const SOURCES: {
   name: string;
   url: (c: City) => string | null;
+  /** Pour une source répartie sur plusieurs pages : les pages à lire, trouvées sur la première. */
+  follow?: (html: string, c: City) => string[];
   parse: (html: string, c: City) => RawEntry[];
 }[] = [
   {
@@ -368,6 +421,12 @@ const SOURCES: {
     name: "pharmacieenpermanence.ma",
     url: (c) => `https://${c}.pharmacieenpermanence.ma/`,
     parse: parsePermanence,
+  },
+  {
+    name: "telecontact.ma",
+    url: (c) => `https://www.telecontact.ma/services/pharmacies-de-garde/${c}-Maroc`,
+    follow: telecontactZones,
+    parse: parseTelecontact,
   },
 ];
 
@@ -454,13 +513,32 @@ async function main() {
         await sleep(DELAY_MS);
         continue;
       }
-      const date = sourceDateOf(html);
-      const parsed = src
-        .parse(html, city)
-        .filter((e) => !isBanner(e.name))
-        .map((e) => ({ ...e, sourceDate: date ?? undefined }));
+      // Une source répartie sur plusieurs pages (telecontact.ma : une par
+      // quartier) est lue page par page ; chaque page porte sa propre date.
+      const pages: { html: string; date: string | null }[] = [];
+      if (src.follow) {
+        const links = src.follow(html, city);
+        let missing = 0;
+        for (const link of links) {
+          await sleep(DELAY_MS);
+          const sub = await fetchPage(link);
+          if (sub.html) pages.push({ html: sub.html, date: sourceDateOf(sub.html) });
+          else missing++;
+        }
+        if (missing) annotate("warning", `${src.name} : ${missing} page(s) sur ${links.length} indisponible(s)`);
+      } else {
+        pages.push({ html, date: sourceDateOf(html) });
+      }
+      const parsed = pages.flatMap((p) =>
+        src
+          .parse(p.html, city)
+          .filter((e) => !isBanner(e.name))
+          .map((e) => ({ ...e, sourceDate: p.date ?? undefined })),
+      );
       raw.push(...parsed);
-      const flag = date === today ? "à jour" : date ? `PÉRIMÉE (${date})` : "sans date";
+      const dates = [...new Set(pages.map((p) => p.date))];
+      const date = dates.length === 1 ? dates[0]! : dates.includes(today) ? today : (dates[0] ?? null);
+      const flag = date === today ? (dates.length > 1 ? "à jour, dates mêlées" : "à jour") : date ? `PÉRIMÉE (${date})` : "sans date";
       console.log(
         `  ${city.padEnd(12)} ${src.name.padEnd(26)} ${String(parsed.length).padStart(3)} entrée(s)  [${flag}]`,
       );
