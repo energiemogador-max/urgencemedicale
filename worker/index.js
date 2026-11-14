@@ -25,6 +25,74 @@ import { CHAT_PATH, handleChat } from "./chat.js";
 
 const GEO_PATH = "/api/geo";
 const STATS_PATH = "/admin/stats";
+const PHONE_NUDGE_PATH = "/api/phone-nudge";
+const REPO = "energiemogador-max/urgencemedicale";
+const OWN_HOSTS = new Set(["urgencemedicale.ma", "www.urgencemedicale.ma", "urgencemedicale.lhakem3chine.workers.dev"]);
+
+function json(body, status = 200) {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
+  });
+}
+
+/**
+ * Starts the GitHub workflow "Numéro de téléphone" now.
+ *
+ * The dashboard's "Modifier" button stores the new number in the database;
+ * that workflow writes it into content/phone.json and pushes, which rebuilds
+ * the site. It is scheduled every 5 minutes, but GitHub was starting this
+ * repository's scheduled runs 5 to 8 hours late in November 2026, and this
+ * one not at all in its first 3 hours. A run started through the API begins
+ * within seconds, so the dashboard calls this route right after saving.
+ *
+ * Needs the Worker secret GITHUB_DISPATCH_TOKEN: a fine-grained GitHub token
+ * for this repository only, with "Actions: Read and write" and nothing else.
+ * It can start a workflow, not change code. Without it, GET and POST answer
+ * { configured: false } and the dashboard says the update waits for the
+ * schedule.
+ *
+ * No sign-in check here, deliberately: starting the workflow is harmless.
+ * It applies only a request stored at site_config/phone, which the database
+ * rules let administrators alone write. Anyone calling this route can at most
+ * start a run that finds nothing to do, and the lock below keeps that to one
+ * run a minute.
+ */
+async function phoneNudge(request, env) {
+  const configured = Boolean(env.GITHUB_DISPATCH_TOKEN);
+  if (request.method === "GET") return json({ configured });
+  if (request.method !== "POST") return json({ error: "method" }, 405);
+
+  let host = "";
+  try {
+    host = new URL(request.headers.get("origin") ?? "").hostname;
+  } catch {
+    host = "";
+  }
+  if (!OWN_HOSTS.has(host)) return json({ error: "origin" }, 403);
+  if (!configured) return json({ configured });
+
+  const lock = new Request("https://urgencemedicale.ma/__phone-nudge-lock");
+  if (await caches.default.match(lock)) return json({ configured, started: false, throttled: true });
+
+  const res = await fetch(`https://api.github.com/repos/${REPO}/actions/workflows/numero-telephone.yml/dispatches`, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${env.GITHUB_DISPATCH_TOKEN}`,
+      accept: "application/vnd.github+json",
+      "x-github-api-version": "2022-11-28",
+      "user-agent": "urgencemedicale-worker",
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({ ref: "main" }),
+  });
+  if (res.status !== 204) {
+    console.error("phone-nudge: GitHub", res.status, (await res.text()).slice(0, 300));
+    return json({ configured, started: false, status: res.status }, 502);
+  }
+  await caches.default.put(lock, new Response("1", { headers: { "cache-control": "max-age=60" } }));
+  return json({ configured, started: true });
+}
 
 /** Conversions — a tap on the number or on WhatsApp. */
 const CONVERSIONS = new Set(["call", "whatsapp"]);
@@ -291,6 +359,15 @@ export default {
           status: 502,
           headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" },
         });
+      }
+    }
+
+    if (url.pathname === PHONE_NUDGE_PATH) {
+      try {
+        return await phoneNudge(request, env);
+      } catch (error) {
+        console.error("phone-nudge failed", error instanceof Error ? error.message : String(error));
+        return json({ error: "failed" }, 502);
       }
     }
 

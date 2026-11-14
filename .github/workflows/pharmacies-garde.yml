@@ -11,10 +11,13 @@ name: Pharmacies de garde
 
 on:
   schedule:
-    # 05h10 et 19h10 UTC — le matin pour la garde de jour, le soir pour
-    # rattraper les corrections publiées dans la journée.
-    - cron: "10 5 * * *"
-    - cron: "10 19 * * *"
+    # Toutes les deux heures. C'était 05h10 et 19h10 UTC, mais GitHub lance
+    # les tâches planifiées de ce dépôt avec 5 à 8 heures de retard
+    # (novembre 2026) : la relève « du matin » arrivait vers 13h et la page
+    # gardait la liste de la veille toute la matinée. Plus de créneaux, c'est
+    # une liste fraîche quel que soit le retard. Une exécution sans
+    # changement ne pousse rien et ne reconstruit pas le site.
+    - cron: "40 */2 * * *"
   workflow_dispatch:
   # Une modification du script de collecte est essayée tout de suite, plutôt
   # qu'à la prochaine exécution planifiée, que GitHub lance en ce moment avec

@@ -497,8 +497,8 @@
       <p class="note">Les patients appelleront :</p>
       <p class="bignum" id="ph-confirm-call"></p>
       <p class="note" id="ph-confirm-wa"></p>
-      <p class="note">Le site se met à jour tout seul, en 5 à 15 minutes environ. Changez aussi le numéro sur vos fiches
-        Google : le même numéro partout aide le classement.</p>
+      <p class="note" id="ph-timing"></p>
+      <p class="note">Changez aussi le numéro sur vos fiches Google : le même numéro partout aide le classement.</p>
       <div id="ph-err2" class="msg" hidden></div>
       <div class="actions end"><button type="button" class="btn" id="ph-back">Corriger</button>
         <button type="button" class="btn primary" id="ph-publish">Publier ce numéro</button></div>
@@ -592,6 +592,10 @@ let phoneReq = null;
 let deployed = DATA.phone || null;
 let phonePoll = null;
 let phoneDraft = null;
+/* Whether the server can start the publishing workflow at once (the
+   GITHUB_DISPATCH_TOKEN secret is set): null until asked, then true/false. */
+let fastPublish = null;
+let lastNudge = 0;
 
 /* Roles.
  *   admin    — manage doctors and users, confirm payments, change the site's number
@@ -891,6 +895,7 @@ else {
     openTab(TABS.includes(want) && want !== "admin" ? want : "dash");
     renderAll();
     renderPhone();
+    checkFastPublish();
   }
 
   /* Every live listener, started once per sign-in and stopped at sign-out. */
@@ -1044,15 +1049,39 @@ function renderPhone() {
     return;
   }
   const mins = Math.max(0, Math.round((Date.now() - Number(pend.at)) / 60000));
-  const late = mins >= 45;
+  const fast = fastPublish === true;
+  /* With the workflow started on request, a change is online in about 5
+     minutes; waiting for GitHub's schedule can take hours. */
+  const late = mins >= (fast ? 45 : 12 * 60);
+  if (fast && Date.now() - lastNudge > 5 * 60000) nudgePublish();
   const ago = mins < 1 ? "à l'instant" : mins < 60 ? "il y a " + mins + " min"
     : mins < 48 * 60 ? "il y a " + Math.round(mins / 60) + " h" : "depuis le " + fmt(Number(pend.at));
   st.className = "pill " + (late ? "bad" : "warn");
-  st.textContent = (late ? "Pas encore en ligne : " : "Mise en ligne en cours : ") + showNum(pend.call) + " · " + ago;
+  st.textContent = (late ? "Pas encore en ligne : " : fast ? "Mise en ligne en cours : " : "En attente de mise en ligne : ") +
+    showNum(pend.call) + " · " + ago;
   st.title = late
     ? "La mise à jour automatique n'a pas abouti. Vérifiez l'onglet Actions du dépôt GitHub (tâche « Numéro de téléphone »)."
-    : "Le site se met à jour tout seul, en 5 à 15 minutes environ. Le numéro ci-contre reste affiché jusque-là.";
+    : fast ? "Le site se met à jour tout seul, en 5 minutes environ. Le numéro ci-contre reste affiché jusque-là."
+    : "La tâche GitHub qui met le site à jour démarre en ce moment avec plusieurs heures de retard. Le numéro ci-contre reste affiché jusque-là.";
   startPhonePoll();
+}
+/* Can the server start the publishing workflow at once? Asked once per
+   opening; the answer sets the wording of the dialog and of the status. */
+async function checkFastPublish() {
+  try { fastPublish = Boolean((await (await fetch("/api/phone-nudge", { cache: "no-store" })).json()).configured); }
+  catch (e) { fastPublish = false; }
+  renderPhone();
+}
+/* Starts the publishing workflow now rather than at GitHub's next scheduled
+   run. Repeated every 5 minutes while a change waits, in case a run failed;
+   the server throttles to one start a minute whoever calls. */
+async function nudgePublish() {
+  lastNudge = Date.now();
+  try {
+    const r = await (await fetch("/api/phone-nudge", { method: "POST", cache: "no-store" })).json();
+    if (typeof r.configured === "boolean") fastPublish = r.configured;
+    return r;
+  } catch (e) { return null; }
 }
 function startPhonePoll() { if (!phonePoll) phonePoll = setInterval(checkDeployed, 30000); }
 function stopPhonePoll() { clearInterval(phonePoll); phonePoll = null; }
@@ -1097,6 +1126,10 @@ function reviewPhone() {
   phoneDraft = { call, whatsapp };
   $("ph-confirm-call").textContent = showNum(call);
   $("ph-confirm-wa").textContent = whatsapp === call ? "WhatsApp : ce même numéro." : "WhatsApp : " + showNum(whatsapp);
+  $("ph-timing").textContent = fastPublish
+    ? "Le site se met à jour tout seul, en 5 minutes environ."
+    : "Le site se met à jour tout seul, mais la tâche GitHub qui s'en charge démarre en ce moment avec plusieurs heures " +
+      "de retard. Une mise en ligne en 5 minutes demande un réglage unique : un jeton GitHub ajouté dans Cloudflare.";
   $("ph-err2").hidden = true;
   $("ph-step1").hidden = true; $("ph-step2").hidden = false;
   $("ph-publish").focus();
@@ -1106,11 +1139,17 @@ async function publishPhone() {
   const b = $("ph-publish");
   b.disabled = true;
   try {
+    /* The write fires the site_config listener, whose renderPhone() would
+       start the workflow too; the explicit start below is enough. */
+    lastNudge = Date.now();
     await set(ref(db, "site_config/phone"), { ...phoneDraft, at: serverTimestamp() });
     /* Who changed the number, and when: kept where only the team can read it. */
     push(ref(db, "site_config_log"), { ...phoneDraft, at: serverTimestamp(), by: me?.uid || null, byName: staff || null }).catch(() => {});
     $("ph-dialog").close();
-    toast("Numéro enregistré. Le site sera à jour dans 5 à 15 minutes environ.");
+    const r = await nudgePublish();
+    toast(r && r.configured
+      ? "Numéro enregistré. Le site sera à jour dans 5 minutes environ."
+      : "Numéro enregistré. La mise à jour du site attend la tâche planifiée de GitHub : cela peut prendre plusieurs heures.");
   } catch (e) {
     $("ph-err2").textContent = denied(e)
       ? "La base a refusé l'enregistrement. Si votre compte est bien administrateur, les règles Firebase du dépôt ne sont pas encore publiées (à faire une fois : Firebase → Realtime Database → Règles)."
