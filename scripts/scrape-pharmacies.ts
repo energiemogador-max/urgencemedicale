@@ -208,20 +208,40 @@ function kindFrom(text: string): GardeKind {
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
-async function fetchPage(url: string): Promise<string | null> {
+/**
+ * La page, ou la raison de son absence. La raison est journalisée : depuis le
+ * 2026-11-12 la tâche GitHub échouait deux fois par jour avec pour seule
+ * trace « exit code 1 », alors que la même collecte réussissait depuis un
+ * poste au Maroc. Sans le code HTTP, impossible de savoir quelle source
+ * refusait les serveurs de GitHub.
+ */
+async function fetchPage(url: string): Promise<{ html: string | null; why?: string }> {
   try {
     const res = await fetch(url, {
       headers: { "user-agent": UA, accept: "text/html" },
       redirect: "follow",
+      signal: AbortSignal.timeout(30000),
     });
-    if (!res.ok) return null;
+    if (!res.ok) {
+      const mitigated = res.headers.get("cf-mitigated");
+      return { html: null, why: `HTTP ${res.status}${mitigated ? ` (Cloudflare : ${mitigated})` : ""}` };
+    }
     const html = await res.text();
     // Un 404 rendu en 200 (page « erreur ») ne doit pas être analysé.
-    if (/erreur-404|page introuvable|not found/i.test(html.slice(0, 4000))) return null;
-    return html;
-  } catch {
-    return null;
+    if (/erreur-404|page introuvable|not found/i.test(html.slice(0, 4000))) return { html: null, why: "page d'erreur" };
+    return { html };
+  } catch (error) {
+    return { html: null, why: error instanceof Error ? error.message : String(error) };
   }
+}
+
+/**
+ * Dans GitHub Actions, une ligne « ::warning:: » devient une annotation
+ * lisible sans ouvrir le journal (qui exige une connexion), y compris par
+ * l'API publique du dépôt.
+ */
+function annotate(level: "warning" | "error", message: string) {
+  if (process.env.GITHUB_ACTIONS === "true") console.log(`::${level} title=Pharmacies de garde::${message}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -427,9 +447,10 @@ async function main() {
     for (const src of SOURCES) {
       const url = src.url(city);
       if (!url) continue;
-      const html = await fetchPage(url);
+      const { html, why } = await fetchPage(url);
       if (!html) {
-        console.log(`  ${city.padEnd(12)} ${src.name.padEnd(26)} — indisponible`);
+        console.log(`  ${city.padEnd(12)} ${src.name.padEnd(26)} — indisponible (${why})`);
+        annotate("warning", `${src.name} indisponible : ${why}`);
         await sleep(DELAY_MS);
         continue;
       }
@@ -443,6 +464,9 @@ async function main() {
       console.log(
         `  ${city.padEnd(12)} ${src.name.padEnd(26)} ${String(parsed.length).padStart(3)} entrée(s)  [${flag}]`,
       );
+      if (date !== today || parsed.length === 0) {
+        annotate("warning", `${src.name} : ${parsed.length} entrée(s), ${flag}`);
+      }
       await sleep(DELAY_MS);
     }
     const entries = merge(raw, today);
@@ -467,6 +491,7 @@ async function main() {
   );
   const FLOOR = 20;
   if (publishable < FLOOR && !args.includes("--force")) {
+    annotate("error", `${publishable} officine(s) confirmée(s) par deux sources, seuil ${FLOOR} : liste non mise à jour.`);
     console.error(
       `
 ÉCHEC : ${publishable} officine(s) publiable(s), seuil ${FLOOR}. ` +

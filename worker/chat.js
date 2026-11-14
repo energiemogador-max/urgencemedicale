@@ -38,11 +38,18 @@ export { CHAT_PATH };
  * (2026-10-12) : l'endpoint répondait 404 et le chat affichait une erreur 502
  * à chaque message. Il est désormais payant (≈ 0,04 $ / M de tokens en entrée,
  * 0,12 $ / M en sortie, soit ≈ 0,0002 $ par message) et demande du crédit sur
- * le compte OpenRouter. Derrière lui, deux modèles gratuits prennent le relais
+ * le compte OpenRouter. Derrière lui, d'autres modèles prennent le relais
  * si le précédent est retiré, à court de crédit, limité ou vide : un modèle
  * qui disparaît ne doit plus jamais couper l'assistant.
+ *
+ * 2026-11-14 : « inclusionai/ling-3.0-flash-sante » n'existe plus sur
+ * OpenRouter (absent de /api/v1/models). Chaque message l'essayait d'abord et
+ * attendait son échec avant que ling-3.1-flash réponde, pour 9 à 11 secondes
+ * par réponse. Retiré : ling-3.1-flash, qui répondait déjà à tout, passe en
+ * tête. Vérifier la liste quand un modèle tombe :
+ * https://openrouter.ai/api/v1/models
  */
-const MODELS = ["inclusionai/ling-3.0-flash-sante", "inclusionai/ling-3.1-flash", "google/gemma-4-31b-it:free"];
+const MODELS = ["inclusionai/ling-3.1-flash", "google/gemma-4-31b-it:free"];
 const ENDPOINT = "https://openrouter.ai/api/v1/chat/completions";
 
 /** Bornes : une conversation d'assistance, pas un terrain de jeu gratuit. */

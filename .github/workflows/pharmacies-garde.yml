@@ -16,6 +16,14 @@ on:
     - cron: "10 5 * * *"
     - cron: "10 19 * * *"
   workflow_dispatch:
+  # Une modification du script de collecte est essayée tout de suite, plutôt
+  # qu'à la prochaine exécution planifiée, que GitHub lance en ce moment avec
+  # 5 à 8 heures de retard (novembre 2026).
+  push:
+    branches: [main]
+    paths:
+      - scripts/scrape-pharmacies.ts
+      - .github/workflows/pharmacies-garde.yml
 
 concurrency:
   group: pharmacies-garde
