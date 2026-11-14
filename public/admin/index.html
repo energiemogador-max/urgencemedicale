@@ -640,6 +640,28 @@ function toast(text) {
 }
 const denied = (e) => /permission/i.test(String(e?.code || "") + " " + String(e?.message || ""));
 
+/* Why a sign-in failed, in words the team can act on. It used to be one
+   "Connexion refusée" for everything, so a disabled account, a typo and a
+   dropped connection all looked the same. */
+const AUTH_ERRORS = {
+  "auth/invalid-credential": "E-mail ou mot de passe incorrect.",
+  "auth/invalid-login-credentials": "E-mail ou mot de passe incorrect.",
+  "auth/wrong-password": "Mot de passe incorrect.",
+  "auth/user-not-found": "Aucun compte avec cet e-mail. Il se crée dans Firebase → Authentication → Users.",
+  "auth/invalid-email": "Adresse e-mail invalide.",
+  "auth/user-disabled": "Ce compte est désactivé. Il se réactive dans Firebase → Authentication → Users.",
+  "auth/too-many-requests": "Trop de tentatives : attendez quelques minutes avant de réessayer.",
+  "auth/network-request-failed": "Pas de connexion internet. Vérifiez le réseau et réessayez.",
+};
+/* Firebase checks the saved login each time the dashboard opens
+   (accounts:lookup). When Google refuses it (password changed, account
+   disabled or deleted), Firebase signs the browser out without a word: the
+   console shows "accounts:lookup 400" and the login form reappears. This flag
+   tells that case apart from a first visit, so the form can say why. */
+const SIGNED_KEY = "um_signed_in";
+const rememberSignedIn = (on) => { try { on ? localStorage.setItem(SIGNED_KEY, "1") : localStorage.removeItem(SIGNED_KEY); } catch (e) {} };
+const wasSignedIn = () => { try { return localStorage.getItem(SIGNED_KEY) === "1"; } catch (e) { return false; } };
+
 if (!isConfigured()) { $("setup").hidden = false; }
 else {
   const app = initializeApp(firebaseConfig);
@@ -653,9 +675,12 @@ else {
       await setPersistence(auth, browserLocalPersistence);
       await signInWithEmailAndPassword(auth, $("em").value.trim(), $("pw").value);
       $("pw").value = "";
-    } catch (e) { $("err").textContent = "Connexion refusée : vérifiez l'e-mail et le mot de passe."; $("err").hidden = false; }
+    } catch (e) {
+      $("err").textContent = AUTH_ERRORS[e?.code] || `Connexion refusée (${e?.code || "erreur inconnue"}).`;
+      $("err").hidden = false;
+    }
   });
-  $("out").onclick = () => signOut(auth);
+  $("out").onclick = () => { rememberSignedIn(false); signOut(auth); };
 
   // ── tabs and periods ───────────────────────────────────────────────────
   $("nav").addEventListener("click", (ev) => {
@@ -912,12 +937,19 @@ else {
     $("login").hidden = !!user;
     $("userbox").hidden = !user;
     if (!user) {
+      if (wasSignedIn()) {
+        $("err").textContent = "Votre session a été fermée par Firebase (mot de passe changé, ou compte désactivé ou supprimé). Reconnectez-vous.";
+        $("err").hidden = false;
+        rememberSignedIn(false);
+      }
       unsubscribe();
       me = null; staff = null; stopPhonePoll();
       $("nav").hidden = true; $("phonebar").hidden = true;
       TABS.forEach((t) => { $("t-" + t).hidden = true; });
       return;
     }
+    rememberSignedIn(true);
+    $("err").hidden = true;
     me = { uid: user.uid };
     staff = user.email;
     $("who").title = user.email || "";
