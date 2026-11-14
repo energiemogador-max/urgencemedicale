@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-14T13:44:40.527Z",
+    "collectedAt": "2026-11-14T13:50:01.782Z",
     "forDate": "2026-11-14",
     "entries": [
       {
@@ -122,10 +122,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -150,7 +146,7 @@
       },
       {
         "name": "Pharmacie Aida",
-        "address": "196 bd Mohamed Zerktouni, Casablanca",
+        "address": "196 bd Mohamed Zerktouni Casablanca",
         "phone": "+212522263253",
         "kind": "jour",
         "district": "Ville Bourgogne Maarif",
@@ -159,10 +155,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -190,7 +182,7 @@
       },
       {
         "name": "Pharmacie Al Kandara",
-        "address": "10 rue Abdellah Guennoun -ex Nièvre Branes, Casablanca",
+        "address": "10 rue Abdellah Guennoun -ex Nièvre Branes",
         "phone": "+212522274083",
         "kind": "24h",
         "district": "Ville Bourgogne Maarif",
@@ -199,10 +191,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -229,7 +217,7 @@
       },
       {
         "name": "Pharmacie AlAhd El Jadid",
-        "address": "43 bd de la Grande Ceinture (h.Mohammadi), Casablanca",
+        "address": "43 bd de la Grande Ceinture (h.Mohammadi)",
         "phone": "+212522601246",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -237,15 +225,11 @@
         "lon": -7.563813,
         "sources": [
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -339,7 +323,7 @@
       },
       {
         "name": "Pharmacie Bin Lamdoune",
-        "address": "derb Sidi Maarouf V (El Fida) rue 50 ang. rue ElFarouki Errahali n°12, Casablanca",
+        "address": "derb Sidi Maarouf V (El Fida) rue 50 ang. rue ElFarouki Errahali n°12",
         "phone": "+212522281424",
         "kind": "24h",
         "district": "el Fida Mers Sultan",
@@ -348,10 +332,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -376,10 +356,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -401,10 +377,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -414,7 +386,7 @@
       },
       {
         "name": "Pharmacie Dalanda",
-        "address": "hay El Osra lot. Sanaa rue 2 n°74, Casablanca",
+        "address": "hay El Osra lot. Sanaa rue 2 n°74",
         "phone": "+212522523561",
         "kind": "jour",
         "district": "Ain Chock",
@@ -422,15 +394,11 @@
         "lon": -7.58361,
         "sources": [
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -450,7 +418,7 @@
       },
       {
         "name": "Pharmacie Derb ElKheir",
-        "address": "derb El Kheir (Aïn Chok) rue 23 n°63-65, Casablanca",
+        "address": "derb El Kheir (Aïn Chok) rue 23 n 63-65",
         "phone": "+212522213423",
         "kind": "24h",
         "district": "Ain Chock",
@@ -459,10 +427,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -532,7 +496,7 @@
       },
       {
         "name": "Pharmacie ElFaiz",
-        "address": "avenue Khalid Bnou Loualid lotiss. Halioua mag.n°5 El Gantour, Casablanca",
+        "address": "LOTISSEMENT HALIOUA - 5, BD. KHALID IBNOU EL WALID - AIN SEBAA",
         "phone": "+212522355939",
         "kind": "jour",
         "district": "Aïn Sebaâ",
@@ -541,10 +505,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -572,7 +532,7 @@
       },
       {
         "name": "Pharmacie Fatma",
-        "address": "hay El Oulfa rue 191 n°48. bd Oued Sebou, Casablanca",
+        "address": "hay El Oulfa rue 191 n 48. bd Oued Sebou",
         "phone": "+212522931029",
         "kind": "24h",
         "district": "Hay Hassani el Oulfa",
@@ -581,10 +541,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -612,7 +568,7 @@
       },
       {
         "name": "Pharmacie Fouarat",
-        "address": "193 bd du Fouarat hay Adil, Casablanca",
+        "address": "193 bd du Fouarat hay Adil",
         "phone": "+212522601483",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -620,15 +576,11 @@
         "lon": -7.566927,
         "sources": [
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -688,10 +640,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -701,7 +649,7 @@
       },
       {
         "name": "Pharmacie Haj Fateh",
-        "address": "520 lotiss. Haj Fateh Lissasfa, Casablanca",
+        "address": "N 250, Lotissement Haj Fateh - Lissasfa",
         "phone": "+212522897926",
         "kind": "24h",
         "district": "Lissasfa",
@@ -710,10 +658,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -795,10 +739,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -853,7 +793,7 @@
       },
       {
         "name": "Pharmacie Houar (Rifai)",
-        "address": "135 bd du Fouarat, Casablanca",
+        "address": "135 Bd du Fouarat",
         "phone": "+212522601724",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -862,10 +802,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -923,7 +859,7 @@
       },
       {
         "name": "Pharmacie Jamila",
-        "address": "326 avenue du Cdt Driss Lharti - ex A, Casablanca",
+        "address": "326 avenue du Cdt Driss Lharti - ex A",
         "phone": "+212522372107",
         "kind": "jour",
         "district": "Benmsik",
@@ -932,10 +868,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -960,10 +892,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -973,7 +901,7 @@
       },
       {
         "name": "Pharmacie Jennane",
-        "address": "lotiss. El Mehdi imm A n°4 Sidi Maârouf, Casablanca",
+        "address": "N 4 Immeuble A Lotissement El Mehdi - Sidi Maarouf",
         "phone": "+212522975451",
         "kind": "24h",
         "district": "Sidi Maarouf",
@@ -982,10 +910,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -998,7 +922,7 @@
       },
       {
         "name": "Pharmacie kissariat Hay Mohammadi",
-        "address": "avenue C imm. 5 n°4, Casablanca",
+        "address": "avenue C imm. 5 n°4",
         "phone": "+212522638621",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -1006,15 +930,11 @@
         "lon": -7.67348,
         "sources": [
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1104,10 +1024,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -1162,7 +1078,7 @@
       },
       {
         "name": "Pharmacie le Corail",
-        "address": "9 X bd de Libye Val d'Anfa, Casablanca",
+        "address": "9 X bd de Libye Val d'Anfa Casablanca",
         "phone": "+212522398222",
         "kind": "jour",
         "district": "Ville Bourgogne Maarif",
@@ -1171,10 +1087,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1196,10 +1108,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1227,7 +1135,7 @@
       },
       {
         "name": "Pharmacie Mechmach",
-        "address": "18 lotiss. Anna Ouled Haddou Sidi Maârouf, Casablanca",
+        "address": "18 lotiss. Anna Ouled Haddou Sidi Maârouf Casablanca",
         "phone": "+212522973912",
         "kind": "jour",
         "district": "Sidi Maarouf",
@@ -1236,10 +1144,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1261,10 +1165,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1291,7 +1191,7 @@
       },
       {
         "name": "Pharmacie Moukdad Lahrizi",
-        "address": "153 avenue Bouchaïb Makdad Lahrizi, Casablanca",
+        "address": "153.BD Moukdad Lahrizi Hay Al Houda",
         "phone": "+212522373735",
         "kind": "24h",
         "district": "Benmsik",
@@ -1300,10 +1200,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1316,7 +1212,7 @@
       },
       {
         "name": "Pharmacie Moulay",
-        "address": "64 rue Bachir El Ibrahimi-ex Quinconces, Casablanca",
+        "address": "64 rue Bachir El Ibrahimi-ex Quinconces La gironde",
         "phone": "+212522313261",
         "kind": "jour",
         "district": "el Fida Mers Sultan",
@@ -1325,10 +1221,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1362,7 +1254,7 @@
       },
       {
         "name": "Pharmacie Najd",
-        "address": "1 X rue Ibn Chahid - ex Rigaud, Casablanca",
+        "address": "1 X rue Ibn Chahid - ex Rigaud",
         "phone": "+212522256064",
         "kind": "jour",
         "district": "Ville Bourgogne Maarif",
@@ -1371,10 +1263,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1396,10 +1284,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1484,10 +1368,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -1497,7 +1377,7 @@
       },
       {
         "name": "Pharmacie Ryad Sofia",
-        "address": "quartier Lissasfa (route d'El Jadida) lotiss. Nassim Islane lot. 770, Casablanca",
+        "address": "quartier Lissasfa (route d'El Jadida) , lotiss. Nassim Islane, lot. 770",
         "phone": "+212522909500",
         "kind": "24h",
         "district": "Lissasfa",
@@ -1506,10 +1386,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1534,10 +1410,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -1547,7 +1419,7 @@
       },
       {
         "name": "Pharmacie Slaoui",
-        "address": "154 bd du Fouarat, Casablanca",
+        "address": "154 bd du Fouarat",
         "phone": "+212522626245",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -1555,15 +1427,11 @@
         "lon": -7.57029,
         "sources": [
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -1577,10 +1445,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1602,10 +1466,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
@@ -1659,10 +1519,6 @@
             "date": "2026-11-14"
           },
           {
-            "name": "sahha.ma",
-            "date": "2026-11-14"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-14"
           }
@@ -1681,10 +1537,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-14"
-          },
-          {
-            "name": "sahha.ma",
             "date": "2026-11-14"
           },
           {
