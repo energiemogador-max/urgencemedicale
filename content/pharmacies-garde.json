@@ -1,7 +1,7 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-17T22:38:36.015Z",
-    "forDate": "2026-11-17",
+    "collectedAt": "2026-11-18T03:52:18.340Z",
+    "forDate": "2026-11-18",
     "entries": [
       {
         "name": "Al Amane",
@@ -16,7 +16,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Assabr",
@@ -31,7 +31,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Janquiere",
@@ -46,7 +46,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Lilas Madina Al Jadida",
@@ -61,7 +61,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Minaret",
@@ -76,7 +76,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Abdessamad",
@@ -91,11 +91,11 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Afriquia",
-        "address": "Pharmacie Afriquia, 1017, Bd Mohammed Vi",
+        "address": "1017 route de Médiouna Sbata",
         "phone": "+212522371428",
         "kind": "24h",
         "district": "Ben Msick",
@@ -107,12 +107,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -129,7 +125,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
@@ -148,7 +144,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie AlAqsa",
@@ -165,7 +161,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -186,7 +182,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -205,7 +201,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie AlOroba",
@@ -218,7 +214,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
@@ -239,7 +235,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -260,7 +256,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -280,12 +276,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -304,7 +296,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Camya",
@@ -316,14 +308,10 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-17"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
           }
         ],
-        "confirmed": true,
-        "stale": false
+        "confirmed": false,
+        "stale": true
       },
       {
         "name": "Pharmacie Camya",
@@ -336,7 +324,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
@@ -356,12 +344,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -381,12 +365,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -404,7 +384,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Cité des Cheminots",
@@ -420,12 +400,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -433,9 +409,10 @@
       },
       {
         "name": "Pharmacie Daha",
-        "address": "cité Sidi Bernoussi lotiss. Daha rue 7 n°48 bis Casablanca",
+        "address": "cité Sidi Bernoussi lotiss. Daha rue 7 n°48 bis, Casablanca",
         "phone": "+212522355290",
         "kind": "jour",
+        "district": "Sidi Bernoussi",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -443,7 +420,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Dakar",
@@ -459,12 +436,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -474,7 +447,8 @@
         "name": "Pharmacie Dawdia",
         "address": "hay El Wifak 1 rue 13 n°85 Oulfa Casablanca",
         "phone": "+212522901424",
-        "kind": "jour",
+        "kind": "24h",
+        "district": "Hay Hassani et el Oulfa",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -482,7 +456,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie de L'Opéra",
@@ -499,7 +473,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -507,7 +481,7 @@
       },
       {
         "name": "Pharmacie de la commune",
-        "address": "Pharmacie De La Commune, 3, Boulevard Zagora",
+        "address": "3 bd Zagora Ain chok",
         "phone": "+212522527171",
         "kind": "jour",
         "district": "Ain Chock",
@@ -519,12 +493,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -544,12 +514,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -566,7 +532,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
@@ -584,13 +550,14 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Derb ElKheir",
         "address": "derb El Kheir (Aïn Chok) rue 23 n°63-65 Aïn Chok Casablanca",
         "phone": "+212522213423",
         "kind": "jour",
+        "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -598,7 +565,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie derb Takadoum",
@@ -615,7 +582,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -636,7 +603,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -657,7 +624,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -675,11 +642,11 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie du Quartier industriel",
-        "address": "Pharmacie Du Quartier Industriel, Quartier Lissasfa Ii (route d'el Jadida), Bloc A N°508",
+        "address": "douar Lissasfa II (route d'El Jadida) bloc A n°508",
         "phone": "+212522651575",
         "kind": "24h",
         "district": "Lissasfa",
@@ -691,12 +658,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -714,7 +677,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie ElKawtar",
@@ -731,7 +694,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -752,7 +715,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -772,12 +735,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -798,7 +757,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -816,7 +775,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Ezohours",
@@ -829,7 +788,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
@@ -848,7 +807,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Fourkane",
@@ -862,7 +821,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Garden California",
@@ -878,7 +837,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -886,10 +845,10 @@
       },
       {
         "name": "Pharmacie Ghaza",
-        "address": "AHL LAGHLAM, ESSALAM II N 4 SIDI MOUMEN",
+        "address": "hay Sidi Moumen Essalam II n°4, Casablanca",
         "phone": "+212522766161",
         "kind": "jour",
-        "district": "Anassi",
+        "district": "Annasi",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -897,7 +856,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Haj Fateh",
@@ -912,7 +871,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Hatim",
@@ -926,7 +885,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Hay Azzeddine",
@@ -942,12 +901,8 @@
             "date": "2026-11-17"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-17"
-          },
-          {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -957,7 +912,7 @@
         "name": "Pharmacie Hay Hakam",
         "address": "Boulevard Ibn Tachfine, rue 21 n 40, quartier Hay Hakam I hay mohammadi",
         "phone": "+212522624648",
-        "kind": "jour",
+        "kind": "24h",
         "district": "Hay Mohammadi",
         "sources": [
           {
@@ -966,7 +921,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Hayfa",
@@ -980,7 +935,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Jamila",
@@ -995,7 +950,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Jennane",
@@ -1010,7 +965,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Khlil",
@@ -1027,7 +982,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1045,7 +1000,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie La Fontaine du Mall",
@@ -1059,7 +1014,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie la Grande Artère",
@@ -1073,7 +1028,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie la Mission",
@@ -1090,7 +1045,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1111,7 +1066,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1122,6 +1077,7 @@
         "address": "354 avenue Ambassadeur Ben Aïcha Roches noires Casablanca",
         "phone": "+212522246921",
         "kind": "jour",
+        "district": "Belvedere et Roches Noires",
         "sources": [
           {
             "name": "aidoctor.ma",
@@ -1129,7 +1085,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Le printemps ex: du port",
@@ -1146,7 +1102,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1167,7 +1123,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1188,7 +1144,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1209,7 +1165,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1230,7 +1186,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1248,7 +1204,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Moukdad Lahrizi",
@@ -1263,7 +1219,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Moulay",
@@ -1278,7 +1234,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Najd",
@@ -1293,7 +1249,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Nouvelle Aïn Borja",
@@ -1310,7 +1266,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1329,11 +1285,11 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Riyad Hay Hassani",
-        "address": "Riyad Hay Hassani Acharaf 2 imm. 4 Gh7 n 1 rte Errahma",
+        "address": "Riyad Hay Hassani Acharaf 2 imm. 4 Gh7 n°1 rte Errahma, Casablanca",
         "phone": "+212522890404",
         "kind": "jour",
         "district": "Hay Hassani el Oulfa",
@@ -1344,7 +1300,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Ryad Sofia",
@@ -1359,13 +1315,13 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Sabrine",
         "address": "hay Amal I (Sidi Bernoussi) rue 11 n°165 Sidi Bernoussi CASABLANCA",
         "phone": "+212522741812",
-        "kind": "jour",
+        "kind": "24h",
         "district": "Sidi Bernoussi",
         "sources": [
           {
@@ -1374,7 +1330,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Sahel",
@@ -1391,7 +1347,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1412,7 +1368,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
@@ -1420,7 +1376,7 @@
       },
       {
         "name": "Pharmacie Sophia",
-        "address": "214, bd Ibn Sina. Hay El Hana",
+        "address": "214 bd Ibn Sina - ex Avicenne El Alia, Casablanca",
         "phone": "+212522360164",
         "kind": "jour",
         "district": "Hay Hassani el Oulfa",
@@ -1431,7 +1387,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Soulaima",
@@ -1445,7 +1401,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Sun Square Almaz",
@@ -1459,7 +1415,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Taouss",
@@ -1474,7 +1430,7 @@
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Yathrib",
@@ -1491,7 +1447,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": true,
