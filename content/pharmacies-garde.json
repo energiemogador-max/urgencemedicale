@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-18T03:52:18.340Z",
+    "collectedAt": "2026-11-18T22:18:46.060Z",
     "forDate": "2026-11-18",
     "entries": [
       {
@@ -12,11 +12,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Assabr",
@@ -27,11 +27,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Janquiere",
@@ -42,11 +42,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Lilas Madina Al Jadida",
@@ -57,11 +57,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Minaret",
@@ -72,11 +72,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Abdessamad",
@@ -87,15 +87,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Afriquia",
-        "address": "1017 route de Médiouna Sbata",
+        "address": "Pharmacie Afriquia, 1017, Bd Mohammed Vi",
         "phone": "+212522371428",
         "kind": "24h",
         "district": "Ben Msick",
@@ -104,7 +104,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -140,11 +144,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie AlAqsa",
@@ -157,7 +161,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -178,7 +182,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -190,18 +194,18 @@
       },
       {
         "name": "Pharmacie AlOroba",
-        "address": "Boulevard 2 mars ,14 rue 15 lotissement rajaa saida,",
+        "address": "avenue du Deux Mars lot. Rajaa Saïda rue 14 n°15 Casablanca",
         "phone": "+212522522269",
         "kind": "jour",
         "district": "Ain Chock",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie AlOroba",
@@ -222,7 +226,7 @@
       },
       {
         "name": "Pharmacie Anafé",
-        "address": "37 rue Félix et Max Guedj Lusitania Casablanca - Maroc",
+        "address": "N 37, Rue Felix Et Max Guedj (ENTRE PLACE MARECHAL ET PLACE OUED MAKHAZINE - CINEMA OPERA - HOTEL HYATT REGENCY)",
         "phone": "+212522274194",
         "kind": "24h",
         "district": "Ville Bourgogne Maarif",
@@ -231,7 +235,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -252,7 +256,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -273,7 +277,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -292,11 +300,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Camya",
@@ -307,11 +315,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           }
         ],
-        "confirmed": false,
-        "stale": true
+        "confirmed": true,
+        "stale": false
       },
       {
         "name": "Pharmacie Camya",
@@ -332,7 +344,7 @@
       },
       {
         "name": "Pharmacie Carnot",
-        "address": "15, rue Jaafar El Barmaki Casablanca",
+        "address": "15, Rue Jaafar El Barmaki, Quartier La Villette,",
         "phone": "+212522638657",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -341,7 +353,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -362,7 +378,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -380,11 +400,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Cité des Cheminots",
@@ -397,7 +417,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -416,11 +440,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Dakar",
@@ -433,7 +457,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -452,11 +480,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie de L'Opéra",
@@ -469,7 +497,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -481,7 +509,7 @@
       },
       {
         "name": "Pharmacie de la commune",
-        "address": "3 bd Zagora Ain chok",
+        "address": "Pharmacie De La Commune, 3, Boulevard Zagora",
         "phone": "+212522527171",
         "kind": "jour",
         "district": "Ain Chock",
@@ -490,7 +518,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -511,7 +543,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -546,11 +582,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Derb ElKheir",
@@ -561,11 +597,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie derb Takadoum",
@@ -578,7 +614,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -599,7 +635,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -620,7 +656,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -638,15 +674,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie du Quartier industriel",
-        "address": "douar Lissasfa II (route d'El Jadida) bloc A n°508",
+        "address": "Pharmacie Du Quartier Industriel, Quartier Lissasfa Ii (route d'el Jadida), Bloc A N°508",
         "phone": "+212522651575",
         "kind": "24h",
         "district": "Lissasfa",
@@ -655,7 +691,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -673,11 +713,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie ElKawtar",
@@ -690,7 +730,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -711,7 +751,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -723,7 +763,7 @@
       },
       {
         "name": "Pharmacie Erreda",
-        "address": "162 avenue Aviateur Bourgadam Hay Mohammadi Casablanca",
+        "address": "162, Boulevard Bourgadem, Quartier La Villette, Hay Mohammadi",
         "phone": "+212522602012",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -732,7 +772,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -753,7 +797,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -771,11 +815,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Ezohours",
@@ -803,11 +847,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Fourkane",
@@ -817,11 +861,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Garden California",
@@ -833,7 +877,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -852,11 +896,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Haj Fateh",
@@ -867,11 +911,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Hatim",
@@ -881,15 +925,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Hay Azzeddine",
-        "address": "hay Azeddine (hay Mohammadi) rue 4 n°3",
+        "address": "3, rue 4, Hay Azzeddine, Quartier Aïn Borja",
         "phone": "+212522625301",
         "kind": "jour",
         "district": "Hay Mohammadi",
@@ -898,7 +942,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -917,11 +965,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Hayfa",
@@ -931,11 +979,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Jamila",
@@ -946,11 +994,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Jennane",
@@ -961,11 +1009,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Khlil",
@@ -978,7 +1026,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -996,11 +1044,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie La Fontaine du Mall",
@@ -1010,11 +1058,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie la Grande Artère",
@@ -1024,11 +1072,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie la Mission",
@@ -1041,7 +1089,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1062,7 +1110,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1081,11 +1129,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Le printemps ex: du port",
@@ -1098,7 +1146,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1119,7 +1167,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1140,7 +1188,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1161,7 +1209,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1182,7 +1230,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1200,11 +1248,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Moukdad Lahrizi",
@@ -1215,11 +1263,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Moulay",
@@ -1230,11 +1278,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Najd",
@@ -1245,11 +1293,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Nouvelle Aïn Borja",
@@ -1262,7 +1310,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1281,11 +1329,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Riyad Hay Hassani",
@@ -1296,11 +1344,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Ryad Sofia",
@@ -1311,11 +1359,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Sabrine",
@@ -1326,11 +1374,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Sahel",
@@ -1343,7 +1391,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1364,7 +1412,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
@@ -1383,11 +1431,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Soulaima",
@@ -1397,11 +1445,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Sun Square Almaz",
@@ -1411,11 +1459,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Taouss",
@@ -1426,11 +1474,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           }
         ],
         "confirmed": false,
-        "stale": true
+        "stale": false
       },
       {
         "name": "Pharmacie Yathrib",
@@ -1443,7 +1491,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-17"
+            "date": "2026-11-18"
           },
           {
             "name": "telecontact.ma",
