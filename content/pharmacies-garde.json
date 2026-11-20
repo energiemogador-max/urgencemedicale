@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-20T13:32:25.524Z",
+    "collectedAt": "2026-11-20T21:58:22.009Z",
     "forDate": "2026-11-20",
     "entries": [
       {
@@ -95,7 +95,7 @@
       },
       {
         "name": "Pharmacie Afriquia",
-        "address": "Pharmacie Afriquia, 1017, Bd Mohammed Vi",
+        "address": "1017 route de Médiouna Sbata",
         "phone": "+212522371428",
         "kind": "24h",
         "district": "Ben Msick",
@@ -104,10 +104,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -280,10 +276,6 @@
             "date": "2026-11-20"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-20"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-20"
           }
@@ -316,13 +308,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-20"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
@@ -356,10 +344,6 @@
             "date": "2026-11-20"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-20"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-20"
           }
@@ -378,10 +362,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -420,10 +400,6 @@
             "date": "2026-11-20"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-20"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-20"
           }
@@ -457,10 +433,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -521,10 +493,6 @@
             "date": "2026-11-20"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-20"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-20"
           }
@@ -543,10 +511,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -682,7 +646,7 @@
       },
       {
         "name": "Pharmacie du Quartier industriel",
-        "address": "Pharmacie Du Quartier Industriel, Quartier Lissasfa Ii (route d'el Jadida), Bloc A N°508",
+        "address": "douar Lissasfa II (route d'El Jadida) bloc A n°508",
         "phone": "+212522651575",
         "kind": "24h",
         "district": "Lissasfa",
@@ -691,10 +655,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -786,10 +746,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
@@ -956,10 +912,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-20"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-20"
           },
           {
