@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-22T16:38:15.499Z",
+    "collectedAt": "2026-11-22T22:00:52.071Z",
     "forDate": "2026-11-22",
     "entries": [
       {
@@ -415,20 +415,6 @@
           }
         ],
         "confirmed": true,
-        "stale": false
-      },
-      {
-        "name": "Pharmacie Chaabia",
-        "address": "Pharmacie Chaabia, N°1, Lotissement. Anassi, Grp. 11 Ahl Loghlam",
-        "phone": "+212522767958",
-        "kind": "inconnu",
-        "sources": [
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-22"
-          }
-        ],
-        "confirmed": false,
         "stale": false
       },
       {
