@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-26T04:20:53.507Z",
+    "collectedAt": "2026-11-26T14:20:42.019Z",
     "forDate": "2026-11-26",
     "entries": [
       {
@@ -104,10 +104,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -233,10 +229,6 @@
             "date": "2026-11-26"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-26"
           }
@@ -255,10 +247,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -349,10 +337,6 @@
             "date": "2026-11-26"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-26"
           }
@@ -385,10 +369,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -536,7 +516,7 @@
       },
       {
         "name": "Pharmacie Diwane",
-        "address": "Pharmacie Diwane, 8 Bis, Allée Des Lilas, Hay Castor. Aïn Sebâa. Face Usine Des Ciments Et Terrain De Basket",
+        "address": "8 BIS, ALLEE DES LILAS - HAY KASTOR - AIN SEBAA (FACE USINE (DE CIMENTS & TERRAIN DE BASKET)",
         "phone": "+212522661480",
         "kind": "jour",
         "district": "Ain Sebaa",
@@ -545,10 +525,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -593,7 +569,7 @@
       },
       {
         "name": "Pharmacie du Lys",
-        "address": "687 Bd Oued Sebou (hay El Oulfa)",
+        "address": "687 bd Oued Sebou (hay El Oulfa)",
         "phone": "+212522905009",
         "kind": "24h",
         "district": "Hay Hassani el Oulfa",
@@ -602,10 +578,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -885,10 +857,6 @@
             "date": "2026-11-26"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-26"
           }
@@ -1016,10 +984,6 @@
             "date": "2026-11-26"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-26"
           }
@@ -1111,10 +1075,6 @@
             "date": "2026-11-26"
           },
           {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
-          },
-          {
             "name": "telecontact.ma",
             "date": "2026-11-26"
           }
@@ -1133,10 +1093,6 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
           },
           {
@@ -1409,13 +1365,9 @@
           {
             "name": "aidoctor.ma",
             "date": "2026-11-26"
-          },
-          {
-            "name": "pharmacieenpermanence.ma",
-            "date": "2026-11-26"
           }
         ],
-        "confirmed": true,
+        "confirmed": false,
         "stale": false
       },
       {
