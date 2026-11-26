@@ -1,6 +1,6 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-26T14:20:42.019Z",
+    "collectedAt": "2026-11-26T23:17:03.792Z",
     "forDate": "2026-11-26",
     "entries": [
       {
@@ -107,8 +107,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -129,7 +133,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -209,7 +213,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -229,8 +233,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -250,8 +258,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -272,7 +284,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -337,8 +349,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -372,8 +388,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -409,7 +429,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -516,7 +536,7 @@
       },
       {
         "name": "Pharmacie Diwane",
-        "address": "8 BIS, ALLEE DES LILAS - HAY KASTOR - AIN SEBAA (FACE USINE (DE CIMENTS & TERRAIN DE BASKET)",
+        "address": "Pharmacie Diwane, 8 Bis, Allée Des Lilas, Hay Castor. Aïn Sebâa. Face Usine Des Ciments Et Terrain De Basket",
         "phone": "+212522661480",
         "kind": "jour",
         "district": "Ain Sebaa",
@@ -528,8 +548,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -561,15 +585,15 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie du Lys",
-        "address": "687 bd Oued Sebou (hay El Oulfa)",
+        "address": "687 Bd Oued Sebou (hay El Oulfa)",
         "phone": "+212522905009",
         "kind": "24h",
         "district": "Hay Hassani el Oulfa",
@@ -581,8 +605,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -632,6 +660,25 @@
         "stale": false
       },
       {
+        "name": "Pharmacie Du Rond Point Aicha Univers",
+        "address": "Bd moulay Smail Angle emile zola rocroy et route de Rabat",
+        "phone": "+212522242555",
+        "kind": "jour",
+        "district": "Belvedere Roches Noires",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-11-26"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-26"
+          }
+        ],
+        "confirmed": true,
+        "stale": false
+      },
+      {
         "name": "Pharmacie ElAlaoui",
         "address": "N 36-37, Immeuble 9, Tranche 6/1, Lotissement Al Azhar - Al Azhar",
         "phone": "+212522755631",
@@ -646,7 +693,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -667,7 +714,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -688,7 +735,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -723,7 +770,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -802,7 +849,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -837,7 +884,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -857,8 +904,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -893,7 +944,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -914,7 +965,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -964,7 +1015,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -984,8 +1035,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1006,7 +1061,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1027,7 +1082,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1075,8 +1130,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1096,8 +1155,12 @@
             "date": "2026-11-26"
           },
           {
-            "name": "telecontact.ma",
+            "name": "pharmacieenpermanence.ma",
             "date": "2026-11-26"
+          },
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1160,7 +1223,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1283,7 +1346,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1328,11 +1391,11 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Ottour",
@@ -1349,7 +1412,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1400,7 +1463,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1451,7 +1514,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
@@ -1472,21 +1535,6 @@
         "stale": false
       },
       {
-        "name": "Pharmacie Univers",
-        "address": "Bd moulay Smail Angle emile zola rocroy et route de Rabat",
-        "phone": "+212522242555",
-        "kind": "jour",
-        "district": "Belvedere Roches Noires",
-        "sources": [
-          {
-            "name": "aidoctor.ma",
-            "date": "2026-11-26"
-          }
-        ],
-        "confirmed": false,
-        "stale": false
-      },
-      {
         "name": "Pharmacie Univers Santé",
         "address": "116 rue Haj Jillali Eloufir-ex Guillotte",
         "phone": "+212522980906",
@@ -1497,11 +1545,11 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": false,
-        "stale": false
+        "stale": true
       },
       {
         "name": "Pharmacie Yacoub ElMansour",
@@ -1518,7 +1566,7 @@
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-26"
+            "date": "2026-11-27"
           }
         ],
         "confirmed": true,
