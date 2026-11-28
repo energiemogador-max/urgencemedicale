@@ -1,7 +1,7 @@
 {
   "casablanca": {
-    "collectedAt": "2026-11-27T19:38:41.586Z",
-    "forDate": "2026-11-27",
+    "collectedAt": "2026-11-28T02:57:11.762Z",
+    "forDate": "2026-11-28",
     "entries": [
       {
         "name": "Al Hadika",
@@ -12,7 +12,22 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Av. Med Bouziane",
+        "address": "752 avenue Mohamed Bouziane hay ElBaraka Hay moulay rachid",
+        "phone": "+212522701537",
+        "kind": "jour",
+        "district": "Sidi Othman Moulay Rachid",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -27,22 +42,37 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
         "stale": false
       },
       {
-        "name": "Du Rond Point Aicha (Univers)",
-        "address": "Bd moulay Smail Angle emile zola rocroy et route de Rabat",
-        "phone": "+212522242555",
+        "name": "de la Prefecture",
+        "address": "bd Nil bloc 33 n 23 Hay sidi othmane",
+        "phone": "+212522371402",
         "kind": "jour",
-        "district": "Belvedere Roches Noires",
+        "district": "Sidi Othman Moulay Rachid",
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "El Jabr",
+        "address": "cité Lalla Mériem bloc 40 n 61 Hay sidi othmane",
+        "phone": "+212522553429",
+        "kind": "jour",
+        "district": "Sidi Othman Moulay Rachid",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -57,7 +87,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -72,7 +102,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -87,7 +117,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -102,7 +132,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -119,11 +149,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -140,11 +174,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -158,7 +192,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -173,7 +207,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -188,7 +222,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -203,7 +237,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -220,11 +254,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -241,11 +275,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -262,11 +300,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -283,11 +325,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -302,7 +344,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -317,7 +359,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -332,7 +374,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -349,11 +391,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -367,7 +413,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -384,11 +430,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -403,7 +453,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -420,11 +470,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -439,7 +489,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -453,7 +503,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -467,7 +517,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -481,7 +531,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -495,7 +545,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -509,7 +559,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -523,7 +573,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -531,7 +581,7 @@
       },
       {
         "name": "Pharmacie Diwane",
-        "address": "8 BIS, ALLEE DES LILAS - HAY KASTOR - AIN SEBAA (FACE USINE (DE CIMENTS & TERRAIN DE BASKET)",
+        "address": "Pharmacie Diwane, 8 Bis, Allée Des Lilas, Hay Castor. Aïn Sebâa. Face Usine Des Ciments Et Terrain De Basket",
         "phone": "+212522661480",
         "kind": "jour",
         "district": "Ain Sebaa",
@@ -540,11 +590,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -559,7 +613,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -576,7 +630,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -584,7 +638,7 @@
       },
       {
         "name": "Pharmacie du Lys",
-        "address": "687 bd Oued Sebou (hay El Oulfa)",
+        "address": "687 Bd Oued Sebou (hay El Oulfa)",
         "phone": "+212522905009",
         "kind": "24h",
         "district": "Hay Hassani el Oulfa",
@@ -593,11 +647,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -611,7 +669,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -625,7 +683,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -640,10 +698,29 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Du Rond Point Aicha Univers",
+        "address": "Bd moulay Smail Angle emile zola rocroy et route de Rabat",
+        "phone": "+212522242555",
+        "kind": "jour",
+        "district": "Belvedere Roches Noires",
+        "sources": [
+          {
+            "name": "aidoctor.ma",
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
+          }
+        ],
+        "confirmed": true,
         "stale": false
       },
       {
@@ -657,11 +734,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -678,11 +755,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -699,11 +776,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -717,7 +794,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -734,11 +811,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -752,7 +829,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -766,7 +843,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -781,7 +858,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -796,7 +873,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -813,11 +890,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -831,7 +908,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -848,11 +925,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -869,11 +946,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -887,7 +968,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -904,11 +985,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -925,11 +1006,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -944,7 +1025,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -958,7 +1039,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -975,11 +1056,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -996,11 +1077,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1017,11 +1102,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1038,11 +1123,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1056,7 +1141,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1070,7 +1155,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1087,11 +1172,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1108,11 +1197,15 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          },
+          {
+            "name": "pharmacieenpermanence.ma",
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1126,7 +1219,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1140,7 +1233,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1154,7 +1247,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1171,11 +1264,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1189,7 +1282,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1204,7 +1297,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1218,7 +1311,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1232,7 +1325,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1247,7 +1340,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1262,7 +1355,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1277,7 +1370,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1294,11 +1387,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1312,7 +1405,24 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
+          }
+        ],
+        "confirmed": false,
+        "stale": false
+      },
+      {
+        "name": "Pharmacie Nouvelle",
+        "address": "16 bd de la Liberté",
+        "phone": "+212522314717",
+        "kind": "jour",
+        "district": "Ville Bourgogne Maarif",
+        "lat": 33.587259,
+        "lon": -7.612048,
+        "sources": [
+          {
+            "name": "telecontact.ma",
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1326,7 +1436,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1343,7 +1453,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1360,11 +1470,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1379,7 +1489,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1394,7 +1504,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1411,11 +1521,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1430,7 +1540,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1445,7 +1555,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1462,11 +1572,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1480,7 +1590,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1497,7 +1607,7 @@
         "sources": [
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
@@ -1514,11 +1624,11 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           },
           {
             "name": "telecontact.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": true,
@@ -1533,7 +1643,7 @@
         "sources": [
           {
             "name": "aidoctor.ma",
-            "date": "2026-11-27"
+            "date": "2026-11-28"
           }
         ],
         "confirmed": false,
